@@ -26,7 +26,7 @@ export const lists = {
       },
     },
   }),
-  Prompts: list({
+  Prompt: list({
     fields: {
       title: text(),
       status: select({
@@ -40,7 +40,7 @@ export const lists = {
         },
       }),
       publishDate: timestamp(),
-      author: relationship({
+      user: relationship({
         ref: 'User.prompts',
         ui: {
           displayMode: 'cards',
