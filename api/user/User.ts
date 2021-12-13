@@ -7,29 +7,12 @@ import {
   timestamp,
   select,
 } from '@keystone-6/core/fields';
+import { afterCreateUser } from './afterCreateUser';
 
 export const User = list({
   hooks: {
     afterOperation: async ({ context, item, operation }) => {
-      console.log('afterOperation: :: operation', operation);
-      const { query } = context
-      console.log('afterOperation: :: item', item);
-      
-      if (operation === 'create') {
-        if (!item) throw new Error('Failed to create User item.')
-        console.log(`New user created. First Name: ${item?.firstName}, Email: ${item?.email}`);
-        
-        const createdPrompt = await query.Prompt.createOne({ data: {
-          name: "Automated prompt",
-          user: {
-            connect: {
-              id: item.id
-            }
-          },
-        }})
-        
-        console.log('afterOperation: :: createdPrompt', createdPrompt);
-      }
+      if (operation === 'create') afterCreateUser({ context, item })
     }
   },
   fields: {
