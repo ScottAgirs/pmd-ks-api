@@ -487,7 +487,7 @@ type Patient {
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
   name: String
-  isConfirmed: Boolean
+  isCompleteProfile: Boolean
   user: User
 }
 
@@ -502,7 +502,7 @@ input PatientWhereInput {
   id: IDFilter
   bookings: BookingManyRelationFilter
   name: StringFilter
-  isConfirmed: BooleanFilter
+  isCompleteProfile: BooleanFilter
   user: UserWhereInput
 }
 
@@ -515,13 +515,13 @@ input BookingManyRelationFilter {
 input PatientOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  isConfirmed: OrderDirection
+  isCompleteProfile: OrderDirection
 }
 
 input PatientUpdateInput {
   bookings: BookingRelateToManyForUpdateInput
   name: String
-  isConfirmed: Boolean
+  isCompleteProfile: Boolean
   user: UserRelateToOneForUpdateInput
 }
 
@@ -546,7 +546,7 @@ input PatientUpdateArgs {
 input PatientCreateInput {
   bookings: BookingRelateToManyForCreateInput
   name: String
-  isConfirmed: Boolean
+  isCompleteProfile: Boolean
   user: UserRelateToOneForCreateInput
 }
 

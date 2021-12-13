@@ -51,12 +51,12 @@ model User {
 }
 
 model Patient {
-  id          String    @id @default(cuid())
-  bookings    Booking[] @relation("Booking_patient")
-  name        String    @default("")
-  isConfirmed Boolean   @default(false)
-  user        User?     @relation("Patient_user", fields: [userId], references: [id])
-  userId      String?   @unique @map("user")
+  id                String    @id @default(cuid())
+  bookings          Booking[] @relation("Booking_patient")
+  name              String    @default("")
+  isCompleteProfile Boolean   @default(false)
+  user              User?     @relation("Patient_user", fields: [userId], references: [id])
+  userId            String?   @unique @map("user")
 }
 
 model Prompt {
