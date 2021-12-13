@@ -33,6 +33,10 @@ model Doctor {
   isCompleteProfile Boolean          @default(false)
   isVerified        Boolean          @default(false)
   languages         DoctorLanguage[] @relation("Doctor_languages")
+  summary           String           @default("")
+  email             String           @unique @default("")
+  patients          Patient[]        @relation("Doctor_patients")
+  savedByPatients   Patient[]        @relation("Doctor_savedByPatients")
 }
 
 model DoctorLanguage {
@@ -62,6 +66,8 @@ model Patient {
   isCompleteProfile Boolean   @default(false)
   user              User?     @relation("Patient_user", fields: [userId], references: [id])
   userId            String?   @unique @map("user")
+  visitedDoctors    Doctor[]  @relation("Doctor_patients")
+  savedDoctors      Doctor[]  @relation("Doctor_savedByPatients")
 }
 
 model Prompt {

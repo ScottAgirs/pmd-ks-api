@@ -211,10 +211,27 @@ type Doctor {
     skip: Int! = 0
   ): [DoctorLanguage!]
   languagesCount(where: DoctorLanguageWhereInput! = {}): Int
+  summary: String
+  email: String
+  patients(
+    where: PatientWhereInput! = {}
+    orderBy: [PatientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Patient!]
+  patientsCount(where: PatientWhereInput! = {}): Int
+  savedByPatients(
+    where: PatientWhereInput! = {}
+    orderBy: [PatientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Patient!]
+  savedByPatientsCount(where: PatientWhereInput! = {}): Int
 }
 
 input DoctorWhereUniqueInput {
   id: ID
+  email: String
 }
 
 input DoctorWhereInput {
@@ -226,6 +243,10 @@ input DoctorWhereInput {
   isCompleteProfile: BooleanFilter
   isVerified: BooleanFilter
   languages: DoctorLanguageManyRelationFilter
+  summary: StringFilter
+  email: StringFilter
+  patients: PatientManyRelationFilter
+  savedByPatients: PatientManyRelationFilter
 }
 
 input DoctorLanguageManyRelationFilter {
@@ -238,6 +259,8 @@ input DoctorOrderByInput {
   id: OrderDirection
   isCompleteProfile: OrderDirection
   isVerified: OrderDirection
+  summary: OrderDirection
+  email: OrderDirection
 }
 
 input DoctorUpdateInput {
@@ -245,6 +268,10 @@ input DoctorUpdateInput {
   isCompleteProfile: Boolean
   isVerified: Boolean
   languages: DoctorLanguageRelateToManyForUpdateInput
+  summary: String
+  email: String
+  patients: PatientRelateToManyForUpdateInput
+  savedByPatients: PatientRelateToManyForUpdateInput
 }
 
 input UserRelateToOneForUpdateInput {
@@ -270,6 +297,10 @@ input DoctorCreateInput {
   isCompleteProfile: Boolean
   isVerified: Boolean
   languages: DoctorLanguageRelateToManyForCreateInput
+  summary: String
+  email: String
+  patients: PatientRelateToManyForCreateInput
+  savedByPatients: PatientRelateToManyForCreateInput
 }
 
 input UserRelateToOneForCreateInput {
@@ -529,6 +560,20 @@ type Patient {
   name: String
   isCompleteProfile: Boolean
   user: User
+  visitedDoctors(
+    where: DoctorWhereInput! = {}
+    orderBy: [DoctorOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Doctor!]
+  visitedDoctorsCount(where: DoctorWhereInput! = {}): Int
+  savedDoctors(
+    where: DoctorWhereInput! = {}
+    orderBy: [DoctorOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Doctor!]
+  savedDoctorsCount(where: DoctorWhereInput! = {}): Int
 }
 
 input PatientWhereUniqueInput {
@@ -544,6 +589,8 @@ input PatientWhereInput {
   name: StringFilter
   isCompleteProfile: BooleanFilter
   user: UserWhereInput
+  visitedDoctors: DoctorManyRelationFilter
+  savedDoctors: DoctorManyRelationFilter
 }
 
 input BookingManyRelationFilter {
@@ -563,6 +610,8 @@ input PatientUpdateInput {
   name: String
   isCompleteProfile: Boolean
   user: UserRelateToOneForUpdateInput
+  visitedDoctors: DoctorRelateToManyForUpdateInput
+  savedDoctors: DoctorRelateToManyForUpdateInput
 }
 
 input BookingRelateToManyForUpdateInput {
@@ -582,6 +631,8 @@ input PatientCreateInput {
   name: String
   isCompleteProfile: Boolean
   user: UserRelateToOneForCreateInput
+  visitedDoctors: DoctorRelateToManyForCreateInput
+  savedDoctors: DoctorRelateToManyForCreateInput
 }
 
 input BookingRelateToManyForCreateInput {
