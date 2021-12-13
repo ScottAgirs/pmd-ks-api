@@ -11,30 +11,123 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
+model Booking {
+  id           String    @id @default(cuid())
+  name         String    @default("")
+  isConfirmed  Boolean   @default(false)
+  durationMins Int
+  startsAt     DateTime?
+  notes        String    @default("")
+  patient      Patient[] @relation("Booking_patient")
+}
+
+model Calendar {
+  id   String @id @default(cuid())
+  name String @default("")
+}
+
+model Doctor {
+  id        String           @id @default(cuid())
+  languages DoctorLanguage[] @relation("Doctor_languages")
+}
+
+model DoctorLanguage {
+  id      String   @id @default(cuid())
+  label   String   @default("")
+  value   String   @default("")
+  doctors Doctor[] @relation("Doctor_languages")
+}
+
 model User {
-  id        String   @id @default(cuid())
-  firstName String   @default("")
-  lastName  String   @default("")
-  email     String   @unique @default("")
-  password  String
-  prompts   Prompt[] @relation("Prompt_user")
-  patient   Patient? @relation("Patient_user")
+  id               String            @id @default(cuid())
+  firstName        String            @default("")
+  lastName         String            @default("")
+  email            String            @unique @default("")
+  password         String
+  prompts          Prompt[]          @relation("Prompt_user")
+  patient          Patient?          @relation("Patient_user")
+  stepperProgs     StepperProg[]     @relation("StepperProg_user")
+  stepperStepProgs StepperStepProg[] @relation("StepperStepProg_user")
 }
 
 model Patient {
-  id          String  @id @default(cuid())
-  name        String  @default("")
-  isConfirmed Boolean @default(false)
-  user        User?   @relation("Patient_user", fields: [userId], references: [id])
-  userId      String? @unique @map("user")
+  id          String    @id @default(cuid())
+  bookings    Booking[] @relation("Booking_patient")
+  name        String    @default("")
+  isConfirmed Boolean   @default(false)
+  user        User?     @relation("Patient_user", fields: [userId], references: [id])
+  userId      String?   @unique @map("user")
 }
 
 model Prompt {
   id          String    @id @default(cuid())
   name        String    @default("")
   publishDate DateTime?
+  stepper     Stepper?  @relation("Prompt_stepper", fields: [stepperId], references: [id])
+  stepperId   String?   @unique @map("stepper")
   user        User?     @relation("Prompt_user", fields: [userId], references: [id])
   userId      String?   @map("user")
 
+  @@index([userId])
+}
+
+model Stepper {
+  id               String            @id @default(cuid())
+  title            String            @default("")
+  name             String            @default("")
+  slug             String            @default("")
+  description      String            @default("")
+  eyebrow          String            @default("")
+  prompt           Prompt?           @relation("Prompt_stepper")
+  stepperSteps     StepperStep[]     @relation("StepperStep_stepper")
+  stepperProgs     StepperProg[]     @relation("StepperProg_stepper")
+  stepperStepProgs StepperStepProg[] @relation("StepperStepProg_stepper")
+}
+
+model StepperProg {
+  id               String            @id @default(cuid())
+  name             String            @default("")
+  isCompleted      Boolean           @default(false)
+  stepper          Stepper?          @relation("StepperProg_stepper", fields: [stepperId], references: [id])
+  stepperId        String?           @map("stepper")
+  stepperStepProgs StepperStepProg[] @relation("StepperStepProg_stepperProg")
+  user             User?             @relation("StepperProg_user", fields: [userId], references: [id])
+  userId           String?           @map("user")
+
+  @@index([stepperId])
+  @@index([userId])
+}
+
+model StepperStep {
+  id                String           @id @default(cuid())
+  title             String           @default("")
+  description       String           @default("")
+  component         String           @default("")
+  slug              String           @default("")
+  isFinal           Boolean          @default(false)
+  order             Int
+  stepper           Stepper?         @relation("StepperStep_stepper", fields: [stepperId], references: [id])
+  stepperId         String?          @map("stepper")
+  stepperStepProg   StepperStepProg? @relation("StepperStep_stepperStepProg", fields: [stepperStepProgId], references: [id])
+  stepperStepProgId String?          @unique @map("stepperStepProg")
+
+  @@index([stepperId])
+}
+
+model StepperStepProg {
+  id            String       @id @default(cuid())
+  name          String       @default("")
+  percentDone   Int
+  isCompleted   Boolean      @default(false)
+  stepper       Stepper?     @relation("StepperStepProg_stepper", fields: [stepperId], references: [id])
+  stepperId     String?      @map("stepper")
+  stepperStep   StepperStep? @relation("StepperStep_stepperStepProg")
+  stepperProg   StepperProg? @relation("StepperStepProg_stepperProg", fields: [stepperProgId], references: [id])
+  stepperProgId String?      @map("stepperProg")
+  user          User?        @relation("StepperStepProg_user", fields: [userId], references: [id])
+  userId        String?      @map("user")
+
+  @@index([stepperId])
+  @@index([stepperProgId])
   @@index([userId])
 }
