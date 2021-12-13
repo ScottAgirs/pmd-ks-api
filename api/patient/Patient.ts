@@ -11,6 +11,8 @@ export const Patient = list({
     // @TODO: healthCards
     // healthCards: relationship({ ref: 'HealthCard.patient', many: true }),
     // @TODO: doctors
+    visitedDoctors: relationship({ ref: 'Doctor.patients', many: true }),
+    savedDoctors: relationship({ ref: 'Doctor.savedByPatients', many: true }),
     // doctors: relationship({ ref: 'HealthCard.patient', many: true }),
     // @TODO: emergencyContacts
     // emergencyContacts: relationship({ ref: 'HealthCard.patient', many: true }),

@@ -18,7 +18,8 @@ export const Doctor = list({
       isIndexed: 'unique',
       isFilterable: true,
     }),
-    // TODO: patients
+    patients: relationship({ ref: 'Patient.visitedDoctors', many: true }),
+    savedByPatients: relationship({ ref: 'Patient.savedDoctors', many: true }),
     // TODO: calendar
     // TODO: bookings
   },
