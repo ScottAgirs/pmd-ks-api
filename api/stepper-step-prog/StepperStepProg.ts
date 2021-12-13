@@ -7,7 +7,6 @@ export const StepperStepProg = list({
     name: text(),
     percentDone: integer({ validation: { isRequired: true } }),
     isCompleted: checkbox(),
-    // TODO: stepper
     stepper: relationship({ ref: 'Stepper.stepperStepProgs', many: false }),
     // TODO: stepperStep
     // TODO: user
