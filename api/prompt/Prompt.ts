@@ -6,6 +6,7 @@ export const Prompt = list({
   fields: {
     name: text(),
     publishDate: timestamp(),
+    stepper: relationship({ ref: 'Stepper.prompt', many: false }),
     user: relationship({
       ref: 'User.prompts',
       ui: {

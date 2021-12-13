@@ -9,8 +9,7 @@ export const Stepper = list({
     slug: text(),
     description: text(),
     eyebrow: text(),
-    // prompt: relationship({ ref: 'Patient.bookings', many: false }),
-    // TODO: prompt
+    prompt: relationship({ ref: 'Prompt.stepper', many: false }),
     // TODO: stepperSteps
     // TODO: stepperProgs
     // TODO: stepperStepProgs
