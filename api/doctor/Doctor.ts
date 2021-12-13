@@ -4,7 +4,7 @@ const { list } = require("@keystone-6/core");
 
 export const Doctor = list({
   fields: {
-    // TODO: user
+    user: relationship({ ref: 'User.doctor', many: false }),
     // TODO: appointments
     // TODO: isCompleteProfile
     // TODO: isVerified

@@ -18,6 +18,7 @@ export const User = list({
   fields: {
     firstName: text({ validation: { isRequired: true } }),
     lastName: text({ validation: { isRequired: true } }),
+    doctor: relationship({ ref: 'Doctor.user', many: false }),
     email: text({
       validation: { isRequired: true },
       isIndexed: 'unique',
