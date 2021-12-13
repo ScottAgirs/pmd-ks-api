@@ -49,12 +49,16 @@ model DoctorLanguage {
 
 model HealthCard {
   id                    String   @id @default(cuid())
+  patient               Patient? @relation("HealthCard_patient", fields: [patientId], references: [id])
+  patientId             String?  @map("patient")
   isVerified            Boolean  @default(false)
   expiryDate            DateTime
   nameOnCard            String   @default("")
   insurancePolicyNumber String   @default("")
   dateOfBirth           DateTime
   versionCode           String   @default("")
+
+  @@index([patientId])
 }
 
 model User {
@@ -71,14 +75,15 @@ model User {
 }
 
 model Patient {
-  id                String    @id @default(cuid())
-  bookings          Booking[] @relation("Booking_patient")
-  name              String    @default("")
-  isCompleteProfile Boolean   @default(false)
-  user              User?     @relation("Patient_user", fields: [userId], references: [id])
-  userId            String?   @unique @map("user")
-  visitedDoctors    Doctor[]  @relation("Doctor_patients")
-  savedDoctors      Doctor[]  @relation("Doctor_savedByPatients")
+  id                String       @id @default(cuid())
+  bookings          Booking[]    @relation("Booking_patient")
+  name              String       @default("")
+  isCompleteProfile Boolean      @default(false)
+  user              User?        @relation("Patient_user", fields: [userId], references: [id])
+  userId            String?      @unique @map("user")
+  healthCards       HealthCard[] @relation("HealthCard_patient")
+  visitedDoctors    Doctor[]     @relation("Doctor_patients")
+  savedDoctors      Doctor[]     @relation("Doctor_savedByPatients")
 }
 
 model Prompt {

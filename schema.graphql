@@ -399,6 +399,7 @@ input DoctorRelateToManyForCreateInput {
 
 type HealthCard {
   id: ID!
+  patient: Patient
   isVerified: Boolean
   expiryDate: DateTime
   nameOnCard: String
@@ -416,6 +417,7 @@ input HealthCardWhereInput {
   OR: [HealthCardWhereInput!]
   NOT: [HealthCardWhereInput!]
   id: IDFilter
+  patient: PatientWhereInput
   isVerified: BooleanFilter
   expiryDate: DateTimeFilter
   nameOnCard: StringFilter
@@ -435,12 +437,19 @@ input HealthCardOrderByInput {
 }
 
 input HealthCardUpdateInput {
+  patient: PatientRelateToOneForUpdateInput
   isVerified: Boolean
   expiryDate: DateTime
   nameOnCard: String
   insurancePolicyNumber: String
   dateOfBirth: DateTime
   versionCode: String
+}
+
+input PatientRelateToOneForUpdateInput {
+  create: PatientCreateInput
+  connect: PatientWhereUniqueInput
+  disconnect: Boolean
 }
 
 input HealthCardUpdateArgs {
@@ -449,12 +458,18 @@ input HealthCardUpdateArgs {
 }
 
 input HealthCardCreateInput {
+  patient: PatientRelateToOneForCreateInput
   isVerified: Boolean
   expiryDate: DateTime
   nameOnCard: String
   insurancePolicyNumber: String
   dateOfBirth: DateTime
   versionCode: String
+}
+
+input PatientRelateToOneForCreateInput {
+  create: PatientCreateInput
+  connect: PatientWhereUniqueInput
 }
 
 type User {
@@ -562,12 +577,6 @@ input PromptRelateToManyForUpdateInput {
   connect: [PromptWhereUniqueInput!]
 }
 
-input PatientRelateToOneForUpdateInput {
-  create: PatientCreateInput
-  connect: PatientWhereUniqueInput
-  disconnect: Boolean
-}
-
 input StepperProgRelateToManyForUpdateInput {
   disconnect: [StepperProgWhereUniqueInput!]
   set: [StepperProgWhereUniqueInput!]
@@ -609,11 +618,6 @@ input PromptRelateToManyForCreateInput {
   connect: [PromptWhereUniqueInput!]
 }
 
-input PatientRelateToOneForCreateInput {
-  create: PatientCreateInput
-  connect: PatientWhereUniqueInput
-}
-
 input StepperProgRelateToManyForCreateInput {
   create: [StepperProgCreateInput!]
   connect: [StepperProgWhereUniqueInput!]
@@ -636,6 +640,13 @@ type Patient {
   name: String
   isCompleteProfile: Boolean
   user: User
+  healthCards(
+    where: HealthCardWhereInput! = {}
+    orderBy: [HealthCardOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [HealthCard!]
+  healthCardsCount(where: HealthCardWhereInput! = {}): Int
   visitedDoctors(
     where: DoctorWhereInput! = {}
     orderBy: [DoctorOrderByInput!]! = []
@@ -665,6 +676,7 @@ input PatientWhereInput {
   name: StringFilter
   isCompleteProfile: BooleanFilter
   user: UserWhereInput
+  healthCards: HealthCardManyRelationFilter
   visitedDoctors: DoctorManyRelationFilter
   savedDoctors: DoctorManyRelationFilter
 }
@@ -673,6 +685,12 @@ input BookingManyRelationFilter {
   every: BookingWhereInput
   some: BookingWhereInput
   none: BookingWhereInput
+}
+
+input HealthCardManyRelationFilter {
+  every: HealthCardWhereInput
+  some: HealthCardWhereInput
+  none: HealthCardWhereInput
 }
 
 input PatientOrderByInput {
@@ -686,6 +704,7 @@ input PatientUpdateInput {
   name: String
   isCompleteProfile: Boolean
   user: UserRelateToOneForUpdateInput
+  healthCards: HealthCardRelateToManyForUpdateInput
   visitedDoctors: DoctorRelateToManyForUpdateInput
   savedDoctors: DoctorRelateToManyForUpdateInput
 }
@@ -695,6 +714,13 @@ input BookingRelateToManyForUpdateInput {
   set: [BookingWhereUniqueInput!]
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
+}
+
+input HealthCardRelateToManyForUpdateInput {
+  disconnect: [HealthCardWhereUniqueInput!]
+  set: [HealthCardWhereUniqueInput!]
+  create: [HealthCardCreateInput!]
+  connect: [HealthCardWhereUniqueInput!]
 }
 
 input PatientUpdateArgs {
@@ -707,6 +733,7 @@ input PatientCreateInput {
   name: String
   isCompleteProfile: Boolean
   user: UserRelateToOneForCreateInput
+  healthCards: HealthCardRelateToManyForCreateInput
   visitedDoctors: DoctorRelateToManyForCreateInput
   savedDoctors: DoctorRelateToManyForCreateInput
 }
@@ -714,6 +741,11 @@ input PatientCreateInput {
 input BookingRelateToManyForCreateInput {
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
+}
+
+input HealthCardRelateToManyForCreateInput {
+  create: [HealthCardCreateInput!]
+  connect: [HealthCardWhereUniqueInput!]
 }
 
 type Prompt {
