@@ -202,6 +202,8 @@ input CalendarCreateInput {
 type Doctor {
   id: ID!
   user: User
+  isCompleteProfile: Boolean
+  isVerified: Boolean
   languages(
     where: DoctorLanguageWhereInput! = {}
     orderBy: [DoctorLanguageOrderByInput!]! = []
@@ -221,6 +223,8 @@ input DoctorWhereInput {
   NOT: [DoctorWhereInput!]
   id: IDFilter
   user: UserWhereInput
+  isCompleteProfile: BooleanFilter
+  isVerified: BooleanFilter
   languages: DoctorLanguageManyRelationFilter
 }
 
@@ -232,10 +236,14 @@ input DoctorLanguageManyRelationFilter {
 
 input DoctorOrderByInput {
   id: OrderDirection
+  isCompleteProfile: OrderDirection
+  isVerified: OrderDirection
 }
 
 input DoctorUpdateInput {
   user: UserRelateToOneForUpdateInput
+  isCompleteProfile: Boolean
+  isVerified: Boolean
   languages: DoctorLanguageRelateToManyForUpdateInput
 }
 
@@ -259,6 +267,8 @@ input DoctorUpdateArgs {
 
 input DoctorCreateInput {
   user: UserRelateToOneForCreateInput
+  isCompleteProfile: Boolean
+  isVerified: Boolean
   languages: DoctorLanguageRelateToManyForCreateInput
 }
 

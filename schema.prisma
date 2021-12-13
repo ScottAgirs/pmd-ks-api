@@ -27,10 +27,12 @@ model Calendar {
 }
 
 model Doctor {
-  id        String           @id @default(cuid())
-  user      User?            @relation("Doctor_user", fields: [userId], references: [id])
-  userId    String?          @unique @map("user")
-  languages DoctorLanguage[] @relation("Doctor_languages")
+  id                String           @id @default(cuid())
+  user              User?            @relation("Doctor_user", fields: [userId], references: [id])
+  userId            String?          @unique @map("user")
+  isCompleteProfile Boolean          @default(false)
+  isVerified        Boolean          @default(false)
+  languages         DoctorLanguage[] @relation("Doctor_languages")
 }
 
 model DoctorLanguage {

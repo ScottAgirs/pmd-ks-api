@@ -6,14 +6,18 @@ export const Doctor = list({
   fields: {
     user: relationship({ ref: 'User.doctor', many: false }),
     // TODO: appointments
-    // TODO: isCompleteProfile
-    // TODO: isVerified
+    // appointments: relationship({ ref: 'User.doctor', many: false }),
+    isCompleteProfile: checkbox(),
+    isVerified: checkbox(),
     languages: relationship({ ref: 'DoctorLanguage.doctors', many: true }),
     // TODO: doctorType
     // TODO: doctorSpecializations
     // TODO: doctorSince
-    // TODO: summary
-    // TODO: email
+    summary: text(),
+    email: text({
+      isIndexed: 'unique',
+      isFilterable: true,
+    }),
     // TODO: patients
     // TODO: calendar
     // TODO: bookings
