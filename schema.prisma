@@ -12,17 +12,17 @@ generator client {
 }
 
 model User {
-  id       String   @id @default(cuid())
-  name     String   @default("")
-  email    String   @unique @default("")
-  password String
-  prompts  Prompt[] @relation("Prompt_user")
+  id        String   @id @default(cuid())
+  firstName String   @default("")
+  lastName  String   @default("")
+  email     String   @unique @default("")
+  password  String
+  prompts   Prompt[] @relation("Prompt_user")
 }
 
 model Prompt {
   id          String    @id @default(cuid())
-  title       String    @default("")
-  status      String?   @default("draft")
+  name        String    @default("")
   publishDate DateTime?
   user        User?     @relation("Prompt_user", fields: [userId], references: [id])
   userId      String?   @map("user")

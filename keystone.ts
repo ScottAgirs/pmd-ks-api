@@ -7,7 +7,6 @@ import { lists } from './schema';
 import { withAuth, session } from './auth';
 
 const FRONTEND_URL:string = process.env.FRONTEND_URL as string;
-
 export default withAuth(
   config({
     server: {

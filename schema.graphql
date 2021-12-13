@@ -3,7 +3,8 @@
 
 type User {
   id: ID!
-  name: String
+  firstName: String
+  lastName: String
   email: String
   password: PasswordState
   prompts(
@@ -29,7 +30,8 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
   id: IDFilter
-  name: StringFilter
+  firstName: StringFilter
+  lastName: StringFilter
   email: StringFilter
   prompts: PromptManyRelationFilter
 }
@@ -87,7 +89,8 @@ input PromptManyRelationFilter {
 
 input UserOrderByInput {
   id: OrderDirection
-  name: OrderDirection
+  firstName: OrderDirection
+  lastName: OrderDirection
   email: OrderDirection
 }
 
@@ -97,7 +100,8 @@ enum OrderDirection {
 }
 
 input UserUpdateInput {
-  name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   prompts: PromptRelateToManyForUpdateInput
@@ -116,7 +120,8 @@ input UserUpdateArgs {
 }
 
 input UserCreateInput {
-  name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
   prompts: PromptRelateToManyForCreateInput
@@ -129,8 +134,7 @@ input PromptRelateToManyForCreateInput {
 
 type Prompt {
   id: ID!
-  title: String
-  status: String
+  name: String
   publishDate: DateTime
   user: User
 }
@@ -147,39 +151,9 @@ input PromptWhereInput {
   OR: [PromptWhereInput!]
   NOT: [PromptWhereInput!]
   id: IDFilter
-  title: StringFilter
-  status: StringNullableFilter
+  name: StringFilter
   publishDate: DateTimeNullableFilter
   user: UserWhereInput
-}
-
-input StringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  mode: QueryMode
-  not: NestedStringNullableFilter
-}
-
-input NestedStringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringNullableFilter
 }
 
 input DateTimeNullableFilter {
@@ -195,14 +169,12 @@ input DateTimeNullableFilter {
 
 input PromptOrderByInput {
   id: OrderDirection
-  title: OrderDirection
-  status: OrderDirection
+  name: OrderDirection
   publishDate: OrderDirection
 }
 
 input PromptUpdateInput {
-  title: String
-  status: String
+  name: String
   publishDate: DateTime
   user: UserRelateToOneForUpdateInput
 }
@@ -219,8 +191,7 @@ input PromptUpdateArgs {
 }
 
 input PromptCreateInput {
-  title: String
-  status: String
+  name: String
   publishDate: DateTime
   user: UserRelateToOneForCreateInput
 }
@@ -275,7 +246,8 @@ type UserAuthenticationWithPasswordFailure {
 }
 
 input CreateInitialUserInput {
-  name: String
+  firstName: String
+  lastName: String
   email: String
   password: String
 }
