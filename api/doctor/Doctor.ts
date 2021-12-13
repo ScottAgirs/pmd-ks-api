@@ -12,7 +12,7 @@ export const Doctor = list({
     languages: relationship({ ref: 'DoctorLanguage.doctors', many: true }),
     // TODO: doctorType
     // TODO: doctorSpecializations
-    // TODO: doctorSince
+    doctorSince: timestamp({ validation: { isRequired: true } }),
     summary: text(),
     email: text({
       isIndexed: 'unique',
