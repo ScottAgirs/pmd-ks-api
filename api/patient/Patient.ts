@@ -6,7 +6,17 @@ export const Patient = list({
   fields: {
     bookings: relationship({ ref: 'Booking.patient', many: true }),
     name: text(),
-    isConfirmed: checkbox(),
+    isCompleteProfile: checkbox(),
     user: relationship({ ref: 'User.patient', many: false }),
+    // @TODO: healthCards
+    // healthCards: relationship({ ref: 'HealthCard.patient', many: true }),
+    // @TODO: doctors
+    // doctors: relationship({ ref: 'HealthCard.patient', many: true }),
+    // @TODO: emergencyContacts
+    // emergencyContacts: relationship({ ref: 'HealthCard.patient', many: true }),
+    // @TODO: appointments
+    // appointments: relationship({ ref: 'HealthCard.patient', many: true }),
+    // @TODO: bookings
+    // bookings: relationship({ ref: 'HealthCard.patient', many: true }),
   },
 })
