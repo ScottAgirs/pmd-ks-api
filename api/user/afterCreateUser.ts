@@ -2,8 +2,17 @@
 export const afterCreateUser = async ({ context, item }) => {
   if (!item) throw new Error('Failed to create User item.')
   
+  await context.query.StepperProg.createOne({ data: {
+    name: `${item.firstName}'s Stepper Progress`,
+    user: {
+      connect: {
+        id: item.id
+      }
+    },
+  }})
+
   await context.query.Prompt.createOne({ data: {
-    name: "Automated prompt",
+    name: `${item.firstName}'s Onboarding Prompt`,
     user: {
       connect: {
         id: item.id
@@ -12,11 +21,12 @@ export const afterCreateUser = async ({ context, item }) => {
   }})
   
   await context.query.Patient.createOne({ data: {
-    name: "After Create Patient",
+    name: `${item.firstName}'s Patient Profile`,
     user: {
       connect: {
         id: item.id
       }
     },
   }})
+
 }
