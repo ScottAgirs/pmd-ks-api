@@ -47,6 +47,16 @@ model DoctorLanguage {
   doctors Doctor[] @relation("Doctor_languages")
 }
 
+model HealthCard {
+  id                    String   @id @default(cuid())
+  isVerified            Boolean  @default(false)
+  expiryDate            DateTime
+  nameOnCard            String   @default("")
+  insurancePolicyNumber String   @default("")
+  dateOfBirth           DateTime
+  versionCode           String   @default("")
+}
+
 model User {
   id               String            @id @default(cuid())
   firstName        String            @default("")

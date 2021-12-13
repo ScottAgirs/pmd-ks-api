@@ -397,6 +397,66 @@ input DoctorRelateToManyForCreateInput {
   connect: [DoctorWhereUniqueInput!]
 }
 
+type HealthCard {
+  id: ID!
+  isVerified: Boolean
+  expiryDate: DateTime
+  nameOnCard: String
+  insurancePolicyNumber: String
+  dateOfBirth: DateTime
+  versionCode: String
+}
+
+input HealthCardWhereUniqueInput {
+  id: ID
+}
+
+input HealthCardWhereInput {
+  AND: [HealthCardWhereInput!]
+  OR: [HealthCardWhereInput!]
+  NOT: [HealthCardWhereInput!]
+  id: IDFilter
+  isVerified: BooleanFilter
+  expiryDate: DateTimeFilter
+  nameOnCard: StringFilter
+  insurancePolicyNumber: StringFilter
+  dateOfBirth: DateTimeFilter
+  versionCode: StringFilter
+}
+
+input HealthCardOrderByInput {
+  id: OrderDirection
+  isVerified: OrderDirection
+  expiryDate: OrderDirection
+  nameOnCard: OrderDirection
+  insurancePolicyNumber: OrderDirection
+  dateOfBirth: OrderDirection
+  versionCode: OrderDirection
+}
+
+input HealthCardUpdateInput {
+  isVerified: Boolean
+  expiryDate: DateTime
+  nameOnCard: String
+  insurancePolicyNumber: String
+  dateOfBirth: DateTime
+  versionCode: String
+}
+
+input HealthCardUpdateArgs {
+  where: HealthCardWhereUniqueInput!
+  data: HealthCardUpdateInput!
+}
+
+input HealthCardCreateInput {
+  isVerified: Boolean
+  expiryDate: DateTime
+  nameOnCard: String
+  insurancePolicyNumber: String
+  dateOfBirth: DateTime
+  versionCode: String
+}
+
 type User {
   id: ID!
   firstName: String
@@ -1107,6 +1167,15 @@ type Mutation {
   deleteDoctorLanguages(
     where: [DoctorLanguageWhereUniqueInput!]!
   ): [DoctorLanguage]
+  createHealthCard(data: HealthCardCreateInput!): HealthCard
+  createHealthCards(data: [HealthCardCreateInput!]!): [HealthCard]
+  updateHealthCard(
+    where: HealthCardWhereUniqueInput!
+    data: HealthCardUpdateInput!
+  ): HealthCard
+  updateHealthCards(data: [HealthCardUpdateArgs!]!): [HealthCard]
+  deleteHealthCard(where: HealthCardWhereUniqueInput!): HealthCard
+  deleteHealthCards(where: [HealthCardWhereUniqueInput!]!): [HealthCard]
   createUser(data: UserCreateInput!): User
   createUsers(data: [UserCreateInput!]!): [User]
   updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
@@ -1233,6 +1302,14 @@ type Query {
   ): [DoctorLanguage!]
   doctorLanguage(where: DoctorLanguageWhereUniqueInput!): DoctorLanguage
   doctorLanguagesCount(where: DoctorLanguageWhereInput! = {}): Int
+  healthCards(
+    where: HealthCardWhereInput! = {}
+    orderBy: [HealthCardOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [HealthCard!]
+  healthCard(where: HealthCardWhereUniqueInput!): HealthCard
+  healthCardsCount(where: HealthCardWhereInput! = {}): Int
   users(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []
