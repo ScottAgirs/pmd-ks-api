@@ -60,13 +60,15 @@ model Patient {
 }
 
 model Prompt {
-  id          String    @id @default(cuid())
-  name        String    @default("")
-  publishDate DateTime?
-  stepper     Stepper?  @relation("Prompt_stepper", fields: [stepperId], references: [id])
-  stepperId   String?   @unique @map("stepper")
-  user        User?     @relation("Prompt_user", fields: [userId], references: [id])
-  userId      String?   @map("user")
+  id          String   @id @default(cuid())
+  stepper     Stepper? @relation("Prompt_stepper", fields: [stepperId], references: [id])
+  stepperId   String?  @unique @map("stepper")
+  user        User?    @relation("Prompt_user", fields: [userId], references: [id])
+  userId      String?  @map("user")
+  name        String   @default("")
+  promptType  String   @default("")
+  promptValue String   @default("")
+  slug        String   @default("")
 
   @@index([userId])
 }

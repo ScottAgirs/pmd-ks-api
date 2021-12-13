@@ -562,10 +562,12 @@ input UserRelateToOneForCreateInput {
 
 type Prompt {
   id: ID!
-  name: String
-  publishDate: DateTime
   stepper: Stepper
   user: User
+  name: String
+  promptType: String
+  promptValue: String
+  slug: String
 }
 
 input PromptWhereUniqueInput {
@@ -577,23 +579,29 @@ input PromptWhereInput {
   OR: [PromptWhereInput!]
   NOT: [PromptWhereInput!]
   id: IDFilter
-  name: StringFilter
-  publishDate: DateTimeNullableFilter
   stepper: StepperWhereInput
   user: UserWhereInput
+  name: StringFilter
+  promptType: StringFilter
+  promptValue: StringFilter
+  slug: StringFilter
 }
 
 input PromptOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  publishDate: OrderDirection
+  promptType: OrderDirection
+  promptValue: OrderDirection
+  slug: OrderDirection
 }
 
 input PromptUpdateInput {
-  name: String
-  publishDate: DateTime
   stepper: StepperRelateToOneForUpdateInput
   user: UserRelateToOneForUpdateInput
+  name: String
+  promptType: String
+  promptValue: String
+  slug: String
 }
 
 input StepperRelateToOneForUpdateInput {
@@ -608,10 +616,12 @@ input PromptUpdateArgs {
 }
 
 input PromptCreateInput {
-  name: String
-  publishDate: DateTime
   stepper: StepperRelateToOneForCreateInput
   user: UserRelateToOneForCreateInput
+  name: String
+  promptType: String
+  promptValue: String
+  slug: String
 }
 
 input StepperRelateToOneForCreateInput {
