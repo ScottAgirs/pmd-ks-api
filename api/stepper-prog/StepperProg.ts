@@ -7,7 +7,7 @@ export const StepperProg = list({
     name: text(),
     isCompleted: checkbox(),
     // TODO: user
-    // TODO: stepper
+    stepper: relationship({ ref: 'Stepper.stepperProgs', many: false }),
     // TODO: stepperStepProgs
   },
 })
