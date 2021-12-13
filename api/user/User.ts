@@ -42,6 +42,7 @@ export const User = list({
     }),
     password: password({ validation: { isRequired: true } }),
     prompts: relationship({ ref: 'Prompt.user', many: true }),
+    patient: relationship({ ref: 'Patient.user', many: false }),
   },
   ui: {
     listView: {

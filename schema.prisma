@@ -18,6 +18,15 @@ model User {
   email     String   @unique @default("")
   password  String
   prompts   Prompt[] @relation("Prompt_user")
+  patient   Patient? @relation("Patient_user")
+}
+
+model Patient {
+  id          String  @id @default(cuid())
+  name        String  @default("")
+  isConfirmed Boolean @default(false)
+  user        User?   @relation("Patient_user", fields: [userId], references: [id])
+  userId      String? @unique @map("user")
 }
 
 model Prompt {
