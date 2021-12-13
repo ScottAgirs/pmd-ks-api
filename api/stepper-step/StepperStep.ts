@@ -10,6 +10,6 @@ export const StepperStep = list({
     slug: text(),
     isFinal: checkbox(),
     order: integer({ validation: { isRequired: true } }),
-    // TODO: stepper
+    stepper: relationship({ ref: 'Stepper.stepperSteps', many: false }),
   },
 })
