@@ -5,6 +5,7 @@ import { Prompt } from "./api/prompt/Prompt";
 import { Calendar } from "./api/calendar/Calendar";
 import { Doctor } from "./api/doctor/Doctor";
 import { DoctorLanguage } from "./api/doctor-language/DoctorLanguage";
+import { HealthCard } from "./api/health-card/HealthCard";
 
 import { Stepper } from "./api/stepper/Stepper";
 import { StepperProg } from "./api/stepper-prog/StepperProg";
@@ -17,6 +18,7 @@ export const lists = {
   Calendar,
   Doctor,
   DoctorLanguage,
+  HealthCard,
   User,
   Patient,
   Prompt,
