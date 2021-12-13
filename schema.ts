@@ -6,6 +6,11 @@ import { Calendar } from "./api/calendar/Calendar";
 import { Doctor } from "./api/doctor/Doctor";
 import { DoctorLanguage } from "./api/doctor-language/DoctorLanguage";
 
+import { Stepper } from "./api/stepper/Stepper";
+import { StepperProg } from "./api/stepper-prog/StepperProg";
+import { StepperStep } from "./api/stepper-step/StepperStep";
+import { StepperStepProg } from "./api/stepper-step-prog/StepperStepProg";
+
 
 export const lists = {
   Booking,
@@ -15,4 +20,9 @@ export const lists = {
   User,
   Patient,
   Prompt,
+  // Stepper
+  Stepper,
+  StepperProg,
+  StepperStep,
+  StepperStepProg,
 };
