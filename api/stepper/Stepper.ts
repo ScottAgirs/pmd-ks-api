@@ -12,7 +12,6 @@ export const Stepper = list({
     prompt: relationship({ ref: 'Prompt.stepper', many: false }),
     stepperSteps: relationship({ ref: 'StepperStep.stepper', many: true }),
     stepperProgs: relationship({ ref: 'StepperProg.stepper', many: true }),
-    // // TODO: stepperStepProgs
-    // stepperStepProgs: relationship({ ref: 'Stepper.stepper', many: true }),
+    stepperStepProgs: relationship({ ref: 'StepperStepProg.stepper', many: true }),
   },
 })

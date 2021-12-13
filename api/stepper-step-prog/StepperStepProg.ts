@@ -1,4 +1,4 @@
-import { checkbox, integer, text } from "@keystone-6/core/fields";
+import { checkbox, integer, relationship, text } from "@keystone-6/core/fields";
 
 const { list } = require("@keystone-6/core");
 
@@ -8,7 +8,7 @@ export const StepperStepProg = list({
     percentDone: integer({ validation: { isRequired: true } }),
     isCompleted: checkbox(),
     // TODO: stepper
-    // patient: relationship({ ref: 'Patient.bookings', many: true }),
+    stepper: relationship({ ref: 'Stepper.stepperStepProgs', many: false }),
     // TODO: stepperStep
     // TODO: user
   },
