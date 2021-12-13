@@ -8,8 +8,7 @@ export const Patient = list({
     name: text(),
     isCompleteProfile: checkbox(),
     user: relationship({ ref: 'User.patient', many: false }),
-    // @TODO: healthCards
-    // healthCards: relationship({ ref: 'HealthCard.patient', many: true }),
+    healthCards: relationship({ ref: 'HealthCard.patient', many: true }),
     visitedDoctors: relationship({ ref: 'Doctor.patients', many: true }),
     savedDoctors: relationship({ ref: 'Doctor.savedByPatients', many: true }),
     // @TODO: emergencyContacts
