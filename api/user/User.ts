@@ -26,6 +26,8 @@ export const User = list({
     password: password({ validation: { isRequired: true } }),
     prompts: relationship({ ref: 'Prompt.user', many: true }),
     patient: relationship({ ref: 'Patient.user', many: false }),
+    stepperProgs: relationship({ ref: 'StepperProg.user', many: true }),
+    stepperStepProgs: relationship({ ref: 'StepperStepProg.user', many: true }),
   },
   ui: {
     listView: {

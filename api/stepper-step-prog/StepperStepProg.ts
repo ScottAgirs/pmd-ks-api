@@ -10,6 +10,6 @@ export const StepperStepProg = list({
     stepper: relationship({ ref: 'Stepper.stepperStepProgs', many: false }),
     stepperStep: relationship({ ref: 'StepperStep.stepperStepProg', many: false }),
     stepperProg: relationship({ ref: 'StepperProg.stepperStepProgs', many: false }),
-    // TODO: user
+    user: relationship({ ref: 'User.stepperStepProgs', many: false }),
   },
 })
