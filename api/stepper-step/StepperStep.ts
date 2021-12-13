@@ -11,5 +11,6 @@ export const StepperStep = list({
     isFinal: checkbox(),
     order: integer({ validation: { isRequired: true } }),
     stepper: relationship({ ref: 'Stepper.stepperSteps', many: false }),
+    stepperStepProg: relationship({ ref: 'StepperStepProg.stepperStep', many: false }),
   },
 })
