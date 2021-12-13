@@ -201,6 +201,7 @@ input CalendarCreateInput {
 
 type Doctor {
   id: ID!
+  user: User
   languages(
     where: DoctorLanguageWhereInput! = {}
     orderBy: [DoctorLanguageOrderByInput!]! = []
@@ -219,6 +220,7 @@ input DoctorWhereInput {
   OR: [DoctorWhereInput!]
   NOT: [DoctorWhereInput!]
   id: IDFilter
+  user: UserWhereInput
   languages: DoctorLanguageManyRelationFilter
 }
 
@@ -233,7 +235,14 @@ input DoctorOrderByInput {
 }
 
 input DoctorUpdateInput {
+  user: UserRelateToOneForUpdateInput
   languages: DoctorLanguageRelateToManyForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input DoctorLanguageRelateToManyForUpdateInput {
@@ -249,7 +258,13 @@ input DoctorUpdateArgs {
 }
 
 input DoctorCreateInput {
+  user: UserRelateToOneForCreateInput
   languages: DoctorLanguageRelateToManyForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input DoctorLanguageRelateToManyForCreateInput {
@@ -329,6 +344,7 @@ type User {
   id: ID!
   firstName: String
   lastName: String
+  doctor: Doctor
   email: String
   password: PasswordState
   prompts(
@@ -371,6 +387,7 @@ input UserWhereInput {
   id: IDFilter
   firstName: StringFilter
   lastName: StringFilter
+  doctor: DoctorWhereInput
   email: StringFilter
   prompts: PromptManyRelationFilter
   patient: PatientWhereInput
@@ -406,12 +423,19 @@ input UserOrderByInput {
 input UserUpdateInput {
   firstName: String
   lastName: String
+  doctor: DoctorRelateToOneForUpdateInput
   email: String
   password: String
   prompts: PromptRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
   stepperProgs: StepperProgRelateToManyForUpdateInput
   stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
+}
+
+input DoctorRelateToOneForUpdateInput {
+  create: DoctorCreateInput
+  connect: DoctorWhereUniqueInput
+  disconnect: Boolean
 }
 
 input PromptRelateToManyForUpdateInput {
@@ -449,12 +473,18 @@ input UserUpdateArgs {
 input UserCreateInput {
   firstName: String
   lastName: String
+  doctor: DoctorRelateToOneForCreateInput
   email: String
   password: String
   prompts: PromptRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
   stepperProgs: StepperProgRelateToManyForCreateInput
   stepperStepProgs: StepperStepProgRelateToManyForCreateInput
+}
+
+input DoctorRelateToOneForCreateInput {
+  create: DoctorCreateInput
+  connect: DoctorWhereUniqueInput
 }
 
 input PromptRelateToManyForCreateInput {
@@ -532,12 +562,6 @@ input BookingRelateToManyForUpdateInput {
   connect: [BookingWhereUniqueInput!]
 }
 
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
-}
-
 input PatientUpdateArgs {
   where: PatientWhereUniqueInput!
   data: PatientUpdateInput!
@@ -553,11 +577,6 @@ input PatientCreateInput {
 input BookingRelateToManyForCreateInput {
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 type Prompt {
