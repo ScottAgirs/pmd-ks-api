@@ -33,6 +33,7 @@ model Doctor {
   isCompleteProfile Boolean          @default(false)
   isVerified        Boolean          @default(false)
   languages         DoctorLanguage[] @relation("Doctor_languages")
+  doctorSince       DateTime
   summary           String           @default("")
   email             String           @unique @default("")
   patients          Patient[]        @relation("Doctor_patients")
