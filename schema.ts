@@ -7,6 +7,7 @@ import { Prompt } from "./api/prompt/Prompt";
 import { Calendar } from "./api/calendar/Calendar";
 import { CalendarEvent } from "./api/calendar-event/CalendarEvent";
 import { CalendarEventType } from "./api/calendar-event-type/CalendarEventType";
+import { Schedule } from "./api/schedule/Schedule";
 
 import { Doctor } from "./api/doctor/Doctor";
 import { DoctorLanguage } from "./api/doctor-language/DoctorLanguage";
@@ -31,6 +32,7 @@ export const lists = {
   Calendar,
   CalendarEvent,
   CalendarEventType,
+  Schedule,
   Doctor,
   DoctorLanguage,
   HealthCard,
