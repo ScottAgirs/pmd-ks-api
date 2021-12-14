@@ -8,7 +8,7 @@ export const Calendar = list({
     events: relationship({ ref: 'CalendarEvent.calendar', many: true }),
     bookings: relationship({ ref: 'Booking.calendar', many: true }),
     doctor: relationship({ ref: 'Doctor.calendar', many: false }),
-    // TODO: schedules
-    // TODO: defaultSchedule
+    schedules: relationship({ ref: 'Schedule.calendar', many: true }),
+    defaultSchedule: relationship({ ref: 'Schedule.defaultOn', many: false }),
   },
 }) 
