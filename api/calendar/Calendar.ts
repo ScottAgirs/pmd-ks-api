@@ -9,7 +9,7 @@ export const Calendar = list({
     name: text({ validation: { isRequired: true } }),
     events: relationship({ ref: 'CalendarEvent.calendar', many: true }),
     bookings: relationship({ ref: 'Booking.calendar', many: true }),
-    // TODO: doctor
+    doctor: relationship({ ref: 'Doctor.calendar', many: false }),
     // TODO: schedules
     // TODO: defaultSchedule
     // TODO: events
