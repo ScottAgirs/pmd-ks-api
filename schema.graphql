@@ -113,10 +113,16 @@ input PatientRelateToOneForCreateInput {
 
 type Booking {
   id: ID!
-  name: String
-  isConfirmed: Boolean
+  event(
+    where: CalendarEventWhereInput! = {}
+    orderBy: [CalendarEventOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CalendarEvent!]
+  eventCount(where: CalendarEventWhereInput! = {}): Int
   durationMins: Int
-  startsAt: DateTime
+  isConfirmed: Boolean
+  name: String
   notes: String
   patient(
     where: PatientWhereInput! = {}
@@ -125,13 +131,7 @@ type Booking {
     skip: Int! = 0
   ): [Patient!]
   patientCount(where: PatientWhereInput! = {}): Int
-  event(
-    where: CalendarEventWhereInput! = {}
-    orderBy: [CalendarEventOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [CalendarEvent!]
-  eventCount(where: CalendarEventWhereInput! = {}): Int
+  startsAt: DateTime
 }
 
 input BookingWhereUniqueInput {
@@ -143,13 +143,35 @@ input BookingWhereInput {
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
   id: IDFilter
-  name: StringFilter
-  isConfirmed: BooleanFilter
+  event: CalendarEventManyRelationFilter
   durationMins: IntFilter
-  startsAt: DateTimeNullableFilter
+  isConfirmed: BooleanFilter
+  name: StringFilter
   notes: StringFilter
   patient: PatientManyRelationFilter
-  event: CalendarEventManyRelationFilter
+  startsAt: DateTimeNullableFilter
+}
+
+input CalendarEventManyRelationFilter {
+  every: CalendarEventWhereInput
+  some: CalendarEventWhereInput
+  none: CalendarEventWhereInput
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input StringFilter {
@@ -186,58 +208,29 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
-}
-
-input IntFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntFilter
-}
-
 input PatientManyRelationFilter {
   every: PatientWhereInput
   some: PatientWhereInput
   none: PatientWhereInput
 }
 
-input CalendarEventManyRelationFilter {
-  every: CalendarEventWhereInput
-  some: CalendarEventWhereInput
-  none: CalendarEventWhereInput
-}
-
 input BookingOrderByInput {
   id: OrderDirection
-  name: OrderDirection
-  isConfirmed: OrderDirection
   durationMins: OrderDirection
-  startsAt: OrderDirection
+  isConfirmed: OrderDirection
+  name: OrderDirection
   notes: OrderDirection
+  startsAt: OrderDirection
 }
 
 input BookingUpdateInput {
-  name: String
-  isConfirmed: Boolean
+  event: CalendarEventRelateToManyForUpdateInput
   durationMins: Int
-  startsAt: DateTime
+  isConfirmed: Boolean
+  name: String
   notes: String
   patient: PatientRelateToManyForUpdateInput
-  event: CalendarEventRelateToManyForUpdateInput
-}
-
-input PatientRelateToManyForUpdateInput {
-  disconnect: [PatientWhereUniqueInput!]
-  set: [PatientWhereUniqueInput!]
-  create: [PatientCreateInput!]
-  connect: [PatientWhereUniqueInput!]
+  startsAt: DateTime
 }
 
 input CalendarEventRelateToManyForUpdateInput {
@@ -247,29 +240,36 @@ input CalendarEventRelateToManyForUpdateInput {
   connect: [CalendarEventWhereUniqueInput!]
 }
 
+input PatientRelateToManyForUpdateInput {
+  disconnect: [PatientWhereUniqueInput!]
+  set: [PatientWhereUniqueInput!]
+  create: [PatientCreateInput!]
+  connect: [PatientWhereUniqueInput!]
+}
+
 input BookingUpdateArgs {
   where: BookingWhereUniqueInput!
   data: BookingUpdateInput!
 }
 
 input BookingCreateInput {
-  name: String
-  isConfirmed: Boolean
+  event: CalendarEventRelateToManyForCreateInput
   durationMins: Int
-  startsAt: DateTime
+  isConfirmed: Boolean
+  name: String
   notes: String
   patient: PatientRelateToManyForCreateInput
-  event: CalendarEventRelateToManyForCreateInput
-}
-
-input PatientRelateToManyForCreateInput {
-  create: [PatientCreateInput!]
-  connect: [PatientWhereUniqueInput!]
+  startsAt: DateTime
 }
 
 input CalendarEventRelateToManyForCreateInput {
   create: [CalendarEventCreateInput!]
   connect: [CalendarEventWhereUniqueInput!]
+}
+
+input PatientRelateToManyForCreateInput {
+  create: [PatientCreateInput!]
+  connect: [PatientWhereUniqueInput!]
 }
 
 type Calendar {
