@@ -4,14 +4,13 @@ const { list } = require("@keystone-6/core");
 
 export const HealthCard = list({
   fields: {
-    patient: relationship({ ref: 'Patient.healthCards', many: false }),
-    isVerified: checkbox(),
-    expiryDate: timestamp({ validation: { isRequired: true } }),
-    nameOnCard: text({ validation: { isRequired: true } }),
-    insurancePolicyNumber: text({ validation: { isRequired: true } }),
+    country: relationship({ ref: 'Country.healthCards', many: false }),
     dateOfBirth: timestamp({ validation: { isRequired: true } }),
-    // // TODO: Country
-    // country: relationship({ ref: 'Patient.visitedDoctors', many: true }),
+    expiryDate: timestamp({ validation: { isRequired: true } }),
+    insurancePolicyNumber: text({ validation: { isRequired: true } }),
+    isVerified: checkbox(),
+    nameOnCard: text({ validation: { isRequired: true } }),
+    patient: relationship({ ref: 'Patient.healthCards', many: false }),
     versionCode: text({ validation: { isRequired: true } }),
   },
 }) 
