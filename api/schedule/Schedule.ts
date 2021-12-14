@@ -9,5 +9,6 @@ export const Schedule = list({
     calendar: relationship({ ref: 'Calendar.schedules', many: false }),
     events: relationship({ ref: 'CalendarEvent.schedule', many: true }),
     defaultOn: relationship({ ref: 'Calendar.defaultSchedule', many: false }),
+    recurringSlots: relationship({ ref: 'RecurringSlot.schedule', many: true }),
   },
 }) 
