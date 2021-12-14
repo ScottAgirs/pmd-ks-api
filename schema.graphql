@@ -247,6 +247,13 @@ input PatientRelateToManyForCreateInput {
 type Calendar {
   id: ID!
   name: String
+  calendarEvents(
+    where: CalendarEventWhereInput! = {}
+    orderBy: [CalendarEventOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CalendarEvent!]
+  calendarEventsCount(where: CalendarEventWhereInput! = {}): Int
 }
 
 input CalendarWhereUniqueInput {
@@ -259,6 +266,13 @@ input CalendarWhereInput {
   NOT: [CalendarWhereInput!]
   id: IDFilter
   name: StringFilter
+  calendarEvents: CalendarEventManyRelationFilter
+}
+
+input CalendarEventManyRelationFilter {
+  every: CalendarEventWhereInput
+  some: CalendarEventWhereInput
+  none: CalendarEventWhereInput
 }
 
 input CalendarOrderByInput {
@@ -268,6 +282,14 @@ input CalendarOrderByInput {
 
 input CalendarUpdateInput {
   name: String
+  calendarEvents: CalendarEventRelateToManyForUpdateInput
+}
+
+input CalendarEventRelateToManyForUpdateInput {
+  disconnect: [CalendarEventWhereUniqueInput!]
+  set: [CalendarEventWhereUniqueInput!]
+  create: [CalendarEventCreateInput!]
+  connect: [CalendarEventWhereUniqueInput!]
 }
 
 input CalendarUpdateArgs {
@@ -277,6 +299,12 @@ input CalendarUpdateArgs {
 
 input CalendarCreateInput {
   name: String
+  calendarEvents: CalendarEventRelateToManyForCreateInput
+}
+
+input CalendarEventRelateToManyForCreateInput {
+  create: [CalendarEventCreateInput!]
+  connect: [CalendarEventWhereUniqueInput!]
 }
 
 type CalendarEvent {
@@ -284,6 +312,7 @@ type CalendarEvent {
   description: String
   title: String
   isConfirmationRequired: Boolean
+  calendar: Calendar
   calendarEventType: CalendarEventType
 }
 
@@ -299,6 +328,7 @@ input CalendarEventWhereInput {
   description: StringFilter
   title: StringFilter
   isConfirmationRequired: BooleanFilter
+  calendar: CalendarWhereInput
   calendarEventType: CalendarEventTypeWhereInput
 }
 
@@ -313,7 +343,14 @@ input CalendarEventUpdateInput {
   description: String
   title: String
   isConfirmationRequired: Boolean
+  calendar: CalendarRelateToOneForUpdateInput
   calendarEventType: CalendarEventTypeRelateToOneForUpdateInput
+}
+
+input CalendarRelateToOneForUpdateInput {
+  create: CalendarCreateInput
+  connect: CalendarWhereUniqueInput
+  disconnect: Boolean
 }
 
 input CalendarEventTypeRelateToOneForUpdateInput {
@@ -331,7 +368,13 @@ input CalendarEventCreateInput {
   description: String
   title: String
   isConfirmationRequired: Boolean
+  calendar: CalendarRelateToOneForCreateInput
   calendarEventType: CalendarEventTypeRelateToOneForCreateInput
+}
+
+input CalendarRelateToOneForCreateInput {
+  create: CalendarCreateInput
+  connect: CalendarWhereUniqueInput
 }
 
 input CalendarEventTypeRelateToOneForCreateInput {
@@ -366,12 +409,6 @@ input CalendarEventTypeWhereInput {
   events: CalendarEventManyRelationFilter
 }
 
-input CalendarEventManyRelationFilter {
-  every: CalendarEventWhereInput
-  some: CalendarEventWhereInput
-  none: CalendarEventWhereInput
-}
-
 input CalendarEventTypeOrderByInput {
   id: OrderDirection
   label: OrderDirection
@@ -384,13 +421,6 @@ input CalendarEventTypeUpdateInput {
   events: CalendarEventRelateToManyForUpdateInput
 }
 
-input CalendarEventRelateToManyForUpdateInput {
-  disconnect: [CalendarEventWhereUniqueInput!]
-  set: [CalendarEventWhereUniqueInput!]
-  create: [CalendarEventCreateInput!]
-  connect: [CalendarEventWhereUniqueInput!]
-}
-
 input CalendarEventTypeUpdateArgs {
   where: CalendarEventTypeWhereUniqueInput!
   data: CalendarEventTypeUpdateInput!
@@ -400,11 +430,6 @@ input CalendarEventTypeCreateInput {
   label: String
   value: String
   events: CalendarEventRelateToManyForCreateInput
-}
-
-input CalendarEventRelateToManyForCreateInput {
-  create: [CalendarEventCreateInput!]
-  connect: [CalendarEventWhereUniqueInput!]
 }
 
 type Doctor {
