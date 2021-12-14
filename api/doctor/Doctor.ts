@@ -7,20 +7,21 @@ export const Doctor = list({
     user: relationship({ ref: 'User.doctor', many: false }),
     // TODO: appointments
     // appointments: relationship({ ref: 'User.doctor', many: false }),
-    isCompleteProfile: checkbox(),
-    isVerified: checkbox(),
-    languages: relationship({ ref: 'DoctorLanguage.doctors', many: true }),
-    // TODO: doctorType
+    // TODO: bookings
+    // TODO: calendar
     // TODO: doctorSpecializations
     doctorSince: timestamp({ validation: { isRequired: true } }),
-    summary: text(),
+    // TODO: doctorType
     email: text({
       isIndexed: 'unique',
       isFilterable: true,
     }),
+    // TODO: emergencyContact
+    isCompleteProfile: checkbox(),
+    isVerified: checkbox(),
+    languages: relationship({ ref: 'DoctorLanguage.doctors', many: true }),
+    summary: text(),
     patients: relationship({ ref: 'Patient.visitedDoctors', many: true }),
     savedByPatients: relationship({ ref: 'Patient.savedDoctors', many: true }),
-    // TODO: calendar
-    // TODO: bookings
   },
 }) 
