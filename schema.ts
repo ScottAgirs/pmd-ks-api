@@ -3,7 +3,10 @@ import { Booking } from "./api/booking/Booking";
 import { User } from "./api/user/User";
 import { Patient } from "./api/patient/Patient";
 import { Prompt } from "./api/prompt/Prompt";
+
 import { Calendar } from "./api/calendar/Calendar";
+import { CalendarEvent } from "./api/calendar-event/CalendarEvent";
+
 import { Doctor } from "./api/doctor/Doctor";
 import { DoctorLanguage } from "./api/doctor-language/DoctorLanguage";
 import { HealthCard } from "./api/health-card/HealthCard";
@@ -23,13 +26,15 @@ import { Country } from "./api/country/Country";
 export const lists = {
   Appointment,
   Booking,
+  // Calendar,
   Calendar,
+  CalendarEvent,
   Doctor,
   DoctorLanguage,
   HealthCard,
   // Country
-  AdministrativeArea,
   Country,
+  AdministrativeArea,
   // EmergencyContact,
   EmergencyContact,
   User,
