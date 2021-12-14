@@ -284,6 +284,7 @@ type CalendarEvent {
   description: String
   title: String
   isConfirmationRequired: Boolean
+  calendarEventType: CalendarEventType
 }
 
 input CalendarEventWhereUniqueInput {
@@ -298,6 +299,7 @@ input CalendarEventWhereInput {
   description: StringFilter
   title: StringFilter
   isConfirmationRequired: BooleanFilter
+  calendarEventType: CalendarEventTypeWhereInput
 }
 
 input CalendarEventOrderByInput {
@@ -311,6 +313,13 @@ input CalendarEventUpdateInput {
   description: String
   title: String
   isConfirmationRequired: Boolean
+  calendarEventType: CalendarEventTypeRelateToOneForUpdateInput
+}
+
+input CalendarEventTypeRelateToOneForUpdateInput {
+  create: CalendarEventTypeCreateInput
+  connect: CalendarEventTypeWhereUniqueInput
+  disconnect: Boolean
 }
 
 input CalendarEventUpdateArgs {
@@ -322,6 +331,80 @@ input CalendarEventCreateInput {
   description: String
   title: String
   isConfirmationRequired: Boolean
+  calendarEventType: CalendarEventTypeRelateToOneForCreateInput
+}
+
+input CalendarEventTypeRelateToOneForCreateInput {
+  create: CalendarEventTypeCreateInput
+  connect: CalendarEventTypeWhereUniqueInput
+}
+
+type CalendarEventType {
+  id: ID!
+  label: String
+  value: String
+  events(
+    where: CalendarEventWhereInput! = {}
+    orderBy: [CalendarEventOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CalendarEvent!]
+  eventsCount(where: CalendarEventWhereInput! = {}): Int
+}
+
+input CalendarEventTypeWhereUniqueInput {
+  id: ID
+}
+
+input CalendarEventTypeWhereInput {
+  AND: [CalendarEventTypeWhereInput!]
+  OR: [CalendarEventTypeWhereInput!]
+  NOT: [CalendarEventTypeWhereInput!]
+  id: IDFilter
+  label: StringFilter
+  value: StringFilter
+  events: CalendarEventManyRelationFilter
+}
+
+input CalendarEventManyRelationFilter {
+  every: CalendarEventWhereInput
+  some: CalendarEventWhereInput
+  none: CalendarEventWhereInput
+}
+
+input CalendarEventTypeOrderByInput {
+  id: OrderDirection
+  label: OrderDirection
+  value: OrderDirection
+}
+
+input CalendarEventTypeUpdateInput {
+  label: String
+  value: String
+  events: CalendarEventRelateToManyForUpdateInput
+}
+
+input CalendarEventRelateToManyForUpdateInput {
+  disconnect: [CalendarEventWhereUniqueInput!]
+  set: [CalendarEventWhereUniqueInput!]
+  create: [CalendarEventCreateInput!]
+  connect: [CalendarEventWhereUniqueInput!]
+}
+
+input CalendarEventTypeUpdateArgs {
+  where: CalendarEventTypeWhereUniqueInput!
+  data: CalendarEventTypeUpdateInput!
+}
+
+input CalendarEventTypeCreateInput {
+  label: String
+  value: String
+  events: CalendarEventRelateToManyForCreateInput
+}
+
+input CalendarEventRelateToManyForCreateInput {
+  create: [CalendarEventCreateInput!]
+  connect: [CalendarEventWhereUniqueInput!]
 }
 
 type Doctor {
@@ -1587,6 +1670,25 @@ type Mutation {
   deleteCalendarEvents(
     where: [CalendarEventWhereUniqueInput!]!
   ): [CalendarEvent]
+  createCalendarEventType(
+    data: CalendarEventTypeCreateInput!
+  ): CalendarEventType
+  createCalendarEventTypes(
+    data: [CalendarEventTypeCreateInput!]!
+  ): [CalendarEventType]
+  updateCalendarEventType(
+    where: CalendarEventTypeWhereUniqueInput!
+    data: CalendarEventTypeUpdateInput!
+  ): CalendarEventType
+  updateCalendarEventTypes(
+    data: [CalendarEventTypeUpdateArgs!]!
+  ): [CalendarEventType]
+  deleteCalendarEventType(
+    where: CalendarEventTypeWhereUniqueInput!
+  ): CalendarEventType
+  deleteCalendarEventTypes(
+    where: [CalendarEventTypeWhereUniqueInput!]!
+  ): [CalendarEventType]
   createDoctor(data: DoctorCreateInput!): Doctor
   createDoctors(data: [DoctorCreateInput!]!): [Doctor]
   updateDoctor(where: DoctorWhereUniqueInput!, data: DoctorUpdateInput!): Doctor
@@ -1784,6 +1886,16 @@ type Query {
   ): [CalendarEvent!]
   calendarEvent(where: CalendarEventWhereUniqueInput!): CalendarEvent
   calendarEventsCount(where: CalendarEventWhereInput! = {}): Int
+  calendarEventTypes(
+    where: CalendarEventTypeWhereInput! = {}
+    orderBy: [CalendarEventTypeOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CalendarEventType!]
+  calendarEventType(
+    where: CalendarEventTypeWhereUniqueInput!
+  ): CalendarEventType
+  calendarEventTypesCount(where: CalendarEventTypeWhereInput! = {}): Int
   doctors(
     where: DoctorWhereInput! = {}
     orderBy: [DoctorOrderByInput!]! = []

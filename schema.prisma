@@ -41,10 +41,21 @@ model Calendar {
 }
 
 model CalendarEvent {
-  id                     String  @id @default(cuid())
-  description            String  @default("")
-  title                  String  @default("")
-  isConfirmationRequired Boolean @default(false)
+  id                     String             @id @default(cuid())
+  description            String             @default("")
+  title                  String             @default("")
+  isConfirmationRequired Boolean            @default(false)
+  calendarEventType      CalendarEventType? @relation("CalendarEvent_calendarEventType", fields: [calendarEventTypeId], references: [id])
+  calendarEventTypeId    String?            @map("calendarEventType")
+
+  @@index([calendarEventTypeId])
+}
+
+model CalendarEventType {
+  id     String          @id @default(cuid())
+  label  String          @default("")
+  value  String          @default("")
+  events CalendarEvent[] @relation("CalendarEvent_calendarEventType")
 }
 
 model Doctor {
