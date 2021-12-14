@@ -399,12 +399,13 @@ input DoctorRelateToManyForCreateInput {
 
 type HealthCard {
   id: ID!
-  patient: Patient
-  isVerified: Boolean
-  expiryDate: DateTime
-  nameOnCard: String
-  insurancePolicyNumber: String
+  country: Country
   dateOfBirth: DateTime
+  expiryDate: DateTime
+  insurancePolicyNumber: String
+  isVerified: Boolean
+  nameOnCard: String
+  patient: Patient
   versionCode: String
 }
 
@@ -417,33 +418,41 @@ input HealthCardWhereInput {
   OR: [HealthCardWhereInput!]
   NOT: [HealthCardWhereInput!]
   id: IDFilter
-  patient: PatientWhereInput
-  isVerified: BooleanFilter
-  expiryDate: DateTimeFilter
-  nameOnCard: StringFilter
-  insurancePolicyNumber: StringFilter
+  country: CountryWhereInput
   dateOfBirth: DateTimeFilter
+  expiryDate: DateTimeFilter
+  insurancePolicyNumber: StringFilter
+  isVerified: BooleanFilter
+  nameOnCard: StringFilter
+  patient: PatientWhereInput
   versionCode: StringFilter
 }
 
 input HealthCardOrderByInput {
   id: OrderDirection
-  isVerified: OrderDirection
-  expiryDate: OrderDirection
-  nameOnCard: OrderDirection
-  insurancePolicyNumber: OrderDirection
   dateOfBirth: OrderDirection
+  expiryDate: OrderDirection
+  insurancePolicyNumber: OrderDirection
+  isVerified: OrderDirection
+  nameOnCard: OrderDirection
   versionCode: OrderDirection
 }
 
 input HealthCardUpdateInput {
-  patient: PatientRelateToOneForUpdateInput
-  isVerified: Boolean
-  expiryDate: DateTime
-  nameOnCard: String
-  insurancePolicyNumber: String
+  country: CountryRelateToOneForUpdateInput
   dateOfBirth: DateTime
+  expiryDate: DateTime
+  insurancePolicyNumber: String
+  isVerified: Boolean
+  nameOnCard: String
+  patient: PatientRelateToOneForUpdateInput
   versionCode: String
+}
+
+input CountryRelateToOneForUpdateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
+  disconnect: Boolean
 }
 
 input PatientRelateToOneForUpdateInput {
@@ -458,18 +467,174 @@ input HealthCardUpdateArgs {
 }
 
 input HealthCardCreateInput {
-  patient: PatientRelateToOneForCreateInput
-  isVerified: Boolean
-  expiryDate: DateTime
-  nameOnCard: String
-  insurancePolicyNumber: String
+  country: CountryRelateToOneForCreateInput
   dateOfBirth: DateTime
+  expiryDate: DateTime
+  insurancePolicyNumber: String
+  isVerified: Boolean
+  nameOnCard: String
+  patient: PatientRelateToOneForCreateInput
   versionCode: String
+}
+
+input CountryRelateToOneForCreateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
 }
 
 input PatientRelateToOneForCreateInput {
   create: PatientCreateInput
   connect: PatientWhereUniqueInput
+}
+
+type AdministrativeArea {
+  id: ID!
+  country: Country
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input AdministrativeAreaWhereUniqueInput {
+  id: ID
+}
+
+input AdministrativeAreaWhereInput {
+  AND: [AdministrativeAreaWhereInput!]
+  OR: [AdministrativeAreaWhereInput!]
+  NOT: [AdministrativeAreaWhereInput!]
+  id: IDFilter
+  country: CountryWhereInput
+  isActive: BooleanFilter
+  label: StringFilter
+  value: StringFilter
+}
+
+input AdministrativeAreaOrderByInput {
+  id: OrderDirection
+  isActive: OrderDirection
+  label: OrderDirection
+  value: OrderDirection
+}
+
+input AdministrativeAreaUpdateInput {
+  country: CountryRelateToOneForUpdateInput
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input AdministrativeAreaUpdateArgs {
+  where: AdministrativeAreaWhereUniqueInput!
+  data: AdministrativeAreaUpdateInput!
+}
+
+input AdministrativeAreaCreateInput {
+  country: CountryRelateToOneForCreateInput
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+type Country {
+  id: ID!
+  healthCards(
+    where: HealthCardWhereInput! = {}
+    orderBy: [HealthCardOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [HealthCard!]
+  healthCardsCount(where: HealthCardWhereInput! = {}): Int
+  administrativeAreas(
+    where: AdministrativeAreaWhereInput! = {}
+    orderBy: [AdministrativeAreaOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AdministrativeArea!]
+  administrativeAreasCount(where: AdministrativeAreaWhereInput! = {}): Int
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input CountryWhereUniqueInput {
+  id: ID
+}
+
+input CountryWhereInput {
+  AND: [CountryWhereInput!]
+  OR: [CountryWhereInput!]
+  NOT: [CountryWhereInput!]
+  id: IDFilter
+  healthCards: HealthCardManyRelationFilter
+  administrativeAreas: AdministrativeAreaManyRelationFilter
+  isActive: BooleanFilter
+  label: StringFilter
+  value: StringFilter
+}
+
+input HealthCardManyRelationFilter {
+  every: HealthCardWhereInput
+  some: HealthCardWhereInput
+  none: HealthCardWhereInput
+}
+
+input AdministrativeAreaManyRelationFilter {
+  every: AdministrativeAreaWhereInput
+  some: AdministrativeAreaWhereInput
+  none: AdministrativeAreaWhereInput
+}
+
+input CountryOrderByInput {
+  id: OrderDirection
+  isActive: OrderDirection
+  label: OrderDirection
+  value: OrderDirection
+}
+
+input CountryUpdateInput {
+  healthCards: HealthCardRelateToManyForUpdateInput
+  administrativeAreas: AdministrativeAreaRelateToManyForUpdateInput
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input HealthCardRelateToManyForUpdateInput {
+  disconnect: [HealthCardWhereUniqueInput!]
+  set: [HealthCardWhereUniqueInput!]
+  create: [HealthCardCreateInput!]
+  connect: [HealthCardWhereUniqueInput!]
+}
+
+input AdministrativeAreaRelateToManyForUpdateInput {
+  disconnect: [AdministrativeAreaWhereUniqueInput!]
+  set: [AdministrativeAreaWhereUniqueInput!]
+  create: [AdministrativeAreaCreateInput!]
+  connect: [AdministrativeAreaWhereUniqueInput!]
+}
+
+input CountryUpdateArgs {
+  where: CountryWhereUniqueInput!
+  data: CountryUpdateInput!
+}
+
+input CountryCreateInput {
+  healthCards: HealthCardRelateToManyForCreateInput
+  administrativeAreas: AdministrativeAreaRelateToManyForCreateInput
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input HealthCardRelateToManyForCreateInput {
+  create: [HealthCardCreateInput!]
+  connect: [HealthCardWhereUniqueInput!]
+}
+
+input AdministrativeAreaRelateToManyForCreateInput {
+  create: [AdministrativeAreaCreateInput!]
+  connect: [AdministrativeAreaWhereUniqueInput!]
 }
 
 type User {
@@ -687,12 +852,6 @@ input BookingManyRelationFilter {
   none: BookingWhereInput
 }
 
-input HealthCardManyRelationFilter {
-  every: HealthCardWhereInput
-  some: HealthCardWhereInput
-  none: HealthCardWhereInput
-}
-
 input PatientOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -716,13 +875,6 @@ input BookingRelateToManyForUpdateInput {
   connect: [BookingWhereUniqueInput!]
 }
 
-input HealthCardRelateToManyForUpdateInput {
-  disconnect: [HealthCardWhereUniqueInput!]
-  set: [HealthCardWhereUniqueInput!]
-  create: [HealthCardCreateInput!]
-  connect: [HealthCardWhereUniqueInput!]
-}
-
 input PatientUpdateArgs {
   where: PatientWhereUniqueInput!
   data: PatientUpdateInput!
@@ -741,11 +893,6 @@ input PatientCreateInput {
 input BookingRelateToManyForCreateInput {
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
-}
-
-input HealthCardRelateToManyForCreateInput {
-  create: [HealthCardCreateInput!]
-  connect: [HealthCardWhereUniqueInput!]
 }
 
 type Prompt {
@@ -1208,6 +1355,34 @@ type Mutation {
   updateHealthCards(data: [HealthCardUpdateArgs!]!): [HealthCard]
   deleteHealthCard(where: HealthCardWhereUniqueInput!): HealthCard
   deleteHealthCards(where: [HealthCardWhereUniqueInput!]!): [HealthCard]
+  createAdministrativeArea(
+    data: AdministrativeAreaCreateInput!
+  ): AdministrativeArea
+  createAdministrativeAreas(
+    data: [AdministrativeAreaCreateInput!]!
+  ): [AdministrativeArea]
+  updateAdministrativeArea(
+    where: AdministrativeAreaWhereUniqueInput!
+    data: AdministrativeAreaUpdateInput!
+  ): AdministrativeArea
+  updateAdministrativeAreas(
+    data: [AdministrativeAreaUpdateArgs!]!
+  ): [AdministrativeArea]
+  deleteAdministrativeArea(
+    where: AdministrativeAreaWhereUniqueInput!
+  ): AdministrativeArea
+  deleteAdministrativeAreas(
+    where: [AdministrativeAreaWhereUniqueInput!]!
+  ): [AdministrativeArea]
+  createCountry(data: CountryCreateInput!): Country
+  createCountries(data: [CountryCreateInput!]!): [Country]
+  updateCountry(
+    where: CountryWhereUniqueInput!
+    data: CountryUpdateInput!
+  ): Country
+  updateCountries(data: [CountryUpdateArgs!]!): [Country]
+  deleteCountry(where: CountryWhereUniqueInput!): Country
+  deleteCountries(where: [CountryWhereUniqueInput!]!): [Country]
   createUser(data: UserCreateInput!): User
   createUsers(data: [UserCreateInput!]!): [User]
   updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
@@ -1342,6 +1517,24 @@ type Query {
   ): [HealthCard!]
   healthCard(where: HealthCardWhereUniqueInput!): HealthCard
   healthCardsCount(where: HealthCardWhereInput! = {}): Int
+  administrativeAreas(
+    where: AdministrativeAreaWhereInput! = {}
+    orderBy: [AdministrativeAreaOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AdministrativeArea!]
+  administrativeArea(
+    where: AdministrativeAreaWhereUniqueInput!
+  ): AdministrativeArea
+  administrativeAreasCount(where: AdministrativeAreaWhereInput! = {}): Int
+  countries(
+    where: CountryWhereInput! = {}
+    orderBy: [CountryOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Country!]
+  country(where: CountryWhereUniqueInput!): Country
+  countriesCount(where: CountryWhereInput! = {}): Int
   users(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []

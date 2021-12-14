@@ -49,16 +49,39 @@ model DoctorLanguage {
 
 model HealthCard {
   id                    String   @id @default(cuid())
+  country               Country? @relation("HealthCard_country", fields: [countryId], references: [id])
+  countryId             String?  @map("country")
+  dateOfBirth           DateTime
+  expiryDate            DateTime
+  insurancePolicyNumber String   @default("")
+  isVerified            Boolean  @default(false)
+  nameOnCard            String   @default("")
   patient               Patient? @relation("HealthCard_patient", fields: [patientId], references: [id])
   patientId             String?  @map("patient")
-  isVerified            Boolean  @default(false)
-  expiryDate            DateTime
-  nameOnCard            String   @default("")
-  insurancePolicyNumber String   @default("")
-  dateOfBirth           DateTime
   versionCode           String   @default("")
 
+  @@index([countryId])
   @@index([patientId])
+}
+
+model AdministrativeArea {
+  id        String   @id @default(cuid())
+  country   Country? @relation("AdministrativeArea_country", fields: [countryId], references: [id])
+  countryId String?  @map("country")
+  isActive  Boolean  @default(false)
+  label     String   @default("")
+  value     String   @default("")
+
+  @@index([countryId])
+}
+
+model Country {
+  id                  String               @id @default(cuid())
+  healthCards         HealthCard[]         @relation("HealthCard_country")
+  administrativeAreas AdministrativeArea[] @relation("AdministrativeArea_country")
+  isActive            Boolean              @default(false)
+  label               String               @default("")
+  value               String               @default("")
 }
 
 model User {
