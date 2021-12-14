@@ -1,3 +1,4 @@
+import { Appointment } from "./api/appointment/Appointment";
 import { Booking } from "./api/booking/Booking";
 import { User } from "./api/user/User";
 import { Patient } from "./api/patient/Patient";
@@ -18,6 +19,7 @@ import { Country } from "./api/country/Country";
 
 
 export const lists = {
+  Appointment,
   Booking,
   Calendar,
   Doctor,
