@@ -26,19 +26,20 @@ model Appointment {
 }
 
 model Booking {
-  id           String    @id @default(cuid())
-  name         String    @default("")
-  isConfirmed  Boolean   @default(false)
+  id           String          @id @default(cuid())
+  name         String          @default("")
+  isConfirmed  Boolean         @default(false)
   durationMins Int
   startsAt     DateTime?
-  notes        String    @default("")
-  patient      Patient[] @relation("Booking_patient")
+  notes        String          @default("")
+  patient      Patient[]       @relation("Booking_patient")
+  event        CalendarEvent[] @relation("Booking_event")
 }
 
 model Calendar {
-  id             String          @id @default(cuid())
-  name           String          @default("")
-  calendarEvents CalendarEvent[] @relation("CalendarEvent_calendar")
+  id     String          @id @default(cuid())
+  name   String          @default("")
+  events CalendarEvent[] @relation("CalendarEvent_calendar")
 }
 
 model CalendarEvent {
@@ -48,6 +49,7 @@ model CalendarEvent {
   isConfirmationRequired Boolean            @default(false)
   calendar               Calendar?          @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
   calendarId             String?            @map("calendar")
+  bookings               Booking[]          @relation("Booking_event")
   calendarEventType      CalendarEventType? @relation("CalendarEvent_calendarEventType", fields: [calendarEventTypeId], references: [id])
   calendarEventTypeId    String?            @map("calendarEventType")
 
