@@ -10,6 +10,7 @@ import { CalendarEventType } from "./api/calendar-event-type/CalendarEventType";
 import { Schedule } from "./api/schedule/Schedule";
 
 import { Doctor } from "./api/doctor/Doctor";
+import { DoctorType } from "./api/doctor-type/DoctorType";
 import { DoctorLanguage } from "./api/doctor-language/DoctorLanguage";
 import { HealthCard } from "./api/health-card/HealthCard";
 
@@ -33,8 +34,11 @@ export const lists = {
   CalendarEvent,
   CalendarEventType,
   Schedule,
+  // Doctor,
   Doctor,
   DoctorLanguage,
+  DoctorType,
+  // HealthCard
   HealthCard,
   // Country
   Country,
