@@ -543,6 +543,13 @@ type Schedule {
   ): [CalendarEvent!]
   eventsCount(where: CalendarEventWhereInput! = {}): Int
   defaultOn: Calendar
+  recurringSlots(
+    where: RecurringSlotWhereInput! = {}
+    orderBy: [RecurringSlotOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [RecurringSlot!]
+  recurringSlotsCount(where: RecurringSlotWhereInput! = {}): Int
 }
 
 input ScheduleWhereUniqueInput {
@@ -559,6 +566,13 @@ input ScheduleWhereInput {
   calendar: CalendarWhereInput
   events: CalendarEventManyRelationFilter
   defaultOn: CalendarWhereInput
+  recurringSlots: RecurringSlotManyRelationFilter
+}
+
+input RecurringSlotManyRelationFilter {
+  every: RecurringSlotWhereInput
+  some: RecurringSlotWhereInput
+  none: RecurringSlotWhereInput
 }
 
 input ScheduleOrderByInput {
@@ -573,6 +587,14 @@ input ScheduleUpdateInput {
   calendar: CalendarRelateToOneForUpdateInput
   events: CalendarEventRelateToManyForUpdateInput
   defaultOn: CalendarRelateToOneForUpdateInput
+  recurringSlots: RecurringSlotRelateToManyForUpdateInput
+}
+
+input RecurringSlotRelateToManyForUpdateInput {
+  disconnect: [RecurringSlotWhereUniqueInput!]
+  set: [RecurringSlotWhereUniqueInput!]
+  create: [RecurringSlotCreateInput!]
+  connect: [RecurringSlotWhereUniqueInput!]
 }
 
 input ScheduleUpdateArgs {
@@ -586,6 +608,160 @@ input ScheduleCreateInput {
   calendar: CalendarRelateToOneForCreateInput
   events: CalendarEventRelateToManyForCreateInput
   defaultOn: CalendarRelateToOneForCreateInput
+  recurringSlots: RecurringSlotRelateToManyForCreateInput
+}
+
+input RecurringSlotRelateToManyForCreateInput {
+  create: [RecurringSlotCreateInput!]
+  connect: [RecurringSlotWhereUniqueInput!]
+}
+
+type RecurringSlot {
+  id: ID!
+  wday: String
+  isActive: Boolean
+  interval: String
+  intervalCount: Int
+  schedule: Schedule
+  timeIntervals(
+    where: TimeIntervalWhereInput! = {}
+    orderBy: [TimeIntervalOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [TimeInterval!]
+  timeIntervalsCount(where: TimeIntervalWhereInput! = {}): Int
+}
+
+input RecurringSlotWhereUniqueInput {
+  id: ID
+}
+
+input RecurringSlotWhereInput {
+  AND: [RecurringSlotWhereInput!]
+  OR: [RecurringSlotWhereInput!]
+  NOT: [RecurringSlotWhereInput!]
+  id: IDFilter
+  wday: StringFilter
+  isActive: BooleanFilter
+  interval: StringFilter
+  intervalCount: IntNullableFilter
+  schedule: ScheduleWhereInput
+  timeIntervals: TimeIntervalManyRelationFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input TimeIntervalManyRelationFilter {
+  every: TimeIntervalWhereInput
+  some: TimeIntervalWhereInput
+  none: TimeIntervalWhereInput
+}
+
+input RecurringSlotOrderByInput {
+  id: OrderDirection
+  wday: OrderDirection
+  isActive: OrderDirection
+  interval: OrderDirection
+  intervalCount: OrderDirection
+}
+
+input RecurringSlotUpdateInput {
+  wday: String
+  isActive: Boolean
+  interval: String
+  intervalCount: Int
+  schedule: ScheduleRelateToOneForUpdateInput
+  timeIntervals: TimeIntervalRelateToManyForUpdateInput
+}
+
+input TimeIntervalRelateToManyForUpdateInput {
+  disconnect: [TimeIntervalWhereUniqueInput!]
+  set: [TimeIntervalWhereUniqueInput!]
+  create: [TimeIntervalCreateInput!]
+  connect: [TimeIntervalWhereUniqueInput!]
+}
+
+input RecurringSlotUpdateArgs {
+  where: RecurringSlotWhereUniqueInput!
+  data: RecurringSlotUpdateInput!
+}
+
+input RecurringSlotCreateInput {
+  wday: String
+  isActive: Boolean
+  interval: String
+  intervalCount: Int
+  schedule: ScheduleRelateToOneForCreateInput
+  timeIntervals: TimeIntervalRelateToManyForCreateInput
+}
+
+input TimeIntervalRelateToManyForCreateInput {
+  create: [TimeIntervalCreateInput!]
+  connect: [TimeIntervalWhereUniqueInput!]
+}
+
+type TimeInterval {
+  id: ID!
+  from: String
+  to: String
+  recurringSlot: RecurringSlot
+}
+
+input TimeIntervalWhereUniqueInput {
+  id: ID
+}
+
+input TimeIntervalWhereInput {
+  AND: [TimeIntervalWhereInput!]
+  OR: [TimeIntervalWhereInput!]
+  NOT: [TimeIntervalWhereInput!]
+  id: IDFilter
+  from: StringFilter
+  to: StringFilter
+  recurringSlot: RecurringSlotWhereInput
+}
+
+input TimeIntervalOrderByInput {
+  id: OrderDirection
+  from: OrderDirection
+  to: OrderDirection
+}
+
+input TimeIntervalUpdateInput {
+  from: String
+  to: String
+  recurringSlot: RecurringSlotRelateToOneForUpdateInput
+}
+
+input RecurringSlotRelateToOneForUpdateInput {
+  create: RecurringSlotCreateInput
+  connect: RecurringSlotWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TimeIntervalUpdateArgs {
+  where: TimeIntervalWhereUniqueInput!
+  data: TimeIntervalUpdateInput!
+}
+
+input TimeIntervalCreateInput {
+  from: String
+  to: String
+  recurringSlot: RecurringSlotRelateToOneForCreateInput
+}
+
+input RecurringSlotRelateToOneForCreateInput {
+  create: RecurringSlotCreateInput
+  connect: RecurringSlotWhereUniqueInput
 }
 
 type Doctor {
@@ -2013,6 +2189,26 @@ type Mutation {
   updateSchedules(data: [ScheduleUpdateArgs!]!): [Schedule]
   deleteSchedule(where: ScheduleWhereUniqueInput!): Schedule
   deleteSchedules(where: [ScheduleWhereUniqueInput!]!): [Schedule]
+  createRecurringSlot(data: RecurringSlotCreateInput!): RecurringSlot
+  createRecurringSlots(data: [RecurringSlotCreateInput!]!): [RecurringSlot]
+  updateRecurringSlot(
+    where: RecurringSlotWhereUniqueInput!
+    data: RecurringSlotUpdateInput!
+  ): RecurringSlot
+  updateRecurringSlots(data: [RecurringSlotUpdateArgs!]!): [RecurringSlot]
+  deleteRecurringSlot(where: RecurringSlotWhereUniqueInput!): RecurringSlot
+  deleteRecurringSlots(
+    where: [RecurringSlotWhereUniqueInput!]!
+  ): [RecurringSlot]
+  createTimeInterval(data: TimeIntervalCreateInput!): TimeInterval
+  createTimeIntervals(data: [TimeIntervalCreateInput!]!): [TimeInterval]
+  updateTimeInterval(
+    where: TimeIntervalWhereUniqueInput!
+    data: TimeIntervalUpdateInput!
+  ): TimeInterval
+  updateTimeIntervals(data: [TimeIntervalUpdateArgs!]!): [TimeInterval]
+  deleteTimeInterval(where: TimeIntervalWhereUniqueInput!): TimeInterval
+  deleteTimeIntervals(where: [TimeIntervalWhereUniqueInput!]!): [TimeInterval]
   createDoctor(data: DoctorCreateInput!): Doctor
   createDoctors(data: [DoctorCreateInput!]!): [Doctor]
   updateDoctor(where: DoctorWhereUniqueInput!, data: DoctorUpdateInput!): Doctor
@@ -2238,6 +2434,22 @@ type Query {
   ): [Schedule!]
   schedule(where: ScheduleWhereUniqueInput!): Schedule
   schedulesCount(where: ScheduleWhereInput! = {}): Int
+  recurringSlots(
+    where: RecurringSlotWhereInput! = {}
+    orderBy: [RecurringSlotOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [RecurringSlot!]
+  recurringSlot(where: RecurringSlotWhereUniqueInput!): RecurringSlot
+  recurringSlotsCount(where: RecurringSlotWhereInput! = {}): Int
+  timeIntervals(
+    where: TimeIntervalWhereInput! = {}
+    orderBy: [TimeIntervalOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [TimeInterval!]
+  timeInterval(where: TimeIntervalWhereUniqueInput!): TimeInterval
+  timeIntervalsCount(where: TimeIntervalWhereInput! = {}): Int
   doctors(
     where: DoctorWhereInput! = {}
     orderBy: [DoctorOrderByInput!]! = []

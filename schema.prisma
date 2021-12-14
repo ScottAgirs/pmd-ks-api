@@ -87,15 +87,39 @@ model CalendarEventType {
 }
 
 model Schedule {
-  id          String          @id @default(cuid())
-  title       String          @default("")
-  description String          @default("")
-  calendar    Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
-  calendarId  String?         @map("calendar")
-  events      CalendarEvent[] @relation("CalendarEvent_schedule")
-  defaultOn   Calendar?       @relation("Calendar_defaultSchedule")
+  id             String          @id @default(cuid())
+  title          String          @default("")
+  description    String          @default("")
+  calendar       Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
+  calendarId     String?         @map("calendar")
+  events         CalendarEvent[] @relation("CalendarEvent_schedule")
+  defaultOn      Calendar?       @relation("Calendar_defaultSchedule")
+  recurringSlots RecurringSlot[] @relation("RecurringSlot_schedule")
 
   @@index([calendarId])
+}
+
+model RecurringSlot {
+  id            String         @id @default(cuid())
+  wday          String         @default("")
+  isActive      Boolean        @default(false)
+  interval      String         @default("")
+  intervalCount Int?
+  schedule      Schedule?      @relation("RecurringSlot_schedule", fields: [scheduleId], references: [id])
+  scheduleId    String?        @map("schedule")
+  timeIntervals TimeInterval[] @relation("TimeInterval_recurringSlot")
+
+  @@index([scheduleId])
+}
+
+model TimeInterval {
+  id              String         @id @default(cuid())
+  from            String         @default("")
+  to              String         @default("")
+  recurringSlot   RecurringSlot? @relation("TimeInterval_recurringSlot", fields: [recurringSlotId], references: [id])
+  recurringSlotId String?        @map("recurringSlot")
+
+  @@index([recurringSlotId])
 }
 
 model Doctor {
