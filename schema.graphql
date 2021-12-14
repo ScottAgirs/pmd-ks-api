@@ -279,6 +279,51 @@ input CalendarCreateInput {
   name: String
 }
 
+type CalendarEvent {
+  id: ID!
+  description: String
+  title: String
+  isConfirmationRequired: Boolean
+}
+
+input CalendarEventWhereUniqueInput {
+  id: ID
+}
+
+input CalendarEventWhereInput {
+  AND: [CalendarEventWhereInput!]
+  OR: [CalendarEventWhereInput!]
+  NOT: [CalendarEventWhereInput!]
+  id: IDFilter
+  description: StringFilter
+  title: StringFilter
+  isConfirmationRequired: BooleanFilter
+}
+
+input CalendarEventOrderByInput {
+  id: OrderDirection
+  description: OrderDirection
+  title: OrderDirection
+  isConfirmationRequired: OrderDirection
+}
+
+input CalendarEventUpdateInput {
+  description: String
+  title: String
+  isConfirmationRequired: Boolean
+}
+
+input CalendarEventUpdateArgs {
+  where: CalendarEventWhereUniqueInput!
+  data: CalendarEventUpdateInput!
+}
+
+input CalendarEventCreateInput {
+  description: String
+  title: String
+  isConfirmationRequired: Boolean
+}
+
 type Doctor {
   id: ID!
   user: User
@@ -571,55 +616,6 @@ input CountryRelateToOneForCreateInput {
   connect: CountryWhereUniqueInput
 }
 
-type AdministrativeArea {
-  id: ID!
-  country: Country
-  isActive: Boolean
-  label: String
-  value: String
-}
-
-input AdministrativeAreaWhereUniqueInput {
-  id: ID
-}
-
-input AdministrativeAreaWhereInput {
-  AND: [AdministrativeAreaWhereInput!]
-  OR: [AdministrativeAreaWhereInput!]
-  NOT: [AdministrativeAreaWhereInput!]
-  id: IDFilter
-  country: CountryWhereInput
-  isActive: BooleanFilter
-  label: StringFilter
-  value: StringFilter
-}
-
-input AdministrativeAreaOrderByInput {
-  id: OrderDirection
-  isActive: OrderDirection
-  label: OrderDirection
-  value: OrderDirection
-}
-
-input AdministrativeAreaUpdateInput {
-  country: CountryRelateToOneForUpdateInput
-  isActive: Boolean
-  label: String
-  value: String
-}
-
-input AdministrativeAreaUpdateArgs {
-  where: AdministrativeAreaWhereUniqueInput!
-  data: AdministrativeAreaUpdateInput!
-}
-
-input AdministrativeAreaCreateInput {
-  country: CountryRelateToOneForCreateInput
-  isActive: Boolean
-  label: String
-  value: String
-}
-
 type Country {
   id: ID!
   healthCards(
@@ -719,6 +715,55 @@ input HealthCardRelateToManyForCreateInput {
 input AdministrativeAreaRelateToManyForCreateInput {
   create: [AdministrativeAreaCreateInput!]
   connect: [AdministrativeAreaWhereUniqueInput!]
+}
+
+type AdministrativeArea {
+  id: ID!
+  country: Country
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input AdministrativeAreaWhereUniqueInput {
+  id: ID
+}
+
+input AdministrativeAreaWhereInput {
+  AND: [AdministrativeAreaWhereInput!]
+  OR: [AdministrativeAreaWhereInput!]
+  NOT: [AdministrativeAreaWhereInput!]
+  id: IDFilter
+  country: CountryWhereInput
+  isActive: BooleanFilter
+  label: StringFilter
+  value: StringFilter
+}
+
+input AdministrativeAreaOrderByInput {
+  id: OrderDirection
+  isActive: OrderDirection
+  label: OrderDirection
+  value: OrderDirection
+}
+
+input AdministrativeAreaUpdateInput {
+  country: CountryRelateToOneForUpdateInput
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input AdministrativeAreaUpdateArgs {
+  where: AdministrativeAreaWhereUniqueInput!
+  data: AdministrativeAreaUpdateInput!
+}
+
+input AdministrativeAreaCreateInput {
+  country: CountryRelateToOneForCreateInput
+  isActive: Boolean
+  label: String
+  value: String
 }
 
 type EmergencyContact {
@@ -1531,6 +1576,17 @@ type Mutation {
   updateCalendars(data: [CalendarUpdateArgs!]!): [Calendar]
   deleteCalendar(where: CalendarWhereUniqueInput!): Calendar
   deleteCalendars(where: [CalendarWhereUniqueInput!]!): [Calendar]
+  createCalendarEvent(data: CalendarEventCreateInput!): CalendarEvent
+  createCalendarEvents(data: [CalendarEventCreateInput!]!): [CalendarEvent]
+  updateCalendarEvent(
+    where: CalendarEventWhereUniqueInput!
+    data: CalendarEventUpdateInput!
+  ): CalendarEvent
+  updateCalendarEvents(data: [CalendarEventUpdateArgs!]!): [CalendarEvent]
+  deleteCalendarEvent(where: CalendarEventWhereUniqueInput!): CalendarEvent
+  deleteCalendarEvents(
+    where: [CalendarEventWhereUniqueInput!]!
+  ): [CalendarEvent]
   createDoctor(data: DoctorCreateInput!): Doctor
   createDoctors(data: [DoctorCreateInput!]!): [Doctor]
   updateDoctor(where: DoctorWhereUniqueInput!, data: DoctorUpdateInput!): Doctor
@@ -1557,6 +1613,15 @@ type Mutation {
   updateHealthCards(data: [HealthCardUpdateArgs!]!): [HealthCard]
   deleteHealthCard(where: HealthCardWhereUniqueInput!): HealthCard
   deleteHealthCards(where: [HealthCardWhereUniqueInput!]!): [HealthCard]
+  createCountry(data: CountryCreateInput!): Country
+  createCountries(data: [CountryCreateInput!]!): [Country]
+  updateCountry(
+    where: CountryWhereUniqueInput!
+    data: CountryUpdateInput!
+  ): Country
+  updateCountries(data: [CountryUpdateArgs!]!): [Country]
+  deleteCountry(where: CountryWhereUniqueInput!): Country
+  deleteCountries(where: [CountryWhereUniqueInput!]!): [Country]
   createAdministrativeArea(
     data: AdministrativeAreaCreateInput!
   ): AdministrativeArea
@@ -1576,15 +1641,6 @@ type Mutation {
   deleteAdministrativeAreas(
     where: [AdministrativeAreaWhereUniqueInput!]!
   ): [AdministrativeArea]
-  createCountry(data: CountryCreateInput!): Country
-  createCountries(data: [CountryCreateInput!]!): [Country]
-  updateCountry(
-    where: CountryWhereUniqueInput!
-    data: CountryUpdateInput!
-  ): Country
-  updateCountries(data: [CountryUpdateArgs!]!): [Country]
-  deleteCountry(where: CountryWhereUniqueInput!): Country
-  deleteCountries(where: [CountryWhereUniqueInput!]!): [Country]
   createEmergencyContact(data: EmergencyContactCreateInput!): EmergencyContact
   createEmergencyContacts(
     data: [EmergencyContactCreateInput!]!
@@ -1720,6 +1776,14 @@ type Query {
   ): [Calendar!]
   calendar(where: CalendarWhereUniqueInput!): Calendar
   calendarsCount(where: CalendarWhereInput! = {}): Int
+  calendarEvents(
+    where: CalendarEventWhereInput! = {}
+    orderBy: [CalendarEventOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CalendarEvent!]
+  calendarEvent(where: CalendarEventWhereUniqueInput!): CalendarEvent
+  calendarEventsCount(where: CalendarEventWhereInput! = {}): Int
   doctors(
     where: DoctorWhereInput! = {}
     orderBy: [DoctorOrderByInput!]! = []
@@ -1744,6 +1808,14 @@ type Query {
   ): [HealthCard!]
   healthCard(where: HealthCardWhereUniqueInput!): HealthCard
   healthCardsCount(where: HealthCardWhereInput! = {}): Int
+  countries(
+    where: CountryWhereInput! = {}
+    orderBy: [CountryOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Country!]
+  country(where: CountryWhereUniqueInput!): Country
+  countriesCount(where: CountryWhereInput! = {}): Int
   administrativeAreas(
     where: AdministrativeAreaWhereInput! = {}
     orderBy: [AdministrativeAreaOrderByInput!]! = []
@@ -1754,14 +1826,6 @@ type Query {
     where: AdministrativeAreaWhereUniqueInput!
   ): AdministrativeArea
   administrativeAreasCount(where: AdministrativeAreaWhereInput! = {}): Int
-  countries(
-    where: CountryWhereInput! = {}
-    orderBy: [CountryOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Country!]
-  country(where: CountryWhereUniqueInput!): Country
-  countriesCount(where: CountryWhereInput! = {}): Int
   emergencyContacts(
     where: EmergencyContactWhereInput! = {}
     orderBy: [EmergencyContactOrderByInput!]! = []

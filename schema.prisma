@@ -40,6 +40,13 @@ model Calendar {
   name String @default("")
 }
 
+model CalendarEvent {
+  id                     String  @id @default(cuid())
+  description            String  @default("")
+  title                  String  @default("")
+  isConfirmationRequired Boolean @default(false)
+}
+
 model Doctor {
   id                String           @id @default(cuid())
   user              User?            @relation("Doctor_user", fields: [userId], references: [id])
@@ -79,6 +86,15 @@ model HealthCard {
   @@index([patientId])
 }
 
+model Country {
+  id                  String               @id @default(cuid())
+  healthCards         HealthCard[]         @relation("HealthCard_country")
+  administrativeAreas AdministrativeArea[] @relation("AdministrativeArea_country")
+  isActive            Boolean              @default(false)
+  label               String               @default("")
+  value               String               @default("")
+}
+
 model AdministrativeArea {
   id        String   @id @default(cuid())
   country   Country? @relation("AdministrativeArea_country", fields: [countryId], references: [id])
@@ -88,15 +104,6 @@ model AdministrativeArea {
   value     String   @default("")
 
   @@index([countryId])
-}
-
-model Country {
-  id                  String               @id @default(cuid())
-  healthCards         HealthCard[]         @relation("HealthCard_country")
-  administrativeAreas AdministrativeArea[] @relation("AdministrativeArea_country")
-  isActive            Boolean              @default(false)
-  label               String               @default("")
-  value               String               @default("")
 }
 
 model EmergencyContact {
