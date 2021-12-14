@@ -8,6 +8,8 @@ import { Calendar } from "./api/calendar/Calendar";
 import { CalendarEvent } from "./api/calendar-event/CalendarEvent";
 import { CalendarEventType } from "./api/calendar-event-type/CalendarEventType";
 import { Schedule } from "./api/schedule/Schedule";
+import { RecurringSlot } from "./api/recurring-slot/RecurringSlot";
+import { TimeInterval } from "./api/time-interval/TimeInterval";
 
 import { Doctor } from "./api/doctor/Doctor";
 import { DoctorType } from "./api/doctor-type/DoctorType";
@@ -34,6 +36,8 @@ export const lists = {
   CalendarEvent,
   CalendarEventType,
   Schedule,
+  RecurringSlot,
+  TimeInterval,
   // Doctor,
   Doctor,
   DoctorLanguage,
