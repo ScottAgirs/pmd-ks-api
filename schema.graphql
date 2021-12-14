@@ -271,6 +271,7 @@ type Calendar {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
+  doctor: Doctor
 }
 
 input CalendarWhereUniqueInput {
@@ -285,6 +286,7 @@ input CalendarWhereInput {
   name: StringFilter
   events: CalendarEventManyRelationFilter
   bookings: BookingManyRelationFilter
+  doctor: DoctorWhereInput
 }
 
 input CalendarEventManyRelationFilter {
@@ -308,6 +310,7 @@ input CalendarUpdateInput {
   name: String
   events: CalendarEventRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
+  doctor: DoctorRelateToOneForUpdateInput
 }
 
 input CalendarEventRelateToManyForUpdateInput {
@@ -333,6 +336,7 @@ input CalendarCreateInput {
   name: String
   events: CalendarEventRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
+  doctor: DoctorRelateToOneForCreateInput
 }
 
 input CalendarEventRelateToManyForCreateInput {
@@ -480,6 +484,7 @@ type Doctor {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
+  calendar: Calendar
   doctorSince: DateTime
   email: String
   isCompleteProfile: Boolean
@@ -521,6 +526,7 @@ input DoctorWhereInput {
   user: UserWhereInput
   appointments: AppointmentWhereInput
   bookings: BookingManyRelationFilter
+  calendar: CalendarWhereInput
   doctorSince: DateTimeFilter
   email: StringFilter
   isCompleteProfile: BooleanFilter
@@ -567,6 +573,7 @@ input DoctorUpdateInput {
   user: UserRelateToOneForUpdateInput
   appointments: AppointmentRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
+  calendar: CalendarRelateToOneForUpdateInput
   doctorSince: DateTime
   email: String
   isCompleteProfile: Boolean
@@ -612,6 +619,7 @@ input DoctorCreateInput {
   user: UserRelateToOneForCreateInput
   appointments: AppointmentRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
+  calendar: CalendarRelateToOneForCreateInput
   doctorSince: DateTime
   email: String
   isCompleteProfile: Boolean

@@ -52,6 +52,8 @@ model Calendar {
   name     String          @default("")
   events   CalendarEvent[] @relation("CalendarEvent_calendar")
   bookings Booking[]       @relation("Booking_calendar")
+  doctor   Doctor?         @relation("Calendar_doctor", fields: [doctorId], references: [id])
+  doctorId String?         @unique @map("doctor")
 }
 
 model CalendarEvent {
@@ -82,6 +84,7 @@ model Doctor {
   userId            String?          @unique @map("user")
   appointments      Appointment?     @relation("Appointment_doctor")
   bookings          Booking[]        @relation("Booking_doctor")
+  calendar          Calendar?        @relation("Calendar_doctor")
   doctorSince       DateTime
   email             String           @unique @default("")
   isCompleteProfile Boolean          @default(false)
