@@ -113,6 +113,7 @@ input PatientRelateToOneForCreateInput {
 
 type Booking {
   id: ID!
+  durationMins: Int
   event(
     where: CalendarEventWhereInput! = {}
     orderBy: [CalendarEventOrderByInput!]! = []
@@ -120,7 +121,6 @@ type Booking {
     skip: Int! = 0
   ): [CalendarEvent!]
   eventCount(where: CalendarEventWhereInput! = {}): Int
-  durationMins: Int
   isConfirmed: Boolean
   name: String
   notes: String
@@ -143,19 +143,13 @@ input BookingWhereInput {
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
   id: IDFilter
-  event: CalendarEventManyRelationFilter
   durationMins: IntFilter
+  event: CalendarEventManyRelationFilter
   isConfirmed: BooleanFilter
   name: StringFilter
   notes: StringFilter
   patient: PatientManyRelationFilter
   startsAt: DateTimeNullableFilter
-}
-
-input CalendarEventManyRelationFilter {
-  every: CalendarEventWhereInput
-  some: CalendarEventWhereInput
-  none: CalendarEventWhereInput
 }
 
 input IntFilter {
@@ -167,6 +161,12 @@ input IntFilter {
   gt: Int
   gte: Int
   not: IntFilter
+}
+
+input CalendarEventManyRelationFilter {
+  every: CalendarEventWhereInput
+  some: CalendarEventWhereInput
+  none: CalendarEventWhereInput
 }
 
 input BooleanFilter {
@@ -224,8 +224,8 @@ input BookingOrderByInput {
 }
 
 input BookingUpdateInput {
-  event: CalendarEventRelateToManyForUpdateInput
   durationMins: Int
+  event: CalendarEventRelateToManyForUpdateInput
   isConfirmed: Boolean
   name: String
   notes: String
@@ -253,8 +253,8 @@ input BookingUpdateArgs {
 }
 
 input BookingCreateInput {
-  event: CalendarEventRelateToManyForCreateInput
   durationMins: Int
+  event: CalendarEventRelateToManyForCreateInput
   isConfirmed: Boolean
   name: String
   notes: String

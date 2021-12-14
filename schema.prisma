@@ -27,8 +27,8 @@ model Appointment {
 
 model Booking {
   id           String          @id @default(cuid())
-  event        CalendarEvent[] @relation("Booking_event")
   durationMins Int
+  event        CalendarEvent[] @relation("Booking_event")
   isConfirmed  Boolean         @default(false)
   name         String          @default("")
   notes        String          @default("")
