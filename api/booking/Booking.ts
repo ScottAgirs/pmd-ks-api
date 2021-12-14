@@ -13,5 +13,6 @@ export const Booking = list({
     notes: text({ validation: { isRequired: false } }),
     patient: relationship({ ref: 'Patient.bookings', many: false }),
     startsAt: timestamp(),
+    endsAt: timestamp(),
   },
 })
