@@ -12,6 +12,10 @@ import { StepperProg } from "./api/stepper-prog/StepperProg";
 import { StepperStep } from "./api/stepper-step/StepperStep";
 import { StepperStepProg } from "./api/stepper-step-prog/StepperStepProg";
 
+// Location
+import { AdministrativeArea } from "./api/administrative-area/AdministrativeArea";
+import { Country } from "./api/country/Country";
+
 
 export const lists = {
   Booking,
@@ -19,6 +23,9 @@ export const lists = {
   Doctor,
   DoctorLanguage,
   HealthCard,
+  // Country
+  AdministrativeArea,
+  Country,
   User,
   Patient,
   Prompt,
