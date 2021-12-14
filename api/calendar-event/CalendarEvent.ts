@@ -7,8 +7,7 @@ export const CalendarEvent = list({
     description: text({ validation: { isRequired: true } }),
     title: text({ validation: { isRequired: true } }),
     isConfirmationRequired: checkbox(),
-    // // TODO: calendar
-    // calendar: relationship({ ref: 'Calendar.calendarEvents', many: false }),
+    calendar: relationship({ ref: 'Calendar.calendarEvents', many: false }),
     // // TODO: bookings
     // bookings: relationship({ ref: 'Booking.calendarEvent', many: false }),
     calendarEventType: relationship({ ref: 'CalendarEventType.events', many: false }),
