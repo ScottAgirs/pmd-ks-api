@@ -8,10 +8,10 @@ export const Calendar = list({
   fields: {
     name: text({ validation: { isRequired: true } }),
     events: relationship({ ref: 'CalendarEvent.calendar', many: true }),
+    bookings: relationship({ ref: 'Booking.calendar', many: true }),
     // TODO: doctor
     // TODO: schedules
     // TODO: defaultSchedule
     // TODO: events
-    // TODO: bookings
   },
 }) 
