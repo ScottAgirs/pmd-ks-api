@@ -306,7 +306,7 @@ model StepperStep {
 model StepperStepProg {
   id            String       @id @default(cuid())
   name          String       @default("")
-  percentDone   Int
+  percentDone   Int?
   isCompleted   Boolean      @default(false)
   stepper       Stepper?     @relation("StepperStepProg_stepper", fields: [stepperId], references: [id])
   stepperId     String?      @map("stepper")
