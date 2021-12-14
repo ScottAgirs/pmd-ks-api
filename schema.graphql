@@ -1188,11 +1188,19 @@ input EmergencyContactCreateInput {
 
 type User {
   id: ID!
+  email: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  country: String
+  administrativeArea: String
+  locality: String
+  postalCode: String
+  thoroughfare: String
+  premise: String
   dateOfBirth: DateTime
+  doctor: Doctor
   firstName: String
   lastName: String
-  doctor: Doctor
-  email: String
   password: PasswordState
   prompts(
     where: PromptWhereInput! = {}
@@ -1233,11 +1241,19 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
   id: IDFilter
+  email: StringFilter
+  cellPhoneNumberString: StringFilter
+  homePhoneNumberString: StringFilter
+  country: StringFilter
+  administrativeArea: StringFilter
+  locality: StringFilter
+  postalCode: StringFilter
+  thoroughfare: StringFilter
+  premise: StringFilter
   dateOfBirth: DateTimeNullableFilter
+  doctor: DoctorWhereInput
   firstName: StringFilter
   lastName: StringFilter
-  doctor: DoctorWhereInput
-  email: StringFilter
   prompts: PromptManyRelationFilter
   patient: PatientWhereInput
   sex: StringFilter
@@ -1265,19 +1281,35 @@ input StepperStepProgManyRelationFilter {
 
 input UserOrderByInput {
   id: OrderDirection
+  email: OrderDirection
+  cellPhoneNumberString: OrderDirection
+  homePhoneNumberString: OrderDirection
+  country: OrderDirection
+  administrativeArea: OrderDirection
+  locality: OrderDirection
+  postalCode: OrderDirection
+  thoroughfare: OrderDirection
+  premise: OrderDirection
   dateOfBirth: OrderDirection
   firstName: OrderDirection
   lastName: OrderDirection
-  email: OrderDirection
   sex: OrderDirection
 }
 
 input UserUpdateInput {
+  email: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  country: String
+  administrativeArea: String
+  locality: String
+  postalCode: String
+  thoroughfare: String
+  premise: String
   dateOfBirth: DateTime
+  doctor: DoctorRelateToOneForUpdateInput
   firstName: String
   lastName: String
-  doctor: DoctorRelateToOneForUpdateInput
-  email: String
   password: String
   prompts: PromptRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
@@ -1313,11 +1345,19 @@ input UserUpdateArgs {
 }
 
 input UserCreateInput {
+  email: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  country: String
+  administrativeArea: String
+  locality: String
+  postalCode: String
+  thoroughfare: String
+  premise: String
   dateOfBirth: DateTime
+  doctor: DoctorRelateToOneForCreateInput
   firstName: String
   lastName: String
-  doctor: DoctorRelateToOneForCreateInput
-  email: String
   password: String
   prompts: PromptRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
@@ -2130,9 +2170,9 @@ type UserAuthenticationWithPasswordFailure {
 }
 
 input CreateInitialUserInput {
+  email: String
   firstName: String
   lastName: String
-  email: String
   password: String
 }
 

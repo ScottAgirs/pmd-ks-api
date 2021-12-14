@@ -184,18 +184,26 @@ model EmergencyContact {
 }
 
 model User {
-  id               String            @id @default(cuid())
-  dateOfBirth      DateTime?
-  firstName        String            @default("")
-  lastName         String            @default("")
-  doctor           Doctor?           @relation("Doctor_user")
-  email            String            @unique @default("")
-  password         String
-  prompts          Prompt[]          @relation("Prompt_user")
-  patient          Patient?          @relation("Patient_user")
-  sex              String            @default("")
-  stepperProgs     StepperProg[]     @relation("StepperProg_user")
-  stepperStepProgs StepperStepProg[] @relation("StepperStepProg_user")
+  id                    String            @id @default(cuid())
+  email                 String            @unique @default("")
+  cellPhoneNumberString String            @default("")
+  homePhoneNumberString String            @default("")
+  country               String            @default("")
+  administrativeArea    String            @default("")
+  locality              String            @default("")
+  postalCode            String            @default("")
+  thoroughfare          String            @default("")
+  premise               String            @default("")
+  dateOfBirth           DateTime?
+  doctor                Doctor?           @relation("Doctor_user")
+  firstName             String            @default("")
+  lastName              String            @default("")
+  password              String
+  prompts               Prompt[]          @relation("Prompt_user")
+  patient               Patient?          @relation("Patient_user")
+  sex                   String            @default("")
+  stepperProgs          StepperProg[]     @relation("StepperProg_user")
+  stepperStepProgs      StepperStepProg[] @relation("StepperStepProg_user")
 }
 
 model Patient {
