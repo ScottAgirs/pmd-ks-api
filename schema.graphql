@@ -4,6 +4,7 @@
 type Appointment {
   id: ID!
   doctor: Doctor
+  patient: Patient
   scheduledStartsAt: DateTime
   scheduledEndsAt: DateTime
   startedAt: DateTime
@@ -23,6 +24,7 @@ input AppointmentWhereInput {
   NOT: [AppointmentWhereInput!]
   id: IDFilter
   doctor: DoctorWhereInput
+  patient: PatientWhereInput
   scheduledStartsAt: DateTimeNullableFilter
   scheduledEndsAt: DateTimeNullableFilter
   startedAt: DateTimeNullableFilter
@@ -66,6 +68,7 @@ enum OrderDirection {
 
 input AppointmentUpdateInput {
   doctor: DoctorRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
   scheduledStartsAt: DateTime
   scheduledEndsAt: DateTime
   startedAt: DateTime
@@ -78,6 +81,12 @@ input DoctorRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input PatientRelateToOneForUpdateInput {
+  create: PatientCreateInput
+  connect: PatientWhereUniqueInput
+  disconnect: Boolean
+}
+
 input AppointmentUpdateArgs {
   where: AppointmentWhereUniqueInput!
   data: AppointmentUpdateInput!
@@ -85,6 +94,7 @@ input AppointmentUpdateArgs {
 
 input AppointmentCreateInput {
   doctor: DoctorRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
   scheduledStartsAt: DateTime
   scheduledEndsAt: DateTime
   startedAt: DateTime
@@ -94,6 +104,11 @@ input AppointmentCreateInput {
 input DoctorRelateToOneForCreateInput {
   create: DoctorCreateInput
   connect: DoctorWhereUniqueInput
+}
+
+input PatientRelateToOneForCreateInput {
+  create: PatientCreateInput
+  connect: PatientWhereUniqueInput
 }
 
 type Booking {
@@ -535,12 +550,6 @@ input CountryRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input PatientRelateToOneForUpdateInput {
-  create: PatientCreateInput
-  connect: PatientWhereUniqueInput
-  disconnect: Boolean
-}
-
 input HealthCardUpdateArgs {
   where: HealthCardWhereUniqueInput!
   data: HealthCardUpdateInput!
@@ -560,11 +569,6 @@ input HealthCardCreateInput {
 input CountryRelateToOneForCreateInput {
   create: CountryCreateInput
   connect: CountryWhereUniqueInput
-}
-
-input PatientRelateToOneForCreateInput {
-  create: PatientCreateInput
-  connect: PatientWhereUniqueInput
 }
 
 type AdministrativeArea {
@@ -864,6 +868,13 @@ input StepperStepProgRelateToManyForCreateInput {
 
 type Patient {
   id: ID!
+  appointments(
+    where: AppointmentWhereInput! = {}
+    orderBy: [AppointmentOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Appointment!]
+  appointmentsCount(where: AppointmentWhereInput! = {}): Int
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -871,9 +882,6 @@ type Patient {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
-  name: String
-  isCompleteProfile: Boolean
-  user: User
   healthCards(
     where: HealthCardWhereInput! = {}
     orderBy: [HealthCardOrderByInput!]! = []
@@ -881,13 +889,8 @@ type Patient {
     skip: Int! = 0
   ): [HealthCard!]
   healthCardsCount(where: HealthCardWhereInput! = {}): Int
-  visitedDoctors(
-    where: DoctorWhereInput! = {}
-    orderBy: [DoctorOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Doctor!]
-  visitedDoctorsCount(where: DoctorWhereInput! = {}): Int
+  isCompleteProfile: Boolean
+  name: String
   savedDoctors(
     where: DoctorWhereInput! = {}
     orderBy: [DoctorOrderByInput!]! = []
@@ -895,6 +898,14 @@ type Patient {
     skip: Int! = 0
   ): [Doctor!]
   savedDoctorsCount(where: DoctorWhereInput! = {}): Int
+  user: User
+  visitedDoctors(
+    where: DoctorWhereInput! = {}
+    orderBy: [DoctorOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Doctor!]
+  visitedDoctorsCount(where: DoctorWhereInput! = {}): Int
 }
 
 input PatientWhereUniqueInput {
@@ -906,13 +917,20 @@ input PatientWhereInput {
   OR: [PatientWhereInput!]
   NOT: [PatientWhereInput!]
   id: IDFilter
+  appointments: AppointmentManyRelationFilter
   bookings: BookingManyRelationFilter
-  name: StringFilter
-  isCompleteProfile: BooleanFilter
-  user: UserWhereInput
   healthCards: HealthCardManyRelationFilter
-  visitedDoctors: DoctorManyRelationFilter
+  isCompleteProfile: BooleanFilter
+  name: StringFilter
   savedDoctors: DoctorManyRelationFilter
+  user: UserWhereInput
+  visitedDoctors: DoctorManyRelationFilter
+}
+
+input AppointmentManyRelationFilter {
+  every: AppointmentWhereInput
+  some: AppointmentWhereInput
+  none: AppointmentWhereInput
 }
 
 input BookingManyRelationFilter {
@@ -923,18 +941,26 @@ input BookingManyRelationFilter {
 
 input PatientOrderByInput {
   id: OrderDirection
-  name: OrderDirection
   isCompleteProfile: OrderDirection
+  name: OrderDirection
 }
 
 input PatientUpdateInput {
+  appointments: AppointmentRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
-  name: String
-  isCompleteProfile: Boolean
-  user: UserRelateToOneForUpdateInput
   healthCards: HealthCardRelateToManyForUpdateInput
-  visitedDoctors: DoctorRelateToManyForUpdateInput
+  isCompleteProfile: Boolean
+  name: String
   savedDoctors: DoctorRelateToManyForUpdateInput
+  user: UserRelateToOneForUpdateInput
+  visitedDoctors: DoctorRelateToManyForUpdateInput
+}
+
+input AppointmentRelateToManyForUpdateInput {
+  disconnect: [AppointmentWhereUniqueInput!]
+  set: [AppointmentWhereUniqueInput!]
+  create: [AppointmentCreateInput!]
+  connect: [AppointmentWhereUniqueInput!]
 }
 
 input BookingRelateToManyForUpdateInput {
@@ -950,13 +976,19 @@ input PatientUpdateArgs {
 }
 
 input PatientCreateInput {
+  appointments: AppointmentRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
-  name: String
-  isCompleteProfile: Boolean
-  user: UserRelateToOneForCreateInput
   healthCards: HealthCardRelateToManyForCreateInput
-  visitedDoctors: DoctorRelateToManyForCreateInput
+  isCompleteProfile: Boolean
+  name: String
   savedDoctors: DoctorRelateToManyForCreateInput
+  user: UserRelateToOneForCreateInput
+  visitedDoctors: DoctorRelateToManyForCreateInput
+}
+
+input AppointmentRelateToManyForCreateInput {
+  create: [AppointmentCreateInput!]
+  connect: [AppointmentWhereUniqueInput!]
 }
 
 input BookingRelateToManyForCreateInput {

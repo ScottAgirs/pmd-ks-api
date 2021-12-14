@@ -15,10 +15,14 @@ model Appointment {
   id                String    @id @default(cuid())
   doctor            Doctor?   @relation("Appointment_doctor", fields: [doctorId], references: [id])
   doctorId          String?   @unique @map("doctor")
+  patient           Patient?  @relation("Appointment_patient", fields: [patientId], references: [id])
+  patientId         String?   @map("patient")
   scheduledStartsAt DateTime?
   scheduledEndsAt   DateTime?
   startedAt         DateTime?
   endedAt           DateTime?
+
+  @@index([patientId])
 }
 
 model Booking {
@@ -109,15 +113,16 @@ model User {
 }
 
 model Patient {
-  id                String       @id @default(cuid())
-  bookings          Booking[]    @relation("Booking_patient")
-  name              String       @default("")
-  isCompleteProfile Boolean      @default(false)
-  user              User?        @relation("Patient_user", fields: [userId], references: [id])
-  userId            String?      @unique @map("user")
-  healthCards       HealthCard[] @relation("HealthCard_patient")
-  visitedDoctors    Doctor[]     @relation("Doctor_patients")
-  savedDoctors      Doctor[]     @relation("Doctor_savedByPatients")
+  id                String        @id @default(cuid())
+  appointments      Appointment[] @relation("Appointment_patient")
+  bookings          Booking[]     @relation("Booking_patient")
+  healthCards       HealthCard[]  @relation("HealthCard_patient")
+  isCompleteProfile Boolean       @default(false)
+  name              String        @default("")
+  savedDoctors      Doctor[]      @relation("Doctor_savedByPatients")
+  user              User?         @relation("Patient_user", fields: [userId], references: [id])
+  userId            String?       @unique @map("user")
+  visitedDoctors    Doctor[]      @relation("Doctor_patients")
 }
 
 model Prompt {
