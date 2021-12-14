@@ -1188,6 +1188,7 @@ input EmergencyContactCreateInput {
 
 type User {
   id: ID!
+  dateOfBirth: DateTime
   firstName: String
   lastName: String
   doctor: Doctor
@@ -1201,6 +1202,7 @@ type User {
   ): [Prompt!]
   promptsCount(where: PromptWhereInput! = {}): Int
   patient: Patient
+  sex: String
   stepperProgs(
     where: StepperProgWhereInput! = {}
     orderBy: [StepperProgOrderByInput!]! = []
@@ -1231,12 +1233,14 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
   id: IDFilter
+  dateOfBirth: DateTimeNullableFilter
   firstName: StringFilter
   lastName: StringFilter
   doctor: DoctorWhereInput
   email: StringFilter
   prompts: PromptManyRelationFilter
   patient: PatientWhereInput
+  sex: StringFilter
   stepperProgs: StepperProgManyRelationFilter
   stepperStepProgs: StepperStepProgManyRelationFilter
 }
@@ -1261,12 +1265,15 @@ input StepperStepProgManyRelationFilter {
 
 input UserOrderByInput {
   id: OrderDirection
+  dateOfBirth: OrderDirection
   firstName: OrderDirection
   lastName: OrderDirection
   email: OrderDirection
+  sex: OrderDirection
 }
 
 input UserUpdateInput {
+  dateOfBirth: DateTime
   firstName: String
   lastName: String
   doctor: DoctorRelateToOneForUpdateInput
@@ -1274,6 +1281,7 @@ input UserUpdateInput {
   password: String
   prompts: PromptRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
+  sex: String
   stepperProgs: StepperProgRelateToManyForUpdateInput
   stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
 }
@@ -1305,6 +1313,7 @@ input UserUpdateArgs {
 }
 
 input UserCreateInput {
+  dateOfBirth: DateTime
   firstName: String
   lastName: String
   doctor: DoctorRelateToOneForCreateInput
@@ -1312,6 +1321,7 @@ input UserCreateInput {
   password: String
   prompts: PromptRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
+  sex: String
   stepperProgs: StepperProgRelateToManyForCreateInput
   stepperStepProgs: StepperStepProgRelateToManyForCreateInput
 }
