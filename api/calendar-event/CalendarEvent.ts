@@ -11,8 +11,6 @@ export const CalendarEvent = list({
     // calendar: relationship({ ref: 'Calendar.calendarEvents', many: false }),
     // // TODO: bookings
     // bookings: relationship({ ref: 'Booking.calendarEvent', many: false }),
-    // // TODO: schedule
-    // patient: relationship({ ref: 'Patient.bookings', many: false }),
     calendarEventType: relationship({ ref: 'CalendarEventType.events', many: false }),
   },
 })
