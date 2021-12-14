@@ -7,7 +7,7 @@ const { list } = require("@keystone-6/core");
 export const Calendar = list({
   fields: {
     name: text({ validation: { isRequired: true } }),
-    // TODO: events
+    calendarEvents: relationship({ ref: 'CalendarEvent.calendar', many: true }),
     // TODO: doctor
     // TODO: schedules
     // TODO: defaultSchedule
