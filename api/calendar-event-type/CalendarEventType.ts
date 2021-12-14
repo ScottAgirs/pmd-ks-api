@@ -6,6 +6,6 @@ export const CalendarEventType = list({
   fields: {
     label: text({ validation: { isRequired: true } }),
     value: text({ validation: { isRequired: true } }),
-    events: relationship({ ref: 'CalendarEvent.calendarEventType', many: true }),
+    events: relationship({ ref: 'CalendarEvent.eventType', many: true }),
   },
 })
