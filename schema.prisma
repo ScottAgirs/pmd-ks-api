@@ -26,14 +26,22 @@ model Appointment {
 }
 
 model Booking {
-  id           String          @id @default(cuid())
+  id           String         @id @default(cuid())
+  doctor       Doctor?        @relation("Booking_doctor", fields: [doctorId], references: [id])
+  doctorId     String?        @map("doctor")
   durationMins Int
-  event        CalendarEvent[] @relation("Booking_event")
-  isConfirmed  Boolean         @default(false)
-  name         String          @default("")
-  notes        String          @default("")
-  patient      Patient[]       @relation("Booking_patient")
+  event        CalendarEvent? @relation("Booking_event", fields: [eventId], references: [id])
+  eventId      String?        @map("event")
+  isConfirmed  Boolean        @default(false)
+  name         String         @default("")
+  notes        String         @default("")
+  patient      Patient?       @relation("Booking_patient", fields: [patientId], references: [id])
+  patientId    String?        @map("patient")
   startsAt     DateTime?
+
+  @@index([doctorId])
+  @@index([eventId])
+  @@index([patientId])
 }
 
 model Calendar {
@@ -69,6 +77,7 @@ model Doctor {
   user              User?            @relation("Doctor_user", fields: [userId], references: [id])
   userId            String?          @unique @map("user")
   appointments      Appointment?     @relation("Appointment_doctor")
+  bookings          Booking[]        @relation("Booking_doctor")
   doctorSince       DateTime
   email             String           @unique @default("")
   isCompleteProfile Boolean          @default(false)

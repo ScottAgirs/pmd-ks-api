@@ -113,24 +113,13 @@ input PatientRelateToOneForCreateInput {
 
 type Booking {
   id: ID!
+  doctor: Doctor
   durationMins: Int
-  event(
-    where: CalendarEventWhereInput! = {}
-    orderBy: [CalendarEventOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [CalendarEvent!]
-  eventCount(where: CalendarEventWhereInput! = {}): Int
+  event: CalendarEvent
   isConfirmed: Boolean
   name: String
   notes: String
-  patient(
-    where: PatientWhereInput! = {}
-    orderBy: [PatientOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Patient!]
-  patientCount(where: PatientWhereInput! = {}): Int
+  patient: Patient
   startsAt: DateTime
 }
 
@@ -143,12 +132,13 @@ input BookingWhereInput {
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
   id: IDFilter
+  doctor: DoctorWhereInput
   durationMins: IntFilter
-  event: CalendarEventManyRelationFilter
+  event: CalendarEventWhereInput
   isConfirmed: BooleanFilter
   name: StringFilter
   notes: StringFilter
-  patient: PatientManyRelationFilter
+  patient: PatientWhereInput
   startsAt: DateTimeNullableFilter
 }
 
@@ -161,12 +151,6 @@ input IntFilter {
   gt: Int
   gte: Int
   not: IntFilter
-}
-
-input CalendarEventManyRelationFilter {
-  every: CalendarEventWhereInput
-  some: CalendarEventWhereInput
-  none: CalendarEventWhereInput
 }
 
 input BooleanFilter {
@@ -208,12 +192,6 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input PatientManyRelationFilter {
-  every: PatientWhereInput
-  some: PatientWhereInput
-  none: PatientWhereInput
-}
-
 input BookingOrderByInput {
   id: OrderDirection
   durationMins: OrderDirection
@@ -224,27 +202,20 @@ input BookingOrderByInput {
 }
 
 input BookingUpdateInput {
+  doctor: DoctorRelateToOneForUpdateInput
   durationMins: Int
-  event: CalendarEventRelateToManyForUpdateInput
+  event: CalendarEventRelateToOneForUpdateInput
   isConfirmed: Boolean
   name: String
   notes: String
-  patient: PatientRelateToManyForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
   startsAt: DateTime
 }
 
-input CalendarEventRelateToManyForUpdateInput {
-  disconnect: [CalendarEventWhereUniqueInput!]
-  set: [CalendarEventWhereUniqueInput!]
-  create: [CalendarEventCreateInput!]
-  connect: [CalendarEventWhereUniqueInput!]
-}
-
-input PatientRelateToManyForUpdateInput {
-  disconnect: [PatientWhereUniqueInput!]
-  set: [PatientWhereUniqueInput!]
-  create: [PatientCreateInput!]
-  connect: [PatientWhereUniqueInput!]
+input CalendarEventRelateToOneForUpdateInput {
+  create: CalendarEventCreateInput
+  connect: CalendarEventWhereUniqueInput
+  disconnect: Boolean
 }
 
 input BookingUpdateArgs {
@@ -253,23 +224,19 @@ input BookingUpdateArgs {
 }
 
 input BookingCreateInput {
+  doctor: DoctorRelateToOneForCreateInput
   durationMins: Int
-  event: CalendarEventRelateToManyForCreateInput
+  event: CalendarEventRelateToOneForCreateInput
   isConfirmed: Boolean
   name: String
   notes: String
-  patient: PatientRelateToManyForCreateInput
+  patient: PatientRelateToOneForCreateInput
   startsAt: DateTime
 }
 
-input CalendarEventRelateToManyForCreateInput {
-  create: [CalendarEventCreateInput!]
-  connect: [CalendarEventWhereUniqueInput!]
-}
-
-input PatientRelateToManyForCreateInput {
-  create: [PatientCreateInput!]
-  connect: [PatientWhereUniqueInput!]
+input CalendarEventRelateToOneForCreateInput {
+  create: CalendarEventCreateInput
+  connect: CalendarEventWhereUniqueInput
 }
 
 type Calendar {
@@ -297,6 +264,12 @@ input CalendarWhereInput {
   events: CalendarEventManyRelationFilter
 }
 
+input CalendarEventManyRelationFilter {
+  every: CalendarEventWhereInput
+  some: CalendarEventWhereInput
+  none: CalendarEventWhereInput
+}
+
 input CalendarOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -307,6 +280,13 @@ input CalendarUpdateInput {
   events: CalendarEventRelateToManyForUpdateInput
 }
 
+input CalendarEventRelateToManyForUpdateInput {
+  disconnect: [CalendarEventWhereUniqueInput!]
+  set: [CalendarEventWhereUniqueInput!]
+  create: [CalendarEventCreateInput!]
+  connect: [CalendarEventWhereUniqueInput!]
+}
+
 input CalendarUpdateArgs {
   where: CalendarWhereUniqueInput!
   data: CalendarUpdateInput!
@@ -315,6 +295,11 @@ input CalendarUpdateArgs {
 input CalendarCreateInput {
   name: String
   events: CalendarEventRelateToManyForCreateInput
+}
+
+input CalendarEventRelateToManyForCreateInput {
+  create: [CalendarEventCreateInput!]
+  connect: [CalendarEventWhereUniqueInput!]
 }
 
 type CalendarEvent {
@@ -474,6 +459,13 @@ type Doctor {
   id: ID!
   user: User
   appointments: Appointment
+  bookings(
+    where: BookingWhereInput! = {}
+    orderBy: [BookingOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Booking!]
+  bookingsCount(where: BookingWhereInput! = {}): Int
   doctorSince: DateTime
   email: String
   isCompleteProfile: Boolean
@@ -514,6 +506,7 @@ input DoctorWhereInput {
   id: IDFilter
   user: UserWhereInput
   appointments: AppointmentWhereInput
+  bookings: BookingManyRelationFilter
   doctorSince: DateTimeFilter
   email: StringFilter
   isCompleteProfile: BooleanFilter
@@ -541,6 +534,12 @@ input DoctorLanguageManyRelationFilter {
   none: DoctorLanguageWhereInput
 }
 
+input PatientManyRelationFilter {
+  every: PatientWhereInput
+  some: PatientWhereInput
+  none: PatientWhereInput
+}
+
 input DoctorOrderByInput {
   id: OrderDirection
   doctorSince: OrderDirection
@@ -553,6 +552,7 @@ input DoctorOrderByInput {
 input DoctorUpdateInput {
   user: UserRelateToOneForUpdateInput
   appointments: AppointmentRelateToOneForUpdateInput
+  bookings: BookingRelateToManyForUpdateInput
   doctorSince: DateTime
   email: String
   isCompleteProfile: Boolean
@@ -582,6 +582,13 @@ input DoctorLanguageRelateToManyForUpdateInput {
   connect: [DoctorLanguageWhereUniqueInput!]
 }
 
+input PatientRelateToManyForUpdateInput {
+  disconnect: [PatientWhereUniqueInput!]
+  set: [PatientWhereUniqueInput!]
+  create: [PatientCreateInput!]
+  connect: [PatientWhereUniqueInput!]
+}
+
 input DoctorUpdateArgs {
   where: DoctorWhereUniqueInput!
   data: DoctorUpdateInput!
@@ -590,6 +597,7 @@ input DoctorUpdateArgs {
 input DoctorCreateInput {
   user: UserRelateToOneForCreateInput
   appointments: AppointmentRelateToOneForCreateInput
+  bookings: BookingRelateToManyForCreateInput
   doctorSince: DateTime
   email: String
   isCompleteProfile: Boolean
@@ -613,6 +621,11 @@ input AppointmentRelateToOneForCreateInput {
 input DoctorLanguageRelateToManyForCreateInput {
   create: [DoctorLanguageCreateInput!]
   connect: [DoctorLanguageWhereUniqueInput!]
+}
+
+input PatientRelateToManyForCreateInput {
+  create: [PatientCreateInput!]
+  connect: [PatientWhereUniqueInput!]
 }
 
 type DoctorLanguage {
