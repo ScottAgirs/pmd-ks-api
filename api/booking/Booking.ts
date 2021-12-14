@@ -10,7 +10,7 @@ export const Booking = list({
     startsAt: timestamp(),
     notes: text({ validation: { isRequired: false } }),
     patient: relationship({ ref: 'Patient.bookings', many: true }),
-    // TODO: event
+    event: relationship({ ref: 'CalendarEvent.bookings', many: true }),
     // TODO: doctor
     // TODO: calendar
   },
