@@ -8,6 +8,8 @@ import { Doctor } from "./api/doctor/Doctor";
 import { DoctorLanguage } from "./api/doctor-language/DoctorLanguage";
 import { HealthCard } from "./api/health-card/HealthCard";
 
+import { EmergencyContact } from "./api/emergency-contact/EmergencyContact";
+
 import { Stepper } from "./api/stepper/Stepper";
 import { StepperProg } from "./api/stepper-prog/StepperProg";
 import { StepperStep } from "./api/stepper-step/StepperStep";
@@ -28,6 +30,8 @@ export const lists = {
   // Country
   AdministrativeArea,
   Country,
+  // EmergencyContact,
+  EmergencyContact,
   User,
   Patient,
   Prompt,
