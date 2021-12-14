@@ -20,7 +20,7 @@ const { withAuth } = createAuth({
   sessionData: 'firstName',
   secretField: 'password',
   initFirstItem: {
-    fields: ['firstName', 'lastName', 'email', 'password'],
+    fields: ['firstName', 'lastName', 'email', 'password', 'username'],
   },
 });
 
