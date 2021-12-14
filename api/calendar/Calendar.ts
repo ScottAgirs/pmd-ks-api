@@ -12,6 +12,5 @@ export const Calendar = list({
     doctor: relationship({ ref: 'Doctor.calendar', many: false }),
     // TODO: schedules
     // TODO: defaultSchedule
-    // TODO: events
   },
 }) 
