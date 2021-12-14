@@ -122,6 +122,7 @@ type Booking {
   notes: String
   patient: Patient
   startsAt: DateTime
+  endsAt: DateTime
 }
 
 input BookingWhereUniqueInput {
@@ -142,6 +143,7 @@ input BookingWhereInput {
   notes: StringFilter
   patient: PatientWhereInput
   startsAt: DateTimeNullableFilter
+  endsAt: DateTimeNullableFilter
 }
 
 input IntFilter {
@@ -201,6 +203,7 @@ input BookingOrderByInput {
   name: OrderDirection
   notes: OrderDirection
   startsAt: OrderDirection
+  endsAt: OrderDirection
 }
 
 input BookingUpdateInput {
@@ -213,6 +216,7 @@ input BookingUpdateInput {
   notes: String
   patient: PatientRelateToOneForUpdateInput
   startsAt: DateTime
+  endsAt: DateTime
 }
 
 input CalendarRelateToOneForUpdateInput {
@@ -242,6 +246,7 @@ input BookingCreateInput {
   notes: String
   patient: PatientRelateToOneForCreateInput
   startsAt: DateTime
+  endsAt: DateTime
 }
 
 input CalendarRelateToOneForCreateInput {
