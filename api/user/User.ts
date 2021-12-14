@@ -42,6 +42,7 @@ export const User = list({
     username: text({ validation: { isRequired: true } }),
   },
   ui: {
+    labelField: 'email',
     listView: {
       initialColumns: ['firstName', 'lastName', 'email', "id"],
     },
