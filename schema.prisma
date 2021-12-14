@@ -27,6 +27,8 @@ model Appointment {
 
 model Booking {
   id           String         @id @default(cuid())
+  calendar     Calendar?      @relation("Booking_calendar", fields: [calendarId], references: [id])
+  calendarId   String?        @map("calendar")
   doctor       Doctor?        @relation("Booking_doctor", fields: [doctorId], references: [id])
   doctorId     String?        @map("doctor")
   durationMins Int
@@ -39,15 +41,17 @@ model Booking {
   patientId    String?        @map("patient")
   startsAt     DateTime?
 
+  @@index([calendarId])
   @@index([doctorId])
   @@index([eventId])
   @@index([patientId])
 }
 
 model Calendar {
-  id     String          @id @default(cuid())
-  name   String          @default("")
-  events CalendarEvent[] @relation("CalendarEvent_calendar")
+  id       String          @id @default(cuid())
+  name     String          @default("")
+  events   CalendarEvent[] @relation("CalendarEvent_calendar")
+  bookings Booking[]       @relation("Booking_calendar")
 }
 
 model CalendarEvent {

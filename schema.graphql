@@ -113,6 +113,7 @@ input PatientRelateToOneForCreateInput {
 
 type Booking {
   id: ID!
+  calendar: Calendar
   doctor: Doctor
   durationMins: Int
   event: CalendarEvent
@@ -132,6 +133,7 @@ input BookingWhereInput {
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
   id: IDFilter
+  calendar: CalendarWhereInput
   doctor: DoctorWhereInput
   durationMins: IntFilter
   event: CalendarEventWhereInput
@@ -202,6 +204,7 @@ input BookingOrderByInput {
 }
 
 input BookingUpdateInput {
+  calendar: CalendarRelateToOneForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
   durationMins: Int
   event: CalendarEventRelateToOneForUpdateInput
@@ -210,6 +213,12 @@ input BookingUpdateInput {
   notes: String
   patient: PatientRelateToOneForUpdateInput
   startsAt: DateTime
+}
+
+input CalendarRelateToOneForUpdateInput {
+  create: CalendarCreateInput
+  connect: CalendarWhereUniqueInput
+  disconnect: Boolean
 }
 
 input CalendarEventRelateToOneForUpdateInput {
@@ -224,6 +233,7 @@ input BookingUpdateArgs {
 }
 
 input BookingCreateInput {
+  calendar: CalendarRelateToOneForCreateInput
   doctor: DoctorRelateToOneForCreateInput
   durationMins: Int
   event: CalendarEventRelateToOneForCreateInput
@@ -232,6 +242,11 @@ input BookingCreateInput {
   notes: String
   patient: PatientRelateToOneForCreateInput
   startsAt: DateTime
+}
+
+input CalendarRelateToOneForCreateInput {
+  create: CalendarCreateInput
+  connect: CalendarWhereUniqueInput
 }
 
 input CalendarEventRelateToOneForCreateInput {
@@ -249,6 +264,13 @@ type Calendar {
     skip: Int! = 0
   ): [CalendarEvent!]
   eventsCount(where: CalendarEventWhereInput! = {}): Int
+  bookings(
+    where: BookingWhereInput! = {}
+    orderBy: [BookingOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Booking!]
+  bookingsCount(where: BookingWhereInput! = {}): Int
 }
 
 input CalendarWhereUniqueInput {
@@ -262,12 +284,19 @@ input CalendarWhereInput {
   id: IDFilter
   name: StringFilter
   events: CalendarEventManyRelationFilter
+  bookings: BookingManyRelationFilter
 }
 
 input CalendarEventManyRelationFilter {
   every: CalendarEventWhereInput
   some: CalendarEventWhereInput
   none: CalendarEventWhereInput
+}
+
+input BookingManyRelationFilter {
+  every: BookingWhereInput
+  some: BookingWhereInput
+  none: BookingWhereInput
 }
 
 input CalendarOrderByInput {
@@ -278,6 +307,7 @@ input CalendarOrderByInput {
 input CalendarUpdateInput {
   name: String
   events: CalendarEventRelateToManyForUpdateInput
+  bookings: BookingRelateToManyForUpdateInput
 }
 
 input CalendarEventRelateToManyForUpdateInput {
@@ -285,6 +315,13 @@ input CalendarEventRelateToManyForUpdateInput {
   set: [CalendarEventWhereUniqueInput!]
   create: [CalendarEventCreateInput!]
   connect: [CalendarEventWhereUniqueInput!]
+}
+
+input BookingRelateToManyForUpdateInput {
+  disconnect: [BookingWhereUniqueInput!]
+  set: [BookingWhereUniqueInput!]
+  create: [BookingCreateInput!]
+  connect: [BookingWhereUniqueInput!]
 }
 
 input CalendarUpdateArgs {
@@ -295,11 +332,17 @@ input CalendarUpdateArgs {
 input CalendarCreateInput {
   name: String
   events: CalendarEventRelateToManyForCreateInput
+  bookings: BookingRelateToManyForCreateInput
 }
 
 input CalendarEventRelateToManyForCreateInput {
   create: [CalendarEventCreateInput!]
   connect: [CalendarEventWhereUniqueInput!]
+}
+
+input BookingRelateToManyForCreateInput {
+  create: [BookingCreateInput!]
+  connect: [BookingWhereUniqueInput!]
 }
 
 type CalendarEvent {
@@ -335,12 +378,6 @@ input CalendarEventWhereInput {
   calendarEventType: CalendarEventTypeWhereInput
 }
 
-input BookingManyRelationFilter {
-  every: BookingWhereInput
-  some: BookingWhereInput
-  none: BookingWhereInput
-}
-
 input CalendarEventOrderByInput {
   id: OrderDirection
   description: OrderDirection
@@ -355,19 +392,6 @@ input CalendarEventUpdateInput {
   calendar: CalendarRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   calendarEventType: CalendarEventTypeRelateToOneForUpdateInput
-}
-
-input CalendarRelateToOneForUpdateInput {
-  create: CalendarCreateInput
-  connect: CalendarWhereUniqueInput
-  disconnect: Boolean
-}
-
-input BookingRelateToManyForUpdateInput {
-  disconnect: [BookingWhereUniqueInput!]
-  set: [BookingWhereUniqueInput!]
-  create: [BookingCreateInput!]
-  connect: [BookingWhereUniqueInput!]
 }
 
 input CalendarEventTypeRelateToOneForUpdateInput {
@@ -388,16 +412,6 @@ input CalendarEventCreateInput {
   calendar: CalendarRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
   calendarEventType: CalendarEventTypeRelateToOneForCreateInput
-}
-
-input CalendarRelateToOneForCreateInput {
-  create: CalendarCreateInput
-  connect: CalendarWhereUniqueInput
-}
-
-input BookingRelateToManyForCreateInput {
-  create: [BookingCreateInput!]
-  connect: [BookingWhereUniqueInput!]
 }
 
 input CalendarEventTypeRelateToOneForCreateInput {
