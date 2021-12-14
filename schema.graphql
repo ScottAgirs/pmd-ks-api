@@ -394,10 +394,6 @@ input ScheduleRelateToOneForCreateInput {
 
 type CalendarEvent {
   id: ID!
-  description: String
-  title: String
-  isConfirmationRequired: Boolean
-  calendar: Calendar
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -405,8 +401,13 @@ type CalendarEvent {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
+  calendar: Calendar
   calendarEventType: CalendarEventType
+  description: String
+  durationMins: Int
+  isConfirmationRequired: Boolean
   schedule: Schedule
+  title: String
 }
 
 input CalendarEventWhereUniqueInput {
@@ -418,30 +419,33 @@ input CalendarEventWhereInput {
   OR: [CalendarEventWhereInput!]
   NOT: [CalendarEventWhereInput!]
   id: IDFilter
-  description: StringFilter
-  title: StringFilter
-  isConfirmationRequired: BooleanFilter
-  calendar: CalendarWhereInput
   bookings: BookingManyRelationFilter
+  calendar: CalendarWhereInput
   calendarEventType: CalendarEventTypeWhereInput
+  description: StringFilter
+  durationMins: IntFilter
+  isConfirmationRequired: BooleanFilter
   schedule: ScheduleWhereInput
+  title: StringFilter
 }
 
 input CalendarEventOrderByInput {
   id: OrderDirection
   description: OrderDirection
-  title: OrderDirection
+  durationMins: OrderDirection
   isConfirmationRequired: OrderDirection
+  title: OrderDirection
 }
 
 input CalendarEventUpdateInput {
-  description: String
-  title: String
-  isConfirmationRequired: Boolean
-  calendar: CalendarRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
+  calendar: CalendarRelateToOneForUpdateInput
   calendarEventType: CalendarEventTypeRelateToOneForUpdateInput
+  description: String
+  durationMins: Int
+  isConfirmationRequired: Boolean
   schedule: ScheduleRelateToOneForUpdateInput
+  title: String
 }
 
 input CalendarEventTypeRelateToOneForUpdateInput {
@@ -456,13 +460,14 @@ input CalendarEventUpdateArgs {
 }
 
 input CalendarEventCreateInput {
-  description: String
-  title: String
-  isConfirmationRequired: Boolean
-  calendar: CalendarRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
+  calendar: CalendarRelateToOneForCreateInput
   calendarEventType: CalendarEventTypeRelateToOneForCreateInput
+  description: String
+  durationMins: Int
+  isConfirmationRequired: Boolean
   schedule: ScheduleRelateToOneForCreateInput
+  title: String
 }
 
 input CalendarEventTypeRelateToOneForCreateInput {
