@@ -48,12 +48,13 @@ model Booking {
 }
 
 model Calendar {
-  id       String          @id @default(cuid())
-  name     String          @default("")
-  events   CalendarEvent[] @relation("CalendarEvent_calendar")
-  bookings Booking[]       @relation("Booking_calendar")
-  doctor   Doctor?         @relation("Calendar_doctor", fields: [doctorId], references: [id])
-  doctorId String?         @unique @map("doctor")
+  id        String          @id @default(cuid())
+  name      String          @default("")
+  events    CalendarEvent[] @relation("CalendarEvent_calendar")
+  bookings  Booking[]       @relation("Booking_calendar")
+  doctor    Doctor?         @relation("Calendar_doctor", fields: [doctorId], references: [id])
+  doctorId  String?         @unique @map("doctor")
+  schedules Schedule[]      @relation("Schedule_calendar")
 }
 
 model CalendarEvent {
@@ -66,9 +67,12 @@ model CalendarEvent {
   bookings               Booking[]          @relation("Booking_event")
   calendarEventType      CalendarEventType? @relation("CalendarEvent_calendarEventType", fields: [calendarEventTypeId], references: [id])
   calendarEventTypeId    String?            @map("calendarEventType")
+  schedule               Schedule?          @relation("CalendarEvent_schedule", fields: [scheduleId], references: [id])
+  scheduleId             String?            @map("schedule")
 
   @@index([calendarId])
   @@index([calendarEventTypeId])
+  @@index([scheduleId])
 }
 
 model CalendarEventType {
@@ -76,6 +80,17 @@ model CalendarEventType {
   label  String          @default("")
   value  String          @default("")
   events CalendarEvent[] @relation("CalendarEvent_calendarEventType")
+}
+
+model Schedule {
+  id          String          @id @default(cuid())
+  title       String          @default("")
+  description String          @default("")
+  calendar    Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
+  calendarId  String?         @map("calendar")
+  events      CalendarEvent[] @relation("CalendarEvent_schedule")
+
+  @@index([calendarId])
 }
 
 model Doctor {

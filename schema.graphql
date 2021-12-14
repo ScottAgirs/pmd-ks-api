@@ -272,6 +272,13 @@ type Calendar {
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
   doctor: Doctor
+  schedules(
+    where: ScheduleWhereInput! = {}
+    orderBy: [ScheduleOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Schedule!]
+  schedulesCount(where: ScheduleWhereInput! = {}): Int
 }
 
 input CalendarWhereUniqueInput {
@@ -287,6 +294,7 @@ input CalendarWhereInput {
   events: CalendarEventManyRelationFilter
   bookings: BookingManyRelationFilter
   doctor: DoctorWhereInput
+  schedules: ScheduleManyRelationFilter
 }
 
 input CalendarEventManyRelationFilter {
@@ -301,6 +309,12 @@ input BookingManyRelationFilter {
   none: BookingWhereInput
 }
 
+input ScheduleManyRelationFilter {
+  every: ScheduleWhereInput
+  some: ScheduleWhereInput
+  none: ScheduleWhereInput
+}
+
 input CalendarOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -311,6 +325,7 @@ input CalendarUpdateInput {
   events: CalendarEventRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
+  schedules: ScheduleRelateToManyForUpdateInput
 }
 
 input CalendarEventRelateToManyForUpdateInput {
@@ -327,6 +342,13 @@ input BookingRelateToManyForUpdateInput {
   connect: [BookingWhereUniqueInput!]
 }
 
+input ScheduleRelateToManyForUpdateInput {
+  disconnect: [ScheduleWhereUniqueInput!]
+  set: [ScheduleWhereUniqueInput!]
+  create: [ScheduleCreateInput!]
+  connect: [ScheduleWhereUniqueInput!]
+}
+
 input CalendarUpdateArgs {
   where: CalendarWhereUniqueInput!
   data: CalendarUpdateInput!
@@ -337,6 +359,7 @@ input CalendarCreateInput {
   events: CalendarEventRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
   doctor: DoctorRelateToOneForCreateInput
+  schedules: ScheduleRelateToManyForCreateInput
 }
 
 input CalendarEventRelateToManyForCreateInput {
@@ -347,6 +370,11 @@ input CalendarEventRelateToManyForCreateInput {
 input BookingRelateToManyForCreateInput {
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
+}
+
+input ScheduleRelateToManyForCreateInput {
+  create: [ScheduleCreateInput!]
+  connect: [ScheduleWhereUniqueInput!]
 }
 
 type CalendarEvent {
@@ -363,6 +391,7 @@ type CalendarEvent {
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
   calendarEventType: CalendarEventType
+  schedule: Schedule
 }
 
 input CalendarEventWhereUniqueInput {
@@ -380,6 +409,7 @@ input CalendarEventWhereInput {
   calendar: CalendarWhereInput
   bookings: BookingManyRelationFilter
   calendarEventType: CalendarEventTypeWhereInput
+  schedule: ScheduleWhereInput
 }
 
 input CalendarEventOrderByInput {
@@ -396,11 +426,18 @@ input CalendarEventUpdateInput {
   calendar: CalendarRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   calendarEventType: CalendarEventTypeRelateToOneForUpdateInput
+  schedule: ScheduleRelateToOneForUpdateInput
 }
 
 input CalendarEventTypeRelateToOneForUpdateInput {
   create: CalendarEventTypeCreateInput
   connect: CalendarEventTypeWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ScheduleRelateToOneForUpdateInput {
+  create: ScheduleCreateInput
+  connect: ScheduleWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -416,11 +453,17 @@ input CalendarEventCreateInput {
   calendar: CalendarRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
   calendarEventType: CalendarEventTypeRelateToOneForCreateInput
+  schedule: ScheduleRelateToOneForCreateInput
 }
 
 input CalendarEventTypeRelateToOneForCreateInput {
   create: CalendarEventTypeCreateInput
   connect: CalendarEventTypeWhereUniqueInput
+}
+
+input ScheduleRelateToOneForCreateInput {
+  create: ScheduleCreateInput
+  connect: ScheduleWhereUniqueInput
 }
 
 type CalendarEventType {
@@ -470,6 +513,60 @@ input CalendarEventTypeUpdateArgs {
 input CalendarEventTypeCreateInput {
   label: String
   value: String
+  events: CalendarEventRelateToManyForCreateInput
+}
+
+type Schedule {
+  id: ID!
+  title: String
+  description: String
+  calendar: Calendar
+  events(
+    where: CalendarEventWhereInput! = {}
+    orderBy: [CalendarEventOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CalendarEvent!]
+  eventsCount(where: CalendarEventWhereInput! = {}): Int
+}
+
+input ScheduleWhereUniqueInput {
+  id: ID
+}
+
+input ScheduleWhereInput {
+  AND: [ScheduleWhereInput!]
+  OR: [ScheduleWhereInput!]
+  NOT: [ScheduleWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  calendar: CalendarWhereInput
+  events: CalendarEventManyRelationFilter
+}
+
+input ScheduleOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+}
+
+input ScheduleUpdateInput {
+  title: String
+  description: String
+  calendar: CalendarRelateToOneForUpdateInput
+  events: CalendarEventRelateToManyForUpdateInput
+}
+
+input ScheduleUpdateArgs {
+  where: ScheduleWhereUniqueInput!
+  data: ScheduleUpdateInput!
+}
+
+input ScheduleCreateInput {
+  title: String
+  description: String
+  calendar: CalendarRelateToOneForCreateInput
   events: CalendarEventRelateToManyForCreateInput
 }
 
@@ -1769,6 +1866,15 @@ type Mutation {
   deleteCalendarEventTypes(
     where: [CalendarEventTypeWhereUniqueInput!]!
   ): [CalendarEventType]
+  createSchedule(data: ScheduleCreateInput!): Schedule
+  createSchedules(data: [ScheduleCreateInput!]!): [Schedule]
+  updateSchedule(
+    where: ScheduleWhereUniqueInput!
+    data: ScheduleUpdateInput!
+  ): Schedule
+  updateSchedules(data: [ScheduleUpdateArgs!]!): [Schedule]
+  deleteSchedule(where: ScheduleWhereUniqueInput!): Schedule
+  deleteSchedules(where: [ScheduleWhereUniqueInput!]!): [Schedule]
   createDoctor(data: DoctorCreateInput!): Doctor
   createDoctors(data: [DoctorCreateInput!]!): [Doctor]
   updateDoctor(where: DoctorWhereUniqueInput!, data: DoctorUpdateInput!): Doctor
@@ -1976,6 +2082,14 @@ type Query {
     where: CalendarEventTypeWhereUniqueInput!
   ): CalendarEventType
   calendarEventTypesCount(where: CalendarEventTypeWhereInput! = {}): Int
+  schedules(
+    where: ScheduleWhereInput! = {}
+    orderBy: [ScheduleOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Schedule!]
+  schedule(where: ScheduleWhereUniqueInput!): Schedule
+  schedulesCount(where: ScheduleWhereInput! = {}): Int
   doctors(
     where: DoctorWhereInput! = {}
     orderBy: [DoctorOrderByInput!]! = []
