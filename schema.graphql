@@ -402,7 +402,7 @@ type CalendarEvent {
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
   calendar: Calendar
-  calendarEventType: CalendarEventType
+  eventType: CalendarEventType
   description: String
   durationMins: Int
   isConfirmationRequired: Boolean
@@ -421,7 +421,7 @@ input CalendarEventWhereInput {
   id: IDFilter
   bookings: BookingManyRelationFilter
   calendar: CalendarWhereInput
-  calendarEventType: CalendarEventTypeWhereInput
+  eventType: CalendarEventTypeWhereInput
   description: StringFilter
   durationMins: IntFilter
   isConfirmationRequired: BooleanFilter
@@ -440,7 +440,7 @@ input CalendarEventOrderByInput {
 input CalendarEventUpdateInput {
   bookings: BookingRelateToManyForUpdateInput
   calendar: CalendarRelateToOneForUpdateInput
-  calendarEventType: CalendarEventTypeRelateToOneForUpdateInput
+  eventType: CalendarEventTypeRelateToOneForUpdateInput
   description: String
   durationMins: Int
   isConfirmationRequired: Boolean
@@ -462,7 +462,7 @@ input CalendarEventUpdateArgs {
 input CalendarEventCreateInput {
   bookings: BookingRelateToManyForCreateInput
   calendar: CalendarRelateToOneForCreateInput
-  calendarEventType: CalendarEventTypeRelateToOneForCreateInput
+  eventType: CalendarEventTypeRelateToOneForCreateInput
   description: String
   durationMins: Int
   isConfirmationRequired: Boolean

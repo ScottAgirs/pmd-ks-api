@@ -64,8 +64,8 @@ model CalendarEvent {
   bookings               Booking[]          @relation("Booking_event")
   calendar               Calendar?          @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
   calendarId             String?            @map("calendar")
-  calendarEventType      CalendarEventType? @relation("CalendarEvent_calendarEventType", fields: [calendarEventTypeId], references: [id])
-  calendarEventTypeId    String?            @map("calendarEventType")
+  eventType              CalendarEventType? @relation("CalendarEvent_eventType", fields: [eventTypeId], references: [id])
+  eventTypeId            String?            @map("eventType")
   description            String             @default("")
   durationMins           Int
   isConfirmationRequired Boolean            @default(false)
@@ -74,7 +74,7 @@ model CalendarEvent {
   title                  String             @default("")
 
   @@index([calendarId])
-  @@index([calendarEventTypeId])
+  @@index([eventTypeId])
   @@index([scheduleId])
 }
 
@@ -82,7 +82,7 @@ model CalendarEventType {
   id     String          @id @default(cuid())
   label  String          @default("")
   value  String          @default("")
-  events CalendarEvent[] @relation("CalendarEvent_calendarEventType")
+  events CalendarEvent[] @relation("CalendarEvent_eventType")
 }
 
 model Schedule {
