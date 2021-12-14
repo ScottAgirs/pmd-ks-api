@@ -1,6 +1,4 @@
-import { checkbox, integer, relationship, text, timestamp } from "@keystone-6/core/fields";
-
-import { document } from '@keystone-6/fields-document';
+import { relationship, text } from "@keystone-6/core/fields";
 
 const { list } = require("@keystone-6/core");
 
