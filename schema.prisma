@@ -105,6 +105,8 @@ model Doctor {
   bookings          Booking[]        @relation("Booking_doctor")
   calendar          Calendar?        @relation("Calendar_doctor")
   doctorSince       DateTime
+  doctorType        DoctorType?      @relation("Doctor_doctorType", fields: [doctorTypeId], references: [id])
+  doctorTypeId      String?          @map("doctorType")
   email             String           @unique @default("")
   isCompleteProfile Boolean          @default(false)
   isVerified        Boolean          @default(false)
@@ -112,6 +114,8 @@ model Doctor {
   summary           String           @default("")
   patients          Patient[]        @relation("Doctor_patients")
   savedByPatients   Patient[]        @relation("Doctor_savedByPatients")
+
+  @@index([doctorTypeId])
 }
 
 model DoctorLanguage {
@@ -119,6 +123,13 @@ model DoctorLanguage {
   label   String   @default("")
   value   String   @default("")
   doctors Doctor[] @relation("Doctor_languages")
+}
+
+model DoctorType {
+  id      String   @id @default(cuid())
+  label   String   @default("")
+  value   String   @default("")
+  doctors Doctor[] @relation("Doctor_doctorType")
 }
 
 model HealthCard {

@@ -596,6 +596,7 @@ type Doctor {
   bookingsCount(where: BookingWhereInput! = {}): Int
   calendar: Calendar
   doctorSince: DateTime
+  doctorType: DoctorType
   email: String
   isCompleteProfile: Boolean
   isVerified: Boolean
@@ -638,6 +639,7 @@ input DoctorWhereInput {
   bookings: BookingManyRelationFilter
   calendar: CalendarWhereInput
   doctorSince: DateTimeFilter
+  doctorType: DoctorTypeWhereInput
   email: StringFilter
   isCompleteProfile: BooleanFilter
   isVerified: BooleanFilter
@@ -685,6 +687,7 @@ input DoctorUpdateInput {
   bookings: BookingRelateToManyForUpdateInput
   calendar: CalendarRelateToOneForUpdateInput
   doctorSince: DateTime
+  doctorType: DoctorTypeRelateToOneForUpdateInput
   email: String
   isCompleteProfile: Boolean
   isVerified: Boolean
@@ -703,6 +706,12 @@ input UserRelateToOneForUpdateInput {
 input AppointmentRelateToOneForUpdateInput {
   create: AppointmentCreateInput
   connect: AppointmentWhereUniqueInput
+  disconnect: Boolean
+}
+
+input DoctorTypeRelateToOneForUpdateInput {
+  create: DoctorTypeCreateInput
+  connect: DoctorTypeWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -731,6 +740,7 @@ input DoctorCreateInput {
   bookings: BookingRelateToManyForCreateInput
   calendar: CalendarRelateToOneForCreateInput
   doctorSince: DateTime
+  doctorType: DoctorTypeRelateToOneForCreateInput
   email: String
   isCompleteProfile: Boolean
   isVerified: Boolean
@@ -748,6 +758,11 @@ input UserRelateToOneForCreateInput {
 input AppointmentRelateToOneForCreateInput {
   create: AppointmentCreateInput
   connect: AppointmentWhereUniqueInput
+}
+
+input DoctorTypeRelateToOneForCreateInput {
+  create: DoctorTypeCreateInput
+  connect: DoctorTypeWhereUniqueInput
 }
 
 input DoctorLanguageRelateToManyForCreateInput {
@@ -826,6 +841,56 @@ input DoctorLanguageCreateInput {
 input DoctorRelateToManyForCreateInput {
   create: [DoctorCreateInput!]
   connect: [DoctorWhereUniqueInput!]
+}
+
+type DoctorType {
+  id: ID!
+  label: String
+  value: String
+  doctors(
+    where: DoctorWhereInput! = {}
+    orderBy: [DoctorOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Doctor!]
+  doctorsCount(where: DoctorWhereInput! = {}): Int
+}
+
+input DoctorTypeWhereUniqueInput {
+  id: ID
+}
+
+input DoctorTypeWhereInput {
+  AND: [DoctorTypeWhereInput!]
+  OR: [DoctorTypeWhereInput!]
+  NOT: [DoctorTypeWhereInput!]
+  id: IDFilter
+  label: StringFilter
+  value: StringFilter
+  doctors: DoctorManyRelationFilter
+}
+
+input DoctorTypeOrderByInput {
+  id: OrderDirection
+  label: OrderDirection
+  value: OrderDirection
+}
+
+input DoctorTypeUpdateInput {
+  label: String
+  value: String
+  doctors: DoctorRelateToManyForUpdateInput
+}
+
+input DoctorTypeUpdateArgs {
+  where: DoctorTypeWhereUniqueInput!
+  data: DoctorTypeUpdateInput!
+}
+
+input DoctorTypeCreateInput {
+  label: String
+  value: String
+  doctors: DoctorRelateToManyForCreateInput
 }
 
 type HealthCard {
@@ -1905,6 +1970,15 @@ type Mutation {
   deleteDoctorLanguages(
     where: [DoctorLanguageWhereUniqueInput!]!
   ): [DoctorLanguage]
+  createDoctorType(data: DoctorTypeCreateInput!): DoctorType
+  createDoctorTypes(data: [DoctorTypeCreateInput!]!): [DoctorType]
+  updateDoctorType(
+    where: DoctorTypeWhereUniqueInput!
+    data: DoctorTypeUpdateInput!
+  ): DoctorType
+  updateDoctorTypes(data: [DoctorTypeUpdateArgs!]!): [DoctorType]
+  deleteDoctorType(where: DoctorTypeWhereUniqueInput!): DoctorType
+  deleteDoctorTypes(where: [DoctorTypeWhereUniqueInput!]!): [DoctorType]
   createHealthCard(data: HealthCardCreateInput!): HealthCard
   createHealthCards(data: [HealthCardCreateInput!]!): [HealthCard]
   updateHealthCard(
@@ -2119,6 +2193,14 @@ type Query {
   ): [DoctorLanguage!]
   doctorLanguage(where: DoctorLanguageWhereUniqueInput!): DoctorLanguage
   doctorLanguagesCount(where: DoctorLanguageWhereInput! = {}): Int
+  doctorTypes(
+    where: DoctorTypeWhereInput! = {}
+    orderBy: [DoctorTypeOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [DoctorType!]
+  doctorType(where: DoctorTypeWhereUniqueInput!): DoctorType
+  doctorTypesCount(where: DoctorTypeWhereInput! = {}): Int
   healthCards(
     where: HealthCardWhereInput! = {}
     orderBy: [HealthCardOrderByInput!]! = []
