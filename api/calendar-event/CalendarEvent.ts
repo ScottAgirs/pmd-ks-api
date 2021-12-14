@@ -9,6 +9,7 @@ export const CalendarEvent = list({
     calendarEventType: relationship({ ref: 'CalendarEventType.events', many: false }),
     description: text({ validation: { isRequired: true } }),
     durationMins: integer({ validation: { isRequired: true } }),
+    // TODO: eventType
     isConfirmationRequired: checkbox(),
     schedule: relationship({ ref: 'Schedule.events', many: false }),
     title: text({ validation: { isRequired: true } }),
