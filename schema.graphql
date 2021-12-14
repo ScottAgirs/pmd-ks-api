@@ -1225,6 +1225,7 @@ type User {
     skip: Int! = 0
   ): [StepperStepProg!]
   stepperStepProgsCount(where: StepperStepProgWhereInput! = {}): Int
+  username: String
 }
 
 type PasswordState {
@@ -1259,6 +1260,7 @@ input UserWhereInput {
   sex: StringFilter
   stepperProgs: StepperProgManyRelationFilter
   stepperStepProgs: StepperStepProgManyRelationFilter
+  username: StringFilter
 }
 
 input PromptManyRelationFilter {
@@ -1294,6 +1296,7 @@ input UserOrderByInput {
   firstName: OrderDirection
   lastName: OrderDirection
   sex: OrderDirection
+  username: OrderDirection
 }
 
 input UserUpdateInput {
@@ -1316,6 +1319,7 @@ input UserUpdateInput {
   sex: String
   stepperProgs: StepperProgRelateToManyForUpdateInput
   stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
+  username: String
 }
 
 input PromptRelateToManyForUpdateInput {
@@ -1364,6 +1368,7 @@ input UserCreateInput {
   sex: String
   stepperProgs: StepperProgRelateToManyForCreateInput
   stepperStepProgs: StepperStepProgRelateToManyForCreateInput
+  username: String
 }
 
 input PromptRelateToManyForCreateInput {
@@ -2174,6 +2179,7 @@ input CreateInitialUserInput {
   firstName: String
   lastName: String
   password: String
+  username: String
 }
 
 type Query {

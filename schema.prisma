@@ -204,6 +204,7 @@ model User {
   sex                   String            @default("")
   stepperProgs          StepperProg[]     @relation("StepperProg_user")
   stepperStepProgs      StepperStepProg[] @relation("StepperStepProg_user")
+  username              String            @default("")
 }
 
 model Patient {
