@@ -4,7 +4,7 @@ const { list } = require("@keystone-6/core");
 
 export const Appointment = list({
   fields: {
-    // doctor: relationship({ ref: 'Doctor.appointments', many: false }),
+    doctor: relationship({ ref: 'Doctor.appointments', many: false }),
     // patient: relationship({ ref: 'Patient.appointments', many: false }),
     scheduledStartsAt: timestamp(),
     scheduledEndsAt: timestamp(),
