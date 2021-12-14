@@ -279,6 +279,7 @@ type Calendar {
     skip: Int! = 0
   ): [Schedule!]
   schedulesCount(where: ScheduleWhereInput! = {}): Int
+  defaultSchedule: Schedule
 }
 
 input CalendarWhereUniqueInput {
@@ -295,6 +296,7 @@ input CalendarWhereInput {
   bookings: BookingManyRelationFilter
   doctor: DoctorWhereInput
   schedules: ScheduleManyRelationFilter
+  defaultSchedule: ScheduleWhereInput
 }
 
 input CalendarEventManyRelationFilter {
@@ -326,6 +328,7 @@ input CalendarUpdateInput {
   bookings: BookingRelateToManyForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
   schedules: ScheduleRelateToManyForUpdateInput
+  defaultSchedule: ScheduleRelateToOneForUpdateInput
 }
 
 input CalendarEventRelateToManyForUpdateInput {
@@ -349,6 +352,12 @@ input ScheduleRelateToManyForUpdateInput {
   connect: [ScheduleWhereUniqueInput!]
 }
 
+input ScheduleRelateToOneForUpdateInput {
+  create: ScheduleCreateInput
+  connect: ScheduleWhereUniqueInput
+  disconnect: Boolean
+}
+
 input CalendarUpdateArgs {
   where: CalendarWhereUniqueInput!
   data: CalendarUpdateInput!
@@ -360,6 +369,7 @@ input CalendarCreateInput {
   bookings: BookingRelateToManyForCreateInput
   doctor: DoctorRelateToOneForCreateInput
   schedules: ScheduleRelateToManyForCreateInput
+  defaultSchedule: ScheduleRelateToOneForCreateInput
 }
 
 input CalendarEventRelateToManyForCreateInput {
@@ -375,6 +385,11 @@ input BookingRelateToManyForCreateInput {
 input ScheduleRelateToManyForCreateInput {
   create: [ScheduleCreateInput!]
   connect: [ScheduleWhereUniqueInput!]
+}
+
+input ScheduleRelateToOneForCreateInput {
+  create: ScheduleCreateInput
+  connect: ScheduleWhereUniqueInput
 }
 
 type CalendarEvent {
@@ -435,12 +450,6 @@ input CalendarEventTypeRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input ScheduleRelateToOneForUpdateInput {
-  create: ScheduleCreateInput
-  connect: ScheduleWhereUniqueInput
-  disconnect: Boolean
-}
-
 input CalendarEventUpdateArgs {
   where: CalendarEventWhereUniqueInput!
   data: CalendarEventUpdateInput!
@@ -459,11 +468,6 @@ input CalendarEventCreateInput {
 input CalendarEventTypeRelateToOneForCreateInput {
   create: CalendarEventTypeCreateInput
   connect: CalendarEventTypeWhereUniqueInput
-}
-
-input ScheduleRelateToOneForCreateInput {
-  create: ScheduleCreateInput
-  connect: ScheduleWhereUniqueInput
 }
 
 type CalendarEventType {
@@ -528,6 +532,7 @@ type Schedule {
     skip: Int! = 0
   ): [CalendarEvent!]
   eventsCount(where: CalendarEventWhereInput! = {}): Int
+  defaultOn: Calendar
 }
 
 input ScheduleWhereUniqueInput {
@@ -543,6 +548,7 @@ input ScheduleWhereInput {
   description: StringFilter
   calendar: CalendarWhereInput
   events: CalendarEventManyRelationFilter
+  defaultOn: CalendarWhereInput
 }
 
 input ScheduleOrderByInput {
@@ -556,6 +562,7 @@ input ScheduleUpdateInput {
   description: String
   calendar: CalendarRelateToOneForUpdateInput
   events: CalendarEventRelateToManyForUpdateInput
+  defaultOn: CalendarRelateToOneForUpdateInput
 }
 
 input ScheduleUpdateArgs {
@@ -568,6 +575,7 @@ input ScheduleCreateInput {
   description: String
   calendar: CalendarRelateToOneForCreateInput
   events: CalendarEventRelateToManyForCreateInput
+  defaultOn: CalendarRelateToOneForCreateInput
 }
 
 type Doctor {

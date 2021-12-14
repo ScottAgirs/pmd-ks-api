@@ -48,13 +48,15 @@ model Booking {
 }
 
 model Calendar {
-  id        String          @id @default(cuid())
-  name      String          @default("")
-  events    CalendarEvent[] @relation("CalendarEvent_calendar")
-  bookings  Booking[]       @relation("Booking_calendar")
-  doctor    Doctor?         @relation("Calendar_doctor", fields: [doctorId], references: [id])
-  doctorId  String?         @unique @map("doctor")
-  schedules Schedule[]      @relation("Schedule_calendar")
+  id                String          @id @default(cuid())
+  name              String          @default("")
+  events            CalendarEvent[] @relation("CalendarEvent_calendar")
+  bookings          Booking[]       @relation("Booking_calendar")
+  doctor            Doctor?         @relation("Calendar_doctor", fields: [doctorId], references: [id])
+  doctorId          String?         @unique @map("doctor")
+  schedules         Schedule[]      @relation("Schedule_calendar")
+  defaultSchedule   Schedule?       @relation("Calendar_defaultSchedule", fields: [defaultScheduleId], references: [id])
+  defaultScheduleId String?         @unique @map("defaultSchedule")
 }
 
 model CalendarEvent {
@@ -89,6 +91,7 @@ model Schedule {
   calendar    Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
   calendarId  String?         @map("calendar")
   events      CalendarEvent[] @relation("CalendarEvent_schedule")
+  defaultOn   Calendar?       @relation("Calendar_defaultSchedule")
 
   @@index([calendarId])
 }
