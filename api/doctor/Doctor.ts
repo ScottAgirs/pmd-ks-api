@@ -15,7 +15,6 @@ export const Doctor = list({
       isIndexed: 'unique',
       isFilterable: true,
     }),
-    // TODO: emergencyContact
     isCompleteProfile: checkbox(),
     isVerified: checkbox(),
     languages: relationship({ ref: 'DoctorLanguage.doctors', many: true }),
