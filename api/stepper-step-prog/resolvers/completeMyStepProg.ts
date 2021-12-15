@@ -3,7 +3,6 @@ import { createOrUpdateStepperStepProg, CreateOrUpdateStepperStepProgInput } fro
 
 export const completeMyStepProg = async (root: any, {stepId}:{stepId: string}, context:KeystoneContext) => {
   const currentUser = context.session?.data;
-
   if (!currentUser) throw new Error('Must be logged in');
 
   const updatedStepperStepProg = await createOrUpdateStepperStepProg(
@@ -11,7 +10,6 @@ export const completeMyStepProg = async (root: any, {stepId}:{stepId: string}, c
     {
       isCompleted: true,
       stepId,
-      user: currentUser,
     } as CreateOrUpdateStepperStepProgInput
   );
   console.log('completeMyStepProg: :: updatedStepperStepProg', updatedStepperStepProg);
