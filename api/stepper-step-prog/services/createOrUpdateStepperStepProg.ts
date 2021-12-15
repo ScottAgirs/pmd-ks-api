@@ -49,7 +49,6 @@ export const createOrUpdateStepperStepProg = async (
     throw new Error("Stepper not found");
   }
 
-
   // TODO: Get Stepper Prog for this user and this stepperStep
   const matchedStepperProgs = await context.db.StepperProg.findMany({
     where: {
@@ -107,5 +106,11 @@ export const createOrUpdateStepperStepProg = async (
     });
   }
   
-  return { ...stepperStepProg, stepper, stepperProg, stepperStep };
+  const stepperProgUser = await context.db.User.findOne({
+    where: {
+      id: stepperProg.userId as string,
+    },
+  });
+
+  return { ...stepperStepProg, stepper, stepperProg, stepperStep, user: stepperProgUser };
 }
