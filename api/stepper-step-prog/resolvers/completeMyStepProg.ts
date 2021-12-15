@@ -1,8 +1,10 @@
 import { KeystoneContext, OrderByFieldInputArg } from "@keystone-6/core/types";
+import { completePatientOnboarding } from "../../patient/services/completePatientOnboarding";
 import { createOrUpdateStepperStepProg, CreateOrUpdateStepperStepProgInput } from "../services/createOrUpdateStepperStepProg";
 
 export const completeMyStepProg = async (root: any, {stepId}:{stepId: string}, context:KeystoneContext) => {
   const currentUser = context.session?.data;
+
   if (!currentUser) throw new Error('Must be logged in');
 
   const updatedStepperStepProg = await createOrUpdateStepperStepProg(
@@ -12,7 +14,6 @@ export const completeMyStepProg = async (root: any, {stepId}:{stepId: string}, c
       stepId,
     } as CreateOrUpdateStepperStepProgInput
   );
-  console.log('completeMyStepProg: :: updatedStepperStepProg', updatedStepperStepProg);
 
   const isFinal = updatedStepperStepProg.stepperStep?.isFinal;
 
@@ -21,16 +22,18 @@ export const completeMyStepProg = async (root: any, {stepId}:{stepId: string}, c
       updatedStepperStepProg.stepper?.slug === 'doctor';
     const isPatientProgress =
       updatedStepperStepProg.stepper?.slug === 'patient';
+      console.log('completeMyStepProg :: updatedStepperStepProg', updatedStepperStepProg);
 
     // if (isDoctorProgress)
       // await strapi.services.doctor.completeDoctorOnboarding(
       //   updatedStepperStepProg
       // );
 
-    // if (isPatientProgress)
-      // await strapi.services.patient.completePatientOnboarding(
-      //   updatedStepperStepProg
-      // );
+    if (isPatientProgress)
+      await completePatientOnboarding(
+        context,
+        updatedStepperStepProg
+      );
 
     const stepperProgId = updatedStepperStepProg.stepperProg.id;
     // strapi.services['stepper-prog'].completeProg({
