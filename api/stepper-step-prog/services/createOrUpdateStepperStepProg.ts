@@ -20,7 +20,7 @@ export const createOrUpdateStepperStepProg = async (
     throw new Error("stepId is required");
   }
 
-  // TODO: Check user is logged in and has access to this step
+  // TODO: Check user is logged in and has access to this stepperStep
   const user = context.session?.data;
   const userId = user.id;
 
@@ -28,20 +28,20 @@ export const createOrUpdateStepperStepProg = async (
     throw new Error('User not logged in');
   }
 
-  // TODO: Check step exists
-  const step = await context.db.StepperStep.findOne({
+  // TODO: Check stepperStep exists
+  const stepperStep = await context.db.StepperStep.findOne({
     where: {
       id: stepId,
     },
   })
-  if (!step) {
+  if (!stepperStep) {
     throw new Error('Step not found')
   }
 
   // TODO: Get Stepper
   const stepper = await context.db.Stepper.findOne({
     where: {
-      id: step.stepperId as string,
+      id: stepperStep.stepperId as string,
     },
   });
 
@@ -50,7 +50,7 @@ export const createOrUpdateStepperStepProg = async (
   }
 
 
-  // TODO: Get Stepper Prog for this user and this step
+  // TODO: Get Stepper Prog for this user and this stepperStep
   const matchedStepperProgs = await context.db.StepperProg.findMany({
     where: {
       user: { id: { equals: userId } },
@@ -75,18 +75,18 @@ export const createOrUpdateStepperStepProg = async (
   const matchedStepperStepProgs = await context.db.StepperStepProg.findMany({
     where: {
       stepperProg: { id: { equals: stepperProg.id } },
-      stepperStep: { id: { equals: step.id } },
+      stepperStep: { id: { equals: stepperStep.id } },
       user: { id: { equals: userId } },
     },
   })
   let stepperStepProg = matchedStepperStepProgs.length > 0 ? matchedStepperStepProgs[0] : null;
   
   if (!stepperStepProg) {
-    // create new stepper step prog
+    // create new stepper stepperStep prog
     stepperStepProg = await context.db.StepperStepProg.createOne({
       data: {
         stepper: { connect: { id: stepper.id } },
-        stepperStep: { connect: { id: step.id } },
+        stepperStep: { connect: { id: stepperStep.id } },
         stepperProg: { connect: { id: stepperProg.id } },
         user: { connect: { id: userId } },
         percentDone,
@@ -105,8 +105,7 @@ export const createOrUpdateStepperStepProg = async (
         isCompleted,
       },
     });
-    // console.log('UPDATED stepperProg', stepperStepProg);
   }
   
-  return { ...stepperStepProg, stepper, stepperProg };
+  return { ...stepperStepProg, stepper, stepperProg, stepperStep };
 }
