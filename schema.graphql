@@ -2,6 +2,11 @@
 # Modify your Keystone config when you want to change this.
 
 type Mutation {
+  createCalendarEventBooking(
+    eventId: ID!
+    notes: String
+    startsAt: DateTime
+  ): StepperStepProg
   completeMyStepProg(stepId: ID!): StepperStepProg
   createAppointment(data: AppointmentCreateInput!): Appointment
   createAppointments(data: [AppointmentCreateInput!]!): [Appointment]
