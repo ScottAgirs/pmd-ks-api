@@ -22,7 +22,6 @@ export const completeMyStepProg = async (root: any, {stepId}:{stepId: string}, c
       updatedStepperStepProg.stepper?.slug === 'doctor';
     const isPatientProgress =
       updatedStepperStepProg.stepper?.slug === 'patient';
-      console.log('completeMyStepProg :: updatedStepperStepProg', updatedStepperStepProg);
 
     // if (isDoctorProgress)
       // await strapi.services.doctor.completeDoctorOnboarding(

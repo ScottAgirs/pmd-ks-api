@@ -23,7 +23,6 @@ export const completePatientOnboarding = async (
     stepperStepProg: any,
   ) => {
   const patientUser = stepperStepProg.user;
-  console.log('patientUser', patientUser);
 
   if (stepperStepProg?.stepper?.slug === 'patient') {
     const userId = patientUser.id;
@@ -43,7 +42,6 @@ export const completePatientOnboarding = async (
       throw new Error('Patient not found');
     }
     
-    console.log('patient', patient);
     const patientId = patient.id;
 
     let isCompleteProfile = true;
@@ -82,7 +80,6 @@ export const completePatientOnboarding = async (
         `Patient's profile for user ${patientUser.username} [ID: ${patientUser.id}] is complete`
       );
 
-      console.log('completedPatient', completedPatient);
       return completedPatient;
     }
   }

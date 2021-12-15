@@ -67,7 +67,6 @@ export const createOrUpdateStepperStepProg = async (
         stepper: { connect: { id: stepper.id } },
       },
     });
-    console.log('CREATED stepperProg', stepperProg);
   }
 
   // TODO: Get Stepper Step Prog
