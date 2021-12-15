@@ -49,6 +49,7 @@ export const createOrUpdateStepperStepProg = async (
     throw new Error("Stepper not found");
   }
 
+
   // TODO: Get Stepper Prog for this user and this step
   const matchedStepperProgs = await context.db.StepperProg.findMany({
     where: {
@@ -73,28 +74,28 @@ export const createOrUpdateStepperStepProg = async (
   // TODO: Get Stepper Step Prog
   const matchedStepperStepProgs = await context.db.StepperStepProg.findMany({
     where: {
-      stepper: { id: { equals: stepper.id } },
+      stepperProg: { id: { equals: stepperProg.id } },
+      stepperStep: { id: { equals: step.id } },
       user: { id: { equals: userId } },
     },
   })
   let stepperStepProg = matchedStepperStepProgs.length > 0 ? matchedStepperStepProgs[0] : null;
   
   if (!stepperStepProg) {
-    console.log("NO STEP PROG FOUND");
     // create new stepper step prog
     stepperStepProg = await context.db.StepperStepProg.createOne({
       data: {
         stepper: { connect: { id: stepper.id } },
+        stepperStep: { connect: { id: step.id } },
         stepperProg: { connect: { id: stepperProg.id } },
         user: { connect: { id: userId } },
         percentDone,
         isCompleted,
       },
-    });
-    console.log('CREATED stepperStepProg', stepperStepProg);
+    })
+
   } else {
-    console.log("HAS step prog");
-    // update existing stepper step prog
+    console.log("Updating stepperStepProg");
     stepperStepProg = await context.db.StepperStepProg.updateOne({
       where: {
         id: stepperStepProg?.id as string,
@@ -104,7 +105,7 @@ export const createOrUpdateStepperStepProg = async (
         isCompleted,
       },
     });
-    console.log('UPDATED stepperProg', stepperStepProg);
+    // console.log('UPDATED stepperProg', stepperStepProg);
   }
   
   return { ...stepperStepProg, stepper, stepperProg };
