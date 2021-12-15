@@ -2,6 +2,8 @@ import 'dotenv/config';
 
 import { config } from '@keystone-6/core';
 
+import { extendGraphqlSchema } from './graphql/extendGraphqlSchema';
+
 import { lists } from './schema';
 
 import { withAuth, session } from './auth';
@@ -19,6 +21,7 @@ export default withAuth(
       provider: 'postgresql',
       url: 'postgresql://doadmin:4dvbMUL0jSI1b3Z4@db-ks-dev-do-user-8624530-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require',
     },
+    extendGraphqlSchema,
     ui: {
       isAccessAllowed: (context) => !!context.session?.data,
     },
