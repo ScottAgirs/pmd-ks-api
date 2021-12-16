@@ -134,7 +134,7 @@ model Doctor {
   doctorSubSpecialties DoctorSubSpecialty[] @relation("Doctor_doctorSubSpecialties")
   doctorType           DoctorType?          @relation("Doctor_doctorType", fields: [doctorTypeId], references: [id])
   doctorTypeId         String?              @map("doctorType")
-  email                String               @unique @default("")
+  email                String               @default("")
   isCompleteProfile    Boolean              @default(false)
   isVerified           Boolean              @default(false)
   languages            DoctorLanguage[]     @relation("Doctor_languages")

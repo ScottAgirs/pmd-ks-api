@@ -1107,7 +1107,6 @@ type Doctor {
 
 input DoctorWhereUniqueInput {
   id: ID
-  email: String
 }
 
 input DoctorWhereInput {
