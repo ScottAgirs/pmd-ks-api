@@ -7,9 +7,9 @@ export const StepperStepProg = list({
     name: text(),
     percentDone: integer(),
     isCompleted: checkbox(),
-    stepper: relationship({ ref: 'Stepper.stepperStepProgs', many: false }),
-    stepperStep: relationship({ ref: 'StepperStep.stepperStepProg', many: false }),
-    stepperProg: relationship({ ref: 'StepperProg.stepperStepProgs', many: false }),
-    user: relationship({ ref: 'User.stepperStepProgs', many: false }),
+    stepper: relationship({ ref: 'Stepper.stepperStepProgs' }),
+    stepperStep: relationship({ ref: 'StepperStep.stepperStepProg' }),
+    stepperProg: relationship({ ref: 'StepperProg.stepperStepProgs' }),
+    user: relationship({ ref: 'User.stepperStepProgs' }),
   },
 })
