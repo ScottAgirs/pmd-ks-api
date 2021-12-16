@@ -1,4 +1,4 @@
-export const specialties = [
+export const SPECIALTIES = [
   { label:  "Subspecialties",
     value: "subspecialties"
   },
