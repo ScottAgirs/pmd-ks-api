@@ -6,6 +6,6 @@ export const TimeInterval = list({
   fields: {
     from: text(),
     to: text(),
-    recurringSlot: relationship({ ref: 'RecurringSlot.timeIntervals', many: false }),
+    recurringSlot: relationship({ ref: 'RecurringSlot.timeIntervals' }),
   },
 })
