@@ -10,6 +10,7 @@ export const Doctor = list({
     calendar: relationship({ ref: 'Calendar.doctor', many: false }),
     // TODO: doctorSpecializations
     doctorSince: timestamp({ validation: { isRequired: true } }),
+    doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors', many: false }),
     doctorType: relationship({ ref: 'DoctorType.doctors', many: false }),
     email: text({
       isIndexed: 'unique',
