@@ -12,6 +12,7 @@ import { RecurringSlot } from "./api/recurring-slot/RecurringSlot";
 import { TimeInterval } from "./api/time-interval/TimeInterval";
 
 import { Doctor } from "./api/doctor/Doctor";
+import { DoctorSpecialty } from "./api/doctor-specialty/DoctorSpecialty";
 import { DoctorType } from "./api/doctor-type/DoctorType";
 import { DoctorLanguage } from "./api/doctor-language/DoctorLanguage";
 import { HealthCard } from "./api/health-card/HealthCard";
@@ -42,6 +43,7 @@ export const lists = {
   Doctor,
   DoctorLanguage,
   DoctorType,
+  DoctorSpecialty,
   // HealthCard
   HealthCard,
   // Country
