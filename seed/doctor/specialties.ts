@@ -1,170 +1,89 @@
 export const SPECIALTIES = [
-  { label:  "Subspecialties",
-    value: "subspecialties"
+  { label: "Anatomical Pathology",
+    value: "anatomical-pathology",
   },
-  { label:  "Adolescent Medicine",
-    value: "adolescent-medicine"
+  { label: "Anesthesiology",
+    value: "anesthesiology",
   },
-  { label:  "Cardiology",
-    value: "cardiology"
+  { label: "Cardiac Surgery",
+    value: "cardiac-surgery",
   },
-  { label: "C hild and Adolescent Psychiatry",
-    value: "c-hild-and-adolescent-psychiatry"
+  { label: "Dermatology",
+    value: "dermatology",
   },
-  { label:  "Clinical Immunology and Allergy",
-    value: "clinical-immunology-and-allergy"
+  { label: "Diagnostic Radiology",
+    value: "diagnostic-radiology",
   },
-  { label:  "Clinical Phamacology and Toxicology",
-    value: "clinical-phamacology-and-toxicology"
+  { label: "Emergency Medicine",
+    value: "emergency-medicine",
   },
-  { label:  "Colorectal Surgery",
-    value: "colorectal-surgery"
+  { label: "Family Medicine",
+    value: "family-medicine",
   },
-  { label: "Pain Medicine",
-    value: "pain-medicine"
+  { label: "General Pathology",
+    value: "general-pathology",
   },
-  { label:  "Critical Care Medicine",
-    value: "critical-care-medicine"
+  { label: "General Surgery",
+    value: "general-surgery",
   },
-  { label:  "Developmental Pediatrics",
-    value: "developmental-pediatrics"
+  { label: "Hermatological Pathology",
+    value: "hermatological-pathology",
   },
-  { label:  "Endocrinology and Metabolism",
-    value: "endocrinology-and-metabolism"
+  { label: "Internal Medicine",
+    value: "internal-medicine",
   },
-  { label:  "Forensic Pathology",
-    value: "forensic-pathology"
+  { label: "Medical Genetics and Genomics",
+    value: "medical-genetics-and-genomics",
   },
-  { label:  "Forensic Psychiatry",
-    value: "forensic-psychiatry"
+  { label: "Medical Microbiology",
+    value: "medical-microbiology",
   },
-  { label:  "Gastroenterology",
-    value: "gastroenterology"
+  { label: "Neurosurgery",
+    value: "neurosurgery",
   },
-  { label:  "Geriactric Medicine",
-    value: "geriactric-medicine"
+  { label: "Neurology",
+    value: "neurology",
   },
-  { label:  "General Internal Medicine",
-    value: "general-internal-medicine"
+  { label: "Neuropathology",
+    value: "neuropathology",
   },
-  { label:  "General Surgical Oncology",
-    value: "general-surgical-oncology"
+  { label: "Nuclear Medicine",
+    value: "nuclear-medicine",
   },
-  { label:  "Geriatric Psychiatry",
-    value: "geriatric-psychiatry"
+  { label: "Obstetrics and Gynecology",
+    value: "obstetrics-and-gynecology",
   },
-  { label:  "Gynecologic Oncology",
-    value: "gynecologic-oncology"
+  { label: "Ophthalmology",
+    value: "ophthalmology",
   },
-  { label:  "Gynecologic Reproductive Endocrinology and Infertility ",
-    value: "gynecologic-reproductive-endocrinology-and-infertility"
+  { label: "Orthopedic Surgery",
+    value: "orthopedic-surgery",
   },
-  { label:  "Hematology",
-    value: "hematology"
+  { label: "Otolaryngology-Head and Neck Surgery",
+    value: "otolaryngology-head-and-neck-surgery",
   },
-  { label:  "Infectious Diseases",
-    value: "infectious-diseases"
+  { label: "Pediactrics",
+    value: "pediactrics",
   },
-  { label:  "Interventional Radiology",
-    value: "interventional-radiology"
+  { label: "Physical Medicine and Rehabilitation",
+    value: "physical-medicine-and-rehabilitation",
   },
-  { label:  "Maternal-Fetal Medicine",
-    value: "maternal-fetal-medicine"
+  { label: "Plastic Surgery",
+    value: "plastic-surgery",
   },
-  { label:  "Medical Biochemistry",
-    value: "medical-biochemistry"
+  { label: "Psychiatry",
+    value: "psychiatry",
   },
-  { label:  "Medical Oncology",
-    value: "medical-oncology"
+  { label: "Public Health and Preventative Medicine",
+    value: "public-health-and-preventative-medicine",
   },
-  { label:  "Neonatal-Perinatal Medicine",
-    value: "neonatal-perinatal-medicine"
+  { label: "Radiation Oncology",
+    value: "radiation-oncology",
   },
-  { label:  "Nephrology",
-    value: "nephrology"
+  { label: "Urology",
+    value: "urology",
   },
-  { label:  "Neuroradiology",
-    value: "neuroradiology"
+  { label: "Vascular Surgery",
+    value: "vascular-surgery",
   },
-  { label:  "Occupational Medicine",
-    value: "occupational-medicine"
-  },
-  { label:  "Addiction Medicine",
-    value: "addiction-medicine"
-  },
-  { label: "Care of the Elderly",
-    value: "care-of-the-elderly"
-  },
-  { label:  "Emergency Medicine",
-    value: "emergency-medicine"
-  },
-  { label:  "Enhanced Surgical Skills",
-    value: "enhanced-surgical-skills"
-  },
-  { label: "Family Practice Anesthesia",
-    value: "family-practice-anesthesia"
-  },
-  { label:  "Obstetrical Surgical Skills",
-    value: "obstetrical-surgical-skills"
-  },
-  { label:  "Pallative Medicine",
-    value: "pallative-medicine"
-  },
-  { label:  "Palliative Care",
-    value: "palliative-care"
-  },
-  { label:  "Pediatric Cardiology",
-    value: "pediatric-cardiology"
-  },
-  { label:  "Pediatric Clinical Immunology & Allergy",
-    value: "pediatric-clinical-immunology-allergy"
-  },
-  { label:  "Pediatric Clinical Pharmacology and Toxicology",
-    value: "pediatric-clinical-pharmacology-and-toxicology"
-  },
-  { label:  "Pediatric Critical Care Medicine",
-    value: "pediatric-critical-care-medicine"
-  },
-  { label:  "Pediatric Emergency Medicine",
-    value: "pediatric-emergency-medicine"
-  },
-  { label:  "Pediatric Endocrinology and Metabolism",
-    value: "pediatric-endocrinology-and-metabolism"
-  },
-  { label:  "Pediatric Gastroenterology",
-    value: "pediatric-gastroenterology"
-  },
-  { label:  "Pediatric Hematology-Oncology",
-    value: "pediatric-hematology-oncology"
-  },
-  { label:  "Pediatric Infectious Diseases",
-    value: "pediatric-infectious-diseases"
-  },
-  { label:  "Pediatric Nephrology",
-    value: "pediatric-nephrology"
-  },
-  { label:  "Pediatric Neurology",
-    value: "pediatric-neurology"
-  },
-  { label:  "Pediatric Radiology",
-    value: "pediatric-radiology"
-  },
-  { label:  "Pediatric Respirology",
-    value: "pediatric-respirology"
-  },
-  { label:  "Pediatric Rheumatology",
-    value: "pediatric-rheumatology"
-  },
-  { label:  "Pediatric Surgery",
-    value: "pediatric-surgery"
-  },
-  { label:  "Respirology",
-    value: "respirology"
-  },
-  { label: "S port and Exercise Medicine",
-    value: "s-port-and-exercise-medicine"
-  },
-  { label:  "Thoracic Surgery",
-    value: "thoracic-surgery"
-  },
-]
+];

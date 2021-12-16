@@ -1,7 +1,4 @@
 export const SUB_SPECIALTIES = [
-  { label:  "Subspecialties",
-    value: "subspecialties"
-  },
   { label:  "Adolescent Medicine",
     value: "adolescent-medicine"
   },
