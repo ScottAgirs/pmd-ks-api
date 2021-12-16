@@ -8,6 +8,7 @@ import { lists } from './schema';
 
 import { withAuth, session } from './auth';
 import { populateSpecialties } from './seed/doctor/populate-specialties';
+import { populateSubSpecialties } from './seed/doctor/populate-sub-specialties';
 
 const FRONTEND_URL:string = process.env.FRONTEND_URL as string;
 export default withAuth(
@@ -24,6 +25,9 @@ export default withAuth(
       async onConnect(keystone) {
         if (process.argv.includes('--seed-doctor-specialties')) {
           populateSpecialties(keystone);
+        }
+        if (process.argv.includes('--seed-doctor-sub-specialties')) {
+          populateSubSpecialties(keystone);
         }
       },
     },
