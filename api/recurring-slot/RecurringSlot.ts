@@ -8,7 +8,7 @@ export const RecurringSlot = list({
     isActive: checkbox(),
     interval: text(),
     intervalCount: integer(),
-    schedule: relationship({ ref: 'Schedule.recurringSlots', many: false }),
+    schedule: relationship({ ref: 'Schedule.recurringSlots' }),
     timeIntervals: relationship({ ref: 'TimeInterval.recurringSlot', many: true }),
   },
 })
