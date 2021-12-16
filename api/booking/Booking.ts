@@ -4,14 +4,14 @@ const { list } = require("@keystone-6/core");
 
 export const Booking = list({
   fields: {    
-    calendar: relationship({ ref: 'Calendar.bookings', many: false }),
-    doctor: relationship({ ref: 'Doctor.bookings', many: false }),
+    calendar: relationship({ ref: 'Calendar.bookings' }),
+    doctor: relationship({ ref: 'Doctor.bookings' }),
     durationMins: integer({ validation: { isRequired: true } }),
-    event: relationship({ ref: 'CalendarEvent.bookings', many: false }),
+    event: relationship({ ref: 'CalendarEvent.bookings' }),
     isConfirmed: checkbox(),
     name: text(),
     notes: text({ validation: { isRequired: false } }),
-    patient: relationship({ ref: 'Patient.bookings', many: false }),
+    patient: relationship({ ref: 'Patient.bookings' }),
     startsAt: timestamp(),
     endsAt: timestamp(),
   },
