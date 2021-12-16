@@ -4,7 +4,7 @@ const { list } = require("@keystone-6/core");
 
 export const Prompt = list({
   fields: {
-    stepper: relationship({ ref: 'Stepper.prompt', many: false }),
+    stepper: relationship({ ref: 'Stepper.prompt' }),
     user: relationship({ ref: 'User.prompts' }),
     name: text(),
     promptType: text(),
