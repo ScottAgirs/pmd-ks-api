@@ -8,11 +8,19 @@ import {
   select,
 } from '@keystone-6/core/fields';
 import { afterCreateUser } from './afterCreateUser';
+import { beforeCreateUser } from './beforeCreateUser';
 
 export const User = list({
   hooks: {
     afterOperation: async ({ context, item, operation }) => {
-      if (operation === 'create') afterCreateUser({ context, item })
+      if (operation === 'create') {
+        afterCreateUser({ context, item })
+      }
+    },
+    beforeOperation: async ({ context, item, operation }) => {
+      if (operation === 'create') {
+        beforeCreateUser({ context, item })
+      }
     }
   },
   fields: {
@@ -23,6 +31,7 @@ export const User = list({
     }),
     cellPhoneNumberString: text(),
     homePhoneNumberString: text(),
+    calendar: relationship({ ref: 'Calendar.user' }),
     country: text(),
     administrativeArea: text(),
     locality: text(),
@@ -30,12 +39,12 @@ export const User = list({
     thoroughfare: text(),
     premise: text(),
     dateOfBirth: timestamp(),
-    doctor: relationship({ ref: 'Doctor.user', many: false }),
+    doctor: relationship({ ref: 'Doctor.user' }),
     firstName: text({ validation: { isRequired: true } }),
     lastName: text({ validation: { isRequired: true } }),
     password: password({ validation: { isRequired: true } }),
     prompts: relationship({ ref: 'Prompt.user', many: true }),
-    patient: relationship({ ref: 'Patient.user', many: false }),
+    patient: relationship({ ref: 'Patient.user' }),
     sex: text(),
     stepperProgs: relationship({ ref: 'StepperProg.user', many: true }),
     stepperStepProgs: relationship({ ref: 'StepperStepProg.user', many: true }),
