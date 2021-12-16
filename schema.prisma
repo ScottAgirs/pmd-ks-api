@@ -123,29 +123,27 @@ model TimeInterval {
 }
 
 model Doctor {
-  id                   String              @id @default(cuid())
-  user                 User?               @relation("Doctor_user", fields: [userId], references: [id])
-  userId               String?             @unique @map("user")
-  appointments         Appointment?        @relation("Appointment_doctor")
-  bookings             Booking[]           @relation("Booking_doctor")
-  calendar             Calendar?           @relation("Calendar_doctor")
+  id                   String               @id @default(cuid())
+  user                 User?                @relation("Doctor_user", fields: [userId], references: [id])
+  userId               String?              @unique @map("user")
+  appointments         Appointment?         @relation("Appointment_doctor")
+  bookings             Booking[]            @relation("Booking_doctor")
+  calendar             Calendar?            @relation("Calendar_doctor")
   doctorSince          DateTime
-  doctorSpecialty      DoctorSpecialty?    @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])
-  doctorSpecialtyId    String?             @map("doctorSpecialty")
-  doctorSubSpecialty   DoctorSubSpecialty? @relation("Doctor_doctorSubSpecialty", fields: [doctorSubSpecialtyId], references: [id])
-  doctorSubSpecialtyId String?             @map("doctorSubSpecialty")
-  doctorType           DoctorType?         @relation("Doctor_doctorType", fields: [doctorTypeId], references: [id])
-  doctorTypeId         String?             @map("doctorType")
-  email                String              @unique @default("")
-  isCompleteProfile    Boolean             @default(false)
-  isVerified           Boolean             @default(false)
-  languages            DoctorLanguage[]    @relation("Doctor_languages")
-  summary              String              @default("")
-  patients             Patient[]           @relation("Doctor_patients")
-  savedByPatients      Patient[]           @relation("Doctor_savedByPatients")
+  doctorSpecialty      DoctorSpecialty?     @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])
+  doctorSpecialtyId    String?              @map("doctorSpecialty")
+  doctorSubSpecialties DoctorSubSpecialty[] @relation("Doctor_doctorSubSpecialties")
+  doctorType           DoctorType?          @relation("Doctor_doctorType", fields: [doctorTypeId], references: [id])
+  doctorTypeId         String?              @map("doctorType")
+  email                String               @unique @default("")
+  isCompleteProfile    Boolean              @default(false)
+  isVerified           Boolean              @default(false)
+  languages            DoctorLanguage[]     @relation("Doctor_languages")
+  summary              String               @default("")
+  patients             Patient[]            @relation("Doctor_patients")
+  savedByPatients      Patient[]            @relation("Doctor_savedByPatients")
 
   @@index([doctorSpecialtyId])
-  @@index([doctorSubSpecialtyId])
   @@index([doctorTypeId])
 }
 
@@ -174,7 +172,7 @@ model DoctorSubSpecialty {
   id      String   @id @default(cuid())
   label   String   @default("")
   value   String   @default("")
-  doctors Doctor[] @relation("Doctor_doctorSubSpecialty")
+  doctors Doctor[] @relation("Doctor_doctorSubSpecialties")
 }
 
 model HealthCard {

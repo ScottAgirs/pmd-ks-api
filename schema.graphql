@@ -1060,7 +1060,13 @@ type Doctor {
   calendar: Calendar
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialty
-  doctorSubSpecialty: DoctorSubSpecialty
+  doctorSubSpecialties(
+    where: DoctorSubSpecialtyWhereInput! = {}
+    orderBy: [DoctorSubSpecialtyOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [DoctorSubSpecialty!]
+  doctorSubSpecialtiesCount(where: DoctorSubSpecialtyWhereInput! = {}): Int
   doctorType: DoctorType
   email: String
   isCompleteProfile: Boolean
@@ -1105,7 +1111,7 @@ input DoctorWhereInput {
   calendar: CalendarWhereInput
   doctorSince: DateTimeFilter
   doctorSpecialty: DoctorSpecialtyWhereInput
-  doctorSubSpecialty: DoctorSubSpecialtyWhereInput
+  doctorSubSpecialties: DoctorSubSpecialtyManyRelationFilter
   doctorType: DoctorTypeWhereInput
   email: StringFilter
   isCompleteProfile: BooleanFilter
@@ -1125,6 +1131,12 @@ input DateTimeFilter {
   gt: DateTime
   gte: DateTime
   not: DateTimeFilter
+}
+
+input DoctorSubSpecialtyManyRelationFilter {
+  every: DoctorSubSpecialtyWhereInput
+  some: DoctorSubSpecialtyWhereInput
+  none: DoctorSubSpecialtyWhereInput
 }
 
 input DoctorLanguageManyRelationFilter {
@@ -1155,7 +1167,7 @@ input DoctorUpdateInput {
   calendar: CalendarRelateToOneForUpdateInput
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
-  doctorSubSpecialty: DoctorSubSpecialtyRelateToOneForUpdateInput
+  doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForUpdateInput
   doctorType: DoctorTypeRelateToOneForUpdateInput
   email: String
   isCompleteProfile: Boolean
@@ -1184,10 +1196,11 @@ input DoctorSpecialtyRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input DoctorSubSpecialtyRelateToOneForUpdateInput {
-  create: DoctorSubSpecialtyCreateInput
-  connect: DoctorSubSpecialtyWhereUniqueInput
-  disconnect: Boolean
+input DoctorSubSpecialtyRelateToManyForUpdateInput {
+  disconnect: [DoctorSubSpecialtyWhereUniqueInput!]
+  set: [DoctorSubSpecialtyWhereUniqueInput!]
+  create: [DoctorSubSpecialtyCreateInput!]
+  connect: [DoctorSubSpecialtyWhereUniqueInput!]
 }
 
 input DoctorTypeRelateToOneForUpdateInput {
@@ -1222,7 +1235,7 @@ input DoctorCreateInput {
   calendar: CalendarRelateToOneForCreateInput
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
-  doctorSubSpecialty: DoctorSubSpecialtyRelateToOneForCreateInput
+  doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForCreateInput
   doctorType: DoctorTypeRelateToOneForCreateInput
   email: String
   isCompleteProfile: Boolean
@@ -1248,9 +1261,9 @@ input DoctorSpecialtyRelateToOneForCreateInput {
   connect: DoctorSpecialtyWhereUniqueInput
 }
 
-input DoctorSubSpecialtyRelateToOneForCreateInput {
-  create: DoctorSubSpecialtyCreateInput
-  connect: DoctorSubSpecialtyWhereUniqueInput
+input DoctorSubSpecialtyRelateToManyForCreateInput {
+  create: [DoctorSubSpecialtyCreateInput!]
+  connect: [DoctorSubSpecialtyWhereUniqueInput!]
 }
 
 input DoctorTypeRelateToOneForCreateInput {
