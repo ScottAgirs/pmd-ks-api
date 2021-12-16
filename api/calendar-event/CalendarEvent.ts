@@ -5,12 +5,12 @@ const { list } = require("@keystone-6/core");
 export const CalendarEvent = list({
   fields: {
     bookings: relationship({ ref: 'Booking.event', many: true }),
-    calendar: relationship({ ref: 'Calendar.events', many: false }),
-    eventType: relationship({ ref: 'CalendarEventType.events', many: false }),
+    calendar: relationship({ ref: 'Calendar.events' }),
+    eventType: relationship({ ref: 'CalendarEventType.events' }),
     description: text({ validation: { isRequired: true } }),
     durationMins: integer({ validation: { isRequired: true } }),
     isConfirmationRequired: checkbox(),
-    schedule: relationship({ ref: 'Schedule.events', many: false }),
+    schedule: relationship({ ref: 'Schedule.events' }),
     title: text({ validation: { isRequired: true } }),
   },
 })
