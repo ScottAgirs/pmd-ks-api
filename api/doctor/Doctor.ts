@@ -11,6 +11,7 @@ export const Doctor = list({
     // TODO: doctorSpecializations
     doctorSince: timestamp({ validation: { isRequired: true } }),
     doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors', many: false }),
+    doctorSubSpecialty: relationship({ ref: 'DoctorSubSpecialty.doctors', many: false }),
     doctorType: relationship({ ref: 'DoctorType.doctors', many: false }),
     email: text({
       isIndexed: 'unique',
