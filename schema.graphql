@@ -558,7 +558,7 @@ type Calendar {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
-  doctor: Doctor
+  user: User
   schedules(
     where: ScheduleWhereInput! = {}
     orderBy: [ScheduleOrderByInput!]! = []
@@ -581,7 +581,7 @@ input CalendarWhereInput {
   name: StringFilter
   events: CalendarEventManyRelationFilter
   bookings: BookingManyRelationFilter
-  doctor: DoctorWhereInput
+  user: UserWhereInput
   schedules: ScheduleManyRelationFilter
   defaultSchedule: ScheduleWhereInput
 }
@@ -613,7 +613,7 @@ input CalendarUpdateInput {
   name: String
   events: CalendarEventRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
-  doctor: DoctorRelateToOneForUpdateInput
+  user: UserRelateToOneForUpdateInput
   schedules: ScheduleRelateToManyForUpdateInput
   defaultSchedule: ScheduleRelateToOneForUpdateInput
 }
@@ -630,6 +630,12 @@ input BookingRelateToManyForUpdateInput {
   set: [BookingWhereUniqueInput!]
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ScheduleRelateToManyForUpdateInput {
@@ -654,7 +660,7 @@ input CalendarCreateInput {
   name: String
   events: CalendarEventRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
-  doctor: DoctorRelateToOneForCreateInput
+  user: UserRelateToOneForCreateInput
   schedules: ScheduleRelateToManyForCreateInput
   defaultSchedule: ScheduleRelateToOneForCreateInput
 }
@@ -667,6 +673,11 @@ input CalendarEventRelateToManyForCreateInput {
 input BookingRelateToManyForCreateInput {
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input ScheduleRelateToManyForCreateInput {
@@ -1057,7 +1068,6 @@ type Doctor {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
-  calendar: Calendar
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialty
   doctorSubSpecialties(
@@ -1108,7 +1118,6 @@ input DoctorWhereInput {
   user: UserWhereInput
   appointments: AppointmentWhereInput
   bookings: BookingManyRelationFilter
-  calendar: CalendarWhereInput
   doctorSince: DateTimeFilter
   doctorSpecialty: DoctorSpecialtyWhereInput
   doctorSubSpecialties: DoctorSubSpecialtyManyRelationFilter
@@ -1164,7 +1173,6 @@ input DoctorUpdateInput {
   user: UserRelateToOneForUpdateInput
   appointments: AppointmentRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
-  calendar: CalendarRelateToOneForUpdateInput
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForUpdateInput
@@ -1176,12 +1184,6 @@ input DoctorUpdateInput {
   summary: String
   patients: PatientRelateToManyForUpdateInput
   savedByPatients: PatientRelateToManyForUpdateInput
-}
-
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
 }
 
 input AppointmentRelateToOneForUpdateInput {
@@ -1232,7 +1234,6 @@ input DoctorCreateInput {
   user: UserRelateToOneForCreateInput
   appointments: AppointmentRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
-  calendar: CalendarRelateToOneForCreateInput
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForCreateInput
@@ -1244,11 +1245,6 @@ input DoctorCreateInput {
   summary: String
   patients: PatientRelateToManyForCreateInput
   savedByPatients: PatientRelateToManyForCreateInput
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 input AppointmentRelateToOneForCreateInput {
@@ -1797,6 +1793,7 @@ type User {
   email: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
+  calendar: Calendar
   country: String
   administrativeArea: String
   locality: String
@@ -1851,6 +1848,7 @@ input UserWhereInput {
   email: StringFilter
   cellPhoneNumberString: StringFilter
   homePhoneNumberString: StringFilter
+  calendar: CalendarWhereInput
   country: StringFilter
   administrativeArea: StringFilter
   locality: StringFilter
@@ -1909,6 +1907,7 @@ input UserUpdateInput {
   email: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
+  calendar: CalendarRelateToOneForUpdateInput
   country: String
   administrativeArea: String
   locality: String
@@ -1958,6 +1957,7 @@ input UserCreateInput {
   email: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
+  calendar: CalendarRelateToOneForCreateInput
   country: String
   administrativeArea: String
   locality: String
