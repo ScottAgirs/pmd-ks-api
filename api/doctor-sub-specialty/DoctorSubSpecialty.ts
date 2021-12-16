@@ -6,6 +6,6 @@ export const DoctorSubSpecialty = list({
   fields: {
     label: text({ validation: { isRequired: true } }),
     value: text({ validation: { isRequired: true } }),
-    doctors: relationship({ ref: 'Doctor.doctorSubSpecialty', many: true }),
+    doctors: relationship({ ref: 'Doctor.doctorSubSpecialties', many: true }),
   },
 })
