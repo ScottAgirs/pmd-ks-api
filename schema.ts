@@ -13,6 +13,7 @@ import { TimeInterval } from "./api/time-interval/TimeInterval";
 
 import { Doctor } from "./api/doctor/Doctor";
 import { DoctorSpecialty } from "./api/doctor-specialty/DoctorSpecialty";
+import { DoctorSubSpecialty } from "./api/doctor-sub-specialty/DoctorSubSpecialty";
 import { DoctorType } from "./api/doctor-type/DoctorType";
 import { DoctorLanguage } from "./api/doctor-language/DoctorLanguage";
 import { HealthCard } from "./api/health-card/HealthCard";
@@ -27,7 +28,6 @@ import { StepperStepProg } from "./api/stepper-step-prog/StepperStepProg";
 // Location
 import { AdministrativeArea } from "./api/administrative-area/AdministrativeArea";
 import { Country } from "./api/country/Country";
-
 
 export const lists = {
   Appointment,
@@ -44,6 +44,7 @@ export const lists = {
   DoctorLanguage,
   DoctorType,
   DoctorSpecialty,
+  DoctorSubSpecialty,
   // HealthCard
   HealthCard,
   // Country
