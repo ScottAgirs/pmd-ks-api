@@ -10,6 +10,6 @@ export const EmergencyContact = list({
     lastName: text({ validation: { isRequired: true } }),
     cellPhoneNumberString: text({ validation: { isRequired: true } }),
     homePhoneNumberString: text({ validation: { isRequired: true } }),
-    patient: relationship({ ref: 'Patient.emergencyContacts', many: false }),
+    patient: relationship({ ref: 'Patient.emergencyContacts' }),
   },
 }) 
