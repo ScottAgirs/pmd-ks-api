@@ -120,6 +120,23 @@ type Mutation {
   updateDoctorTypes(data: [DoctorTypeUpdateArgs!]!): [DoctorType]
   deleteDoctorType(where: DoctorTypeWhereUniqueInput!): DoctorType
   deleteDoctorTypes(where: [DoctorTypeWhereUniqueInput!]!): [DoctorType]
+  createDoctorSpecialty(data: DoctorSpecialtyCreateInput!): DoctorSpecialty
+  createDoctorSpecialties(
+    data: [DoctorSpecialtyCreateInput!]!
+  ): [DoctorSpecialty]
+  updateDoctorSpecialty(
+    where: DoctorSpecialtyWhereUniqueInput!
+    data: DoctorSpecialtyUpdateInput!
+  ): DoctorSpecialty
+  updateDoctorSpecialties(
+    data: [DoctorSpecialtyUpdateArgs!]!
+  ): [DoctorSpecialty]
+  deleteDoctorSpecialty(
+    where: DoctorSpecialtyWhereUniqueInput!
+  ): DoctorSpecialty
+  deleteDoctorSpecialties(
+    where: [DoctorSpecialtyWhereUniqueInput!]!
+  ): [DoctorSpecialty]
   createHealthCard(data: HealthCardCreateInput!): HealthCard
   createHealthCards(data: [HealthCardCreateInput!]!): [HealthCard]
   updateHealthCard(
@@ -1023,6 +1040,7 @@ type Doctor {
   bookingsCount(where: BookingWhereInput! = {}): Int
   calendar: Calendar
   doctorSince: DateTime
+  doctorSpecialty: DoctorSpecialty
   doctorType: DoctorType
   email: String
   isCompleteProfile: Boolean
@@ -1066,6 +1084,7 @@ input DoctorWhereInput {
   bookings: BookingManyRelationFilter
   calendar: CalendarWhereInput
   doctorSince: DateTimeFilter
+  doctorSpecialty: DoctorSpecialtyWhereInput
   doctorType: DoctorTypeWhereInput
   email: StringFilter
   isCompleteProfile: BooleanFilter
@@ -1114,6 +1133,7 @@ input DoctorUpdateInput {
   bookings: BookingRelateToManyForUpdateInput
   calendar: CalendarRelateToOneForUpdateInput
   doctorSince: DateTime
+  doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
   doctorType: DoctorTypeRelateToOneForUpdateInput
   email: String
   isCompleteProfile: Boolean
@@ -1133,6 +1153,12 @@ input UserRelateToOneForUpdateInput {
 input AppointmentRelateToOneForUpdateInput {
   create: AppointmentCreateInput
   connect: AppointmentWhereUniqueInput
+  disconnect: Boolean
+}
+
+input DoctorSpecialtyRelateToOneForUpdateInput {
+  create: DoctorSpecialtyCreateInput
+  connect: DoctorSpecialtyWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1167,6 +1193,7 @@ input DoctorCreateInput {
   bookings: BookingRelateToManyForCreateInput
   calendar: CalendarRelateToOneForCreateInput
   doctorSince: DateTime
+  doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
   doctorType: DoctorTypeRelateToOneForCreateInput
   email: String
   isCompleteProfile: Boolean
@@ -1185,6 +1212,11 @@ input UserRelateToOneForCreateInput {
 input AppointmentRelateToOneForCreateInput {
   create: AppointmentCreateInput
   connect: AppointmentWhereUniqueInput
+}
+
+input DoctorSpecialtyRelateToOneForCreateInput {
+  create: DoctorSpecialtyCreateInput
+  connect: DoctorSpecialtyWhereUniqueInput
 }
 
 input DoctorTypeRelateToOneForCreateInput {
@@ -1315,6 +1347,56 @@ input DoctorTypeUpdateArgs {
 }
 
 input DoctorTypeCreateInput {
+  label: String
+  value: String
+  doctors: DoctorRelateToManyForCreateInput
+}
+
+type DoctorSpecialty {
+  id: ID!
+  label: String
+  value: String
+  doctors(
+    where: DoctorWhereInput! = {}
+    orderBy: [DoctorOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Doctor!]
+  doctorsCount(where: DoctorWhereInput! = {}): Int
+}
+
+input DoctorSpecialtyWhereUniqueInput {
+  id: ID
+}
+
+input DoctorSpecialtyWhereInput {
+  AND: [DoctorSpecialtyWhereInput!]
+  OR: [DoctorSpecialtyWhereInput!]
+  NOT: [DoctorSpecialtyWhereInput!]
+  id: IDFilter
+  label: StringFilter
+  value: StringFilter
+  doctors: DoctorManyRelationFilter
+}
+
+input DoctorSpecialtyOrderByInput {
+  id: OrderDirection
+  label: OrderDirection
+  value: OrderDirection
+}
+
+input DoctorSpecialtyUpdateInput {
+  label: String
+  value: String
+  doctors: DoctorRelateToManyForUpdateInput
+}
+
+input DoctorSpecialtyUpdateArgs {
+  where: DoctorSpecialtyWhereUniqueInput!
+  data: DoctorSpecialtyUpdateInput!
+}
+
+input DoctorSpecialtyCreateInput {
   label: String
   value: String
   doctors: DoctorRelateToManyForCreateInput
@@ -2480,6 +2562,14 @@ type Query {
   ): [DoctorType!]
   doctorType(where: DoctorTypeWhereUniqueInput!): DoctorType
   doctorTypesCount(where: DoctorTypeWhereInput! = {}): Int
+  doctorSpecialties(
+    where: DoctorSpecialtyWhereInput! = {}
+    orderBy: [DoctorSpecialtyOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [DoctorSpecialty!]
+  doctorSpecialty(where: DoctorSpecialtyWhereUniqueInput!): DoctorSpecialty
+  doctorSpecialtiesCount(where: DoctorSpecialtyWhereInput! = {}): Int
   healthCards(
     where: HealthCardWhereInput! = {}
     orderBy: [HealthCardOrderByInput!]! = []
