@@ -12,10 +12,7 @@ export const Doctor = list({
     doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors' }),
     doctorSubSpecialties: relationship({ ref: 'DoctorSubSpecialty.doctors', many: true }),
     doctorType: relationship({ ref: 'DoctorType.doctors' }),
-    email: text({
-      isIndexed: 'unique',
-      isFilterable: true,
-    }),
+    email: text(),
     isCompleteProfile: checkbox(),
     isVerified: checkbox(),
     languages: relationship({ ref: 'DoctorLanguage.doctors', many: true }),
