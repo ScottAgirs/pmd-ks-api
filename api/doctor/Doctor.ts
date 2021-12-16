@@ -4,15 +4,14 @@ const { list } = require("@keystone-6/core");
 
 export const Doctor = list({
   fields: {
-    user: relationship({ ref: 'User.doctor', many: false }),
-    appointments: relationship({ ref: 'Appointment.doctor', many: false }),
+    user: relationship({ ref: 'User.doctor' }),
+    appointments: relationship({ ref: 'Appointment.doctor' }),
     bookings: relationship({ ref: 'Booking.doctor', many: true }),
-    calendar: relationship({ ref: 'Calendar.doctor', many: false }),
     // TODO: doctorSpecializations
     doctorSince: timestamp({ validation: { isRequired: true } }),
-    doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors', many: false }),
+    doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors' }),
     doctorSubSpecialties: relationship({ ref: 'DoctorSubSpecialty.doctors', many: true }),
-    doctorType: relationship({ ref: 'DoctorType.doctors', many: false }),
+    doctorType: relationship({ ref: 'DoctorType.doctors' }),
     email: text({
       isIndexed: 'unique',
       isFilterable: true,
