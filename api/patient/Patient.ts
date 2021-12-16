@@ -10,7 +10,7 @@ export const Patient = list({
     isCompleteProfile: checkbox(),
     name: text(),
     savedDoctors: relationship({ ref: 'Doctor.savedByPatients', many: true }),
-    user: relationship({ ref: 'User.patient', many: false }),
+    user: relationship({ ref: 'User.patient' }),
     visitedDoctors: relationship({ ref: 'Doctor.patients', many: true }),
     emergencyContacts: relationship({ ref: 'EmergencyContact.patient', many: true }),
   },
