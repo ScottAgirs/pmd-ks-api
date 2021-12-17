@@ -72,6 +72,27 @@ export const completePatientOnboarding = async (
           isCompleteProfile: true,
         },
       });
+      
+
+    const promptDB = context.db.Prompt;
+
+    const matchUserToOnboardPrompt = await promptDB.findMany({
+      where: {
+        user: {
+          id: { equals: userId },
+        },
+        promptValue: { equals: '/onboard/patient' },  
+      },
+    });
+    const matchUserToOnboardPromptId = matchUserToOnboardPrompt.length > 0 ? matchUserToOnboardPrompt[0].id : null;
+
+    if (matchUserToOnboardPromptId) {
+     await promptDB.deleteOne({
+        where: {
+          id: matchUserToOnboardPromptId as string,
+        },
+      });
+    }
 
       // TODO: send email to patient user
 
