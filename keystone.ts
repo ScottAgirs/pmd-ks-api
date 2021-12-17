@@ -9,6 +9,7 @@ import { lists } from './schema';
 import { withAuth, session } from './auth';
 import { populateSpecialties } from './seed/doctor/populate-specialties';
 import { populateSubSpecialties } from './seed/doctor/populate-sub-specialties';
+import { populateCalendarEventTypes } from './seed/doctor/populate-calendar-event-types';
 
 const FRONTEND_URL:string = process.env.FRONTEND_URL as string;
 export default withAuth(
@@ -23,6 +24,9 @@ export default withAuth(
       provider: 'postgresql',
       url: 'postgresql://doadmin:4dvbMUL0jSI1b3Z4@db-ks-dev-do-user-8624530-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require',
       async onConnect(keystone) {
+        if (process.argv.includes('--seed-calendar-event-types')) {
+          populateCalendarEventTypes(keystone);
+        }
         if (process.argv.includes('--seed-doctor-specialties')) {
           populateSpecialties(keystone);
         }
