@@ -65,6 +65,8 @@ model CalendarEvent {
   bookings               Booking[]          @relation("Booking_event")
   calendar               Calendar?          @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
   calendarId             String?            @map("calendar")
+  doctor                 Doctor?            @relation("CalendarEvent_doctor", fields: [doctorId], references: [id])
+  doctorId               String?            @map("doctor")
   eventType              CalendarEventType? @relation("CalendarEvent_eventType", fields: [eventTypeId], references: [id])
   eventTypeId            String?            @map("eventType")
   description            String             @default("")
@@ -75,6 +77,7 @@ model CalendarEvent {
   title                  String             @default("")
 
   @@index([calendarId])
+  @@index([doctorId])
   @@index([eventTypeId])
   @@index([scheduleId])
 }
@@ -128,6 +131,7 @@ model Doctor {
   userId               String?              @unique @map("user")
   appointments         Appointment?         @relation("Appointment_doctor")
   bookings             Booking[]            @relation("Booking_doctor")
+  calendarEvents       CalendarEvent[]      @relation("CalendarEvent_doctor")
   doctorSince          DateTime
   doctorSpecialty      DoctorSpecialty?     @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])
   doctorSpecialtyId    String?              @map("doctorSpecialty")

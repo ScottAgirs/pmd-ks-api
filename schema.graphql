@@ -700,6 +700,7 @@ type CalendarEvent {
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
   calendar: Calendar
+  doctor: Doctor
   eventType: CalendarEventType
   description: String
   durationMins: Int
@@ -719,6 +720,7 @@ input CalendarEventWhereInput {
   id: IDFilter
   bookings: BookingManyRelationFilter
   calendar: CalendarWhereInput
+  doctor: DoctorWhereInput
   eventType: CalendarEventTypeWhereInput
   description: StringFilter
   durationMins: IntFilter
@@ -738,6 +740,7 @@ input CalendarEventOrderByInput {
 input CalendarEventUpdateInput {
   bookings: BookingRelateToManyForUpdateInput
   calendar: CalendarRelateToOneForUpdateInput
+  doctor: DoctorRelateToOneForUpdateInput
   eventType: CalendarEventTypeRelateToOneForUpdateInput
   description: String
   durationMins: Int
@@ -760,6 +763,7 @@ input CalendarEventUpdateArgs {
 input CalendarEventCreateInput {
   bookings: BookingRelateToManyForCreateInput
   calendar: CalendarRelateToOneForCreateInput
+  doctor: DoctorRelateToOneForCreateInput
   eventType: CalendarEventTypeRelateToOneForCreateInput
   description: String
   durationMins: Int
@@ -1068,6 +1072,13 @@ type Doctor {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
+  calendarEvents(
+    where: CalendarEventWhereInput! = {}
+    orderBy: [CalendarEventOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CalendarEvent!]
+  calendarEventsCount(where: CalendarEventWhereInput! = {}): Int
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialty
   doctorSubSpecialties(
@@ -1117,6 +1128,7 @@ input DoctorWhereInput {
   user: UserWhereInput
   appointments: AppointmentWhereInput
   bookings: BookingManyRelationFilter
+  calendarEvents: CalendarEventManyRelationFilter
   doctorSince: DateTimeFilter
   doctorSpecialty: DoctorSpecialtyWhereInput
   doctorSubSpecialties: DoctorSubSpecialtyManyRelationFilter
@@ -1172,6 +1184,7 @@ input DoctorUpdateInput {
   user: UserRelateToOneForUpdateInput
   appointments: AppointmentRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
+  calendarEvents: CalendarEventRelateToManyForUpdateInput
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForUpdateInput
@@ -1233,6 +1246,7 @@ input DoctorCreateInput {
   user: UserRelateToOneForCreateInput
   appointments: AppointmentRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
+  calendarEvents: CalendarEventRelateToManyForCreateInput
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForCreateInput
