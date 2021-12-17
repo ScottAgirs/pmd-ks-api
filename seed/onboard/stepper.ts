@@ -1,6 +1,6 @@
 const DOCTOR_ONBOARDING_STEPS = [
   {
-    title: "Next Generation Health Care",
+    title: "Public Profile",
     description: "",
     component: "profile",
     slug: "profile",
@@ -8,7 +8,7 @@ const DOCTOR_ONBOARDING_STEPS = [
     order: 0,
   },
   {
-    title: "Next Generation Health Care",
+    title: "Professional Information",
     description: "",
     component: "profession",
     slug: "profession",
@@ -16,12 +16,20 @@ const DOCTOR_ONBOARDING_STEPS = [
     order: 1,
   },
   {
-    title: "Next Generation Health Care",
+    title: "Review and Confirm",
     description: "",
     component: "review",
     slug: "review",
     isFinal: true,
     order: 2,
+  },
+  {
+    title: "Complete",
+    description: "",
+    component: "final",
+    slug: "final",
+    isFinal: true,
+    order: 3,
   },
 ]
 
