@@ -7,12 +7,11 @@ export interface CreateEventBookingInput {
 }
 
 export const createCalendarEventBooking = async (
-  context: KeystoneContext,
-  {
+  root: any, {
     eventId,
     notes,
     startsAt,
-  }: CreateEventBookingInput
+  }: CreateEventBookingInput, context:KeystoneContext
   // TODO: [TypeScript] Add type for `Promise`
 ): Promise<any> => {
   if (!eventId) {
@@ -22,11 +21,14 @@ export const createCalendarEventBooking = async (
   // Check user is logged in
   const user = context.session?.data;
   const userId = user.id;
+  const currentUserPatientId = user.patient.id;
 
   if (!userId) {
     throw new Error('User not logged in');
   }
 
+  // TODO: Get user Patient id
+  
   // Check event exists
   const event = await context.db.CalendarEvent.findOne({
     where: {
@@ -37,7 +39,40 @@ export const createCalendarEventBooking = async (
     throw new Error('event not found')
   }
   console.log('event', event);
+  // TODO: Get Event Calendar
+  
 
+  // TODO: Create Booking based on event
+  const createdBooking = await context.db.Booking.createOne({ 
+    data: {
+      calendar: {
+        connect: {
+          id: event.calendarId,
+        }
+      },
+      doctor: {
+        connect: {
+          id: event.doctorId,
+        }
+      },
+      durationMins: event.durationMins,
+      event: {
+        connect: {
+          id: eventId,
+        }
+      },
+      // TODO: Implement isConfirmed
+      // isConfirmed: false,
+      // endsAt, // @TODO: See above to calculate
+      notes,
+      patient: {
+        connect: {
+          id: currentUserPatientId,
+        }
+      },
+      startsAt,
+    },
+  });
 
-  // return { ...stepperStepProg, stepper, stepperProg };
+  return createdBooking;
 }
