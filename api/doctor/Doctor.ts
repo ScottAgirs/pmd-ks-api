@@ -7,6 +7,7 @@ export const Doctor = list({
     user: relationship({ ref: 'User.doctor' }),
     appointments: relationship({ ref: 'Appointment.doctor' }),
     bookings: relationship({ ref: 'Booking.doctor', many: true }),
+    calendarEvents: relationship({ ref: 'CalendarEvent.doctor', many: true }),
     // TODO: doctorSpecializations
     doctorSince: timestamp({ validation: { isRequired: true } }),
     doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors' }),
