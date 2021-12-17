@@ -25,8 +25,8 @@ export async function populateSteppers(keystone: any) {
     });
 
     console.log(` 👨🏼‍⚕️ ✅ Created [${createdStepper.name}]`);
-    console.log(` 👣 Adding ${stepperSteps.length} Steps to [${createdStepper.name}]`);
-
+    console.log(` 🦶🏼 Adding ${stepperSteps.length} Steps to [${createdStepper.name}]`);
+    
     for (const stepperStep of stepperSteps) {
       const addedStepperStep = await keystone.db.StepperStep.createOne({
         data: {
@@ -34,7 +34,7 @@ export async function populateSteppers(keystone: any) {
           stepper: { connect: { id: createdStepper.id } }
         }
       });
-      console.log('populateSteppers :: addedStepperStep', addedStepperStep);
+      console.log(`🦶🏼 ✅ Added [${addedStepperStep.title}]`);
     }
   }
   console.log(`✅ Steppers Seeded with ${STEPPERS.length} items`);
