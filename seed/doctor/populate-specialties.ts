@@ -1,7 +1,9 @@
 import { SPECIALTIES } from "./specialties";
 
 export async function populateSpecialties(keystone: any) {
+  console.log(`----------------------------------------`);
   console.log(`🌱 Inserting Doctor Specialties Data: ${SPECIALTIES.length} items`);
+  console.log(`----------------------------------------`);
 
   for (const specialty of SPECIALTIES) {
     console.log(` 👨🏼‍⚕️ Adding [${specialty.label}] Specialty`);
