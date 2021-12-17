@@ -6,8 +6,9 @@ export const CalendarEvent = list({
   fields: {
     bookings: relationship({ ref: 'Booking.event', many: true }),
     calendar: relationship({ ref: 'Calendar.events' }),
+    doctor: relationship({ ref: 'Doctor.calendarEvents' }),
     eventType: relationship({ ref: 'CalendarEventType.events' }),
-    description: text({ validation: { isRequired: true } }),
+    description: text(),
     durationMins: integer({ validation: { isRequired: true } }),
     isConfirmationRequired: checkbox(),
     schedule: relationship({ ref: 'Schedule.events' }),
