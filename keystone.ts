@@ -23,7 +23,7 @@ export default withAuth(
     },
     db: {
       provider: 'postgresql',
-      url: 'postgresql://doadmin:4dvbMUL0jSI1b3Z4@db-ks-dev-do-user-8624530-0.b.db.ondigitalocean.com:25060/defaultdb?sslmode=require',
+      url: process.env.DATABASE_URL as string,
       async onConnect(keystone) {
         if (process.argv.includes('--seed-steppers')) {
           populateSteppers(keystone);
