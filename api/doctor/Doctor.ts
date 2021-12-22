@@ -12,7 +12,6 @@ export const Doctor = list({
     doctorSince: timestamp({ validation: { isRequired: true } }),
     doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors' }),
     doctorSubSpecialties: relationship({ ref: 'DoctorSubSpecialty.doctors', many: true }),
-    doctorType: relationship({ ref: 'DoctorType.doctors' }),
     email: text(),
     isCompleteProfile: checkbox(),
     isVerified: checkbox(),
