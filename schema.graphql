@@ -17,6 +17,38 @@ type Mutation {
   updateAppointments(data: [AppointmentUpdateArgs!]!): [Appointment]
   deleteAppointment(where: AppointmentWhereUniqueInput!): Appointment
   deleteAppointments(where: [AppointmentWhereUniqueInput!]!): [Appointment]
+  createAppointmentNote(data: AppointmentNoteCreateInput!): AppointmentNote
+  createAppointmentNotes(
+    data: [AppointmentNoteCreateInput!]!
+  ): [AppointmentNote]
+  updateAppointmentNote(
+    where: AppointmentNoteWhereUniqueInput!
+    data: AppointmentNoteUpdateInput!
+  ): AppointmentNote
+  updateAppointmentNotes(data: [AppointmentNoteUpdateArgs!]!): [AppointmentNote]
+  deleteAppointmentNote(
+    where: AppointmentNoteWhereUniqueInput!
+  ): AppointmentNote
+  deleteAppointmentNotes(
+    where: [AppointmentNoteWhereUniqueInput!]!
+  ): [AppointmentNote]
+  createAppointmentVital(data: AppointmentVitalCreateInput!): AppointmentVital
+  createAppointmentVitals(
+    data: [AppointmentVitalCreateInput!]!
+  ): [AppointmentVital]
+  updateAppointmentVital(
+    where: AppointmentVitalWhereUniqueInput!
+    data: AppointmentVitalUpdateInput!
+  ): AppointmentVital
+  updateAppointmentVitals(
+    data: [AppointmentVitalUpdateArgs!]!
+  ): [AppointmentVital]
+  deleteAppointmentVital(
+    where: AppointmentVitalWhereUniqueInput!
+  ): AppointmentVital
+  deleteAppointmentVitals(
+    where: [AppointmentVitalWhereUniqueInput!]!
+  ): [AppointmentVital]
   createBooking(data: BookingCreateInput!): Booking
   createBookings(data: [BookingCreateInput!]!): [Booking]
   updateBooking(
@@ -276,8 +308,11 @@ type Mutation {
 
 type Appointment {
   id: ID!
+  booking: Booking
   doctor: Doctor
+  note: AppointmentNote
   patient: Patient
+  vitals: AppointmentVital
   scheduledStartsAt: DateTime
   scheduledEndsAt: DateTime
   startedAt: DateTime
@@ -296,8 +331,11 @@ input AppointmentWhereInput {
   OR: [AppointmentWhereInput!]
   NOT: [AppointmentWhereInput!]
   id: IDFilter
+  booking: BookingWhereInput
   doctor: DoctorWhereInput
+  note: AppointmentNoteWhereInput
   patient: PatientWhereInput
+  vitals: AppointmentVitalWhereInput
   scheduledStartsAt: DateTimeNullableFilter
   scheduledEndsAt: DateTimeNullableFilter
   startedAt: DateTimeNullableFilter
@@ -340,17 +378,32 @@ enum OrderDirection {
 }
 
 input AppointmentUpdateInput {
+  booking: BookingRelateToOneForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
+  note: AppointmentNoteRelateToOneForUpdateInput
   patient: PatientRelateToOneForUpdateInput
+  vitals: AppointmentVitalRelateToOneForUpdateInput
   scheduledStartsAt: DateTime
   scheduledEndsAt: DateTime
   startedAt: DateTime
   endedAt: DateTime
 }
 
+input BookingRelateToOneForUpdateInput {
+  create: BookingCreateInput
+  connect: BookingWhereUniqueInput
+  disconnect: Boolean
+}
+
 input DoctorRelateToOneForUpdateInput {
   create: DoctorCreateInput
   connect: DoctorWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AppointmentNoteRelateToOneForUpdateInput {
+  create: AppointmentNoteCreateInput
+  connect: AppointmentNoteWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -360,18 +413,32 @@ input PatientRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input AppointmentVitalRelateToOneForUpdateInput {
+  create: AppointmentVitalCreateInput
+  connect: AppointmentVitalWhereUniqueInput
+  disconnect: Boolean
+}
+
 input AppointmentUpdateArgs {
   where: AppointmentWhereUniqueInput!
   data: AppointmentUpdateInput!
 }
 
 input AppointmentCreateInput {
+  booking: BookingRelateToOneForCreateInput
   doctor: DoctorRelateToOneForCreateInput
+  note: AppointmentNoteRelateToOneForCreateInput
   patient: PatientRelateToOneForCreateInput
+  vitals: AppointmentVitalRelateToOneForCreateInput
   scheduledStartsAt: DateTime
   scheduledEndsAt: DateTime
   startedAt: DateTime
   endedAt: DateTime
+}
+
+input BookingRelateToOneForCreateInput {
+  create: BookingCreateInput
+  connect: BookingWhereUniqueInput
 }
 
 input DoctorRelateToOneForCreateInput {
@@ -379,60 +446,54 @@ input DoctorRelateToOneForCreateInput {
   connect: DoctorWhereUniqueInput
 }
 
+input AppointmentNoteRelateToOneForCreateInput {
+  create: AppointmentNoteCreateInput
+  connect: AppointmentNoteWhereUniqueInput
+}
+
 input PatientRelateToOneForCreateInput {
   create: PatientCreateInput
   connect: PatientWhereUniqueInput
 }
 
-type Booking {
-  id: ID!
-  calendar: Calendar
-  doctor: Doctor
-  durationMins: Int
-  event: CalendarEvent
-  isConfirmed: Boolean
-  name: String
-  notes: String
-  patient: Patient
-  startsAt: DateTime
-  endsAt: DateTime
+input AppointmentVitalRelateToOneForCreateInput {
+  create: AppointmentVitalCreateInput
+  connect: AppointmentVitalWhereUniqueInput
 }
 
-input BookingWhereUniqueInput {
+type AppointmentNote {
+  id: ID!
+  appointment: Appointment
+  patient(
+    where: PatientWhereInput! = {}
+    orderBy: [PatientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Patient!]
+  patientCount(where: PatientWhereInput! = {}): Int
+  body: String
+  title: String
+}
+
+input AppointmentNoteWhereUniqueInput {
   id: ID
 }
 
-input BookingWhereInput {
-  AND: [BookingWhereInput!]
-  OR: [BookingWhereInput!]
-  NOT: [BookingWhereInput!]
+input AppointmentNoteWhereInput {
+  AND: [AppointmentNoteWhereInput!]
+  OR: [AppointmentNoteWhereInput!]
+  NOT: [AppointmentNoteWhereInput!]
   id: IDFilter
-  calendar: CalendarWhereInput
-  doctor: DoctorWhereInput
-  durationMins: IntFilter
-  event: CalendarEventWhereInput
-  isConfirmed: BooleanFilter
-  name: StringFilter
-  notes: StringFilter
-  patient: PatientWhereInput
-  startsAt: DateTimeNullableFilter
-  endsAt: DateTimeNullableFilter
+  appointment: AppointmentWhereInput
+  patient: PatientManyRelationFilter
+  body: StringFilter
+  title: StringFilter
 }
 
-input IntFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
+input PatientManyRelationFilter {
+  every: PatientWhereInput
+  some: PatientWhereInput
+  none: PatientWhereInput
 }
 
 input StringFilter {
@@ -469,6 +530,187 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input AppointmentNoteOrderByInput {
+  id: OrderDirection
+  body: OrderDirection
+  title: OrderDirection
+}
+
+input AppointmentNoteUpdateInput {
+  appointment: AppointmentRelateToOneForUpdateInput
+  patient: PatientRelateToManyForUpdateInput
+  body: String
+  title: String
+}
+
+input AppointmentRelateToOneForUpdateInput {
+  create: AppointmentCreateInput
+  connect: AppointmentWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PatientRelateToManyForUpdateInput {
+  disconnect: [PatientWhereUniqueInput!]
+  set: [PatientWhereUniqueInput!]
+  create: [PatientCreateInput!]
+  connect: [PatientWhereUniqueInput!]
+}
+
+input AppointmentNoteUpdateArgs {
+  where: AppointmentNoteWhereUniqueInput!
+  data: AppointmentNoteUpdateInput!
+}
+
+input AppointmentNoteCreateInput {
+  appointment: AppointmentRelateToOneForCreateInput
+  patient: PatientRelateToManyForCreateInput
+  body: String
+  title: String
+}
+
+input AppointmentRelateToOneForCreateInput {
+  create: AppointmentCreateInput
+  connect: AppointmentWhereUniqueInput
+}
+
+input PatientRelateToManyForCreateInput {
+  create: [PatientCreateInput!]
+  connect: [PatientWhereUniqueInput!]
+}
+
+type AppointmentVital {
+  id: ID!
+  appointment: Appointment
+  patient(
+    where: PatientWhereInput! = {}
+    orderBy: [PatientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Patient!]
+  patientCount(where: PatientWhereInput! = {}): Int
+  oxygenSaturation: Int
+  heartRate: Int
+  temperature: Int
+  bloodPressure: String
+  resp: Int
+}
+
+input AppointmentVitalWhereUniqueInput {
+  id: ID
+}
+
+input AppointmentVitalWhereInput {
+  AND: [AppointmentVitalWhereInput!]
+  OR: [AppointmentVitalWhereInput!]
+  NOT: [AppointmentVitalWhereInput!]
+  id: IDFilter
+  appointment: AppointmentWhereInput
+  patient: PatientManyRelationFilter
+  oxygenSaturation: IntNullableFilter
+  heartRate: IntNullableFilter
+  temperature: IntNullableFilter
+  bloodPressure: StringFilter
+  resp: IntNullableFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input AppointmentVitalOrderByInput {
+  id: OrderDirection
+  oxygenSaturation: OrderDirection
+  heartRate: OrderDirection
+  temperature: OrderDirection
+  bloodPressure: OrderDirection
+  resp: OrderDirection
+}
+
+input AppointmentVitalUpdateInput {
+  appointment: AppointmentRelateToOneForUpdateInput
+  patient: PatientRelateToManyForUpdateInput
+  oxygenSaturation: Int
+  heartRate: Int
+  temperature: Int
+  bloodPressure: String
+  resp: Int
+}
+
+input AppointmentVitalUpdateArgs {
+  where: AppointmentVitalWhereUniqueInput!
+  data: AppointmentVitalUpdateInput!
+}
+
+input AppointmentVitalCreateInput {
+  appointment: AppointmentRelateToOneForCreateInput
+  patient: PatientRelateToManyForCreateInput
+  oxygenSaturation: Int
+  heartRate: Int
+  temperature: Int
+  bloodPressure: String
+  resp: Int
+}
+
+type Booking {
+  id: ID!
+  appointment: Appointment
+  calendar: Calendar
+  doctor: Doctor
+  durationMins: Int
+  event: CalendarEvent
+  isConfirmed: Boolean
+  name: String
+  notes: String
+  patient: Patient
+  startsAt: DateTime
+  endsAt: DateTime
+}
+
+input BookingWhereUniqueInput {
+  id: ID
+}
+
+input BookingWhereInput {
+  AND: [BookingWhereInput!]
+  OR: [BookingWhereInput!]
+  NOT: [BookingWhereInput!]
+  id: IDFilter
+  appointment: AppointmentWhereInput
+  calendar: CalendarWhereInput
+  doctor: DoctorWhereInput
+  durationMins: IntFilter
+  event: CalendarEventWhereInput
+  isConfirmed: BooleanFilter
+  name: StringFilter
+  notes: StringFilter
+  patient: PatientWhereInput
+  startsAt: DateTimeNullableFilter
+  endsAt: DateTimeNullableFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
 input BookingOrderByInput {
   id: OrderDirection
   durationMins: OrderDirection
@@ -480,6 +722,7 @@ input BookingOrderByInput {
 }
 
 input BookingUpdateInput {
+  appointment: AppointmentRelateToOneForUpdateInput
   calendar: CalendarRelateToOneForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
   durationMins: Int
@@ -510,6 +753,7 @@ input BookingUpdateArgs {
 }
 
 input BookingCreateInput {
+  appointment: AppointmentRelateToOneForCreateInput
   calendar: CalendarRelateToOneForCreateInput
   doctor: DoctorRelateToOneForCreateInput
   durationMins: Int
@@ -937,17 +1181,6 @@ input RecurringSlotWhereInput {
   timeIntervals: TimeIntervalManyRelationFilter
 }
 
-input IntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntNullableFilter
-}
-
 input TimeIntervalManyRelationFilter {
   every: TimeIntervalWhereInput
   some: TimeIntervalWhereInput
@@ -1154,12 +1387,6 @@ input DoctorLanguageManyRelationFilter {
   none: DoctorLanguageWhereInput
 }
 
-input PatientManyRelationFilter {
-  every: PatientWhereInput
-  some: PatientWhereInput
-  none: PatientWhereInput
-}
-
 input DoctorOrderByInput {
   id: OrderDirection
   doctorSince: OrderDirection
@@ -1186,12 +1413,6 @@ input DoctorUpdateInput {
   savedByPatients: PatientRelateToManyForUpdateInput
 }
 
-input AppointmentRelateToOneForUpdateInput {
-  create: AppointmentCreateInput
-  connect: AppointmentWhereUniqueInput
-  disconnect: Boolean
-}
-
 input DoctorSpecialtyRelateToOneForUpdateInput {
   create: DoctorSpecialtyCreateInput
   connect: DoctorSpecialtyWhereUniqueInput
@@ -1210,13 +1431,6 @@ input DoctorLanguageRelateToManyForUpdateInput {
   set: [DoctorLanguageWhereUniqueInput!]
   create: [DoctorLanguageCreateInput!]
   connect: [DoctorLanguageWhereUniqueInput!]
-}
-
-input PatientRelateToManyForUpdateInput {
-  disconnect: [PatientWhereUniqueInput!]
-  set: [PatientWhereUniqueInput!]
-  create: [PatientCreateInput!]
-  connect: [PatientWhereUniqueInput!]
 }
 
 input DoctorUpdateArgs {
@@ -1241,11 +1455,6 @@ input DoctorCreateInput {
   savedByPatients: PatientRelateToManyForCreateInput
 }
 
-input AppointmentRelateToOneForCreateInput {
-  create: AppointmentCreateInput
-  connect: AppointmentWhereUniqueInput
-}
-
 input DoctorSpecialtyRelateToOneForCreateInput {
   create: DoctorSpecialtyCreateInput
   connect: DoctorSpecialtyWhereUniqueInput
@@ -1259,11 +1468,6 @@ input DoctorSubSpecialtyRelateToManyForCreateInput {
 input DoctorLanguageRelateToManyForCreateInput {
   create: [DoctorLanguageCreateInput!]
   connect: [DoctorLanguageWhereUniqueInput!]
-}
-
-input PatientRelateToManyForCreateInput {
-  create: [PatientCreateInput!]
-  connect: [PatientWhereUniqueInput!]
 }
 
 type DoctorLanguage {
@@ -1940,6 +2144,8 @@ type Patient {
     skip: Int! = 0
   ): [Appointment!]
   appointmentsCount(where: AppointmentWhereInput! = {}): Int
+  appointmentVitals: AppointmentVital
+  appointmentNotes: AppointmentNote
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -1990,6 +2196,8 @@ input PatientWhereInput {
   NOT: [PatientWhereInput!]
   id: IDFilter
   appointments: AppointmentManyRelationFilter
+  appointmentVitals: AppointmentVitalWhereInput
+  appointmentNotes: AppointmentNoteWhereInput
   bookings: BookingManyRelationFilter
   healthCards: HealthCardManyRelationFilter
   isCompleteProfile: BooleanFilter
@@ -2020,6 +2228,8 @@ input PatientOrderByInput {
 
 input PatientUpdateInput {
   appointments: AppointmentRelateToManyForUpdateInput
+  appointmentVitals: AppointmentVitalRelateToOneForUpdateInput
+  appointmentNotes: AppointmentNoteRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   healthCards: HealthCardRelateToManyForUpdateInput
   isCompleteProfile: Boolean
@@ -2051,6 +2261,8 @@ input PatientUpdateArgs {
 
 input PatientCreateInput {
   appointments: AppointmentRelateToManyForCreateInput
+  appointmentVitals: AppointmentVitalRelateToOneForCreateInput
+  appointmentNotes: AppointmentNoteRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
   healthCards: HealthCardRelateToManyForCreateInput
   isCompleteProfile: Boolean
@@ -2516,6 +2728,22 @@ type Query {
   ): [Appointment!]
   appointment(where: AppointmentWhereUniqueInput!): Appointment
   appointmentsCount(where: AppointmentWhereInput! = {}): Int
+  appointmentNotes(
+    where: AppointmentNoteWhereInput! = {}
+    orderBy: [AppointmentNoteOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentNote!]
+  appointmentNote(where: AppointmentNoteWhereUniqueInput!): AppointmentNote
+  appointmentNotesCount(where: AppointmentNoteWhereInput! = {}): Int
+  appointmentVitals(
+    where: AppointmentVitalWhereInput! = {}
+    orderBy: [AppointmentVitalOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentVital!]
+  appointmentVital(where: AppointmentVitalWhereUniqueInput!): AppointmentVital
+  appointmentVitalsCount(where: AppointmentVitalWhereInput! = {}): Int
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []

@@ -12,11 +12,17 @@ generator client {
 }
 
 model Appointment {
-  id                String    @id @default(cuid())
-  doctor            Doctor?   @relation("Appointment_doctor", fields: [doctorId], references: [id])
-  doctorId          String?   @unique @map("doctor")
-  patient           Patient?  @relation("Appointment_patient", fields: [patientId], references: [id])
-  patientId         String?   @map("patient")
+  id                String            @id @default(cuid())
+  booking           Booking?          @relation("Appointment_booking", fields: [bookingId], references: [id])
+  bookingId         String?           @unique @map("booking")
+  doctor            Doctor?           @relation("Appointment_doctor", fields: [doctorId], references: [id])
+  doctorId          String?           @unique @map("doctor")
+  note              AppointmentNote?  @relation("Appointment_note", fields: [noteId], references: [id])
+  noteId            String?           @unique @map("note")
+  patient           Patient?          @relation("Appointment_patient", fields: [patientId], references: [id])
+  patientId         String?           @map("patient")
+  vitals            AppointmentVital? @relation("Appointment_vitals", fields: [vitalsId], references: [id])
+  vitalsId          String?           @unique @map("vitals")
   scheduledStartsAt DateTime?
   scheduledEndsAt   DateTime?
   startedAt         DateTime?
@@ -25,8 +31,28 @@ model Appointment {
   @@index([patientId])
 }
 
+model AppointmentNote {
+  id          String       @id @default(cuid())
+  appointment Appointment? @relation("Appointment_note")
+  patient     Patient[]    @relation("Patient_appointmentNotes")
+  body        String       @default("")
+  title       String       @default("")
+}
+
+model AppointmentVital {
+  id               String       @id @default(cuid())
+  appointment      Appointment? @relation("Appointment_vitals")
+  patient          Patient[]    @relation("Patient_appointmentVitals")
+  oxygenSaturation Int?
+  heartRate        Int?
+  temperature      Int?
+  bloodPressure    String       @default("")
+  resp             Int?
+}
+
 model Booking {
   id           String         @id @default(cuid())
+  appointment  Appointment?   @relation("Appointment_booking")
   calendar     Calendar?      @relation("Booking_calendar", fields: [calendarId], references: [id])
   calendarId   String?        @map("calendar")
   doctor       Doctor?        @relation("Booking_doctor", fields: [doctorId], references: [id])
@@ -245,17 +271,24 @@ model User {
 }
 
 model Patient {
-  id                String             @id @default(cuid())
-  appointments      Appointment[]      @relation("Appointment_patient")
-  bookings          Booking[]          @relation("Booking_patient")
-  healthCards       HealthCard[]       @relation("HealthCard_patient")
-  isCompleteProfile Boolean            @default(false)
-  name              String             @default("")
-  savedDoctors      Doctor[]           @relation("Doctor_savedByPatients")
-  user              User?              @relation("Patient_user", fields: [userId], references: [id])
-  userId            String?            @unique @map("user")
-  visitedDoctors    Doctor[]           @relation("Doctor_patients")
-  emergencyContacts EmergencyContact[] @relation("EmergencyContact_patient")
+  id                  String             @id @default(cuid())
+  appointments        Appointment[]      @relation("Appointment_patient")
+  appointmentVitals   AppointmentVital?  @relation("Patient_appointmentVitals", fields: [appointmentVitalsId], references: [id])
+  appointmentVitalsId String?            @map("appointmentVitals")
+  appointmentNotes    AppointmentNote?   @relation("Patient_appointmentNotes", fields: [appointmentNotesId], references: [id])
+  appointmentNotesId  String?            @map("appointmentNotes")
+  bookings            Booking[]          @relation("Booking_patient")
+  healthCards         HealthCard[]       @relation("HealthCard_patient")
+  isCompleteProfile   Boolean            @default(false)
+  name                String             @default("")
+  savedDoctors        Doctor[]           @relation("Doctor_savedByPatients")
+  user                User?              @relation("Patient_user", fields: [userId], references: [id])
+  userId              String?            @unique @map("user")
+  visitedDoctors      Doctor[]           @relation("Doctor_patients")
+  emergencyContacts   EmergencyContact[] @relation("EmergencyContact_patient")
+
+  @@index([appointmentVitalsId])
+  @@index([appointmentNotesId])
 }
 
 model Prompt {
