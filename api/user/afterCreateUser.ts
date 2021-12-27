@@ -11,7 +11,7 @@ export const afterCreateUser = async ({ context, item }) => {
     },
   }})
 
-  await context.query.Calendar.createOne({ data: {
+  const createdCalendar = await context.query.Calendar.createOne({ data: {
     name: `${item.firstName}'s Calendar`,
     user: {
       connect: {
@@ -19,7 +19,21 @@ export const afterCreateUser = async ({ context, item }) => {
       }
     },
   }})
-  
+
+  await context.query.Schedule.createOne({ data: {
+    title: `${item.firstName}'s Default Schedule`,
+    calendar: {
+      connect: {
+        id: createdCalendar.id
+      }
+    },
+    defaultOn: {
+      connect: {
+        id: createdCalendar.id
+      }
+    }
+  }})
+
   await context.query.Prompt.createOne({ data: {
     name: `${item.firstName}'s Patient Onboarding Prompt`,
     promptType: "redirect",
