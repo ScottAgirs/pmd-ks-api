@@ -45,6 +45,26 @@ export const createCalendarEventBooking = async (
   // TODO: Create Booking based on event
   const createdBooking = await context.db.Booking.createOne({ 
     data: {
+      appointment:{
+        // TODO: [performance] can be improved by creating in afterCreate hook
+        create:{
+          doctor:{
+            connect:{
+              id: event.doctorId
+            }
+          },
+          patient:{
+            connect:{
+              id: currentUserPatientId
+            }
+          },
+          vitals: {
+            create: {
+              resp: 0
+            }
+          }
+        }
+      },
       calendar: {
         connect: {
           id: event.calendarId,
@@ -73,6 +93,7 @@ export const createCalendarEventBooking = async (
       startsAt,
     },
   });
+  console.log('createdBooking', createdBooking);
 
   return createdBooking;
 }
