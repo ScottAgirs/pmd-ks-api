@@ -4,6 +4,7 @@ const { list } = require("@keystone-6/core");
 
 export const Booking = list({
   fields: {    
+    appointment: relationship({ ref: 'Appointment.booking' }),
     calendar: relationship({ ref: 'Calendar.bookings' }),
     doctor: relationship({ ref: 'Doctor.bookings' }),
     durationMins: integer({ validation: { isRequired: true } }),
