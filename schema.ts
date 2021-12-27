@@ -1,3 +1,5 @@
+import { AppointmentNote } from "./api/appointment-note/AppointmentNote";
+import { AppointmentVital } from "./api/appointment-vital/AppointmentVital";
 import { Appointment } from "./api/appointment/Appointment";
 import { Booking } from "./api/booking/Booking";
 import { User } from "./api/user/User";
@@ -29,7 +31,10 @@ import { AdministrativeArea } from "./api/administrative-area/AdministrativeArea
 import { Country } from "./api/country/Country";
 
 export const lists = {
+  // Appointment
   Appointment,
+  AppointmentNote,
+  AppointmentVital,
   Booking,
   // Calendar,
   Calendar,
