@@ -1,0 +1,95 @@
+export const DUMMY_USERS = [
+  // Patient Users
+  {
+    email: "pat-0@example.com",
+    country: "CA",
+    administrativeArea: "ON",
+    locality: "Toronto",
+    postalCode: "M5J 2H2",
+    dateOfBirth: "2000-12-21T18:12:21.313Z",
+    firstName: "P.A.T.I.E.N.T. [1]",
+    lastName: "L.A.D.O.",
+    password:"123123123",
+    sex: "male",
+    username:"UserPatient-0"
+  },
+  {
+    email: "pat-1@example.com",
+    country: "CA",
+    administrativeArea: "ON",
+    locality: "Toronto",
+    postalCode: "M5J 2H2",
+    dateOfBirth: "2000-12-21T18:12:21.313Z",
+    firstName: "P.A.T.I.E.N.T. [0]",
+    lastName: "L.A.D.O.",
+    password:"123123123",
+    sex: "male",
+    username:"UserPatient-1"
+  },
+  {
+    email: "pat-2@example.com",
+    country: "CA",
+    administrativeArea: "ON",
+    locality: "Toronto",
+    postalCode: "M5J 2H2",
+    dateOfBirth: "2000-12-21T18:12:21.313Z",
+    firstName: "P.A.T.I.E.N.T. [2]",
+    lastName: "L.A.D.O.",
+    password:"123123123",
+    sex: "male",
+    username:"UserPatient-2"
+  },
+  // Doctor Users
+  {
+    email: "doc-0@example.com",
+    country: "CA",
+    administrativeArea: "ON",
+    locality: "Toronto",
+    postalCode: "M8J 1A1",
+    dateOfBirth: "1985-02-03T18:12:21.313Z",
+    firstName: "D.O.C.T.O.R. [0]",
+    lastName: "D.O.C.T.O.R.Y.",
+    password:"123123123",
+    sex: "male",
+    username:"UserDoctor-0"
+  },
+  {
+    email: "doc-1@example.com",
+    country: "CA",
+    administrativeArea: "ON",
+    locality: "Toronto",
+    postalCode: "M8J 1A1",
+    dateOfBirth: "1985-02-03T18:12:21.313Z",
+    firstName: "D.O.C.T.O.R. [1]",
+    lastName: "D.O.C.T.O.R.Y.",
+    password:"123123123",
+    sex: "male",
+    username:"UserDoctor-1"
+  },
+  {
+    email: "doc-2@example.com",
+    country: "CA",
+    administrativeArea: "ON",
+    locality: "Toronto",
+    postalCode: "M8J 1A1",
+    dateOfBirth: "1985-02-03T18:12:21.313Z",
+    firstName: "D.O.C.T.O.R. [2]",
+    lastName: "D.O.C.T.O.R.Y.",
+    password:"123123123",
+    sex: "female",
+    username:"UserDoctor-2"
+  },
+  {
+    email: "doc-3@example.com",
+    country: "CA",
+    administrativeArea: "ON",
+    locality: "Toronto",
+    postalCode: "M8J 1A1",
+    dateOfBirth: "1985-02-03T18:12:21.313Z",
+    firstName: "D.O.C.T.O.R. [3]",
+    lastName: "D.O.C.T.O.R.Y.",
+    password:"123123123",
+    sex: "female",
+    username:"UserDoctor-3"
+  },
+];
