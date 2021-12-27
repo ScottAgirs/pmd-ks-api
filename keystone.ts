@@ -10,6 +10,7 @@ import { withAuth, session } from './auth';
 import { populateSpecialties } from './seed/doctor/populate-specialties';
 import { populateSubSpecialties } from './seed/doctor/populate-sub-specialties';
 import { populateCalendarEventTypes } from './seed/doctor/populate-calendar-event-types';
+import { populateDummyUsers } from './seed/user/populate-dummy-users';
 import { populateSteppers } from './seed/onboard/populate-stepper';
 
 const FRONTEND_URL:string = process.env.FRONTEND_URL as string;
@@ -36,6 +37,9 @@ export default withAuth(
         }
         if (process.argv.includes('--seed-doctor-sub-specialties')) {
           populateSubSpecialties(keystone);
+        }
+        if (process.argv.includes('--seed-users')) {
+          populateDummyUsers(keystone);
         }
       },
     },
