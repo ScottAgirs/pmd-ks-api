@@ -43,6 +43,9 @@ model AppointmentVital {
   id               String       @id @default(cuid())
   appointment      Appointment? @relation("Appointment_vitals")
   patient          Patient[]    @relation("Patient_appointmentVitals")
+  feet             Int?
+  inches           Int?
+  lbs              Int?
   oxygenSaturation Int?
   heartRate        Int?
   temperature      Int?

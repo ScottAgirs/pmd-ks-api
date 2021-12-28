@@ -6,6 +6,10 @@ export const AppointmentVital = list({
   fields: {
     appointment: relationship({ ref: 'Appointment.vitals' }),
     patient: relationship({ ref: 'Patient.appointmentVitals', many: true }),
+    feet: integer(),
+    inches: integer(),
+    lbs: integer(),
+
     oxygenSaturation: integer(),
     heartRate: integer(),
     temperature: integer(),
