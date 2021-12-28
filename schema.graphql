@@ -312,7 +312,7 @@ type Appointment {
   doctor: Doctor
   note: AppointmentNote
   patient: Patient
-  vitals: AppointmentVital
+  vitalsData: AppointmentVital
   scheduledStartsAt: DateTime
   scheduledEndsAt: DateTime
   startedAt: DateTime
@@ -335,7 +335,7 @@ input AppointmentWhereInput {
   doctor: DoctorWhereInput
   note: AppointmentNoteWhereInput
   patient: PatientWhereInput
-  vitals: AppointmentVitalWhereInput
+  vitalsData: AppointmentVitalWhereInput
   scheduledStartsAt: DateTimeNullableFilter
   scheduledEndsAt: DateTimeNullableFilter
   startedAt: DateTimeNullableFilter
@@ -382,7 +382,7 @@ input AppointmentUpdateInput {
   doctor: DoctorRelateToOneForUpdateInput
   note: AppointmentNoteRelateToOneForUpdateInput
   patient: PatientRelateToOneForUpdateInput
-  vitals: AppointmentVitalRelateToOneForUpdateInput
+  vitalsData: AppointmentVitalRelateToOneForUpdateInput
   scheduledStartsAt: DateTime
   scheduledEndsAt: DateTime
   startedAt: DateTime
@@ -429,7 +429,7 @@ input AppointmentCreateInput {
   doctor: DoctorRelateToOneForCreateInput
   note: AppointmentNoteRelateToOneForCreateInput
   patient: PatientRelateToOneForCreateInput
-  vitals: AppointmentVitalRelateToOneForCreateInput
+  vitalsData: AppointmentVitalRelateToOneForCreateInput
   scheduledStartsAt: DateTime
   scheduledEndsAt: DateTime
   startedAt: DateTime

@@ -21,8 +21,8 @@ model Appointment {
   noteId            String?           @unique @map("note")
   patient           Patient?          @relation("Appointment_patient", fields: [patientId], references: [id])
   patientId         String?           @map("patient")
-  vitals            AppointmentVital? @relation("Appointment_vitals", fields: [vitalsId], references: [id])
-  vitalsId          String?           @unique @map("vitals")
+  vitalsData        AppointmentVital? @relation("Appointment_vitalsData", fields: [vitalsDataId], references: [id])
+  vitalsDataId      String?           @unique @map("vitalsData")
   scheduledStartsAt DateTime?
   scheduledEndsAt   DateTime?
   startedAt         DateTime?
@@ -41,7 +41,7 @@ model AppointmentNote {
 
 model AppointmentVital {
   id               String       @id @default(cuid())
-  appointment      Appointment? @relation("Appointment_vitals")
+  appointment      Appointment? @relation("Appointment_vitalsData")
   patient          Patient[]    @relation("Patient_appointmentVitals")
   feet             Int?
   inches           Int?
