@@ -58,7 +58,7 @@ export const createCalendarEventBooking = async (
               id: currentUserPatientId
             }
           },
-          vitals: {
+          vitalsData: {
             create: {
               resp: 0
             }
