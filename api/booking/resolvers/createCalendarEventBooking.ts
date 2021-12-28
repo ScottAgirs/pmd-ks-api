@@ -20,12 +20,13 @@ export const createCalendarEventBooking = async (
 
   // Check user is logged in
   const user = context.session?.data;
+  if (!user) {
+    throw new Error('User not logged in');
+  }
+
   const userId = user.id;
   const currentUserPatientId = user.patient.id;
 
-  if (!userId) {
-    throw new Error('User not logged in');
-  }
 
   // TODO: Get user Patient id
   
@@ -51,6 +52,11 @@ export const createCalendarEventBooking = async (
           doctor:{
             connect:{
               id: event.doctorId
+            }
+          },
+          note: {
+            create: {
+              title: ""
             }
           },
           patient:{
