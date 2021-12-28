@@ -588,6 +588,9 @@ type AppointmentVital {
     skip: Int! = 0
   ): [Patient!]
   patientCount(where: PatientWhereInput! = {}): Int
+  feet: Int
+  inches: Int
+  lbs: Int
   oxygenSaturation: Int
   heartRate: Int
   temperature: Int
@@ -606,6 +609,9 @@ input AppointmentVitalWhereInput {
   id: IDFilter
   appointment: AppointmentWhereInput
   patient: PatientManyRelationFilter
+  feet: IntNullableFilter
+  inches: IntNullableFilter
+  lbs: IntNullableFilter
   oxygenSaturation: IntNullableFilter
   heartRate: IntNullableFilter
   temperature: IntNullableFilter
@@ -626,6 +632,9 @@ input IntNullableFilter {
 
 input AppointmentVitalOrderByInput {
   id: OrderDirection
+  feet: OrderDirection
+  inches: OrderDirection
+  lbs: OrderDirection
   oxygenSaturation: OrderDirection
   heartRate: OrderDirection
   temperature: OrderDirection
@@ -636,6 +645,9 @@ input AppointmentVitalOrderByInput {
 input AppointmentVitalUpdateInput {
   appointment: AppointmentRelateToOneForUpdateInput
   patient: PatientRelateToManyForUpdateInput
+  feet: Int
+  inches: Int
+  lbs: Int
   oxygenSaturation: Int
   heartRate: Int
   temperature: Int
@@ -651,6 +663,9 @@ input AppointmentVitalUpdateArgs {
 input AppointmentVitalCreateInput {
   appointment: AppointmentRelateToOneForCreateInput
   patient: PatientRelateToManyForCreateInput
+  feet: Int
+  inches: Int
+  lbs: Int
   oxygenSaturation: Int
   heartRate: Int
   temperature: Int
