@@ -34,7 +34,7 @@ model Appointment {
 model AppointmentNote {
   id          String       @id @default(cuid())
   appointment Appointment? @relation("Appointment_note")
-  patient     Patient[]    @relation("Patient_appointmentNotes")
+  patient     Patient[]    @relation("Patient_appointmentNote")
   body        String       @default("")
   title       String       @default("")
 }
@@ -278,8 +278,8 @@ model Patient {
   appointments        Appointment[]      @relation("Appointment_patient")
   appointmentVitals   AppointmentVital?  @relation("Patient_appointmentVitals", fields: [appointmentVitalsId], references: [id])
   appointmentVitalsId String?            @map("appointmentVitals")
-  appointmentNotes    AppointmentNote?   @relation("Patient_appointmentNotes", fields: [appointmentNotesId], references: [id])
-  appointmentNotesId  String?            @map("appointmentNotes")
+  appointmentNote     AppointmentNote?   @relation("Patient_appointmentNote", fields: [appointmentNoteId], references: [id])
+  appointmentNoteId   String?            @map("appointmentNote")
   bookings            Booking[]          @relation("Booking_patient")
   healthCards         HealthCard[]       @relation("HealthCard_patient")
   isCompleteProfile   Boolean            @default(false)
@@ -291,7 +291,7 @@ model Patient {
   emergencyContacts   EmergencyContact[] @relation("EmergencyContact_patient")
 
   @@index([appointmentVitalsId])
-  @@index([appointmentNotesId])
+  @@index([appointmentNoteId])
 }
 
 model Prompt {

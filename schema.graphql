@@ -2160,7 +2160,7 @@ type Patient {
   ): [Appointment!]
   appointmentsCount(where: AppointmentWhereInput! = {}): Int
   appointmentVitals: AppointmentVital
-  appointmentNotes: AppointmentNote
+  appointmentNote: AppointmentNote
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -2212,7 +2212,7 @@ input PatientWhereInput {
   id: IDFilter
   appointments: AppointmentManyRelationFilter
   appointmentVitals: AppointmentVitalWhereInput
-  appointmentNotes: AppointmentNoteWhereInput
+  appointmentNote: AppointmentNoteWhereInput
   bookings: BookingManyRelationFilter
   healthCards: HealthCardManyRelationFilter
   isCompleteProfile: BooleanFilter
@@ -2244,7 +2244,7 @@ input PatientOrderByInput {
 input PatientUpdateInput {
   appointments: AppointmentRelateToManyForUpdateInput
   appointmentVitals: AppointmentVitalRelateToOneForUpdateInput
-  appointmentNotes: AppointmentNoteRelateToOneForUpdateInput
+  appointmentNote: AppointmentNoteRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   healthCards: HealthCardRelateToManyForUpdateInput
   isCompleteProfile: Boolean
@@ -2277,7 +2277,7 @@ input PatientUpdateArgs {
 input PatientCreateInput {
   appointments: AppointmentRelateToManyForCreateInput
   appointmentVitals: AppointmentVitalRelateToOneForCreateInput
-  appointmentNotes: AppointmentNoteRelateToOneForCreateInput
+  appointmentNote: AppointmentNoteRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
   healthCards: HealthCardRelateToManyForCreateInput
   isCompleteProfile: Boolean
