@@ -5,8 +5,8 @@ const { list } = require("@keystone-6/core");
 export const Patient = list({
   fields: {
     appointments: relationship({ ref: 'Appointment.patient', many: true }),
-    appointmentVitals: relationship({ ref: 'AppointmentVital.patient' }),
-    appointmentNote: relationship({ ref: 'AppointmentNote.patient' }),
+    appointmentVitals: relationship({ ref: 'AppointmentVital.patient', many: true }),
+    appointmentNotes: relationship({ ref: 'AppointmentNote.patient', many: true }),
     bookings: relationship({ ref: 'Booking.patient', many: true }),
     healthCards: relationship({ ref: 'HealthCard.patient', many: true }),
     isCompleteProfile: checkbox(),
