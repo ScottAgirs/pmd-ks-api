@@ -34,15 +34,19 @@ model Appointment {
 model AppointmentNote {
   id          String       @id @default(cuid())
   appointment Appointment? @relation("Appointment_note")
-  patient     Patient[]    @relation("Patient_appointmentNote")
+  patient     Patient?     @relation("AppointmentNote_patient", fields: [patientId], references: [id])
+  patientId   String?      @map("patient")
   body        String       @default("")
   title       String       @default("")
+
+  @@index([patientId])
 }
 
 model AppointmentVital {
   id               String       @id @default(cuid())
   appointment      Appointment? @relation("Appointment_vitalsData")
-  patient          Patient[]    @relation("Patient_appointmentVitals")
+  patient          Patient?     @relation("AppointmentVital_patient", fields: [patientId], references: [id])
+  patientId        String?      @map("patient")
   feet             Int?
   inches           Int?
   lbs              Int?
@@ -51,6 +55,8 @@ model AppointmentVital {
   temperature      Int?
   bloodPressure    String       @default("")
   resp             Int?
+
+  @@index([patientId])
 }
 
 model Booking {
@@ -274,24 +280,19 @@ model User {
 }
 
 model Patient {
-  id                  String             @id @default(cuid())
-  appointments        Appointment[]      @relation("Appointment_patient")
-  appointmentVitals   AppointmentVital?  @relation("Patient_appointmentVitals", fields: [appointmentVitalsId], references: [id])
-  appointmentVitalsId String?            @map("appointmentVitals")
-  appointmentNote     AppointmentNote?   @relation("Patient_appointmentNote", fields: [appointmentNoteId], references: [id])
-  appointmentNoteId   String?            @map("appointmentNote")
-  bookings            Booking[]          @relation("Booking_patient")
-  healthCards         HealthCard[]       @relation("HealthCard_patient")
-  isCompleteProfile   Boolean            @default(false)
-  name                String             @default("")
-  savedDoctors        Doctor[]           @relation("Doctor_savedByPatients")
-  user                User?              @relation("Patient_user", fields: [userId], references: [id])
-  userId              String?            @unique @map("user")
-  visitedDoctors      Doctor[]           @relation("Doctor_patients")
-  emergencyContacts   EmergencyContact[] @relation("EmergencyContact_patient")
-
-  @@index([appointmentVitalsId])
-  @@index([appointmentNoteId])
+  id                String             @id @default(cuid())
+  appointments      Appointment[]      @relation("Appointment_patient")
+  appointmentVitals AppointmentVital[] @relation("AppointmentVital_patient")
+  appointmentNotes  AppointmentNote[]  @relation("AppointmentNote_patient")
+  bookings          Booking[]          @relation("Booking_patient")
+  healthCards       HealthCard[]       @relation("HealthCard_patient")
+  isCompleteProfile Boolean            @default(false)
+  name              String             @default("")
+  savedDoctors      Doctor[]           @relation("Doctor_savedByPatients")
+  user              User?              @relation("Patient_user", fields: [userId], references: [id])
+  userId            String?            @unique @map("user")
+  visitedDoctors    Doctor[]           @relation("Doctor_patients")
+  emergencyContacts EmergencyContact[] @relation("EmergencyContact_patient")
 }
 
 model Prompt {

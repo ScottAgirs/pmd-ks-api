@@ -464,13 +464,7 @@ input AppointmentVitalRelateToOneForCreateInput {
 type AppointmentNote {
   id: ID!
   appointment: Appointment
-  patient(
-    where: PatientWhereInput! = {}
-    orderBy: [PatientOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Patient!]
-  patientCount(where: PatientWhereInput! = {}): Int
+  patient: Patient
   body: String
   title: String
 }
@@ -485,15 +479,9 @@ input AppointmentNoteWhereInput {
   NOT: [AppointmentNoteWhereInput!]
   id: IDFilter
   appointment: AppointmentWhereInput
-  patient: PatientManyRelationFilter
+  patient: PatientWhereInput
   body: StringFilter
   title: StringFilter
-}
-
-input PatientManyRelationFilter {
-  every: PatientWhereInput
-  some: PatientWhereInput
-  none: PatientWhereInput
 }
 
 input StringFilter {
@@ -538,7 +526,7 @@ input AppointmentNoteOrderByInput {
 
 input AppointmentNoteUpdateInput {
   appointment: AppointmentRelateToOneForUpdateInput
-  patient: PatientRelateToManyForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
   body: String
   title: String
 }
@@ -549,13 +537,6 @@ input AppointmentRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input PatientRelateToManyForUpdateInput {
-  disconnect: [PatientWhereUniqueInput!]
-  set: [PatientWhereUniqueInput!]
-  create: [PatientCreateInput!]
-  connect: [PatientWhereUniqueInput!]
-}
-
 input AppointmentNoteUpdateArgs {
   where: AppointmentNoteWhereUniqueInput!
   data: AppointmentNoteUpdateInput!
@@ -563,7 +544,7 @@ input AppointmentNoteUpdateArgs {
 
 input AppointmentNoteCreateInput {
   appointment: AppointmentRelateToOneForCreateInput
-  patient: PatientRelateToManyForCreateInput
+  patient: PatientRelateToOneForCreateInput
   body: String
   title: String
 }
@@ -573,21 +554,10 @@ input AppointmentRelateToOneForCreateInput {
   connect: AppointmentWhereUniqueInput
 }
 
-input PatientRelateToManyForCreateInput {
-  create: [PatientCreateInput!]
-  connect: [PatientWhereUniqueInput!]
-}
-
 type AppointmentVital {
   id: ID!
   appointment: Appointment
-  patient(
-    where: PatientWhereInput! = {}
-    orderBy: [PatientOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Patient!]
-  patientCount(where: PatientWhereInput! = {}): Int
+  patient: Patient
   feet: Int
   inches: Int
   lbs: Int
@@ -608,7 +578,7 @@ input AppointmentVitalWhereInput {
   NOT: [AppointmentVitalWhereInput!]
   id: IDFilter
   appointment: AppointmentWhereInput
-  patient: PatientManyRelationFilter
+  patient: PatientWhereInput
   feet: IntNullableFilter
   inches: IntNullableFilter
   lbs: IntNullableFilter
@@ -644,7 +614,7 @@ input AppointmentVitalOrderByInput {
 
 input AppointmentVitalUpdateInput {
   appointment: AppointmentRelateToOneForUpdateInput
-  patient: PatientRelateToManyForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
   feet: Int
   inches: Int
   lbs: Int
@@ -662,7 +632,7 @@ input AppointmentVitalUpdateArgs {
 
 input AppointmentVitalCreateInput {
   appointment: AppointmentRelateToOneForCreateInput
-  patient: PatientRelateToManyForCreateInput
+  patient: PatientRelateToOneForCreateInput
   feet: Int
   inches: Int
   lbs: Int
@@ -1402,6 +1372,12 @@ input DoctorLanguageManyRelationFilter {
   none: DoctorLanguageWhereInput
 }
 
+input PatientManyRelationFilter {
+  every: PatientWhereInput
+  some: PatientWhereInput
+  none: PatientWhereInput
+}
+
 input DoctorOrderByInput {
   id: OrderDirection
   doctorSince: OrderDirection
@@ -1448,6 +1424,13 @@ input DoctorLanguageRelateToManyForUpdateInput {
   connect: [DoctorLanguageWhereUniqueInput!]
 }
 
+input PatientRelateToManyForUpdateInput {
+  disconnect: [PatientWhereUniqueInput!]
+  set: [PatientWhereUniqueInput!]
+  create: [PatientCreateInput!]
+  connect: [PatientWhereUniqueInput!]
+}
+
 input DoctorUpdateArgs {
   where: DoctorWhereUniqueInput!
   data: DoctorUpdateInput!
@@ -1483,6 +1466,11 @@ input DoctorSubSpecialtyRelateToManyForCreateInput {
 input DoctorLanguageRelateToManyForCreateInput {
   create: [DoctorLanguageCreateInput!]
   connect: [DoctorLanguageWhereUniqueInput!]
+}
+
+input PatientRelateToManyForCreateInput {
+  create: [PatientCreateInput!]
+  connect: [PatientWhereUniqueInput!]
 }
 
 type DoctorLanguage {
@@ -2159,8 +2147,20 @@ type Patient {
     skip: Int! = 0
   ): [Appointment!]
   appointmentsCount(where: AppointmentWhereInput! = {}): Int
-  appointmentVitals: AppointmentVital
-  appointmentNote: AppointmentNote
+  appointmentVitals(
+    where: AppointmentVitalWhereInput! = {}
+    orderBy: [AppointmentVitalOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentVital!]
+  appointmentVitalsCount(where: AppointmentVitalWhereInput! = {}): Int
+  appointmentNotes(
+    where: AppointmentNoteWhereInput! = {}
+    orderBy: [AppointmentNoteOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentNote!]
+  appointmentNotesCount(where: AppointmentNoteWhereInput! = {}): Int
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -2211,8 +2211,8 @@ input PatientWhereInput {
   NOT: [PatientWhereInput!]
   id: IDFilter
   appointments: AppointmentManyRelationFilter
-  appointmentVitals: AppointmentVitalWhereInput
-  appointmentNote: AppointmentNoteWhereInput
+  appointmentVitals: AppointmentVitalManyRelationFilter
+  appointmentNotes: AppointmentNoteManyRelationFilter
   bookings: BookingManyRelationFilter
   healthCards: HealthCardManyRelationFilter
   isCompleteProfile: BooleanFilter
@@ -2229,6 +2229,18 @@ input AppointmentManyRelationFilter {
   none: AppointmentWhereInput
 }
 
+input AppointmentVitalManyRelationFilter {
+  every: AppointmentVitalWhereInput
+  some: AppointmentVitalWhereInput
+  none: AppointmentVitalWhereInput
+}
+
+input AppointmentNoteManyRelationFilter {
+  every: AppointmentNoteWhereInput
+  some: AppointmentNoteWhereInput
+  none: AppointmentNoteWhereInput
+}
+
 input EmergencyContactManyRelationFilter {
   every: EmergencyContactWhereInput
   some: EmergencyContactWhereInput
@@ -2243,8 +2255,8 @@ input PatientOrderByInput {
 
 input PatientUpdateInput {
   appointments: AppointmentRelateToManyForUpdateInput
-  appointmentVitals: AppointmentVitalRelateToOneForUpdateInput
-  appointmentNote: AppointmentNoteRelateToOneForUpdateInput
+  appointmentVitals: AppointmentVitalRelateToManyForUpdateInput
+  appointmentNotes: AppointmentNoteRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   healthCards: HealthCardRelateToManyForUpdateInput
   isCompleteProfile: Boolean
@@ -2262,6 +2274,20 @@ input AppointmentRelateToManyForUpdateInput {
   connect: [AppointmentWhereUniqueInput!]
 }
 
+input AppointmentVitalRelateToManyForUpdateInput {
+  disconnect: [AppointmentVitalWhereUniqueInput!]
+  set: [AppointmentVitalWhereUniqueInput!]
+  create: [AppointmentVitalCreateInput!]
+  connect: [AppointmentVitalWhereUniqueInput!]
+}
+
+input AppointmentNoteRelateToManyForUpdateInput {
+  disconnect: [AppointmentNoteWhereUniqueInput!]
+  set: [AppointmentNoteWhereUniqueInput!]
+  create: [AppointmentNoteCreateInput!]
+  connect: [AppointmentNoteWhereUniqueInput!]
+}
+
 input EmergencyContactRelateToManyForUpdateInput {
   disconnect: [EmergencyContactWhereUniqueInput!]
   set: [EmergencyContactWhereUniqueInput!]
@@ -2276,8 +2302,8 @@ input PatientUpdateArgs {
 
 input PatientCreateInput {
   appointments: AppointmentRelateToManyForCreateInput
-  appointmentVitals: AppointmentVitalRelateToOneForCreateInput
-  appointmentNote: AppointmentNoteRelateToOneForCreateInput
+  appointmentVitals: AppointmentVitalRelateToManyForCreateInput
+  appointmentNotes: AppointmentNoteRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
   healthCards: HealthCardRelateToManyForCreateInput
   isCompleteProfile: Boolean
@@ -2291,6 +2317,16 @@ input PatientCreateInput {
 input AppointmentRelateToManyForCreateInput {
   create: [AppointmentCreateInput!]
   connect: [AppointmentWhereUniqueInput!]
+}
+
+input AppointmentVitalRelateToManyForCreateInput {
+  create: [AppointmentVitalCreateInput!]
+  connect: [AppointmentVitalWhereUniqueInput!]
+}
+
+input AppointmentNoteRelateToManyForCreateInput {
+  create: [AppointmentNoteCreateInput!]
+  connect: [AppointmentNoteWhereUniqueInput!]
 }
 
 input EmergencyContactRelateToManyForCreateInput {
