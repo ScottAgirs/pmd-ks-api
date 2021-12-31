@@ -1,6 +1,14 @@
 import { checkbox, integer, relationship, text, timestamp } from "@keystone-6/core/fields";
+import { afterCreateDoctor } from "./hooks/afterCreateDoctor";
+import { KeystoneContext, OrderByFieldInputArg } from "@keystone-6/core/types";
 
 const { list } = require("@keystone-6/core");
+
+interface AfterCreateItemArgs {
+  context: KeystoneContext;
+  item: any;
+  operation: string;
+}
 
 export const Doctor = list({
   fields: {
@@ -19,5 +27,17 @@ export const Doctor = list({
     summary: text(),
     patients: relationship({ ref: 'Patient.visitedDoctors', many: true }),
     savedByPatients: relationship({ ref: 'Patient.savedDoctors', many: true }),
+  },
+  hooks: {
+    afterOperation: async ({ context, item, operation }:AfterCreateItemArgs) => {
+      if (operation === 'create') {
+        afterCreateDoctor({ context, item })
+      }
+    },
+    // beforeOperation: async ({ context, item, operation }) => {
+    //   if (operation === 'create') {
+    //     // beforeCreateUser({ context, item })
+    //   }
+    // }
   },
 }) 
