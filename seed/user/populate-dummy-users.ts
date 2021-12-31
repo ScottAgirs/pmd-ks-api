@@ -1,3 +1,9 @@
+var faker = require('faker');
+
+interface DummyUser {
+  id?: string;
+}
+
 import { DUMMY_DOCTORS } from "./dummy-doctors"; // total 4 doctors
 import { HEALTH_CARDS } from "./dummy-patient-health-cards";
 import { DUMMY_PATIENTS } from "./dummy-patients";
@@ -12,15 +18,41 @@ export async function populateDummyUsers(keystone: any) {
   let i = 0;
   for (const user of DUMMY_USERS) {
     console.log('before :: i', i);
-   
+    let userToPopulate = {
+      ...DUMMY_USERS[i],
+    };
+
+    // https://rawgit.com/Marak/faker.js/master/examples/browser/index.html#helpers
+    const fakerUser = faker.helpers.contextualCard();
+
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
+
+    const email = userToPopulate.id.includes("0-doctor") 
+                    ? "doc-0@example.com" 
+                    : userToPopulate.id.includes("0-patient") 
+                    ? "pat-0@example.com"
+                    : fakerUser.email;
+
+    userToPopulate.firstName = firstName;
+    userToPopulate.lastName = lastName;
+    userToPopulate.email = email;
+    userToPopulate.dateOfBirth = fakerUser.dob;
+    userToPopulate.cellPhoneNumberString = fakerUser.phone;
+    userToPopulate.username = fakerUser.username;
+    
+    // @ts-ignore
+    delete userToPopulate.id;
+    console.log('populateDummyUsers :: userToPopulate', userToPopulate);
+
     await keystone.db.User.createOne({
-      data: DUMMY_USERS[i]
+      data: userToPopulate
     })
-      .catch(() => console.log(`res :: err - FAILED TO CREATE A USER ${DUMMY_USERS[i].email}`))
+      .catch((err) => console.log(`res :: err - FAILED TO CREATE A USER ${DUMMY_USERS[i].id}`, err))
       .then(async createdUser => {
-      console.log('createdUser :: email', createdUser.email);
+      console.log('createdUser :: ', createdUser);
         if (!createdUser) {
-          throw new Error(`Failed to create a user ${DUMMY_USERS[i].email}`);
+          throw new Error(`Failed to create a user ${DUMMY_USERS[i].id}`);
           return null
         }
         // const hasHealthCardForIndex = Boolean(HEALTH_CARDS[i]);
@@ -78,7 +110,7 @@ export async function populateDummyUsers(keystone: any) {
         }
       });
       
-    console.log(`🦶🏼 ✅ Added [${DUMMY_USERS[i].firstName}]`);
+    console.log(`🦶🏼 ✅ Added [${userToPopulate.id}]: ${firstName} ${lastName}]`);
     i = i + 1;
   }
 
