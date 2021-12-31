@@ -1,18 +1,22 @@
 import { SPECIALTIES } from "./specialties";
 
 export async function populateSpecialties(keystone: any) {
-  console.log(`----------------------------------------`);
-  console.log(`🌱 Inserting Doctor Specialties Data: ${SPECIALTIES.length} items`);
-  console.log(`----------------------------------------`);
+  try {
+    console.log(`----------------------------------------`);
+    console.log(`🌱 Inserting Doctor Specialties Data: ${SPECIALTIES.length} items`);
+    console.log(`----------------------------------------`);
 
-  for (const specialty of SPECIALTIES) {
-    console.log(` 👨🏼‍⚕️ Adding [${specialty.label}] Specialty`);
-    const createdSpecialty = await keystone.db.DoctorSpecialty.createOne({
-      data: specialty
-    });
-    console.log(` 👨🏼‍⚕️ ✅ Created [${createdSpecialty.label}]`);
+    for (const specialty of SPECIALTIES) {
+      console.log(` 👨🏼‍⚕️ Adding [${specialty.label}] Specialty`);
+      const createdSpecialty = await keystone.db.DoctorSpecialty.createOne({
+        data: specialty
+      });
+      console.log(` 👨🏼‍⚕️ ✅ Created [${createdSpecialty.label}]`);
+    }
+    console.log(`✅ Doctor Specialties Seeded with ${SPECIALTIES.length} items`);
+    console.log(`👋 Please start the process with \`yarn dev\` or \`npm run dev\``);
+    // process.exit();
+  } catch (error) {
+    console.error('populateSpecialties :: error', error);
   }
-  console.log(`✅ Doctor Specialties Seeded with ${SPECIALTIES.length} items`);
-  console.log(`👋 Please start the process with \`yarn dev\` or \`npm run dev\``);
-  process.exit();
 }
