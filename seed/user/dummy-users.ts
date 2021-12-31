@@ -1,6 +1,8 @@
 export const DUMMY_USERS = [
   // Patient Users
   {
+    id: "0-patient",
+    cellPhoneNumberString: "",
     email: "pat-0@example.com",
     country: "CA",
     administrativeArea: "ON",
@@ -14,6 +16,8 @@ export const DUMMY_USERS = [
     username:"UserPatient-0"
   },
   {
+    id: "1-patient",
+    cellPhoneNumberString: "",
     email: "pat-1@example.com",
     country: "CA",
     administrativeArea: "ON",
@@ -27,6 +31,8 @@ export const DUMMY_USERS = [
     username:"UserPatient-1"
   },
   {
+    id: "2-patient",
+    cellPhoneNumberString: "",
     email: "pat-2@example.com",
     country: "CA",
     administrativeArea: "ON",
@@ -41,6 +47,8 @@ export const DUMMY_USERS = [
   },
   // Doctor Users
   {
+    id: "0-doctor",
+    cellPhoneNumberString: "",
     email: "doc-0@example.com",
     country: "CA",
     administrativeArea: "ON",
@@ -54,6 +62,8 @@ export const DUMMY_USERS = [
     username:"UserDoctor-0"
   },
   {
+    id: "1-doctor",
+    cellPhoneNumberString: "",
     email: "doc-1@example.com",
     country: "CA",
     administrativeArea: "ON",
@@ -67,6 +77,8 @@ export const DUMMY_USERS = [
     username:"UserDoctor-1"
   },
   {
+    id: "2-doctor",
+    cellPhoneNumberString: "",
     email: "doc-2@example.com",
     country: "CA",
     administrativeArea: "ON",
@@ -80,6 +92,8 @@ export const DUMMY_USERS = [
     username:"UserDoctor-2"
   },
   {
+    id: "3-doctor",
+    cellPhoneNumberString: "",
     email: "doc-3@example.com",
     country: "CA",
     administrativeArea: "ON",
