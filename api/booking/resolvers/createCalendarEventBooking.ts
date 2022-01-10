@@ -2,14 +2,14 @@ import { KeystoneContext } from "@keystone-6/core/types";
 
 export interface CreateEventBookingInput {
   eventId: string,
-  notes: string,
+  reason: string,
   startsAt: string,
 }
 
 export const createCalendarEventBooking = async (
   root: any, {
     eventId,
-    notes,
+    reason,
     startsAt,
   }: CreateEventBookingInput, context:KeystoneContext
   // TODO: [TypeScript] Add type for `Promise`
@@ -54,16 +54,12 @@ export const createCalendarEventBooking = async (
               id: event.doctorId
             }
           },
-          note: {
-            create: {
-              title: ""
-            }
-          },
           patient:{
             connect:{
               id: currentUserPatientId
             }
           },
+          reason,
           vitalsData: {
             create: {
               resp: 0
@@ -90,7 +86,6 @@ export const createCalendarEventBooking = async (
       // TODO: Implement isConfirmed
       // isConfirmed: false,
       // endsAt, // @TODO: See above to calculate
-      notes,
       patient: {
         connect: {
           id: currentUserPatientId,
