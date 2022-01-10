@@ -6,7 +6,7 @@ export const Appointment = list({
   fields: {
     booking: relationship({ ref: 'Booking.appointment' }),
     doctor: relationship({ ref: 'Doctor.appointments' }),
-    note: relationship({ ref: 'AppointmentNote.appointment' }),
+    notes: relationship({ ref: 'AppointmentNote.appointment', many: true }),
     patient: relationship({ ref: 'Patient.appointments' }),
     vitalsData: relationship({ ref: 'AppointmentVital.appointment' }),
     scheduledStartsAt: timestamp(),
