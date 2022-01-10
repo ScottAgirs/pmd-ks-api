@@ -11,7 +11,6 @@ export const Booking = list({
     event: relationship({ ref: 'CalendarEvent.bookings' }),
     isConfirmed: checkbox(),
     name: text(),
-    notes: text({ validation: { isRequired: false } }),
     patient: relationship({ ref: 'Patient.bookings' }),
     startsAt: timestamp(),
     endsAt: timestamp(),
