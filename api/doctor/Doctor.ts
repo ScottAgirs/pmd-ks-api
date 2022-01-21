@@ -24,8 +24,9 @@ export const Doctor = list({
     isCompleteProfile: checkbox(),
     isVerified: checkbox(),
     languages: relationship({ ref: 'DoctorLanguage.doctors', many: true }),
-    summary: text(),
     patients: relationship({ ref: 'Patient.visitedDoctors', many: true }),
+    prescriptions: relationship({ ref: 'Prescription.doctor', many: true }),
+    summary: text(),
     savedByPatients: relationship({ ref: 'Patient.savedDoctors', many: true }),
   },
   hooks: {
