@@ -17,28 +17,35 @@ model Appointment {
   bookingId         String?           @unique @map("booking")
   doctor            Doctor?           @relation("Appointment_doctor", fields: [doctorId], references: [id])
   doctorId          String?           @unique @map("doctor")
-  note              AppointmentNote?  @relation("Appointment_note", fields: [noteId], references: [id])
-  noteId            String?           @unique @map("note")
+  notes             AppointmentNote[] @relation("AppointmentNote_appointment")
   patient           Patient?          @relation("Appointment_patient", fields: [patientId], references: [id])
   patientId         String?           @map("patient")
+  prescription      Prescription?     @relation("Appointment_prescription", fields: [prescriptionId], references: [id])
+  prescriptionId    String?           @unique @map("prescription")
+  reason            String            @default("")
   vitalsData        AppointmentVital? @relation("Appointment_vitalsData", fields: [vitalsDataId], references: [id])
   vitalsDataId      String?           @unique @map("vitalsData")
   scheduledStartsAt DateTime?
   scheduledEndsAt   DateTime?
   startedAt         DateTime?
+  summaryString     String            @default("")
+  summary           Json              @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   endedAt           DateTime?
 
   @@index([patientId])
 }
 
 model AppointmentNote {
-  id          String       @id @default(cuid())
-  appointment Appointment? @relation("Appointment_note")
-  patient     Patient?     @relation("AppointmentNote_patient", fields: [patientId], references: [id])
-  patientId   String?      @map("patient")
-  body        String       @default("")
-  title       String       @default("")
+  id            String       @id @default(cuid())
+  appointment   Appointment? @relation("AppointmentNote_appointment", fields: [appointmentId], references: [id])
+  appointmentId String?      @map("appointment")
+  createdAt     DateTime?    @default(now())
+  patient       Patient?     @relation("AppointmentNote_patient", fields: [patientId], references: [id])
+  patientId     String?      @map("patient")
+  summary       String       @default("")
+  title         String       @default("")
 
+  @@index([appointmentId])
   @@index([patientId])
 }
 
@@ -47,9 +54,9 @@ model AppointmentVital {
   appointment      Appointment? @relation("Appointment_vitalsData")
   patient          Patient?     @relation("AppointmentVital_patient", fields: [patientId], references: [id])
   patientId        String?      @map("patient")
-  feet             Int?
-  inches           Int?
-  lbs              Int?
+  meters           Int?
+  cm               Int?
+  kg               Int?
   oxygenSaturation Int?
   heartRate        Int?
   temperature      Int?
@@ -71,7 +78,6 @@ model Booking {
   eventId      String?        @map("event")
   isConfirmed  Boolean        @default(false)
   name         String         @default("")
-  notes        String         @default("")
   patient      Patient?       @relation("Booking_patient", fields: [patientId], references: [id])
   patientId    String?        @map("patient")
   startsAt     DateTime?
@@ -175,8 +181,9 @@ model Doctor {
   isCompleteProfile    Boolean              @default(false)
   isVerified           Boolean              @default(false)
   languages            DoctorLanguage[]     @relation("Doctor_languages")
-  summary              String               @default("")
   patients             Patient[]            @relation("Doctor_patients")
+  prescriptions        Prescription[]       @relation("Prescription_doctor")
+  summary              String               @default("")
   savedByPatients      Patient[]            @relation("Doctor_savedByPatients")
 
   @@index([doctorSpecialtyId])
@@ -288,11 +295,61 @@ model Patient {
   healthCards       HealthCard[]       @relation("HealthCard_patient")
   isCompleteProfile Boolean            @default(false)
   name              String             @default("")
+  medications       Medication[]       @relation("Medication_patient")
+  prescriptions     Prescription[]     @relation("Prescription_patient")
   savedDoctors      Doctor[]           @relation("Doctor_savedByPatients")
   user              User?              @relation("Patient_user", fields: [userId], references: [id])
   userId            String?            @unique @map("user")
   visitedDoctors    Doctor[]           @relation("Doctor_patients")
   emergencyContacts EmergencyContact[] @relation("EmergencyContact_patient")
+}
+
+model Medication {
+  id                 String            @id @default(cuid())
+  activeIngredient   String            @default("")
+  companyName        String            @default("")
+  drugCode           Int?
+  brandName          String            @default("")
+  dosageCount        Int?
+  dosageUnit         String            @default("")
+  patient            Patient?          @relation("Medication_patient", fields: [patientId], references: [id])
+  patientId          String?           @map("patient")
+  prescription       Prescription?     @relation("Medication_prescription", fields: [prescriptionId], references: [id])
+  prescriptionId     String?           @map("prescription")
+  prescriptionItem   PrescriptionItem? @relation("Medication_prescriptionItem", fields: [prescriptionItemId], references: [id])
+  prescriptionItemId String?           @unique @map("prescriptionItem")
+
+  @@index([activeIngredient])
+  @@index([drugCode])
+  @@index([brandName])
+  @@index([patientId])
+  @@index([prescriptionId])
+}
+
+model Prescription {
+  id                String             @id @default(cuid())
+  appointment       Appointment?       @relation("Appointment_prescription")
+  doctor            Doctor?            @relation("Prescription_doctor", fields: [doctorId], references: [id])
+  doctorId          String?            @map("doctor")
+  medications       Medication[]       @relation("Medication_prescription")
+  patient           Patient?           @relation("Prescription_patient", fields: [patientId], references: [id])
+  patientId         String?            @map("patient")
+  prescriptionItems PrescriptionItem[] @relation("PrescriptionItem_prescription")
+
+  @@index([doctorId])
+  @@index([patientId])
+}
+
+model PrescriptionItem {
+  id             String        @id @default(cuid())
+  medication     Medication?   @relation("Medication_prescriptionItem")
+  prescription   Prescription? @relation("PrescriptionItem_prescription", fields: [prescriptionId], references: [id])
+  prescriptionId String?       @map("prescription")
+  instructions   String        @default("")
+  luCode         String        @default("")
+  refills        String        @default("")
+
+  @@index([prescriptionId])
 }
 
 model Prompt {
