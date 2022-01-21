@@ -10,6 +10,7 @@ export const AppointmentNote = list({
         kind: "now"
       }
     }),
+    // TODO: Document for the note body
     patient: relationship({ ref: 'Patient.appointmentNotes' }),
     summary: text(),
     title: text(),
