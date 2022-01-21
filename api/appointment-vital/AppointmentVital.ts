@@ -9,9 +9,9 @@ export const AppointmentVital = list({
     // if appointmentVitals would be linked/accessible via patient.appointment.vitalsData instead,
     // that way eliminating the need to replicate explicitly the connection to Patient here.
     patient: relationship({ ref: 'Patient.appointmentVitals' }),
-    feet: integer(),
-    inches: integer(),
-    lbs: integer(),
+    meters: integer(),
+    cm: integer(),
+    kg: integer(),
     oxygenSaturation: integer(),
     heartRate: integer(),
     temperature: integer(),
