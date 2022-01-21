@@ -11,6 +11,8 @@ export const Patient = list({
     healthCards: relationship({ ref: 'HealthCard.patient', many: true }),
     isCompleteProfile: checkbox(),
     name: text(),
+    medications: relationship({ ref: 'Medication.patient', many: true }),
+    prescriptions: relationship({ ref: 'Prescription.patient', many: true }),
     savedDoctors: relationship({ ref: 'Doctor.savedByPatients', many: true }),
     user: relationship({ ref: 'User.patient' }),
     visitedDoctors: relationship({ ref: 'Doctor.patients', many: true }),
