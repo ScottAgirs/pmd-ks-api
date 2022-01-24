@@ -17,10 +17,10 @@ if (!sessionSecret) {
 const { withAuth } = createAuth({
   listKey: 'User',
   identityField: 'email',
-  sessionData: 'firstName id lastName email doctor { id } patient { id }',
+  sessionData: 'firstName id lastName middleName email doctor { id } patient { id }',
   secretField: 'password',
   initFirstItem: {
-    fields: ['firstName', 'lastName', 'email', 'password', 'username'],
+    fields: ['firstName', 'middleName', 'lastName', 'email', 'password', 'username'],
   },
 });
 
