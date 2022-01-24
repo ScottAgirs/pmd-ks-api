@@ -2049,6 +2049,8 @@ type User {
   homePhoneNumberString: String
   calendar: Calendar
   country: String
+  addressLine1: String
+  addressLine2: String
   administrativeArea: String
   locality: String
   postalCode: String
@@ -2058,6 +2060,7 @@ type User {
   doctor: Doctor
   firstName: String
   lastName: String
+  middleName: String
   password: PasswordState
   prompts(
     where: PromptWhereInput! = {}
@@ -2104,6 +2107,8 @@ input UserWhereInput {
   homePhoneNumberString: StringFilter
   calendar: CalendarWhereInput
   country: StringFilter
+  addressLine1: StringFilter
+  addressLine2: StringFilter
   administrativeArea: StringFilter
   locality: StringFilter
   postalCode: StringFilter
@@ -2113,6 +2118,7 @@ input UserWhereInput {
   doctor: DoctorWhereInput
   firstName: StringFilter
   lastName: StringFilter
+  middleName: StringFilter
   prompts: PromptManyRelationFilter
   patient: PatientWhereInput
   sex: StringFilter
@@ -2145,6 +2151,8 @@ input UserOrderByInput {
   cellPhoneNumberString: OrderDirection
   homePhoneNumberString: OrderDirection
   country: OrderDirection
+  addressLine1: OrderDirection
+  addressLine2: OrderDirection
   administrativeArea: OrderDirection
   locality: OrderDirection
   postalCode: OrderDirection
@@ -2153,6 +2161,7 @@ input UserOrderByInput {
   dateOfBirth: OrderDirection
   firstName: OrderDirection
   lastName: OrderDirection
+  middleName: OrderDirection
   sex: OrderDirection
   username: OrderDirection
 }
@@ -2163,6 +2172,8 @@ input UserUpdateInput {
   homePhoneNumberString: String
   calendar: CalendarRelateToOneForUpdateInput
   country: String
+  addressLine1: String
+  addressLine2: String
   administrativeArea: String
   locality: String
   postalCode: String
@@ -2172,6 +2183,7 @@ input UserUpdateInput {
   doctor: DoctorRelateToOneForUpdateInput
   firstName: String
   lastName: String
+  middleName: String
   password: String
   prompts: PromptRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
@@ -2213,6 +2225,8 @@ input UserCreateInput {
   homePhoneNumberString: String
   calendar: CalendarRelateToOneForCreateInput
   country: String
+  addressLine1: String
+  addressLine2: String
   administrativeArea: String
   locality: String
   postalCode: String
@@ -2222,6 +2236,7 @@ input UserCreateInput {
   doctor: DoctorRelateToOneForCreateInput
   firstName: String
   lastName: String
+  middleName: String
   password: String
   prompts: PromptRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
@@ -3121,6 +3136,7 @@ input CreateInitialUserInput {
   email: String
   firstName: String
   lastName: String
+  middleName: String
   password: String
   username: String
 }
