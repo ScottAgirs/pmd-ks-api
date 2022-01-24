@@ -26,9 +26,6 @@ export const createCalendarEventBooking = async (
 
   const userId = user.id;
   const currentUserPatientId = user.patient.id;
-
-
-  // TODO: Get user Patient id
   
   // Check event exists
   const event = await context.db.CalendarEvent.findOne({
@@ -39,11 +36,7 @@ export const createCalendarEventBooking = async (
   if (!event) {
     throw new Error('event not found')
   }
-  console.log('event', event);
-  // TODO: Get Event Calendar
   
-
-  // TODO: Create Booking based on event
   const createdBooking = await context.db.Booking.createOne({ 
     data: {
       appointment:{
@@ -54,12 +47,31 @@ export const createCalendarEventBooking = async (
               id: event.doctorId
             }
           },
+          notes: {
+            create: {
+              title: ""
+            }
+          },
           patient:{
             connect:{
               id: currentUserPatientId
             }
           },
           reason,
+          prescription: {
+            create: {
+              patient: {
+                connect: {
+                  id: currentUserPatientId
+                },
+              },
+              doctor: {
+                connect: {
+                  id: event.doctorId
+                }
+              },
+            }
+          },
           vitalsData: {
             create: {
               resp: 0
