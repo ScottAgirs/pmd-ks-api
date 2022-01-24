@@ -268,6 +268,8 @@ model User {
   homePhoneNumberString String            @default("")
   calendar              Calendar?         @relation("Calendar_user")
   country               String            @default("")
+  addressLine1          String            @default("")
+  addressLine2          String            @default("")
   administrativeArea    String            @default("")
   locality              String            @default("")
   postalCode            String            @default("")
@@ -277,6 +279,7 @@ model User {
   doctor                Doctor?           @relation("Doctor_user")
   firstName             String            @default("")
   lastName              String            @default("")
+  middleName            String            @default("")
   password              String
   prompts               Prompt[]          @relation("Prompt_user")
   patient               Patient?          @relation("Patient_user")
