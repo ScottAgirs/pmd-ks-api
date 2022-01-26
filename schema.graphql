@@ -2952,6 +2952,7 @@ input StepperProgCreateInput {
 type StepperStep {
   id: ID!
   title: String
+  label: String
   description: String
   component: String
   slug: String
@@ -2971,6 +2972,7 @@ input StepperStepWhereInput {
   NOT: [StepperStepWhereInput!]
   id: IDFilter
   title: StringFilter
+  label: StringFilter
   description: StringFilter
   component: StringFilter
   slug: StringFilter
@@ -2983,6 +2985,7 @@ input StepperStepWhereInput {
 input StepperStepOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  label: OrderDirection
   description: OrderDirection
   component: OrderDirection
   slug: OrderDirection
@@ -2992,6 +2995,7 @@ input StepperStepOrderByInput {
 
 input StepperStepUpdateInput {
   title: String
+  label: String
   description: String
   component: String
   slug: String
@@ -3014,6 +3018,7 @@ input StepperStepUpdateArgs {
 
 input StepperStepCreateInput {
   title: String
+  label: String
   description: String
   component: String
   slug: String

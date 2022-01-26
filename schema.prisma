@@ -399,6 +399,7 @@ model StepperProg {
 model StepperStep {
   id                String           @id @default(cuid())
   title             String           @default("")
+  label             String           @default("")
   description       String           @default("")
   component         String           @default("")
   slug              String           @default("")
