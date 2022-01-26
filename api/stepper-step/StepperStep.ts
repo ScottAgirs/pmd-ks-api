@@ -5,6 +5,7 @@ const { list } = require("@keystone-6/core");
 export const StepperStep = list({
   fields: {
     title: text(),
+    label: text(),
     description: text(),
     component: text(),
     slug: text(),
