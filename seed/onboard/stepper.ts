@@ -1,5 +1,6 @@
 const DOCTOR_ONBOARDING_STEPS = [
   {
+    label: "Public Profile",
     title: "Public Profile",
     description: "",
     component: "profile",
@@ -8,6 +9,7 @@ const DOCTOR_ONBOARDING_STEPS = [
     order: 0,
   },
   {
+    label: "Professional Information",
     title: "Professional Information",
     description: "",
     component: "profession",
@@ -16,6 +18,7 @@ const DOCTOR_ONBOARDING_STEPS = [
     order: 1,
   },
   {
+    label: "Review and Confirm",
     title: "Review and Confirm",
     description: "",
     component: "review",
@@ -24,6 +27,7 @@ const DOCTOR_ONBOARDING_STEPS = [
     order: 2,
   },
   {
+    label: "Complete",
     title: "Complete",
     description: "",
     component: "final",
@@ -35,6 +39,7 @@ const DOCTOR_ONBOARDING_STEPS = [
 
 const PATIENT_ONBOARDING_STEPS = [
   {
+    label: "Personal Information",
     title: "Personal Information",
     description: "",
     component: "personal-data-form",
@@ -43,6 +48,7 @@ const PATIENT_ONBOARDING_STEPS = [
     order: 0,
   },
   {
+    label: "Contact Information",
     title: "Contact Information",
     description: "",
     component: "contacts",
@@ -51,6 +57,7 @@ const PATIENT_ONBOARDING_STEPS = [
     order: 1,
   },
   {
+    label: "Add Health Card Information",
     title: "Add Health Card Information",
     description: "",
     component: "healthcard",
@@ -59,6 +66,7 @@ const PATIENT_ONBOARDING_STEPS = [
     order: 2,
   },
   {
+    label: "Review & Confirm",
     title: "Review & Confirm",
     description: "",
     component: "review",
@@ -67,7 +75,8 @@ const PATIENT_ONBOARDING_STEPS = [
     order: 3,
   },
   {
-    title: "Done",
+    label: "Done",
+    title: "You are all set and ready to book doctors!",
     description: "",
     component: "final",
     slug: "final",
@@ -79,6 +88,7 @@ const PATIENT_ONBOARDING_STEPS = [
 
 export const STEPPERS = [
   { 
+    label: "Welcome to PocketMD",
     title: "Welcome to PocketMD",
     name: "Patient onboarding",
     description: "",
@@ -86,6 +96,7 @@ export const STEPPERS = [
     stepperSteps: PATIENT_ONBOARDING_STEPS,
   },
   { 
+    label: "Next Generation Health Care",
     title: "Next Generation Health Care",
     name: "Doctor Onboarding",
     description: "",
