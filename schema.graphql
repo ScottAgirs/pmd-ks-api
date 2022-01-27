@@ -132,17 +132,15 @@ type Mutation {
   updateDoctors(data: [DoctorUpdateArgs!]!): [Doctor]
   deleteDoctor(where: DoctorWhereUniqueInput!): Doctor
   deleteDoctors(where: [DoctorWhereUniqueInput!]!): [Doctor]
-  createDoctorLanguage(data: DoctorLanguageCreateInput!): DoctorLanguage
-  createDoctorLanguages(data: [DoctorLanguageCreateInput!]!): [DoctorLanguage]
-  updateDoctorLanguage(
-    where: DoctorLanguageWhereUniqueInput!
-    data: DoctorLanguageUpdateInput!
-  ): DoctorLanguage
-  updateDoctorLanguages(data: [DoctorLanguageUpdateArgs!]!): [DoctorLanguage]
-  deleteDoctorLanguage(where: DoctorLanguageWhereUniqueInput!): DoctorLanguage
-  deleteDoctorLanguages(
-    where: [DoctorLanguageWhereUniqueInput!]!
-  ): [DoctorLanguage]
+  createLanguage(data: LanguageCreateInput!): Language
+  createLanguages(data: [LanguageCreateInput!]!): [Language]
+  updateLanguage(
+    where: LanguageWhereUniqueInput!
+    data: LanguageUpdateInput!
+  ): Language
+  updateLanguages(data: [LanguageUpdateArgs!]!): [Language]
+  deleteLanguage(where: LanguageWhereUniqueInput!): Language
+  deleteLanguages(where: [LanguageWhereUniqueInput!]!): [Language]
   createDoctorSpecialty(data: DoctorSpecialtyCreateInput!): DoctorSpecialty
   createDoctorSpecialties(
     data: [DoctorSpecialtyCreateInput!]!
@@ -1381,12 +1379,12 @@ type Doctor {
   isCompleteProfile: Boolean
   isVerified: Boolean
   languages(
-    where: DoctorLanguageWhereInput! = {}
-    orderBy: [DoctorLanguageOrderByInput!]! = []
+    where: LanguageWhereInput! = {}
+    orderBy: [LanguageOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [DoctorLanguage!]
-  languagesCount(where: DoctorLanguageWhereInput! = {}): Int
+  ): [Language!]
+  languagesCount(where: LanguageWhereInput! = {}): Int
   patients(
     where: PatientWhereInput! = {}
     orderBy: [PatientOrderByInput!]! = []
@@ -1430,7 +1428,7 @@ input DoctorWhereInput {
   email: StringFilter
   isCompleteProfile: BooleanFilter
   isVerified: BooleanFilter
-  languages: DoctorLanguageManyRelationFilter
+  languages: LanguageManyRelationFilter
   patients: PatientManyRelationFilter
   prescriptions: PrescriptionManyRelationFilter
   summary: StringFilter
@@ -1454,10 +1452,10 @@ input DoctorSubSpecialtyManyRelationFilter {
   none: DoctorSubSpecialtyWhereInput
 }
 
-input DoctorLanguageManyRelationFilter {
-  every: DoctorLanguageWhereInput
-  some: DoctorLanguageWhereInput
-  none: DoctorLanguageWhereInput
+input LanguageManyRelationFilter {
+  every: LanguageWhereInput
+  some: LanguageWhereInput
+  none: LanguageWhereInput
 }
 
 input PatientManyRelationFilter {
@@ -1492,7 +1490,7 @@ input DoctorUpdateInput {
   email: String
   isCompleteProfile: Boolean
   isVerified: Boolean
-  languages: DoctorLanguageRelateToManyForUpdateInput
+  languages: LanguageRelateToManyForUpdateInput
   patients: PatientRelateToManyForUpdateInput
   prescriptions: PrescriptionRelateToManyForUpdateInput
   summary: String
@@ -1512,11 +1510,11 @@ input DoctorSubSpecialtyRelateToManyForUpdateInput {
   connect: [DoctorSubSpecialtyWhereUniqueInput!]
 }
 
-input DoctorLanguageRelateToManyForUpdateInput {
-  disconnect: [DoctorLanguageWhereUniqueInput!]
-  set: [DoctorLanguageWhereUniqueInput!]
-  create: [DoctorLanguageCreateInput!]
-  connect: [DoctorLanguageWhereUniqueInput!]
+input LanguageRelateToManyForUpdateInput {
+  disconnect: [LanguageWhereUniqueInput!]
+  set: [LanguageWhereUniqueInput!]
+  create: [LanguageCreateInput!]
+  connect: [LanguageWhereUniqueInput!]
 }
 
 input PatientRelateToManyForUpdateInput {
@@ -1549,7 +1547,7 @@ input DoctorCreateInput {
   email: String
   isCompleteProfile: Boolean
   isVerified: Boolean
-  languages: DoctorLanguageRelateToManyForCreateInput
+  languages: LanguageRelateToManyForCreateInput
   patients: PatientRelateToManyForCreateInput
   prescriptions: PrescriptionRelateToManyForCreateInput
   summary: String
@@ -1566,9 +1564,9 @@ input DoctorSubSpecialtyRelateToManyForCreateInput {
   connect: [DoctorSubSpecialtyWhereUniqueInput!]
 }
 
-input DoctorLanguageRelateToManyForCreateInput {
-  create: [DoctorLanguageCreateInput!]
-  connect: [DoctorLanguageWhereUniqueInput!]
+input LanguageRelateToManyForCreateInput {
+  create: [LanguageCreateInput!]
+  connect: [LanguageWhereUniqueInput!]
 }
 
 input PatientRelateToManyForCreateInput {
@@ -1581,7 +1579,7 @@ input PrescriptionRelateToManyForCreateInput {
   connect: [PrescriptionWhereUniqueInput!]
 }
 
-type DoctorLanguage {
+type Language {
   id: ID!
   label: String
   value: String
@@ -1594,14 +1592,14 @@ type DoctorLanguage {
   doctorsCount(where: DoctorWhereInput! = {}): Int
 }
 
-input DoctorLanguageWhereUniqueInput {
+input LanguageWhereUniqueInput {
   id: ID
 }
 
-input DoctorLanguageWhereInput {
-  AND: [DoctorLanguageWhereInput!]
-  OR: [DoctorLanguageWhereInput!]
-  NOT: [DoctorLanguageWhereInput!]
+input LanguageWhereInput {
+  AND: [LanguageWhereInput!]
+  OR: [LanguageWhereInput!]
+  NOT: [LanguageWhereInput!]
   id: IDFilter
   label: StringFilter
   value: StringFilter
@@ -1614,13 +1612,13 @@ input DoctorManyRelationFilter {
   none: DoctorWhereInput
 }
 
-input DoctorLanguageOrderByInput {
+input LanguageOrderByInput {
   id: OrderDirection
   label: OrderDirection
   value: OrderDirection
 }
 
-input DoctorLanguageUpdateInput {
+input LanguageUpdateInput {
   label: String
   value: String
   doctors: DoctorRelateToManyForUpdateInput
@@ -1633,12 +1631,12 @@ input DoctorRelateToManyForUpdateInput {
   connect: [DoctorWhereUniqueInput!]
 }
 
-input DoctorLanguageUpdateArgs {
-  where: DoctorLanguageWhereUniqueInput!
-  data: DoctorLanguageUpdateInput!
+input LanguageUpdateArgs {
+  where: LanguageWhereUniqueInput!
+  data: LanguageUpdateInput!
 }
 
-input DoctorLanguageCreateInput {
+input LanguageCreateInput {
   label: String
   value: String
   doctors: DoctorRelateToManyForCreateInput
@@ -3237,14 +3235,14 @@ type Query {
   ): [Doctor!]
   doctor(where: DoctorWhereUniqueInput!): Doctor
   doctorsCount(where: DoctorWhereInput! = {}): Int
-  doctorLanguages(
-    where: DoctorLanguageWhereInput! = {}
-    orderBy: [DoctorLanguageOrderByInput!]! = []
+  languages(
+    where: LanguageWhereInput! = {}
+    orderBy: [LanguageOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [DoctorLanguage!]
-  doctorLanguage(where: DoctorLanguageWhereUniqueInput!): DoctorLanguage
-  doctorLanguagesCount(where: DoctorLanguageWhereInput! = {}): Int
+  ): [Language!]
+  language(where: LanguageWhereUniqueInput!): Language
+  languagesCount(where: LanguageWhereInput! = {}): Int
   doctorSpecialties(
     where: DoctorSpecialtyWhereInput! = {}
     orderBy: [DoctorSpecialtyOrderByInput!]! = []

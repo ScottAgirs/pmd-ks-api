@@ -180,7 +180,7 @@ model Doctor {
   email                String               @default("")
   isCompleteProfile    Boolean              @default(false)
   isVerified           Boolean              @default(false)
-  languages            DoctorLanguage[]     @relation("Doctor_languages")
+  languages            Language[]           @relation("Doctor_languages")
   patients             Patient[]            @relation("Doctor_patients")
   prescriptions        Prescription[]       @relation("Prescription_doctor")
   summary              String               @default("")
@@ -189,7 +189,7 @@ model Doctor {
   @@index([doctorSpecialtyId])
 }
 
-model DoctorLanguage {
+model Language {
   id      String   @id @default(cuid())
   label   String   @default("")
   value   String   @default("")
