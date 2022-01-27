@@ -14,7 +14,7 @@ import { Doctor } from "./api/doctor/Doctor";
 import { Medication } from "./api/medication/Medication";
 import { DoctorSpecialty } from "./api/doctor-specialty/DoctorSpecialty";
 import { DoctorSubSpecialty } from "./api/doctor-sub-specialty/DoctorSubSpecialty";
-import { DoctorLanguage } from "./api/doctor-language/DoctorLanguage";
+import { Language } from "./api/language/Language";
 import { HealthCard } from "./api/health-card/HealthCard";
 
 import { EmergencyContact } from "./api/emergency-contact/EmergencyContact";
@@ -50,7 +50,7 @@ export const lists = {
   TimeInterval,
   // Doctor,
   Doctor,
-  DoctorLanguage,
+  Language,
   DoctorSpecialty,
   DoctorSubSpecialty,
   // HealthCard
