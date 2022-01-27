@@ -12,6 +12,7 @@ import { populateSubSpecialties } from './seed/doctor/populate-sub-specialties';
 import { populateCalendarEventTypes } from './seed/doctor/populate-calendar-event-types';
 import { populateDummyUsers } from './seed/user/populate-dummy-users';
 import { populateSteppers } from './seed/onboard/populate-stepper';
+import { populateLanguages } from './seed/common/populate-languages';
 
 const FRONTEND_URL:string = process.env.FRONTEND_URL as string;
 export default withAuth(
@@ -31,8 +32,12 @@ export default withAuth(
           populateCalendarEventTypes(keystone);
           populateSpecialties(keystone);
           populateSubSpecialties(keystone);
+          populateLanguages(keystone);
         }
 
+        if (process.argv.includes('--seed-languages')) {
+          populateLanguages(keystone);
+        }
         if (process.argv.includes('--seed-steppers')) {
           populateSteppers(keystone);
         }
