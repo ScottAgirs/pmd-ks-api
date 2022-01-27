@@ -23,7 +23,7 @@ export const Doctor = list({
     email: text(),
     isCompleteProfile: checkbox(),
     isVerified: checkbox(),
-    languages: relationship({ ref: 'DoctorLanguage.doctors', many: true }),
+    languages: relationship({ ref: 'Language.doctors', many: true }),
     patients: relationship({ ref: 'Patient.visitedDoctors', many: true }),
     prescriptions: relationship({ ref: 'Prescription.doctor', many: true }),
     summary: text(),
