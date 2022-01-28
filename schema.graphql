@@ -1376,6 +1376,8 @@ type Doctor {
   ): [DoctorSubSpecialty!]
   doctorSubSpecialtiesCount(where: DoctorSubSpecialtyWhereInput! = {}): Int
   email: String
+  insurancePolicyNumber: String
+  insuranceProvider: String
   isCompleteProfile: Boolean
   isVerified: Boolean
   languages(
@@ -1385,6 +1387,8 @@ type Doctor {
     skip: Int! = 0
   ): [Language!]
   languagesCount(where: LanguageWhereInput! = {}): Int
+  licensedBy: String
+  licenseNumber: String
   patients(
     where: PatientWhereInput! = {}
     orderBy: [PatientOrderByInput!]! = []
@@ -1399,6 +1403,7 @@ type Doctor {
     skip: Int! = 0
   ): [Prescription!]
   prescriptionsCount(where: PrescriptionWhereInput! = {}): Int
+  province: String
   summary: String
   savedByPatients(
     where: PatientWhereInput! = {}
@@ -1426,11 +1431,16 @@ input DoctorWhereInput {
   doctorSpecialty: DoctorSpecialtyWhereInput
   doctorSubSpecialties: DoctorSubSpecialtyManyRelationFilter
   email: StringFilter
+  insurancePolicyNumber: StringFilter
+  insuranceProvider: StringFilter
   isCompleteProfile: BooleanFilter
   isVerified: BooleanFilter
   languages: LanguageManyRelationFilter
+  licensedBy: StringFilter
+  licenseNumber: StringFilter
   patients: PatientManyRelationFilter
   prescriptions: PrescriptionManyRelationFilter
+  province: StringFilter
   summary: StringFilter
   savedByPatients: PatientManyRelationFilter
 }
@@ -1474,8 +1484,13 @@ input DoctorOrderByInput {
   id: OrderDirection
   doctorSince: OrderDirection
   email: OrderDirection
+  insurancePolicyNumber: OrderDirection
+  insuranceProvider: OrderDirection
   isCompleteProfile: OrderDirection
   isVerified: OrderDirection
+  licensedBy: OrderDirection
+  licenseNumber: OrderDirection
+  province: OrderDirection
   summary: OrderDirection
 }
 
@@ -1488,11 +1503,16 @@ input DoctorUpdateInput {
   doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForUpdateInput
   email: String
+  insurancePolicyNumber: String
+  insuranceProvider: String
   isCompleteProfile: Boolean
   isVerified: Boolean
   languages: LanguageRelateToManyForUpdateInput
+  licensedBy: String
+  licenseNumber: String
   patients: PatientRelateToManyForUpdateInput
   prescriptions: PrescriptionRelateToManyForUpdateInput
+  province: String
   summary: String
   savedByPatients: PatientRelateToManyForUpdateInput
 }
@@ -1545,11 +1565,16 @@ input DoctorCreateInput {
   doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForCreateInput
   email: String
+  insurancePolicyNumber: String
+  insuranceProvider: String
   isCompleteProfile: Boolean
   isVerified: Boolean
   languages: LanguageRelateToManyForCreateInput
+  licensedBy: String
+  licenseNumber: String
   patients: PatientRelateToManyForCreateInput
   prescriptions: PrescriptionRelateToManyForCreateInput
+  province: String
   summary: String
   savedByPatients: PatientRelateToManyForCreateInput
 }
