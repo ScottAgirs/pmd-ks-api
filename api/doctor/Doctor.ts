@@ -17,6 +17,8 @@ export const Doctor = list({
     bookings: relationship({ ref: 'Booking.doctor', many: true }),
     calendarEvents: relationship({ ref: 'CalendarEvent.doctor', many: true }),
     // TODO: doctorSpecializations
+    // TODO: contractSignedOn time must be max 1 hour in the future and min 15 mins in the past
+    contractSignedOn: timestamp(),
     doctorSince: timestamp({ validation: { isRequired: true } }),
     doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors' }),
     doctorSubSpecialties: relationship({ ref: 'DoctorSubSpecialty.doctors', many: true }),
