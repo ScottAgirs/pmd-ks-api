@@ -93,7 +93,6 @@ export const createOrUpdateStepperStepProg = async (
     })
 
   } else {
-    console.log("Updating stepperStepProg");
     stepperStepProg = await context.db.StepperStepProg.updateOne({
       where: {
         id: stepperStepProg?.id as string,
