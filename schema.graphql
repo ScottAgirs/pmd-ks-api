@@ -126,6 +126,15 @@ type Mutation {
   updateTimeIntervals(data: [TimeIntervalUpdateArgs!]!): [TimeInterval]
   deleteTimeInterval(where: TimeIntervalWhereUniqueInput!): TimeInterval
   deleteTimeIntervals(where: [TimeIntervalWhereUniqueInput!]!): [TimeInterval]
+  createContract(data: ContractCreateInput!): Contract
+  createContracts(data: [ContractCreateInput!]!): [Contract]
+  updateContract(
+    where: ContractWhereUniqueInput!
+    data: ContractUpdateInput!
+  ): Contract
+  updateContracts(data: [ContractUpdateArgs!]!): [Contract]
+  deleteContract(where: ContractWhereUniqueInput!): Contract
+  deleteContracts(where: [ContractWhereUniqueInput!]!): [Contract]
   createDoctor(data: DoctorCreateInput!): Doctor
   createDoctors(data: [DoctorCreateInput!]!): [Doctor]
   updateDoctor(where: DoctorWhereUniqueInput!, data: DoctorUpdateInput!): Doctor
@@ -1348,6 +1357,96 @@ input RecurringSlotRelateToOneForCreateInput {
   connect: RecurringSlotWhereUniqueInput
 }
 
+type Contract {
+  id: ID!
+  signedBy(
+    where: UserWhereInput! = {}
+    orderBy: [UserOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [User!]
+  signedByCount(where: UserWhereInput! = {}): Int
+  isActive: Boolean
+  body: Contract_body_Document
+  name: String
+  slug: String
+  effectiveFrom: DateTime
+  lastUpdated: DateTime
+}
+
+type Contract_body_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input ContractWhereUniqueInput {
+  id: ID
+}
+
+input ContractWhereInput {
+  AND: [ContractWhereInput!]
+  OR: [ContractWhereInput!]
+  NOT: [ContractWhereInput!]
+  id: IDFilter
+  signedBy: UserManyRelationFilter
+  isActive: BooleanFilter
+  name: StringFilter
+  slug: StringFilter
+  effectiveFrom: DateTimeNullableFilter
+  lastUpdated: DateTimeNullableFilter
+}
+
+input UserManyRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
+}
+
+input ContractOrderByInput {
+  id: OrderDirection
+  isActive: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+  effectiveFrom: OrderDirection
+  lastUpdated: OrderDirection
+}
+
+input ContractUpdateInput {
+  signedBy: UserRelateToManyForUpdateInput
+  isActive: Boolean
+  body: JSON
+  name: String
+  slug: String
+  effectiveFrom: DateTime
+  lastUpdated: DateTime
+}
+
+input UserRelateToManyForUpdateInput {
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input ContractUpdateArgs {
+  where: ContractWhereUniqueInput!
+  data: ContractUpdateInput!
+}
+
+input ContractCreateInput {
+  signedBy: UserRelateToManyForCreateInput
+  isActive: Boolean
+  body: JSON
+  name: String
+  slug: String
+  effectiveFrom: DateTime
+  lastUpdated: DateTime
+}
+
+input UserRelateToManyForCreateInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
 type Doctor {
   id: ID!
   user: User
@@ -1366,6 +1465,7 @@ type Doctor {
     skip: Int! = 0
   ): [CalendarEvent!]
   calendarEventsCount(where: CalendarEventWhereInput! = {}): Int
+  contractSignedOn: DateTime
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialty
   doctorSubSpecialties(
@@ -1427,6 +1527,7 @@ input DoctorWhereInput {
   appointments: AppointmentWhereInput
   bookings: BookingManyRelationFilter
   calendarEvents: CalendarEventManyRelationFilter
+  contractSignedOn: DateTimeNullableFilter
   doctorSince: DateTimeFilter
   doctorSpecialty: DoctorSpecialtyWhereInput
   doctorSubSpecialties: DoctorSubSpecialtyManyRelationFilter
@@ -1482,6 +1583,7 @@ input PrescriptionManyRelationFilter {
 
 input DoctorOrderByInput {
   id: OrderDirection
+  contractSignedOn: OrderDirection
   doctorSince: OrderDirection
   email: OrderDirection
   insurancePolicyNumber: OrderDirection
@@ -1499,6 +1601,7 @@ input DoctorUpdateInput {
   appointments: AppointmentRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   calendarEvents: CalendarEventRelateToManyForUpdateInput
+  contractSignedOn: DateTime
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForUpdateInput
@@ -1561,6 +1664,7 @@ input DoctorCreateInput {
   appointments: AppointmentRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
   calendarEvents: CalendarEventRelateToManyForCreateInput
+  contractSignedOn: DateTime
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForCreateInput
@@ -2071,6 +2175,13 @@ type User {
   cellPhoneNumberString: String
   homePhoneNumberString: String
   calendar: Calendar
+  contracts(
+    where: ContractWhereInput! = {}
+    orderBy: [ContractOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Contract!]
+  contractsCount(where: ContractWhereInput! = {}): Int
   country: String
   addressLine1: String
   addressLine2: String
@@ -2129,6 +2240,7 @@ input UserWhereInput {
   cellPhoneNumberString: StringFilter
   homePhoneNumberString: StringFilter
   calendar: CalendarWhereInput
+  contracts: ContractManyRelationFilter
   country: StringFilter
   addressLine1: StringFilter
   addressLine2: StringFilter
@@ -2148,6 +2260,12 @@ input UserWhereInput {
   stepperProgs: StepperProgManyRelationFilter
   stepperStepProgs: StepperStepProgManyRelationFilter
   username: StringFilter
+}
+
+input ContractManyRelationFilter {
+  every: ContractWhereInput
+  some: ContractWhereInput
+  none: ContractWhereInput
 }
 
 input PromptManyRelationFilter {
@@ -2194,6 +2312,7 @@ input UserUpdateInput {
   cellPhoneNumberString: String
   homePhoneNumberString: String
   calendar: CalendarRelateToOneForUpdateInput
+  contracts: ContractRelateToManyForUpdateInput
   country: String
   addressLine1: String
   addressLine2: String
@@ -2214,6 +2333,13 @@ input UserUpdateInput {
   stepperProgs: StepperProgRelateToManyForUpdateInput
   stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
   username: String
+}
+
+input ContractRelateToManyForUpdateInput {
+  disconnect: [ContractWhereUniqueInput!]
+  set: [ContractWhereUniqueInput!]
+  create: [ContractCreateInput!]
+  connect: [ContractWhereUniqueInput!]
 }
 
 input PromptRelateToManyForUpdateInput {
@@ -2247,6 +2373,7 @@ input UserCreateInput {
   cellPhoneNumberString: String
   homePhoneNumberString: String
   calendar: CalendarRelateToOneForCreateInput
+  contracts: ContractRelateToManyForCreateInput
   country: String
   addressLine1: String
   addressLine2: String
@@ -2267,6 +2394,11 @@ input UserCreateInput {
   stepperProgs: StepperProgRelateToManyForCreateInput
   stepperStepProgs: StepperStepProgRelateToManyForCreateInput
   username: String
+}
+
+input ContractRelateToManyForCreateInput {
+  create: [ContractCreateInput!]
+  connect: [ContractWhereUniqueInput!]
 }
 
 input PromptRelateToManyForCreateInput {
@@ -3252,6 +3384,14 @@ type Query {
   ): [TimeInterval!]
   timeInterval(where: TimeIntervalWhereUniqueInput!): TimeInterval
   timeIntervalsCount(where: TimeIntervalWhereInput! = {}): Int
+  contracts(
+    where: ContractWhereInput! = {}
+    orderBy: [ContractOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Contract!]
+  contract(where: ContractWhereUniqueInput!): Contract
+  contractsCount(where: ContractWhereInput! = {}): Int
   doctors(
     where: DoctorWhereInput! = {}
     orderBy: [DoctorOrderByInput!]! = []

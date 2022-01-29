@@ -166,6 +166,17 @@ model TimeInterval {
   @@index([recurringSlotId])
 }
 
+model Contract {
+  id            String    @id @default(cuid())
+  signedBy      User[]    @relation("Contract_signedBy")
+  isActive      Boolean   @default(false)
+  body          Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  name          String    @default("")
+  slug          String    @default("")
+  effectiveFrom DateTime?
+  lastUpdated   DateTime?
+}
+
 model Doctor {
   id                    String               @id @default(cuid())
   user                  User?                @relation("Doctor_user", fields: [userId], references: [id])
@@ -173,6 +184,7 @@ model Doctor {
   appointments          Appointment?         @relation("Appointment_doctor")
   bookings              Booking[]            @relation("Booking_doctor")
   calendarEvents        CalendarEvent[]      @relation("CalendarEvent_doctor")
+  contractSignedOn      DateTime?
   doctorSince           DateTime
   doctorSpecialty       DoctorSpecialty?     @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])
   doctorSpecialtyId     String?              @map("doctorSpecialty")
@@ -272,6 +284,7 @@ model User {
   cellPhoneNumberString String            @default("")
   homePhoneNumberString String            @default("")
   calendar              Calendar?         @relation("Calendar_user")
+  contracts             Contract[]        @relation("Contract_signedBy")
   country               String            @default("")
   addressLine1          String            @default("")
   addressLine2          String            @default("")
