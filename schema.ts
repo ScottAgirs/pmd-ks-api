@@ -6,6 +6,7 @@ import { Booking } from "./api/booking/Booking";
 import { Calendar } from "./api/calendar/Calendar";
 import { CalendarEvent } from "./api/calendar-event/CalendarEvent";
 import { CalendarEventType } from "./api/calendar-event-type/CalendarEventType";
+import { Contract } from "./api/contract/Contract";
 import { RecurringSlot } from "./api/recurring-slot/RecurringSlot";
 import { Schedule } from "./api/schedule/Schedule";
 import { TimeInterval } from "./api/time-interval/TimeInterval";
@@ -48,6 +49,8 @@ export const lists = {
   Schedule,
   RecurringSlot,
   TimeInterval,
+  // Contracts
+  Contract,
   // Doctor,
   Doctor,
   Language,
