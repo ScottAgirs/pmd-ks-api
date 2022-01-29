@@ -32,6 +32,7 @@ export const User = list({
     cellPhoneNumberString: text(),
     homePhoneNumberString: text(),
     calendar: relationship({ ref: 'Calendar.user' }),
+    contracts: relationship({ ref: 'Contract.signedBy', many: true }),
     country: text(),
     addressLine1: text(),
     addressLine2: text(),
