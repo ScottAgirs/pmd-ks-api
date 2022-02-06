@@ -5,7 +5,10 @@ const { list } = require("@keystone-6/core");
 export const CalendarEventType = list({
   fields: {
     label: text({ validation: { isRequired: true } }),
-    value: text({ validation: { isRequired: true } }),
+    value: text({ 
+      validation: { isRequired: true }, 
+      isIndexed: 'unique',
+    }),
     events: relationship({ ref: 'CalendarEvent.eventType', many: true }),
   },
 })
