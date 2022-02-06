@@ -7,7 +7,8 @@ export const Schedule = list({
     title: text({ validation: { isRequired: true } }),
     description: text(),
     calendar: relationship({ ref: 'Calendar.schedules' }),
-    events: relationship({ ref: 'CalendarEvent.schedule', many: true }),
+    // TODO: Link to bookings
+    // bookings: relationship({ ref: 'Booking.schedule', many: true }),
     defaultOn: relationship({ ref: 'Calendar.defaultSchedule' }),
     recurringSlots: relationship({ ref: 'RecurringSlot.schedule', many: true }),
   },
