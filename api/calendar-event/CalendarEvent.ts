@@ -11,7 +11,6 @@ export const CalendarEvent = list({
     description: text(),
     durationMins: integer({ validation: { isRequired: true } }),
     isConfirmationRequired: checkbox(),
-    schedule: relationship({ ref: 'Schedule.events' }),
     title: text({ validation: { isRequired: true } }),
   },
 })
