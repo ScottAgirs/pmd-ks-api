@@ -113,20 +113,17 @@ model CalendarEvent {
   description            String             @default("")
   durationMins           Int
   isConfirmationRequired Boolean            @default(false)
-  schedule               Schedule?          @relation("CalendarEvent_schedule", fields: [scheduleId], references: [id])
-  scheduleId             String?            @map("schedule")
   title                  String             @default("")
 
   @@index([calendarId])
   @@index([doctorId])
   @@index([eventTypeId])
-  @@index([scheduleId])
 }
 
 model CalendarEventType {
   id     String          @id @default(cuid())
   label  String          @default("")
-  value  String          @default("")
+  value  String          @unique @default("")
   events CalendarEvent[] @relation("CalendarEvent_eventType")
 }
 
@@ -136,7 +133,6 @@ model Schedule {
   description    String          @default("")
   calendar       Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
   calendarId     String?         @map("calendar")
-  events         CalendarEvent[] @relation("CalendarEvent_schedule")
   defaultOn      Calendar?       @relation("Calendar_defaultSchedule")
   recurringSlots RecurringSlot[] @relation("RecurringSlot_schedule")
 
@@ -184,6 +180,12 @@ model Doctor {
   appointments          Appointment?         @relation("Appointment_doctor")
   bookings              Booking[]            @relation("Booking_doctor")
   calendarEvents        CalendarEvent[]      @relation("CalendarEvent_doctor")
+  clinicName            String               @default("")
+  clinicPhoneNumber     String               @default("")
+  clinicFaxNumber       String               @default("")
+  clinicFMN             String               @default("")
+  clinicSLI             String               @default("")
+  clinicOHIPBillingCode String               @default("")
   contractSignedOn      DateTime?
   doctorSince           DateTime
   doctorSpecialty       DoctorSpecialty?     @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])

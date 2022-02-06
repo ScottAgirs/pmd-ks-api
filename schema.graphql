@@ -1012,7 +1012,6 @@ type CalendarEvent {
   description: String
   durationMins: Int
   isConfirmationRequired: Boolean
-  schedule: Schedule
   title: String
 }
 
@@ -1032,7 +1031,6 @@ input CalendarEventWhereInput {
   description: StringFilter
   durationMins: IntFilter
   isConfirmationRequired: BooleanFilter
-  schedule: ScheduleWhereInput
   title: StringFilter
 }
 
@@ -1052,7 +1050,6 @@ input CalendarEventUpdateInput {
   description: String
   durationMins: Int
   isConfirmationRequired: Boolean
-  schedule: ScheduleRelateToOneForUpdateInput
   title: String
 }
 
@@ -1075,7 +1072,6 @@ input CalendarEventCreateInput {
   description: String
   durationMins: Int
   isConfirmationRequired: Boolean
-  schedule: ScheduleRelateToOneForCreateInput
   title: String
 }
 
@@ -1099,6 +1095,7 @@ type CalendarEventType {
 
 input CalendarEventTypeWhereUniqueInput {
   id: ID
+  value: String
 }
 
 input CalendarEventTypeWhereInput {
@@ -1139,13 +1136,6 @@ type Schedule {
   title: String
   description: String
   calendar: Calendar
-  events(
-    where: CalendarEventWhereInput! = {}
-    orderBy: [CalendarEventOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [CalendarEvent!]
-  eventsCount(where: CalendarEventWhereInput! = {}): Int
   defaultOn: Calendar
   recurringSlots(
     where: RecurringSlotWhereInput! = {}
@@ -1168,7 +1158,6 @@ input ScheduleWhereInput {
   title: StringFilter
   description: StringFilter
   calendar: CalendarWhereInput
-  events: CalendarEventManyRelationFilter
   defaultOn: CalendarWhereInput
   recurringSlots: RecurringSlotManyRelationFilter
 }
@@ -1189,7 +1178,6 @@ input ScheduleUpdateInput {
   title: String
   description: String
   calendar: CalendarRelateToOneForUpdateInput
-  events: CalendarEventRelateToManyForUpdateInput
   defaultOn: CalendarRelateToOneForUpdateInput
   recurringSlots: RecurringSlotRelateToManyForUpdateInput
 }
@@ -1210,7 +1198,6 @@ input ScheduleCreateInput {
   title: String
   description: String
   calendar: CalendarRelateToOneForCreateInput
-  events: CalendarEventRelateToManyForCreateInput
   defaultOn: CalendarRelateToOneForCreateInput
   recurringSlots: RecurringSlotRelateToManyForCreateInput
 }
@@ -1465,6 +1452,12 @@ type Doctor {
     skip: Int! = 0
   ): [CalendarEvent!]
   calendarEventsCount(where: CalendarEventWhereInput! = {}): Int
+  clinicName: String
+  clinicPhoneNumber: String
+  clinicFaxNumber: String
+  clinicFMN: String
+  clinicSLI: String
+  clinicOHIPBillingCode: String
   contractSignedOn: DateTime
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialty
@@ -1527,6 +1520,12 @@ input DoctorWhereInput {
   appointments: AppointmentWhereInput
   bookings: BookingManyRelationFilter
   calendarEvents: CalendarEventManyRelationFilter
+  clinicName: StringFilter
+  clinicPhoneNumber: StringFilter
+  clinicFaxNumber: StringFilter
+  clinicFMN: StringFilter
+  clinicSLI: StringFilter
+  clinicOHIPBillingCode: StringFilter
   contractSignedOn: DateTimeNullableFilter
   doctorSince: DateTimeFilter
   doctorSpecialty: DoctorSpecialtyWhereInput
@@ -1583,6 +1582,12 @@ input PrescriptionManyRelationFilter {
 
 input DoctorOrderByInput {
   id: OrderDirection
+  clinicName: OrderDirection
+  clinicPhoneNumber: OrderDirection
+  clinicFaxNumber: OrderDirection
+  clinicFMN: OrderDirection
+  clinicSLI: OrderDirection
+  clinicOHIPBillingCode: OrderDirection
   contractSignedOn: OrderDirection
   doctorSince: OrderDirection
   email: OrderDirection
@@ -1601,6 +1606,12 @@ input DoctorUpdateInput {
   appointments: AppointmentRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   calendarEvents: CalendarEventRelateToManyForUpdateInput
+  clinicName: String
+  clinicPhoneNumber: String
+  clinicFaxNumber: String
+  clinicFMN: String
+  clinicSLI: String
+  clinicOHIPBillingCode: String
   contractSignedOn: DateTime
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
@@ -1664,6 +1675,12 @@ input DoctorCreateInput {
   appointments: AppointmentRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
   calendarEvents: CalendarEventRelateToManyForCreateInput
+  clinicName: String
+  clinicPhoneNumber: String
+  clinicFaxNumber: String
+  clinicFMN: String
+  clinicSLI: String
+  clinicOHIPBillingCode: String
   contractSignedOn: DateTime
   doctorSince: DateTime
   doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
