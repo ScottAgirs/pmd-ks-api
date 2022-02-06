@@ -16,6 +16,12 @@ export const Doctor = list({
     appointments: relationship({ ref: 'Appointment.doctor' }),
     bookings: relationship({ ref: 'Booking.doctor', many: true }),
     calendarEvents: relationship({ ref: 'CalendarEvent.doctor', many: true }),
+    clinicName: text(),
+    clinicPhoneNumber: text(),
+    clinicFaxNumber: text(),
+    clinicFMN: text(),
+    clinicSLI: text(),
+    clinicOHIPBillingCode: text(),
     // TODO: doctorSpecializations
     // TODO: contractSignedOn time must be max 1 hour in the future and min 15 mins in the past
     contractSignedOn: timestamp(),
