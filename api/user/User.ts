@@ -33,6 +33,7 @@ export const User = list({
     homePhoneNumberString: text(),
     calendar: relationship({ ref: 'Calendar.user' }),
     contracts: relationship({ ref: 'Contract.signedBy', many: true }),
+    // Address start
     country: text(),
     addressLine1: text(),
     addressLine2: text(),
@@ -41,6 +42,7 @@ export const User = list({
     postalCode: text(),
     thoroughfare: text(),
     premise: text(),
+    // Address end
     dateOfBirth: timestamp(),
     doctor: relationship({ ref: 'Doctor.user' }),
     firstName: text({ validation: { isRequired: true } }),
