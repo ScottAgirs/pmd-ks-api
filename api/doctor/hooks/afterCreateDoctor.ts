@@ -9,7 +9,7 @@ interface AfterCreateDoctorInput {
 }
 // TODO: [TypeScript] Add context interface
 export const afterCreateDoctor = async ({ context, item }:AfterCreateDoctorInput) => {
-  if (!item) throw new Error('Failed to create User item.')
+  if (!item) throw new Error('Failed to create User Doctor item.')
 
   const userDB = context.db.User;
   const user = await userDB.findOne({ where: { id: item.userId } });
@@ -23,7 +23,7 @@ export const afterCreateDoctor = async ({ context, item }:AfterCreateDoctorInput
     },
   }})
 
-  const createdSchedule = await context.db.Schedule.createOne({ data: {
+  await context.db.Schedule.createOne({ data: {
     title: `${user.firstName}'s Default Schedule`,
     calendar: {
       connect: {
@@ -38,9 +38,8 @@ export const afterCreateDoctor = async ({ context, item }:AfterCreateDoctorInput
   }})
 
   const eventTypes = await context.db.CalendarEventType.findMany()
-  await context.db.CalendarEvent.createOne({ data: {
-    durationMins: 30,
-    title: "Default Event",
+
+  const sharedCreateCalendarEventParams = {
     calendar: {
       connect: {
         id: createdCalendar.id
@@ -51,15 +50,20 @@ export const afterCreateDoctor = async ({ context, item }:AfterCreateDoctorInput
         id: item.id
       }
     },
-    schedule: {
-      connect: {
-        id: createdSchedule.id
-      }
-    },
+    durationMins: 15,
+    isConfirmationRequired: false,
+  }
+
+  const createdCalendarEventsData = eventTypes.map(eventType => ({
+    ...sharedCreateCalendarEventParams,
     eventType: {
       connect: {
-        id: eventTypes[0].id
+        id: eventType.id
       }
     },
-  }})
+    title: eventType.label,
+    description: `${eventType.label} appointment with Dr. ${user.firstName} ${user.firstName}`,
+  }))
+
+  await context.db.CalendarEvent.createMany({ data: createdCalendarEventsData });
 }
