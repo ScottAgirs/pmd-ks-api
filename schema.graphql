@@ -1007,10 +1007,11 @@ type CalendarEvent {
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
   calendar: Calendar
-  doctor: Doctor
-  eventType: CalendarEventType
   description: String
+  doctor: Doctor
   durationMins: Int
+  eventType: CalendarEventType
+  isActive: Boolean
   isConfirmationRequired: Boolean
   title: String
 }
@@ -1026,10 +1027,11 @@ input CalendarEventWhereInput {
   id: IDFilter
   bookings: BookingManyRelationFilter
   calendar: CalendarWhereInput
-  doctor: DoctorWhereInput
-  eventType: CalendarEventTypeWhereInput
   description: StringFilter
+  doctor: DoctorWhereInput
   durationMins: IntFilter
+  eventType: CalendarEventTypeWhereInput
+  isActive: BooleanFilter
   isConfirmationRequired: BooleanFilter
   title: StringFilter
 }
@@ -1038,6 +1040,7 @@ input CalendarEventOrderByInput {
   id: OrderDirection
   description: OrderDirection
   durationMins: OrderDirection
+  isActive: OrderDirection
   isConfirmationRequired: OrderDirection
   title: OrderDirection
 }
@@ -1045,10 +1048,11 @@ input CalendarEventOrderByInput {
 input CalendarEventUpdateInput {
   bookings: BookingRelateToManyForUpdateInput
   calendar: CalendarRelateToOneForUpdateInput
-  doctor: DoctorRelateToOneForUpdateInput
-  eventType: CalendarEventTypeRelateToOneForUpdateInput
   description: String
+  doctor: DoctorRelateToOneForUpdateInput
   durationMins: Int
+  eventType: CalendarEventTypeRelateToOneForUpdateInput
+  isActive: Boolean
   isConfirmationRequired: Boolean
   title: String
 }
@@ -1067,10 +1071,11 @@ input CalendarEventUpdateArgs {
 input CalendarEventCreateInput {
   bookings: BookingRelateToManyForCreateInput
   calendar: CalendarRelateToOneForCreateInput
-  doctor: DoctorRelateToOneForCreateInput
-  eventType: CalendarEventTypeRelateToOneForCreateInput
   description: String
+  doctor: DoctorRelateToOneForCreateInput
   durationMins: Int
+  eventType: CalendarEventTypeRelateToOneForCreateInput
+  isActive: Boolean
   isConfirmationRequired: Boolean
   title: String
 }

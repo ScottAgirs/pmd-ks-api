@@ -106,12 +106,13 @@ model CalendarEvent {
   bookings               Booking[]          @relation("Booking_event")
   calendar               Calendar?          @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
   calendarId             String?            @map("calendar")
+  description            String             @default("")
   doctor                 Doctor?            @relation("CalendarEvent_doctor", fields: [doctorId], references: [id])
   doctorId               String?            @map("doctor")
+  durationMins           Int
   eventType              CalendarEventType? @relation("CalendarEvent_eventType", fields: [eventTypeId], references: [id])
   eventTypeId            String?            @map("eventType")
-  description            String             @default("")
-  durationMins           Int
+  isActive               Boolean            @default(false)
   isConfirmationRequired Boolean            @default(false)
   title                  String             @default("")
 
