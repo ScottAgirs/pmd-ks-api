@@ -1,3 +1,4 @@
+import { Address } from "./api/address/Address";
 import { AppointmentNote } from "./api/appointment-note/AppointmentNote";
 import { AppointmentVital } from "./api/appointment-vital/AppointmentVital";
 import { Appointment } from "./api/appointment/Appointment";
@@ -37,6 +38,7 @@ import { AdministrativeArea } from "./api/administrative-area/AdministrativeArea
 import { Country } from "./api/country/Country";
 
 export const lists = {
+  Address,
   // Appointment
   Appointment,
   AppointmentNote,
