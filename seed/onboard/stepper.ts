@@ -88,17 +88,15 @@ const PATIENT_ONBOARDING_STEPS = [
 
 export const STEPPERS = [
   { 
-    name: "Patient onboarding",
     description: "",
+    name: "Patient onboarding",
     slug: "patient",
     stepperSteps: PATIENT_ONBOARDING_STEPS,
     title: "Welcome to PocketMD",
-    label: "Welcome to PocketMD",
   },
   { 
-    name: "Doctor Onboarding",
     description: "",
-    label: "Next Generation Health Care",
+    name: "Doctor Onboarding",
     slug: "doctor",
     stepperSteps: DOCTOR_ONBOARDING_STEPS,
     title: "Next Generation Health Care",
