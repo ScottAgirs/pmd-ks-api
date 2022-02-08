@@ -3123,15 +3123,15 @@ input StepperProgCreateInput {
 
 type StepperStep {
   id: ID!
-  title: String
-  label: String
-  description: String
   component: String
-  slug: String
+  description: String
   isFinal: Boolean
+  label: String
   order: Int
+  slug: String
   stepper: Stepper
   stepperStepProg: StepperStepProg
+  title: String
 }
 
 input StepperStepWhereUniqueInput {
@@ -3143,38 +3143,38 @@ input StepperStepWhereInput {
   OR: [StepperStepWhereInput!]
   NOT: [StepperStepWhereInput!]
   id: IDFilter
-  title: StringFilter
-  label: StringFilter
-  description: StringFilter
   component: StringFilter
-  slug: StringFilter
+  description: StringFilter
   isFinal: BooleanFilter
+  label: StringFilter
   order: IntFilter
+  slug: StringFilter
   stepper: StepperWhereInput
   stepperStepProg: StepperStepProgWhereInput
+  title: StringFilter
 }
 
 input StepperStepOrderByInput {
   id: OrderDirection
-  title: OrderDirection
-  label: OrderDirection
-  description: OrderDirection
   component: OrderDirection
-  slug: OrderDirection
+  description: OrderDirection
   isFinal: OrderDirection
+  label: OrderDirection
   order: OrderDirection
+  slug: OrderDirection
+  title: OrderDirection
 }
 
 input StepperStepUpdateInput {
-  title: String
-  label: String
-  description: String
   component: String
-  slug: String
+  description: String
   isFinal: Boolean
+  label: String
   order: Int
+  slug: String
   stepper: StepperRelateToOneForUpdateInput
   stepperStepProg: StepperStepProgRelateToOneForUpdateInput
+  title: String
 }
 
 input StepperStepProgRelateToOneForUpdateInput {
@@ -3189,15 +3189,15 @@ input StepperStepUpdateArgs {
 }
 
 input StepperStepCreateInput {
-  title: String
-  label: String
-  description: String
   component: String
-  slug: String
+  description: String
   isFinal: Boolean
+  label: String
   order: Int
+  slug: String
   stepper: StepperRelateToOneForCreateInput
   stepperStepProg: StepperStepProgRelateToOneForCreateInput
+  title: String
 }
 
 input StepperStepProgRelateToOneForCreateInput {

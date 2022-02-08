@@ -418,17 +418,17 @@ model StepperProg {
 
 model StepperStep {
   id                String           @id @default(cuid())
-  title             String           @default("")
-  label             String           @default("")
-  description       String           @default("")
   component         String           @default("")
-  slug              String           @default("")
+  description       String           @default("")
   isFinal           Boolean          @default(false)
+  label             String           @default("")
   order             Int
+  slug              String           @default("")
   stepper           Stepper?         @relation("StepperStep_stepper", fields: [stepperId], references: [id])
   stepperId         String?          @map("stepper")
   stepperStepProg   StepperStepProg? @relation("StepperStep_stepperStepProg", fields: [stepperStepProgId], references: [id])
   stepperStepProgId String?          @unique @map("stepperStepProg")
+  title             String           @default("")
 
   @@index([stepperId])
 }
