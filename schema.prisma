@@ -11,6 +11,20 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
+model Address {
+  id                 String  @id @default(cuid())
+  country            String  @default("")
+  addressLine1       String  @default("")
+  addressLine2       String  @default("")
+  administrativeArea String  @default("")
+  locality           String  @default("")
+  postalCode         String  @default("")
+  thoroughfare       String  @default("")
+  premise            String  @default("")
+  doctor             Doctor? @relation("Address_doctor", fields: [doctorId], references: [id])
+  doctorId           String? @unique @map("doctor")
+}
+
 model Appointment {
   id                String            @id @default(cuid())
   booking           Booking?          @relation("Appointment_booking", fields: [bookingId], references: [id])
@@ -181,6 +195,7 @@ model Doctor {
   appointments          Appointment?         @relation("Appointment_doctor")
   bookings              Booking[]            @relation("Booking_doctor")
   calendarEvents        CalendarEvent[]      @relation("CalendarEvent_doctor")
+  clinicAddress         Address?             @relation("Address_doctor")
   clinicName            String               @default("")
   clinicPhoneNumber     String               @default("")
   clinicFaxNumber       String               @default("")

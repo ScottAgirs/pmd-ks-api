@@ -8,6 +8,15 @@ type Mutation {
     startsAt: DateTime
   ): StepperStepProg
   completeMyStepProg(stepId: ID!): StepperStepProg
+  createAddress(data: AddressCreateInput!): Address
+  createAddresses(data: [AddressCreateInput!]!): [Address]
+  updateAddress(
+    where: AddressWhereUniqueInput!
+    data: AddressUpdateInput!
+  ): Address
+  updateAddresses(data: [AddressUpdateArgs!]!): [Address]
+  deleteAddress(where: AddressWhereUniqueInput!): Address
+  deleteAddresses(where: [AddressWhereUniqueInput!]!): [Address]
   createAppointment(data: AppointmentCreateInput!): Appointment
   createAppointments(data: [AppointmentCreateInput!]!): [Appointment]
   updateAppointment(
@@ -348,6 +357,141 @@ type Mutation {
   ): UserAuthenticationWithPasswordSuccess!
 }
 
+type Address {
+  id: ID!
+  country: String
+  addressLine1: String
+  addressLine2: String
+  administrativeArea: String
+  locality: String
+  postalCode: String
+  thoroughfare: String
+  premise: String
+  doctor: Doctor
+}
+
+input AddressWhereUniqueInput {
+  id: ID
+}
+
+input AddressWhereInput {
+  AND: [AddressWhereInput!]
+  OR: [AddressWhereInput!]
+  NOT: [AddressWhereInput!]
+  id: IDFilter
+  country: StringFilter
+  addressLine1: StringFilter
+  addressLine2: StringFilter
+  administrativeArea: StringFilter
+  locality: StringFilter
+  postalCode: StringFilter
+  thoroughfare: StringFilter
+  premise: StringFilter
+  doctor: DoctorWhereInput
+}
+
+input IDFilter {
+  equals: ID
+  in: [ID!]
+  notIn: [ID!]
+  lt: ID
+  lte: ID
+  gt: ID
+  gte: ID
+  not: IDFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input AddressOrderByInput {
+  id: OrderDirection
+  country: OrderDirection
+  addressLine1: OrderDirection
+  addressLine2: OrderDirection
+  administrativeArea: OrderDirection
+  locality: OrderDirection
+  postalCode: OrderDirection
+  thoroughfare: OrderDirection
+  premise: OrderDirection
+}
+
+enum OrderDirection {
+  asc
+  desc
+}
+
+input AddressUpdateInput {
+  country: String
+  addressLine1: String
+  addressLine2: String
+  administrativeArea: String
+  locality: String
+  postalCode: String
+  thoroughfare: String
+  premise: String
+  doctor: DoctorRelateToOneForUpdateInput
+}
+
+input DoctorRelateToOneForUpdateInput {
+  create: DoctorCreateInput
+  connect: DoctorWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AddressUpdateArgs {
+  where: AddressWhereUniqueInput!
+  data: AddressUpdateInput!
+}
+
+input AddressCreateInput {
+  country: String
+  addressLine1: String
+  addressLine2: String
+  administrativeArea: String
+  locality: String
+  postalCode: String
+  thoroughfare: String
+  premise: String
+  doctor: DoctorRelateToOneForCreateInput
+}
+
+input DoctorRelateToOneForCreateInput {
+  create: DoctorCreateInput
+  connect: DoctorWhereUniqueInput
+}
+
 type Appointment {
   id: ID!
   booking: Booking
@@ -401,55 +545,10 @@ input AppointmentWhereInput {
   endedAt: DateTimeNullableFilter
 }
 
-input IDFilter {
-  equals: ID
-  in: [ID!]
-  notIn: [ID!]
-  lt: ID
-  lte: ID
-  gt: ID
-  gte: ID
-  not: IDFilter
-}
-
 input AppointmentNoteManyRelationFilter {
   every: AppointmentNoteWhereInput
   some: AppointmentNoteWhereInput
   none: AppointmentNoteWhereInput
-}
-
-input StringFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  mode: QueryMode
-  not: NestedStringFilter
-}
-
-enum QueryMode {
-  default
-  insensitive
-}
-
-input NestedStringFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringFilter
 }
 
 input DateTimeNullableFilter {
@@ -473,11 +572,6 @@ input AppointmentOrderByInput {
   endedAt: OrderDirection
 }
 
-enum OrderDirection {
-  asc
-  desc
-}
-
 input AppointmentUpdateInput {
   booking: BookingRelateToOneForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
@@ -497,12 +591,6 @@ input AppointmentUpdateInput {
 input BookingRelateToOneForUpdateInput {
   create: BookingCreateInput
   connect: BookingWhereUniqueInput
-  disconnect: Boolean
-}
-
-input DoctorRelateToOneForUpdateInput {
-  create: DoctorCreateInput
-  connect: DoctorWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -555,11 +643,6 @@ input AppointmentCreateInput {
 input BookingRelateToOneForCreateInput {
   create: BookingCreateInput
   connect: BookingWhereUniqueInput
-}
-
-input DoctorRelateToOneForCreateInput {
-  create: DoctorCreateInput
-  connect: DoctorWhereUniqueInput
 }
 
 input AppointmentNoteRelateToManyForCreateInput {
@@ -1457,6 +1540,7 @@ type Doctor {
     skip: Int! = 0
   ): [CalendarEvent!]
   calendarEventsCount(where: CalendarEventWhereInput! = {}): Int
+  clinicAddress: Address
   clinicName: String
   clinicPhoneNumber: String
   clinicFaxNumber: String
@@ -1525,6 +1609,7 @@ input DoctorWhereInput {
   appointments: AppointmentWhereInput
   bookings: BookingManyRelationFilter
   calendarEvents: CalendarEventManyRelationFilter
+  clinicAddress: AddressWhereInput
   clinicName: StringFilter
   clinicPhoneNumber: StringFilter
   clinicFaxNumber: StringFilter
@@ -1611,6 +1696,7 @@ input DoctorUpdateInput {
   appointments: AppointmentRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   calendarEvents: CalendarEventRelateToManyForUpdateInput
+  clinicAddress: AddressRelateToOneForUpdateInput
   clinicName: String
   clinicPhoneNumber: String
   clinicFaxNumber: String
@@ -1634,6 +1720,12 @@ input DoctorUpdateInput {
   province: String
   summary: String
   savedByPatients: PatientRelateToManyForUpdateInput
+}
+
+input AddressRelateToOneForUpdateInput {
+  create: AddressCreateInput
+  connect: AddressWhereUniqueInput
+  disconnect: Boolean
 }
 
 input DoctorSpecialtyRelateToOneForUpdateInput {
@@ -1680,6 +1772,7 @@ input DoctorCreateInput {
   appointments: AppointmentRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
   calendarEvents: CalendarEventRelateToManyForCreateInput
+  clinicAddress: AddressRelateToOneForCreateInput
   clinicName: String
   clinicPhoneNumber: String
   clinicFaxNumber: String
@@ -1703,6 +1796,11 @@ input DoctorCreateInput {
   province: String
   summary: String
   savedByPatients: PatientRelateToManyForCreateInput
+}
+
+input AddressRelateToOneForCreateInput {
+  create: AddressCreateInput
+  connect: AddressWhereUniqueInput
 }
 
 input DoctorSpecialtyRelateToOneForCreateInput {
@@ -3324,6 +3422,14 @@ input CreateInitialUserInput {
 }
 
 type Query {
+  addresses(
+    where: AddressWhereInput! = {}
+    orderBy: [AddressOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Address!]
+  address(where: AddressWhereUniqueInput!): Address
+  addressesCount(where: AddressWhereInput! = {}): Int
   appointments(
     where: AppointmentWhereInput! = {}
     orderBy: [AppointmentOrderByInput!]! = []
