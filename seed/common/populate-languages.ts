@@ -18,7 +18,7 @@ export async function populateLanguages(keystone: any) {
       }
     }
 
-    console.log(`✅ Seeded [${SUPPORTED_LANGUAGES.length}] Calendar Event Types 🌳`);
+    console.log(`✅ Seeded [${SUPPORTED_LANGUAGES.length}] Languages 🌳`);
   } catch (error) {
     console.error('populateLanguages :: error', error);
   }
