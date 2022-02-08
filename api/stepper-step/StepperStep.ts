@@ -4,14 +4,14 @@ const { list } = require("@keystone-6/core");
 
 export const StepperStep = list({
   fields: {
-    title: text(),
-    label: text(),
-    description: text(),
     component: text(),
-    slug: text(),
+    description: text(),
     isFinal: checkbox(),
+    label: text(),
     order: integer({ validation: { isRequired: true } }),
+    slug: text(),
     stepper: relationship({ ref: 'Stepper.stepperSteps' }),
     stepperStepProg: relationship({ ref: 'StepperStepProg.stepperStep' }),
+    title: text(),
   },
 })
