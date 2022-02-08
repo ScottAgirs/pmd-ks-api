@@ -1,4 +1,4 @@
-import { text } from "@keystone-6/core/fields";
+import { relationship, text } from "@keystone-6/core/fields";
 
 const { list } = require("@keystone-6/core");
 
@@ -12,5 +12,6 @@ export const Address = list({
     postalCode: text(),
     thoroughfare: text(),
     premise: text(),
+    doctor: relationship({ ref: "Doctor.clinicAddress" }),
   },
 }) 

@@ -16,6 +16,7 @@ export const Doctor = list({
     appointments: relationship({ ref: 'Appointment.doctor' }),
     bookings: relationship({ ref: 'Booking.doctor', many: true }),
     calendarEvents: relationship({ ref: 'CalendarEvent.doctor', many: true }),
+    clinicAddress: relationship({ ref: 'Address.doctor' }),
     clinicName: text(),
     clinicPhoneNumber: text(),
     clinicFaxNumber: text(),
