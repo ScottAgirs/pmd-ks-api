@@ -15,7 +15,7 @@ export async function populateSteppers(keystone: any) {
     console.log(`----------------------------------------`);
 
     for (const stepper of STEPPERS) {
-      console.log(` 👨🏼‍⚕️ Adding [${stepper.name}] Specialty`);
+      console.log(` 👨🏼‍⚕️ Adding [${stepper.name}] Steppers`);
       const { stepperSteps } = stepper;
       const stepperNoSteps:StepperWithoutSteps = stepper;
 
