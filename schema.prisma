@@ -13,14 +13,14 @@ generator client {
 
 model Address {
   id                 String  @id @default(cuid())
-  country            String  @default("")
   addressLine1       String  @default("")
   addressLine2       String  @default("")
   administrativeArea String  @default("")
+  country            String  @default("")
   locality           String  @default("")
   postalCode         String  @default("")
-  thoroughfare       String  @default("")
   premise            String  @default("")
+  thoroughfare       String  @default("")
   doctorClinic       Doctor? @relation("Address_doctorClinic", fields: [doctorClinicId], references: [id])
   doctorClinicId     String? @unique @map("doctorClinic")
 }

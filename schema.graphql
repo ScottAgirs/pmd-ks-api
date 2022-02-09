@@ -359,14 +359,14 @@ type Mutation {
 
 type Address {
   id: ID!
-  country: String
   addressLine1: String
   addressLine2: String
   administrativeArea: String
+  country: String
   locality: String
   postalCode: String
-  thoroughfare: String
   premise: String
+  thoroughfare: String
   doctorClinic: Doctor
 }
 
@@ -379,14 +379,14 @@ input AddressWhereInput {
   OR: [AddressWhereInput!]
   NOT: [AddressWhereInput!]
   id: IDFilter
-  country: StringFilter
   addressLine1: StringFilter
   addressLine2: StringFilter
   administrativeArea: StringFilter
+  country: StringFilter
   locality: StringFilter
   postalCode: StringFilter
-  thoroughfare: StringFilter
   premise: StringFilter
+  thoroughfare: StringFilter
   doctorClinic: DoctorWhereInput
 }
 
@@ -437,14 +437,14 @@ input NestedStringFilter {
 
 input AddressOrderByInput {
   id: OrderDirection
-  country: OrderDirection
   addressLine1: OrderDirection
   addressLine2: OrderDirection
   administrativeArea: OrderDirection
+  country: OrderDirection
   locality: OrderDirection
   postalCode: OrderDirection
-  thoroughfare: OrderDirection
   premise: OrderDirection
+  thoroughfare: OrderDirection
 }
 
 enum OrderDirection {
@@ -453,14 +453,14 @@ enum OrderDirection {
 }
 
 input AddressUpdateInput {
-  country: String
   addressLine1: String
   addressLine2: String
   administrativeArea: String
+  country: String
   locality: String
   postalCode: String
-  thoroughfare: String
   premise: String
+  thoroughfare: String
   doctorClinic: DoctorRelateToOneForUpdateInput
 }
 
@@ -476,14 +476,14 @@ input AddressUpdateArgs {
 }
 
 input AddressCreateInput {
-  country: String
   addressLine1: String
   addressLine2: String
   administrativeArea: String
+  country: String
   locality: String
   postalCode: String
-  thoroughfare: String
   premise: String
+  thoroughfare: String
   doctorClinic: DoctorRelateToOneForCreateInput
 }
 
