@@ -12,6 +12,6 @@ export const Address = list({
     postalCode: text(),
     thoroughfare: text(),
     premise: text(),
-    doctor: relationship({ ref: "Doctor.clinicAddress" }),
+    doctorClinic: relationship({ ref: "Doctor.clinicAddress" }),
   },
 }) 
