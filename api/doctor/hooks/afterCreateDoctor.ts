@@ -1,18 +1,16 @@
-import { KeystoneContext } from "@keystone-6/core/types";
+import { BaseItem, KeystoneContext } from "@keystone-6/core/types";
 
 interface AfterCreateDoctorInput {
   context: KeystoneContext;
-  item: {
-    id: string,
-    userId: string
-  };
+  item: BaseItem;
 }
 // TODO: [TypeScript] Add context interface
-export const afterCreateDoctor = async ({ context, item }:AfterCreateDoctorInput) => {
-  if (!item) throw new Error('Failed to create User Doctor item.')
+export const afterCreateDoctor = async ({ context, item: doctor }: AfterCreateDoctorInput) => {
+  if (!doctor) throw new Error('Failed to create User Doctor doctor.')
+  console.log('afterCreateDoctor :: doctor', doctor);
 
   const userDB = context.db.User;
-  const user = await userDB.findOne({ where: { id: item.userId } });
+  const user = await userDB.findOne({ where: { id: doctor.userId as string } });
 
   const createdCalendar = await context.db.Calendar.createOne({ data: {
     name: `${user.firstName}'s Calendar`,
@@ -36,6 +34,14 @@ export const afterCreateDoctor = async ({ context, item }:AfterCreateDoctorInput
       }
     }
   }})
+  
+  await context.db.Address.createOne({ data: {
+    doctorClinic: {
+      connect: {
+        id: doctor.id
+      }
+    }
+  }})
 
   const eventTypes = await context.db.CalendarEventType.findMany()
 
@@ -47,7 +53,7 @@ export const afterCreateDoctor = async ({ context, item }:AfterCreateDoctorInput
     },
     doctor: {
       connect: {
-        id: item.id
+        id: doctor.id
       }
     },
     durationMins: 15,
