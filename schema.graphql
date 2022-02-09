@@ -367,7 +367,7 @@ type Address {
   postalCode: String
   thoroughfare: String
   premise: String
-  doctor: Doctor
+  doctorClinic: Doctor
 }
 
 input AddressWhereUniqueInput {
@@ -387,7 +387,7 @@ input AddressWhereInput {
   postalCode: StringFilter
   thoroughfare: StringFilter
   premise: StringFilter
-  doctor: DoctorWhereInput
+  doctorClinic: DoctorWhereInput
 }
 
 input IDFilter {
@@ -461,7 +461,7 @@ input AddressUpdateInput {
   postalCode: String
   thoroughfare: String
   premise: String
-  doctor: DoctorRelateToOneForUpdateInput
+  doctorClinic: DoctorRelateToOneForUpdateInput
 }
 
 input DoctorRelateToOneForUpdateInput {
@@ -484,7 +484,7 @@ input AddressCreateInput {
   postalCode: String
   thoroughfare: String
   premise: String
-  doctor: DoctorRelateToOneForCreateInput
+  doctorClinic: DoctorRelateToOneForCreateInput
 }
 
 input DoctorRelateToOneForCreateInput {

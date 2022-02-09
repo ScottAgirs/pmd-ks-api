@@ -21,8 +21,8 @@ model Address {
   postalCode         String  @default("")
   thoroughfare       String  @default("")
   premise            String  @default("")
-  doctor             Doctor? @relation("Address_doctor", fields: [doctorId], references: [id])
-  doctorId           String? @unique @map("doctor")
+  doctorClinic       Doctor? @relation("Address_doctorClinic", fields: [doctorClinicId], references: [id])
+  doctorClinicId     String? @unique @map("doctorClinic")
 }
 
 model Appointment {
@@ -195,7 +195,7 @@ model Doctor {
   appointments          Appointment?         @relation("Appointment_doctor")
   bookings              Booking[]            @relation("Booking_doctor")
   calendarEvents        CalendarEvent[]      @relation("CalendarEvent_doctor")
-  clinicAddress         Address?             @relation("Address_doctor")
+  clinicAddress         Address?             @relation("Address_doctorClinic")
   clinicName            String               @default("")
   clinicPhoneNumber     String               @default("")
   clinicFaxNumber       String               @default("")
