@@ -2505,9 +2505,6 @@ type User {
   postalCode: String
   thoroughfare: String
   premise: String
-  email: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
   calendar: Calendar
   contracts(
     where: ContractWhereInput! = {}
@@ -2518,10 +2515,13 @@ type User {
   contractsCount(where: ContractWhereInput! = {}): Int
   dateOfBirth: DateTime
   doctor: Doctor
+  email: String
   firstName: String
   lastName: String
   middleName: String
   password: PasswordState
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
   prompts(
     where: PromptWhereInput! = {}
     orderBy: [PromptOrderByInput!]! = []
@@ -2570,16 +2570,16 @@ input UserWhereInput {
   postalCode: StringFilter
   thoroughfare: StringFilter
   premise: StringFilter
-  email: StringFilter
-  cellPhoneNumberString: StringFilter
-  homePhoneNumberString: StringFilter
   calendar: CalendarWhereInput
   contracts: ContractManyRelationFilter
   dateOfBirth: DateTimeNullableFilter
   doctor: DoctorWhereInput
+  email: StringFilter
   firstName: StringFilter
   lastName: StringFilter
   middleName: StringFilter
+  cellPhoneNumberString: StringFilter
+  homePhoneNumberString: StringFilter
   prompts: PromptManyRelationFilter
   patient: PatientWhereInput
   sex: StringFilter
@@ -2622,13 +2622,13 @@ input UserOrderByInput {
   postalCode: OrderDirection
   thoroughfare: OrderDirection
   premise: OrderDirection
-  email: OrderDirection
-  cellPhoneNumberString: OrderDirection
-  homePhoneNumberString: OrderDirection
   dateOfBirth: OrderDirection
+  email: OrderDirection
   firstName: OrderDirection
   lastName: OrderDirection
   middleName: OrderDirection
+  cellPhoneNumberString: OrderDirection
+  homePhoneNumberString: OrderDirection
   sex: OrderDirection
   username: OrderDirection
 }
@@ -2642,17 +2642,17 @@ input UserUpdateInput {
   postalCode: String
   thoroughfare: String
   premise: String
-  email: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
   calendar: CalendarRelateToOneForUpdateInput
   contracts: ContractRelateToManyForUpdateInput
   dateOfBirth: DateTime
   doctor: DoctorRelateToOneForUpdateInput
+  email: String
   firstName: String
   lastName: String
   middleName: String
   password: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
   prompts: PromptRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
   sex: String
@@ -2703,17 +2703,17 @@ input UserCreateInput {
   postalCode: String
   thoroughfare: String
   premise: String
-  email: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
   calendar: CalendarRelateToOneForCreateInput
   contracts: ContractRelateToManyForCreateInput
   dateOfBirth: DateTime
   doctor: DoctorRelateToOneForCreateInput
+  email: String
   firstName: String
   lastName: String
   middleName: String
   password: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
   prompts: PromptRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
   sex: String
