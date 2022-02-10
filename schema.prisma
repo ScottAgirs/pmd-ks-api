@@ -26,27 +26,52 @@ model Address {
 }
 
 model Appointment {
-  id                String            @id @default(cuid())
-  booking           Booking?          @relation("Appointment_booking", fields: [bookingId], references: [id])
-  bookingId         String?           @unique @map("booking")
-  doctor            Doctor?           @relation("Appointment_doctor", fields: [doctorId], references: [id])
-  doctorId          String?           @unique @map("doctor")
-  notes             AppointmentNote[] @relation("AppointmentNote_appointment")
-  patient           Patient?          @relation("Appointment_patient", fields: [patientId], references: [id])
-  patientId         String?           @map("patient")
-  prescription      Prescription?     @relation("Appointment_prescription", fields: [prescriptionId], references: [id])
-  prescriptionId    String?           @unique @map("prescription")
-  reason            String            @default("")
-  vitalsData        AppointmentVital? @relation("Appointment_vitalsData", fields: [vitalsDataId], references: [id])
-  vitalsDataId      String?           @unique @map("vitalsData")
+  id                String              @id @default(cuid())
+  billing           AppointmentBilling? @relation("Appointment_billing", fields: [billingId], references: [id])
+  billingId         String?             @unique @map("billing")
+  booking           Booking?            @relation("Appointment_booking", fields: [bookingId], references: [id])
+  bookingId         String?             @unique @map("booking")
+  doctor            Doctor?             @relation("Appointment_doctor", fields: [doctorId], references: [id])
+  doctorId          String?             @unique @map("doctor")
+  isSigned          Boolean             @default(false)
+  isSignedOn        DateTime?           @default(now())
+  notes             AppointmentNote[]   @relation("AppointmentNote_appointment")
+  patient           Patient?            @relation("Appointment_patient", fields: [patientId], references: [id])
+  patientId         String?             @map("patient")
+  prescription      Prescription?       @relation("Appointment_prescription", fields: [prescriptionId], references: [id])
+  prescriptionId    String?             @unique @map("prescription")
+  reason            String              @default("")
+  vitalsData        AppointmentVital?   @relation("Appointment_vitalsData", fields: [vitalsDataId], references: [id])
+  vitalsDataId      String?             @unique @map("vitalsData")
   scheduledStartsAt DateTime?
   scheduledEndsAt   DateTime?
   startedAt         DateTime?
-  summaryString     String            @default("")
-  summary           Json              @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  summaryString     String              @default("")
+  summary           Json                @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   endedAt           DateTime?
 
   @@index([patientId])
+}
+
+model AppointmentBilling {
+  id           String                   @id @default(cuid())
+  appointment  Appointment?             @relation("Appointment_billing")
+  doctor       Doctor?                  @relation("AppointmentBilling_doctor", fields: [doctorId], references: [id])
+  doctorId     String?                  @map("doctor")
+  billingItems AppointmentBillingItem[] @relation("AppointmentBillingItem_billing")
+
+  @@index([doctorId])
+}
+
+model AppointmentBillingItem {
+  id            String              @id @default(cuid())
+  billing       AppointmentBilling? @relation("AppointmentBillingItem_billing", fields: [billingId], references: [id])
+  billingId     String?             @map("billing")
+  feeCode       String              @default("")
+  diagnosisCode String              @default("")
+  units         String              @default("")
+
+  @@index([billingId])
 }
 
 model AppointmentNote {
@@ -193,6 +218,7 @@ model Doctor {
   user                  User?                @relation("Doctor_user", fields: [userId], references: [id])
   userId                String?              @unique @map("user")
   appointments          Appointment?         @relation("Appointment_doctor")
+  billings              AppointmentBilling[] @relation("AppointmentBilling_doctor")
   bookings              Booking[]            @relation("Booking_doctor")
   calendarEvents        CalendarEvent[]      @relation("CalendarEvent_doctor")
   clinicAddress         Address?             @relation("Address_doctorClinic")

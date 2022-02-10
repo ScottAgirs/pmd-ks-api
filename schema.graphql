@@ -26,6 +26,44 @@ type Mutation {
   updateAppointments(data: [AppointmentUpdateArgs!]!): [Appointment]
   deleteAppointment(where: AppointmentWhereUniqueInput!): Appointment
   deleteAppointments(where: [AppointmentWhereUniqueInput!]!): [Appointment]
+  createAppointmentBilling(
+    data: AppointmentBillingCreateInput!
+  ): AppointmentBilling
+  createAppointmentBillings(
+    data: [AppointmentBillingCreateInput!]!
+  ): [AppointmentBilling]
+  updateAppointmentBilling(
+    where: AppointmentBillingWhereUniqueInput!
+    data: AppointmentBillingUpdateInput!
+  ): AppointmentBilling
+  updateAppointmentBillings(
+    data: [AppointmentBillingUpdateArgs!]!
+  ): [AppointmentBilling]
+  deleteAppointmentBilling(
+    where: AppointmentBillingWhereUniqueInput!
+  ): AppointmentBilling
+  deleteAppointmentBillings(
+    where: [AppointmentBillingWhereUniqueInput!]!
+  ): [AppointmentBilling]
+  createAppointmentBillingItem(
+    data: AppointmentBillingItemCreateInput!
+  ): AppointmentBillingItem
+  createAppointmentBillingItems(
+    data: [AppointmentBillingItemCreateInput!]!
+  ): [AppointmentBillingItem]
+  updateAppointmentBillingItem(
+    where: AppointmentBillingItemWhereUniqueInput!
+    data: AppointmentBillingItemUpdateInput!
+  ): AppointmentBillingItem
+  updateAppointmentBillingItems(
+    data: [AppointmentBillingItemUpdateArgs!]!
+  ): [AppointmentBillingItem]
+  deleteAppointmentBillingItem(
+    where: AppointmentBillingItemWhereUniqueInput!
+  ): AppointmentBillingItem
+  deleteAppointmentBillingItems(
+    where: [AppointmentBillingItemWhereUniqueInput!]!
+  ): [AppointmentBillingItem]
   createAppointmentNote(data: AppointmentNoteCreateInput!): AppointmentNote
   createAppointmentNotes(
     data: [AppointmentNoteCreateInput!]!
@@ -494,8 +532,11 @@ input DoctorRelateToOneForCreateInput {
 
 type Appointment {
   id: ID!
+  billing: AppointmentBilling
   booking: Booking
   doctor: Doctor
+  isSigned: Boolean
+  isSignedOn: DateTime
   notes(
     where: AppointmentNoteWhereInput! = {}
     orderBy: [AppointmentNoteOrderByInput!]! = []
@@ -531,8 +572,11 @@ input AppointmentWhereInput {
   OR: [AppointmentWhereInput!]
   NOT: [AppointmentWhereInput!]
   id: IDFilter
+  billing: AppointmentBillingWhereInput
   booking: BookingWhereInput
   doctor: DoctorWhereInput
+  isSigned: BooleanFilter
+  isSignedOn: DateTimeNullableFilter
   notes: AppointmentNoteManyRelationFilter
   patient: PatientWhereInput
   prescription: PrescriptionWhereInput
@@ -545,10 +589,9 @@ input AppointmentWhereInput {
   endedAt: DateTimeNullableFilter
 }
 
-input AppointmentNoteManyRelationFilter {
-  every: AppointmentNoteWhereInput
-  some: AppointmentNoteWhereInput
-  none: AppointmentNoteWhereInput
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input DateTimeNullableFilter {
@@ -562,8 +605,16 @@ input DateTimeNullableFilter {
   not: DateTimeNullableFilter
 }
 
+input AppointmentNoteManyRelationFilter {
+  every: AppointmentNoteWhereInput
+  some: AppointmentNoteWhereInput
+  none: AppointmentNoteWhereInput
+}
+
 input AppointmentOrderByInput {
   id: OrderDirection
+  isSigned: OrderDirection
+  isSignedOn: OrderDirection
   reason: OrderDirection
   scheduledStartsAt: OrderDirection
   scheduledEndsAt: OrderDirection
@@ -573,8 +624,11 @@ input AppointmentOrderByInput {
 }
 
 input AppointmentUpdateInput {
+  billing: AppointmentBillingRelateToOneForUpdateInput
   booking: BookingRelateToOneForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
+  isSigned: Boolean
+  isSignedOn: DateTime
   notes: AppointmentNoteRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
   prescription: PrescriptionRelateToOneForUpdateInput
@@ -586,6 +640,12 @@ input AppointmentUpdateInput {
   summaryString: String
   summary: JSON
   endedAt: DateTime
+}
+
+input AppointmentBillingRelateToOneForUpdateInput {
+  create: AppointmentBillingCreateInput
+  connect: AppointmentBillingWhereUniqueInput
+  disconnect: Boolean
 }
 
 input BookingRelateToOneForUpdateInput {
@@ -625,8 +685,11 @@ input AppointmentUpdateArgs {
 }
 
 input AppointmentCreateInput {
+  billing: AppointmentBillingRelateToOneForCreateInput
   booking: BookingRelateToOneForCreateInput
   doctor: DoctorRelateToOneForCreateInput
+  isSigned: Boolean
+  isSignedOn: DateTime
   notes: AppointmentNoteRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
   prescription: PrescriptionRelateToOneForCreateInput
@@ -638,6 +701,11 @@ input AppointmentCreateInput {
   summaryString: String
   summary: JSON
   endedAt: DateTime
+}
+
+input AppointmentBillingRelateToOneForCreateInput {
+  create: AppointmentBillingCreateInput
+  connect: AppointmentBillingWhereUniqueInput
 }
 
 input BookingRelateToOneForCreateInput {
@@ -663,6 +731,132 @@ input PrescriptionRelateToOneForCreateInput {
 input AppointmentVitalRelateToOneForCreateInput {
   create: AppointmentVitalCreateInput
   connect: AppointmentVitalWhereUniqueInput
+}
+
+type AppointmentBilling {
+  id: ID!
+  appointment: Appointment
+  doctor: Doctor
+  billingItems(
+    where: AppointmentBillingItemWhereInput! = {}
+    orderBy: [AppointmentBillingItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentBillingItem!]
+  billingItemsCount(where: AppointmentBillingItemWhereInput! = {}): Int
+}
+
+input AppointmentBillingWhereUniqueInput {
+  id: ID
+}
+
+input AppointmentBillingWhereInput {
+  AND: [AppointmentBillingWhereInput!]
+  OR: [AppointmentBillingWhereInput!]
+  NOT: [AppointmentBillingWhereInput!]
+  id: IDFilter
+  appointment: AppointmentWhereInput
+  doctor: DoctorWhereInput
+  billingItems: AppointmentBillingItemManyRelationFilter
+}
+
+input AppointmentBillingItemManyRelationFilter {
+  every: AppointmentBillingItemWhereInput
+  some: AppointmentBillingItemWhereInput
+  none: AppointmentBillingItemWhereInput
+}
+
+input AppointmentBillingOrderByInput {
+  id: OrderDirection
+}
+
+input AppointmentBillingUpdateInput {
+  appointment: AppointmentRelateToOneForUpdateInput
+  doctor: DoctorRelateToOneForUpdateInput
+  billingItems: AppointmentBillingItemRelateToManyForUpdateInput
+}
+
+input AppointmentRelateToOneForUpdateInput {
+  create: AppointmentCreateInput
+  connect: AppointmentWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AppointmentBillingItemRelateToManyForUpdateInput {
+  disconnect: [AppointmentBillingItemWhereUniqueInput!]
+  set: [AppointmentBillingItemWhereUniqueInput!]
+  create: [AppointmentBillingItemCreateInput!]
+  connect: [AppointmentBillingItemWhereUniqueInput!]
+}
+
+input AppointmentBillingUpdateArgs {
+  where: AppointmentBillingWhereUniqueInput!
+  data: AppointmentBillingUpdateInput!
+}
+
+input AppointmentBillingCreateInput {
+  appointment: AppointmentRelateToOneForCreateInput
+  doctor: DoctorRelateToOneForCreateInput
+  billingItems: AppointmentBillingItemRelateToManyForCreateInput
+}
+
+input AppointmentRelateToOneForCreateInput {
+  create: AppointmentCreateInput
+  connect: AppointmentWhereUniqueInput
+}
+
+input AppointmentBillingItemRelateToManyForCreateInput {
+  create: [AppointmentBillingItemCreateInput!]
+  connect: [AppointmentBillingItemWhereUniqueInput!]
+}
+
+type AppointmentBillingItem {
+  id: ID!
+  billing: AppointmentBilling
+  feeCode: String
+  diagnosisCode: String
+  units: String
+}
+
+input AppointmentBillingItemWhereUniqueInput {
+  id: ID
+}
+
+input AppointmentBillingItemWhereInput {
+  AND: [AppointmentBillingItemWhereInput!]
+  OR: [AppointmentBillingItemWhereInput!]
+  NOT: [AppointmentBillingItemWhereInput!]
+  id: IDFilter
+  billing: AppointmentBillingWhereInput
+  feeCode: StringFilter
+  diagnosisCode: StringFilter
+  units: StringFilter
+}
+
+input AppointmentBillingItemOrderByInput {
+  id: OrderDirection
+  feeCode: OrderDirection
+  diagnosisCode: OrderDirection
+  units: OrderDirection
+}
+
+input AppointmentBillingItemUpdateInput {
+  billing: AppointmentBillingRelateToOneForUpdateInput
+  feeCode: String
+  diagnosisCode: String
+  units: String
+}
+
+input AppointmentBillingItemUpdateArgs {
+  where: AppointmentBillingItemWhereUniqueInput!
+  data: AppointmentBillingItemUpdateInput!
+}
+
+input AppointmentBillingItemCreateInput {
+  billing: AppointmentBillingRelateToOneForCreateInput
+  feeCode: String
+  diagnosisCode: String
+  units: String
 }
 
 type AppointmentNote {
@@ -705,12 +899,6 @@ input AppointmentNoteUpdateInput {
   title: String
 }
 
-input AppointmentRelateToOneForUpdateInput {
-  create: AppointmentCreateInput
-  connect: AppointmentWhereUniqueInput
-  disconnect: Boolean
-}
-
 input AppointmentNoteUpdateArgs {
   where: AppointmentNoteWhereUniqueInput!
   data: AppointmentNoteUpdateInput!
@@ -722,11 +910,6 @@ input AppointmentNoteCreateInput {
   patient: PatientRelateToOneForCreateInput
   summary: String
   title: String
-}
-
-input AppointmentRelateToOneForCreateInput {
-  create: AppointmentCreateInput
-  connect: AppointmentWhereUniqueInput
 }
 
 type AppointmentVital {
@@ -862,11 +1045,6 @@ input IntFilter {
   gt: Int
   gte: Int
   not: IntFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
 }
 
 input BookingOrderByInput {
@@ -1526,6 +1704,13 @@ type Doctor {
   id: ID!
   user: User
   appointments: Appointment
+  billings(
+    where: AppointmentBillingWhereInput! = {}
+    orderBy: [AppointmentBillingOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentBilling!]
+  billingsCount(where: AppointmentBillingWhereInput! = {}): Int
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -1607,6 +1792,7 @@ input DoctorWhereInput {
   id: IDFilter
   user: UserWhereInput
   appointments: AppointmentWhereInput
+  billings: AppointmentBillingManyRelationFilter
   bookings: BookingManyRelationFilter
   calendarEvents: CalendarEventManyRelationFilter
   clinicAddress: AddressWhereInput
@@ -1633,6 +1819,12 @@ input DoctorWhereInput {
   province: StringFilter
   summary: StringFilter
   savedByPatients: PatientManyRelationFilter
+}
+
+input AppointmentBillingManyRelationFilter {
+  every: AppointmentBillingWhereInput
+  some: AppointmentBillingWhereInput
+  none: AppointmentBillingWhereInput
 }
 
 input DateTimeFilter {
@@ -1694,6 +1886,7 @@ input DoctorOrderByInput {
 input DoctorUpdateInput {
   user: UserRelateToOneForUpdateInput
   appointments: AppointmentRelateToOneForUpdateInput
+  billings: AppointmentBillingRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   calendarEvents: CalendarEventRelateToManyForUpdateInput
   clinicAddress: AddressRelateToOneForUpdateInput
@@ -1720,6 +1913,13 @@ input DoctorUpdateInput {
   province: String
   summary: String
   savedByPatients: PatientRelateToManyForUpdateInput
+}
+
+input AppointmentBillingRelateToManyForUpdateInput {
+  disconnect: [AppointmentBillingWhereUniqueInput!]
+  set: [AppointmentBillingWhereUniqueInput!]
+  create: [AppointmentBillingCreateInput!]
+  connect: [AppointmentBillingWhereUniqueInput!]
 }
 
 input AddressRelateToOneForUpdateInput {
@@ -1770,6 +1970,7 @@ input DoctorUpdateArgs {
 input DoctorCreateInput {
   user: UserRelateToOneForCreateInput
   appointments: AppointmentRelateToOneForCreateInput
+  billings: AppointmentBillingRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
   calendarEvents: CalendarEventRelateToManyForCreateInput
   clinicAddress: AddressRelateToOneForCreateInput
@@ -1796,6 +1997,11 @@ input DoctorCreateInput {
   province: String
   summary: String
   savedByPatients: PatientRelateToManyForCreateInput
+}
+
+input AppointmentBillingRelateToManyForCreateInput {
+  create: [AppointmentBillingCreateInput!]
+  connect: [AppointmentBillingWhereUniqueInput!]
 }
 
 input AddressRelateToOneForCreateInput {
@@ -3438,6 +3644,28 @@ type Query {
   ): [Appointment!]
   appointment(where: AppointmentWhereUniqueInput!): Appointment
   appointmentsCount(where: AppointmentWhereInput! = {}): Int
+  appointmentBillings(
+    where: AppointmentBillingWhereInput! = {}
+    orderBy: [AppointmentBillingOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentBilling!]
+  appointmentBilling(
+    where: AppointmentBillingWhereUniqueInput!
+  ): AppointmentBilling
+  appointmentBillingsCount(where: AppointmentBillingWhereInput! = {}): Int
+  appointmentBillingItems(
+    where: AppointmentBillingItemWhereInput! = {}
+    orderBy: [AppointmentBillingItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentBillingItem!]
+  appointmentBillingItem(
+    where: AppointmentBillingItemWhereUniqueInput!
+  ): AppointmentBillingItem
+  appointmentBillingItemsCount(
+    where: AppointmentBillingItemWhereInput! = {}
+  ): Int
   appointmentNotes(
     where: AppointmentNoteWhereInput! = {}
     orderBy: [AppointmentNoteOrderByInput!]! = []
