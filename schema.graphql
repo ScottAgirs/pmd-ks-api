@@ -744,6 +744,7 @@ type AppointmentBilling {
     skip: Int! = 0
   ): [AppointmentBillingItem!]
   billingItemsCount(where: AppointmentBillingItemWhereInput! = {}): Int
+  status: String
 }
 
 input AppointmentBillingWhereUniqueInput {
@@ -758,6 +759,7 @@ input AppointmentBillingWhereInput {
   appointment: AppointmentWhereInput
   doctor: DoctorWhereInput
   billingItems: AppointmentBillingItemManyRelationFilter
+  status: StringFilter
 }
 
 input AppointmentBillingItemManyRelationFilter {
@@ -768,12 +770,14 @@ input AppointmentBillingItemManyRelationFilter {
 
 input AppointmentBillingOrderByInput {
   id: OrderDirection
+  status: OrderDirection
 }
 
 input AppointmentBillingUpdateInput {
   appointment: AppointmentRelateToOneForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
   billingItems: AppointmentBillingItemRelateToManyForUpdateInput
+  status: String
 }
 
 input AppointmentRelateToOneForUpdateInput {
@@ -798,6 +802,7 @@ input AppointmentBillingCreateInput {
   appointment: AppointmentRelateToOneForCreateInput
   doctor: DoctorRelateToOneForCreateInput
   billingItems: AppointmentBillingItemRelateToManyForCreateInput
+  status: String
 }
 
 input AppointmentRelateToOneForCreateInput {

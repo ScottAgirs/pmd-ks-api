@@ -59,6 +59,7 @@ model AppointmentBilling {
   doctor       Doctor?                  @relation("AppointmentBilling_doctor", fields: [doctorId], references: [id])
   doctorId     String?                  @map("doctor")
   billingItems AppointmentBillingItem[] @relation("AppointmentBillingItem_billing")
+  status       String                   @default("")
 
   @@index([doctorId])
 }
