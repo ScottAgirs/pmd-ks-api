@@ -42,6 +42,15 @@ export const createCalendarEventBooking = async (
       appointment:{
         // TODO: [performance] can be improved by creating in afterCreate hook
         create:{
+          billing: {
+            create: {
+              doctor: {
+                connect: {
+                  id: event.doctorId
+                }
+              },
+            }
+          },
           doctor:{
             connect:{
               id: event.doctorId
