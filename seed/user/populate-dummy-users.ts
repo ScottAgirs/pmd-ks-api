@@ -12,7 +12,7 @@ import { DUMMY_USERS } from "./dummy-users"; // total 7 users
 
 export async function populateDummyUsers(keystone: any) {
   console.log(`-----------------------------------------------`);
-  console.log(`🌱 Seeding with ${DUMMY_USERS.length} Users`);
+  console.log(`🌱 Seeding [${DUMMY_USERS.length}] Users`);
   console.log(`-----------------------------------------------`);
 
   let i = 0;
