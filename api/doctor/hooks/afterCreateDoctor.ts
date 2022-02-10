@@ -22,7 +22,7 @@ export const afterCreateDoctor = async ({ context, item: doctor }: AfterCreateDo
   }})
 
   await context.db.Schedule.createOne({ data: {
-    title: `${user.firstName}'s Default Schedule`,
+    title: `${user.firstName}'s Work Hours`,
     calendar: {
       connect: {
         id: createdCalendar.id
