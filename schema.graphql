@@ -2497,6 +2497,14 @@ input EmergencyContactCreateInput {
 
 type User {
   id: ID!
+  country: String
+  addressLine1: String
+  addressLine2: String
+  administrativeArea: String
+  locality: String
+  postalCode: String
+  thoroughfare: String
+  premise: String
   email: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
@@ -2508,14 +2516,6 @@ type User {
     skip: Int! = 0
   ): [Contract!]
   contractsCount(where: ContractWhereInput! = {}): Int
-  country: String
-  addressLine1: String
-  addressLine2: String
-  administrativeArea: String
-  locality: String
-  postalCode: String
-  thoroughfare: String
-  premise: String
   dateOfBirth: DateTime
   doctor: Doctor
   firstName: String
@@ -2562,11 +2562,6 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
   id: IDFilter
-  email: StringFilter
-  cellPhoneNumberString: StringFilter
-  homePhoneNumberString: StringFilter
-  calendar: CalendarWhereInput
-  contracts: ContractManyRelationFilter
   country: StringFilter
   addressLine1: StringFilter
   addressLine2: StringFilter
@@ -2575,6 +2570,11 @@ input UserWhereInput {
   postalCode: StringFilter
   thoroughfare: StringFilter
   premise: StringFilter
+  email: StringFilter
+  cellPhoneNumberString: StringFilter
+  homePhoneNumberString: StringFilter
+  calendar: CalendarWhereInput
+  contracts: ContractManyRelationFilter
   dateOfBirth: DateTimeNullableFilter
   doctor: DoctorWhereInput
   firstName: StringFilter
@@ -2614,9 +2614,6 @@ input StepperStepProgManyRelationFilter {
 
 input UserOrderByInput {
   id: OrderDirection
-  email: OrderDirection
-  cellPhoneNumberString: OrderDirection
-  homePhoneNumberString: OrderDirection
   country: OrderDirection
   addressLine1: OrderDirection
   addressLine2: OrderDirection
@@ -2625,6 +2622,9 @@ input UserOrderByInput {
   postalCode: OrderDirection
   thoroughfare: OrderDirection
   premise: OrderDirection
+  email: OrderDirection
+  cellPhoneNumberString: OrderDirection
+  homePhoneNumberString: OrderDirection
   dateOfBirth: OrderDirection
   firstName: OrderDirection
   lastName: OrderDirection
@@ -2634,11 +2634,6 @@ input UserOrderByInput {
 }
 
 input UserUpdateInput {
-  email: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
-  calendar: CalendarRelateToOneForUpdateInput
-  contracts: ContractRelateToManyForUpdateInput
   country: String
   addressLine1: String
   addressLine2: String
@@ -2647,6 +2642,11 @@ input UserUpdateInput {
   postalCode: String
   thoroughfare: String
   premise: String
+  email: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  calendar: CalendarRelateToOneForUpdateInput
+  contracts: ContractRelateToManyForUpdateInput
   dateOfBirth: DateTime
   doctor: DoctorRelateToOneForUpdateInput
   firstName: String
@@ -2695,11 +2695,6 @@ input UserUpdateArgs {
 }
 
 input UserCreateInput {
-  email: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
-  calendar: CalendarRelateToOneForCreateInput
-  contracts: ContractRelateToManyForCreateInput
   country: String
   addressLine1: String
   addressLine2: String
@@ -2708,6 +2703,11 @@ input UserCreateInput {
   postalCode: String
   thoroughfare: String
   premise: String
+  email: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  calendar: CalendarRelateToOneForCreateInput
+  contracts: ContractRelateToManyForCreateInput
   dateOfBirth: DateTime
   doctor: DoctorRelateToOneForCreateInput
   firstName: String

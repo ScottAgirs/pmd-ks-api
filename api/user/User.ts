@@ -24,15 +24,6 @@ export const User = list({
     }
   },
   fields: {
-    email: text({
-      validation: { isRequired: true },
-      isIndexed: 'unique',
-      isFilterable: true,
-    }),
-    cellPhoneNumberString: text(),
-    homePhoneNumberString: text(),
-    calendar: relationship({ ref: 'Calendar.user' }),
-    contracts: relationship({ ref: 'Contract.signedBy', many: true }),
     // Address start
     country: text(),
     addressLine1: text(),
@@ -43,12 +34,23 @@ export const User = list({
     thoroughfare: text(),
     premise: text(),
     // Address end
+    calendar: relationship({ ref: 'Calendar.user' }),
+    contracts: relationship({ ref: 'Contract.signedBy', many: true }),
     dateOfBirth: timestamp(),
     doctor: relationship({ ref: 'Doctor.user' }),
+    email: text({
+      validation: { isRequired: true },
+      isIndexed: 'unique',
+      isFilterable: true,
+    }),
     firstName: text({ validation: { isRequired: true } }),
     lastName: text({ validation: { isRequired: true } }),
     middleName: text(),
     password: password({ validation: { isRequired: true } }),
+    // Phone numbers start
+    cellPhoneNumberString: text(),
+    homePhoneNumberString: text(),
+    // Phone numbers end
     prompts: relationship({ ref: 'Prompt.user', many: true }),
     patient: relationship({ ref: 'Patient.user' }),
     sex: text(),

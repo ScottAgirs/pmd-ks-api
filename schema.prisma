@@ -324,11 +324,6 @@ model EmergencyContact {
 
 model User {
   id                    String            @id @default(cuid())
-  email                 String            @unique @default("")
-  cellPhoneNumberString String            @default("")
-  homePhoneNumberString String            @default("")
-  calendar              Calendar?         @relation("Calendar_user")
-  contracts             Contract[]        @relation("Contract_signedBy")
   country               String            @default("")
   addressLine1          String            @default("")
   addressLine2          String            @default("")
@@ -337,6 +332,11 @@ model User {
   postalCode            String            @default("")
   thoroughfare          String            @default("")
   premise               String            @default("")
+  email                 String            @unique @default("")
+  cellPhoneNumberString String            @default("")
+  homePhoneNumberString String            @default("")
+  calendar              Calendar?         @relation("Calendar_user")
+  contracts             Contract[]        @relation("Contract_signedBy")
   dateOfBirth           DateTime?
   doctor                Doctor?           @relation("Doctor_user")
   firstName             String            @default("")
