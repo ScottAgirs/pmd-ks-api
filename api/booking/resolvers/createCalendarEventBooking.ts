@@ -49,6 +49,7 @@ export const createCalendarEventBooking = async (
                   id: event.doctorId
                 }
               },
+              status: "OPEN",
             }
           },
           doctor:{
