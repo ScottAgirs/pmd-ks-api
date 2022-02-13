@@ -32,7 +32,7 @@ model Appointment {
   booking           Booking?            @relation("Appointment_booking", fields: [bookingId], references: [id])
   bookingId         String?             @unique @map("booking")
   doctor            Doctor?             @relation("Appointment_doctor", fields: [doctorId], references: [id])
-  doctorId          String?             @unique @map("doctor")
+  doctorId          String?             @map("doctor")
   isSigned          Boolean             @default(false)
   isSignedOn        DateTime?           @default(now())
   notes             AppointmentNote[]   @relation("AppointmentNote_appointment")
@@ -50,6 +50,7 @@ model Appointment {
   summary           Json                @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   endedAt           DateTime?
 
+  @@index([doctorId])
   @@index([patientId])
 }
 
@@ -220,7 +221,7 @@ model Doctor {
   id                    String               @id @default(cuid())
   user                  User?                @relation("Doctor_user", fields: [userId], references: [id])
   userId                String?              @unique @map("user")
-  appointments          Appointment?         @relation("Appointment_doctor")
+  appointments          Appointment[]        @relation("Appointment_doctor")
   billings              AppointmentBilling[] @relation("AppointmentBilling_doctor")
   bookings              Booking[]            @relation("Booking_doctor")
   calendarEvents        CalendarEvent[]      @relation("CalendarEvent_doctor")
