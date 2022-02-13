@@ -14,6 +14,7 @@ export const Appointment = list({
         kind: "now",
       }
     }),
+    forms: relationship({ ref: 'Form.appointment', many: true }),
     notes: relationship({ ref: 'AppointmentNote.appointment', many: true }),
     patient: relationship({ ref: 'Patient.appointments' }),
     prescription: relationship({ ref: 'Prescription.appointment' }),
