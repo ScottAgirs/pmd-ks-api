@@ -13,7 +13,7 @@ interface AfterCreateItemArgs {
 export const Doctor = list({
   fields: {
     user: relationship({ ref: 'User.doctor' }),
-    appointments: relationship({ ref: 'Appointment.doctor' }),
+    appointments: relationship({ ref: 'Appointment.doctor', many: true  }),
     billings: relationship({ ref: 'AppointmentBilling.doctor', many: true }),
     bookings: relationship({ ref: 'Booking.doctor', many: true }),
     calendarEvents: relationship({ ref: 'CalendarEvent.doctor', many: true }),
