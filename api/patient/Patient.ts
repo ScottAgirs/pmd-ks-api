@@ -8,6 +8,7 @@ export const Patient = list({
     appointmentVitals: relationship({ ref: 'AppointmentVital.patient', many: true }),
     appointmentNotes: relationship({ ref: 'AppointmentNote.patient', many: true }),
     bookings: relationship({ ref: 'Booking.patient', many: true }),
+    forms: relationship({ ref: 'Form.patient', many: true }),
     healthCards: relationship({ ref: 'HealthCard.patient', many: true }),
     isCompleteProfile: checkbox(),
     name: text(),
