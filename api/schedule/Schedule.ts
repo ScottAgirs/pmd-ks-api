@@ -10,7 +10,7 @@ export const Schedule = list({
     description: text(),
     defaultOn: relationship({ ref: 'Calendar.defaultSchedule' }),
     recurringSlots: relationship({ ref: 'RecurringSlot.schedule', many: true }),
-    timezone: text(),
+    tz: text(),
     title: text({ validation: { isRequired: true } }),
   },
 }) 
