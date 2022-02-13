@@ -31,6 +31,7 @@ export const Doctor = list({
     doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors' }),
     doctorSubSpecialties: relationship({ ref: 'DoctorSubSpecialty.doctors', many: true }),
     email: text(),
+    forms: relationship({ ref: 'Form.doctor', many: true }),
     insurancePolicyNumber: text(),
     insuranceProvider: text(),
     isCompleteProfile: checkbox(),
