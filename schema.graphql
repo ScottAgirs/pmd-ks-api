@@ -2223,6 +2223,7 @@ type HealthCard {
   dateOfBirth: DateTime
   expiryDate: DateTime
   insurancePolicyNumber: String
+  insuranceProvider: String
   isVerified: Boolean
   nameOnCard: String
   patient: Patient
@@ -2242,6 +2243,7 @@ input HealthCardWhereInput {
   dateOfBirth: DateTimeFilter
   expiryDate: DateTimeFilter
   insurancePolicyNumber: StringFilter
+  insuranceProvider: StringFilter
   isVerified: BooleanFilter
   nameOnCard: StringFilter
   patient: PatientWhereInput
@@ -2253,6 +2255,7 @@ input HealthCardOrderByInput {
   dateOfBirth: OrderDirection
   expiryDate: OrderDirection
   insurancePolicyNumber: OrderDirection
+  insuranceProvider: OrderDirection
   isVerified: OrderDirection
   nameOnCard: OrderDirection
   versionCode: OrderDirection
@@ -2263,6 +2266,7 @@ input HealthCardUpdateInput {
   dateOfBirth: DateTime
   expiryDate: DateTime
   insurancePolicyNumber: String
+  insuranceProvider: String
   isVerified: Boolean
   nameOnCard: String
   patient: PatientRelateToOneForUpdateInput
@@ -2285,6 +2289,7 @@ input HealthCardCreateInput {
   dateOfBirth: DateTime
   expiryDate: DateTime
   insurancePolicyNumber: String
+  insuranceProvider: String
   isVerified: Boolean
   nameOnCard: String
   patient: PatientRelateToOneForCreateInput

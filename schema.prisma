@@ -281,6 +281,7 @@ model HealthCard {
   dateOfBirth           DateTime
   expiryDate            DateTime
   insurancePolicyNumber String   @default("")
+  insuranceProvider     String   @default("")
   isVerified            Boolean  @default(false)
   nameOnCard            String   @default("")
   patient               Patient? @relation("HealthCard_patient", fields: [patientId], references: [id])
