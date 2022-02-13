@@ -117,6 +117,7 @@ model Booking {
   event        CalendarEvent? @relation("Booking_event", fields: [eventId], references: [id])
   eventId      String?        @map("event")
   isConfirmed  Boolean        @default(false)
+  isPending    Boolean        @default(false)
   name         String         @default("")
   patient      Patient?       @relation("Booking_patient", fields: [patientId], references: [id])
   patientId    String?        @map("patient")
@@ -170,12 +171,13 @@ model CalendarEventType {
 
 model Schedule {
   id             String          @id @default(cuid())
-  title          String          @default("")
-  description    String          @default("")
   calendar       Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
   calendarId     String?         @map("calendar")
+  description    String          @default("")
   defaultOn      Calendar?       @relation("Calendar_defaultSchedule")
   recurringSlots RecurringSlot[] @relation("RecurringSlot_schedule")
+  tz             String          @default("")
+  title          String          @default("")
 
   @@index([calendarId])
 }

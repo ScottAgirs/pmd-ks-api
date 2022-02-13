@@ -1014,6 +1014,7 @@ type Booking {
   durationMins: Int
   event: CalendarEvent
   isConfirmed: Boolean
+  isPending: Boolean
   name: String
   patient: Patient
   startsAt: DateTime
@@ -1035,6 +1036,7 @@ input BookingWhereInput {
   durationMins: IntFilter
   event: CalendarEventWhereInput
   isConfirmed: BooleanFilter
+  isPending: BooleanFilter
   name: StringFilter
   patient: PatientWhereInput
   startsAt: DateTimeNullableFilter
@@ -1056,6 +1058,7 @@ input BookingOrderByInput {
   id: OrderDirection
   durationMins: OrderDirection
   isConfirmed: OrderDirection
+  isPending: OrderDirection
   name: OrderDirection
   startsAt: OrderDirection
   endsAt: OrderDirection
@@ -1068,6 +1071,7 @@ input BookingUpdateInput {
   durationMins: Int
   event: CalendarEventRelateToOneForUpdateInput
   isConfirmed: Boolean
+  isPending: Boolean
   name: String
   patient: PatientRelateToOneForUpdateInput
   startsAt: DateTime
@@ -1098,6 +1102,7 @@ input BookingCreateInput {
   durationMins: Int
   event: CalendarEventRelateToOneForCreateInput
   isConfirmed: Boolean
+  isPending: Boolean
   name: String
   patient: PatientRelateToOneForCreateInput
   startsAt: DateTime
@@ -1404,9 +1409,8 @@ input CalendarEventTypeCreateInput {
 
 type Schedule {
   id: ID!
-  title: String
-  description: String
   calendar: Calendar
+  description: String
   defaultOn: Calendar
   recurringSlots(
     where: RecurringSlotWhereInput! = {}
@@ -1415,6 +1419,8 @@ type Schedule {
     skip: Int! = 0
   ): [RecurringSlot!]
   recurringSlotsCount(where: RecurringSlotWhereInput! = {}): Int
+  tz: String
+  title: String
 }
 
 input ScheduleWhereUniqueInput {
@@ -1426,11 +1432,12 @@ input ScheduleWhereInput {
   OR: [ScheduleWhereInput!]
   NOT: [ScheduleWhereInput!]
   id: IDFilter
-  title: StringFilter
-  description: StringFilter
   calendar: CalendarWhereInput
+  description: StringFilter
   defaultOn: CalendarWhereInput
   recurringSlots: RecurringSlotManyRelationFilter
+  tz: StringFilter
+  title: StringFilter
 }
 
 input RecurringSlotManyRelationFilter {
@@ -1441,16 +1448,18 @@ input RecurringSlotManyRelationFilter {
 
 input ScheduleOrderByInput {
   id: OrderDirection
-  title: OrderDirection
   description: OrderDirection
+  tz: OrderDirection
+  title: OrderDirection
 }
 
 input ScheduleUpdateInput {
-  title: String
-  description: String
   calendar: CalendarRelateToOneForUpdateInput
+  description: String
   defaultOn: CalendarRelateToOneForUpdateInput
   recurringSlots: RecurringSlotRelateToManyForUpdateInput
+  tz: String
+  title: String
 }
 
 input RecurringSlotRelateToManyForUpdateInput {
@@ -1466,11 +1475,12 @@ input ScheduleUpdateArgs {
 }
 
 input ScheduleCreateInput {
-  title: String
-  description: String
   calendar: CalendarRelateToOneForCreateInput
+  description: String
   defaultOn: CalendarRelateToOneForCreateInput
   recurringSlots: RecurringSlotRelateToManyForCreateInput
+  tz: String
+  title: String
 }
 
 input RecurringSlotRelateToManyForCreateInput {
