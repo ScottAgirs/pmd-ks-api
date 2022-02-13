@@ -8,6 +8,7 @@ export const HealthCard = list({
     dateOfBirth: timestamp({ validation: { isRequired: true } }),
     expiryDate: timestamp({ validation: { isRequired: true } }),
     insurancePolicyNumber: text({ validation: { isRequired: true } }),
+    insuranceProvider: text(),
     isVerified: checkbox(),
     nameOnCard: text({ validation: { isRequired: true } }),
     patient: relationship({ ref: 'Patient.healthCards' }),
