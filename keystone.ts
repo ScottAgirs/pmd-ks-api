@@ -28,11 +28,11 @@ export default withAuth(
       url: process.env.DATABASE_URL as string,
       async onConnect(keystone) {
         if (process.argv.includes('--seed-critical')) {
-          populateSteppers(keystone);
           populateCalendarEventTypes(keystone);
-          populateSpecialties(keystone);
-          populateSubSpecialties(keystone);
           populateLanguages(keystone);
+          populateSpecialties(keystone);
+          populateSteppers(keystone);
+          populateSubSpecialties(keystone);
         }
 
         if (process.argv.includes('--seed-languages')) {
