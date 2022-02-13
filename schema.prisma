@@ -35,6 +35,7 @@ model Appointment {
   doctorId          String?             @map("doctor")
   isSigned          Boolean             @default(false)
   isSignedOn        DateTime?           @default(now())
+  forms             Form[]              @relation("Form_appointment")
   notes             AppointmentNote[]   @relation("AppointmentNote_appointment")
   patient           Patient?            @relation("Appointment_patient", fields: [patientId], references: [id])
   patientId         String?             @map("patient")
@@ -129,6 +130,32 @@ model Booking {
   @@index([doctorId])
   @@index([eventId])
   @@index([patientId])
+}
+
+model Form {
+  id            String       @id @default(cuid())
+  appointment   Appointment? @relation("Form_appointment", fields: [appointmentId], references: [id])
+  appointmentId String?      @map("appointment")
+  formType      FormType?    @relation("Form_formType", fields: [formTypeId], references: [id])
+  formTypeId    String?      @map("formType")
+  name          String       @default("")
+  doctor        Doctor?      @relation("Form_doctor", fields: [doctorId], references: [id])
+  doctorId      String?      @map("doctor")
+  patient       Patient?     @relation("Form_patient", fields: [patientId], references: [id])
+  patientId     String?      @map("patient")
+  slug          String       @default("")
+
+  @@index([appointmentId])
+  @@index([formTypeId])
+  @@index([doctorId])
+  @@index([patientId])
+}
+
+model FormType {
+  id    String @id @default(cuid())
+  name  String @default("")
+  forms Form[] @relation("Form_formType")
+  slug  String @default("")
 }
 
 model Calendar {
@@ -238,6 +265,7 @@ model Doctor {
   doctorSpecialtyId     String?              @map("doctorSpecialty")
   doctorSubSpecialties  DoctorSubSpecialty[] @relation("Doctor_doctorSubSpecialties")
   email                 String               @default("")
+  forms                 Form[]               @relation("Form_doctor")
   insurancePolicyNumber String               @default("")
   insuranceProvider     String               @default("")
   isCompleteProfile     Boolean              @default(false)
@@ -362,6 +390,7 @@ model Patient {
   appointmentVitals AppointmentVital[] @relation("AppointmentVital_patient")
   appointmentNotes  AppointmentNote[]  @relation("AppointmentNote_patient")
   bookings          Booking[]          @relation("Booking_patient")
+  forms             Form[]             @relation("Form_patient")
   healthCards       HealthCard[]       @relation("HealthCard_patient")
   isCompleteProfile Boolean            @default(false)
   name              String             @default("")

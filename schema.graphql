@@ -105,6 +105,21 @@ type Mutation {
   updateBookings(data: [BookingUpdateArgs!]!): [Booking]
   deleteBooking(where: BookingWhereUniqueInput!): Booking
   deleteBookings(where: [BookingWhereUniqueInput!]!): [Booking]
+  createForm(data: FormCreateInput!): Form
+  createForms(data: [FormCreateInput!]!): [Form]
+  updateForm(where: FormWhereUniqueInput!, data: FormUpdateInput!): Form
+  updateForms(data: [FormUpdateArgs!]!): [Form]
+  deleteForm(where: FormWhereUniqueInput!): Form
+  deleteForms(where: [FormWhereUniqueInput!]!): [Form]
+  createFormType(data: FormTypeCreateInput!): FormType
+  createFormTypes(data: [FormTypeCreateInput!]!): [FormType]
+  updateFormType(
+    where: FormTypeWhereUniqueInput!
+    data: FormTypeUpdateInput!
+  ): FormType
+  updateFormTypes(data: [FormTypeUpdateArgs!]!): [FormType]
+  deleteFormType(where: FormTypeWhereUniqueInput!): FormType
+  deleteFormTypes(where: [FormTypeWhereUniqueInput!]!): [FormType]
   createCalendar(data: CalendarCreateInput!): Calendar
   createCalendars(data: [CalendarCreateInput!]!): [Calendar]
   updateCalendar(
@@ -537,6 +552,13 @@ type Appointment {
   doctor: Doctor
   isSigned: Boolean
   isSignedOn: DateTime
+  forms(
+    where: FormWhereInput! = {}
+    orderBy: [FormOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Form!]
+  formsCount(where: FormWhereInput! = {}): Int
   notes(
     where: AppointmentNoteWhereInput! = {}
     orderBy: [AppointmentNoteOrderByInput!]! = []
@@ -577,6 +599,7 @@ input AppointmentWhereInput {
   doctor: DoctorWhereInput
   isSigned: BooleanFilter
   isSignedOn: DateTimeNullableFilter
+  forms: FormManyRelationFilter
   notes: AppointmentNoteManyRelationFilter
   patient: PatientWhereInput
   prescription: PrescriptionWhereInput
@@ -605,6 +628,12 @@ input DateTimeNullableFilter {
   not: DateTimeNullableFilter
 }
 
+input FormManyRelationFilter {
+  every: FormWhereInput
+  some: FormWhereInput
+  none: FormWhereInput
+}
+
 input AppointmentNoteManyRelationFilter {
   every: AppointmentNoteWhereInput
   some: AppointmentNoteWhereInput
@@ -629,6 +658,7 @@ input AppointmentUpdateInput {
   doctor: DoctorRelateToOneForUpdateInput
   isSigned: Boolean
   isSignedOn: DateTime
+  forms: FormRelateToManyForUpdateInput
   notes: AppointmentNoteRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
   prescription: PrescriptionRelateToOneForUpdateInput
@@ -652,6 +682,13 @@ input BookingRelateToOneForUpdateInput {
   create: BookingCreateInput
   connect: BookingWhereUniqueInput
   disconnect: Boolean
+}
+
+input FormRelateToManyForUpdateInput {
+  disconnect: [FormWhereUniqueInput!]
+  set: [FormWhereUniqueInput!]
+  create: [FormCreateInput!]
+  connect: [FormWhereUniqueInput!]
 }
 
 input AppointmentNoteRelateToManyForUpdateInput {
@@ -690,6 +727,7 @@ input AppointmentCreateInput {
   doctor: DoctorRelateToOneForCreateInput
   isSigned: Boolean
   isSignedOn: DateTime
+  forms: FormRelateToManyForCreateInput
   notes: AppointmentNoteRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
   prescription: PrescriptionRelateToOneForCreateInput
@@ -711,6 +749,11 @@ input AppointmentBillingRelateToOneForCreateInput {
 input BookingRelateToOneForCreateInput {
   create: BookingCreateInput
   connect: BookingWhereUniqueInput
+}
+
+input FormRelateToManyForCreateInput {
+  create: [FormCreateInput!]
+  connect: [FormWhereUniqueInput!]
 }
 
 input AppointmentNoteRelateToManyForCreateInput {
@@ -1117,6 +1160,123 @@ input CalendarRelateToOneForCreateInput {
 input CalendarEventRelateToOneForCreateInput {
   create: CalendarEventCreateInput
   connect: CalendarEventWhereUniqueInput
+}
+
+type Form {
+  id: ID!
+  appointment: Appointment
+  formType: FormType
+  name: String
+  doctor: Doctor
+  patient: Patient
+  slug: String
+}
+
+input FormWhereUniqueInput {
+  id: ID
+}
+
+input FormWhereInput {
+  AND: [FormWhereInput!]
+  OR: [FormWhereInput!]
+  NOT: [FormWhereInput!]
+  id: IDFilter
+  appointment: AppointmentWhereInput
+  formType: FormTypeWhereInput
+  name: StringFilter
+  doctor: DoctorWhereInput
+  patient: PatientWhereInput
+  slug: StringFilter
+}
+
+input FormOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+}
+
+input FormUpdateInput {
+  appointment: AppointmentRelateToOneForUpdateInput
+  formType: FormTypeRelateToOneForUpdateInput
+  name: String
+  doctor: DoctorRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
+  slug: String
+}
+
+input FormTypeRelateToOneForUpdateInput {
+  create: FormTypeCreateInput
+  connect: FormTypeWhereUniqueInput
+  disconnect: Boolean
+}
+
+input FormUpdateArgs {
+  where: FormWhereUniqueInput!
+  data: FormUpdateInput!
+}
+
+input FormCreateInput {
+  appointment: AppointmentRelateToOneForCreateInput
+  formType: FormTypeRelateToOneForCreateInput
+  name: String
+  doctor: DoctorRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
+  slug: String
+}
+
+input FormTypeRelateToOneForCreateInput {
+  create: FormTypeCreateInput
+  connect: FormTypeWhereUniqueInput
+}
+
+type FormType {
+  id: ID!
+  name: String
+  forms(
+    where: FormWhereInput! = {}
+    orderBy: [FormOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Form!]
+  formsCount(where: FormWhereInput! = {}): Int
+  slug: String
+}
+
+input FormTypeWhereUniqueInput {
+  id: ID
+}
+
+input FormTypeWhereInput {
+  AND: [FormTypeWhereInput!]
+  OR: [FormTypeWhereInput!]
+  NOT: [FormTypeWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  forms: FormManyRelationFilter
+  slug: StringFilter
+}
+
+input FormTypeOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+}
+
+input FormTypeUpdateInput {
+  name: String
+  forms: FormRelateToManyForUpdateInput
+  slug: String
+}
+
+input FormTypeUpdateArgs {
+  where: FormTypeWhereUniqueInput!
+  data: FormTypeUpdateInput!
+}
+
+input FormTypeCreateInput {
+  name: String
+  forms: FormRelateToManyForCreateInput
+  slug: String
 }
 
 type Calendar {
@@ -1764,6 +1924,13 @@ type Doctor {
   ): [DoctorSubSpecialty!]
   doctorSubSpecialtiesCount(where: DoctorSubSpecialtyWhereInput! = {}): Int
   email: String
+  forms(
+    where: FormWhereInput! = {}
+    orderBy: [FormOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Form!]
+  formsCount(where: FormWhereInput! = {}): Int
   insurancePolicyNumber: String
   insuranceProvider: String
   isCompleteProfile: Boolean
@@ -1828,6 +1995,7 @@ input DoctorWhereInput {
   doctorSpecialty: DoctorSpecialtyWhereInput
   doctorSubSpecialties: DoctorSubSpecialtyManyRelationFilter
   email: StringFilter
+  forms: FormManyRelationFilter
   insurancePolicyNumber: StringFilter
   insuranceProvider: StringFilter
   isCompleteProfile: BooleanFilter
@@ -1928,6 +2096,7 @@ input DoctorUpdateInput {
   doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForUpdateInput
   email: String
+  forms: FormRelateToManyForUpdateInput
   insurancePolicyNumber: String
   insuranceProvider: String
   isCompleteProfile: Boolean
@@ -2019,6 +2188,7 @@ input DoctorCreateInput {
   doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForCreateInput
   email: String
+  forms: FormRelateToManyForCreateInput
   insurancePolicyNumber: String
   insuranceProvider: String
   isCompleteProfile: Boolean
@@ -2816,6 +2986,13 @@ type Patient {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
+  forms(
+    where: FormWhereInput! = {}
+    orderBy: [FormOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Form!]
+  formsCount(where: FormWhereInput! = {}): Int
   healthCards(
     where: HealthCardWhereInput! = {}
     orderBy: [HealthCardOrderByInput!]! = []
@@ -2876,6 +3053,7 @@ input PatientWhereInput {
   appointmentVitals: AppointmentVitalManyRelationFilter
   appointmentNotes: AppointmentNoteManyRelationFilter
   bookings: BookingManyRelationFilter
+  forms: FormManyRelationFilter
   healthCards: HealthCardManyRelationFilter
   isCompleteProfile: BooleanFilter
   name: StringFilter
@@ -2916,6 +3094,7 @@ input PatientUpdateInput {
   appointmentVitals: AppointmentVitalRelateToManyForUpdateInput
   appointmentNotes: AppointmentNoteRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
+  forms: FormRelateToManyForUpdateInput
   healthCards: HealthCardRelateToManyForUpdateInput
   isCompleteProfile: Boolean
   name: String
@@ -2958,6 +3137,7 @@ input PatientCreateInput {
   appointmentVitals: AppointmentVitalRelateToManyForCreateInput
   appointmentNotes: AppointmentNoteRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
+  forms: FormRelateToManyForCreateInput
   healthCards: HealthCardRelateToManyForCreateInput
   isCompleteProfile: Boolean
   name: String
@@ -3716,6 +3896,22 @@ type Query {
   ): [Booking!]
   booking(where: BookingWhereUniqueInput!): Booking
   bookingsCount(where: BookingWhereInput! = {}): Int
+  forms(
+    where: FormWhereInput! = {}
+    orderBy: [FormOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Form!]
+  form(where: FormWhereUniqueInput!): Form
+  formsCount(where: FormWhereInput! = {}): Int
+  formTypes(
+    where: FormTypeWhereInput! = {}
+    orderBy: [FormTypeOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [FormType!]
+  formType(where: FormTypeWhereUniqueInput!): FormType
+  formTypesCount(where: FormTypeWhereInput! = {}): Int
   calendars(
     where: CalendarWhereInput! = {}
     orderBy: [CalendarOrderByInput!]! = []
