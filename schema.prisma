@@ -378,6 +378,7 @@ model User {
   homePhoneNumberString String            @default("")
   prompts               Prompt[]          @relation("Prompt_user")
   patient               Patient?          @relation("Patient_user")
+  photoSrcString        String            @default("")
   sex                   String            @default("")
   stepperProgs          StepperProg[]     @relation("StepperProg_user")
   stepperStepProgs      StepperStepProg[] @relation("StepperStepProg_user")

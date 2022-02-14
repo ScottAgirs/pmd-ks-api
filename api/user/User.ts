@@ -53,6 +53,7 @@ export const User = list({
     // Phone numbers end
     prompts: relationship({ ref: 'Prompt.user', many: true }),
     patient: relationship({ ref: 'Patient.user' }),
+    photoSrcString: text(),
     sex: text(),
     stepperProgs: relationship({ ref: 'StepperProg.user', many: true }),
     stepperStepProgs: relationship({ ref: 'StepperStepProg.user', many: true }),

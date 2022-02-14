@@ -2744,6 +2744,7 @@ type User {
   ): [Prompt!]
   promptsCount(where: PromptWhereInput! = {}): Int
   patient: Patient
+  photoSrcString: String
   sex: String
   stepperProgs(
     where: StepperProgWhereInput! = {}
@@ -2796,6 +2797,7 @@ input UserWhereInput {
   homePhoneNumberString: StringFilter
   prompts: PromptManyRelationFilter
   patient: PatientWhereInput
+  photoSrcString: StringFilter
   sex: StringFilter
   stepperProgs: StepperProgManyRelationFilter
   stepperStepProgs: StepperStepProgManyRelationFilter
@@ -2843,6 +2845,7 @@ input UserOrderByInput {
   middleName: OrderDirection
   cellPhoneNumberString: OrderDirection
   homePhoneNumberString: OrderDirection
+  photoSrcString: OrderDirection
   sex: OrderDirection
   username: OrderDirection
 }
@@ -2869,6 +2872,7 @@ input UserUpdateInput {
   homePhoneNumberString: String
   prompts: PromptRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
+  photoSrcString: String
   sex: String
   stepperProgs: StepperProgRelateToManyForUpdateInput
   stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
@@ -2930,6 +2934,7 @@ input UserCreateInput {
   homePhoneNumberString: String
   prompts: PromptRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
+  photoSrcString: String
   sex: String
   stepperProgs: StepperProgRelateToManyForCreateInput
   stepperStepProgs: StepperStepProgRelateToManyForCreateInput
