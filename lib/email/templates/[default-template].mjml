@@ -1,0 +1,30 @@
+<mjml>
+  <mj-head>
+    <mj-title>[ADMIN] New user subscribed to mailing - iJS</mj-title>
+    <mj-font name="Source Sans Pro" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"></mj-font>
+    <mj-font name="Playfair Display" href="https://fonts.googleapis.com/css2?family=Playfair+Display@600"></mj-font>
+    <mj-attributes>
+      <mj-all font-family="Source Sans Pro, Helvetica, sans-serif"></mj-all>
+      <mj-text font-size="16px" color="#616161" line-height="28px"></mj-text>
+      <mj-section padding="0px"></mj-section>
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body background-color="#eee">
+
+    <mj-include path="./email-header.mjml" />
+
+    <mj-include path="./body.mjml" />
+    <mj-section>
+      <mj-column width="80%">
+        <mj-text color="#333644">
+          BODY_CONTENTS
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-include path="./email-socials.mjml" />
+    <mj-include path="./email-footer.mjml" />
+  </mj-body>
+
+</mjml>
