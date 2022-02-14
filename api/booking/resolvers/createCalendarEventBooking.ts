@@ -1,4 +1,5 @@
 import { KeystoneContext } from "@keystone-6/core/types";
+import { sendEmail } from "../../../lib/email/sendEmail";
 
 export interface CreateEventBookingInput {
   eventId: string,
@@ -116,7 +117,18 @@ export const createCalendarEventBooking = async (
       startsAt,
     },
   });
-  console.log('createdBooking', createdBooking);
+
+  if (!createdBooking.id) throw new Error("Failed to create a booking");
+
+  // sendEmail({
+  //   from:{
+  //     email:"test@pocketmd.ca",
+  //     name:"PocketMD Tester"
+  //   },
+  //   to:"scott.agirs@gmail.com",
+  //   subject:"Test suvjest",
+  //   text:"Test text",
+  // })
 
   return createdBooking;
 }
