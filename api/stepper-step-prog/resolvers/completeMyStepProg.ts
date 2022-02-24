@@ -1,5 +1,6 @@
 import { KeystoneContext, OrderByFieldInputArg } from "@keystone-6/core/types";
 import { completePatientOnboarding } from "../../patient/services/completePatientOnboarding";
+import { completeDoctorOnboarding } from "../../doctor/services/completeDoctorOnboarding";
 import { createOrUpdateStepperStepProg, CreateOrUpdateStepperStepProgInput } from "../services/createOrUpdateStepperStepProg";
 
 export const completeMyStepProg = async (root: any, {stepId}:{stepId: string}, context:KeystoneContext) => {
@@ -23,10 +24,11 @@ export const completeMyStepProg = async (root: any, {stepId}:{stepId: string}, c
     const isPatientProgress =
       updatedStepperStepProg.stepper?.slug === 'patient';
 
-    // if (isDoctorProgress)
-      // await strapi.services.doctor.completeDoctorOnboarding(
-      //   updatedStepperStepProg
-      // );
+    if (isDoctorProgress)
+      await completeDoctorOnboarding(
+        context,
+        updatedStepperStepProg
+      );
 
     if (isPatientProgress)
       await completePatientOnboarding(
