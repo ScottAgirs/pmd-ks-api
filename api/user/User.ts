@@ -5,7 +5,6 @@ import {
   relationship,
   password,
   timestamp,
-  select,
 } from '@keystone-6/core/fields';
 import { afterCreateUser } from './afterCreateUser';
 import { beforeCreateUser } from './beforeCreateUser';
