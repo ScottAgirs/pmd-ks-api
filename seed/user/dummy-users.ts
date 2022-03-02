@@ -1,28 +1,87 @@
+var { faker } = require('@faker-js/faker'); // https://fakerjs.dev/
+
 export const DUMMY_USERS = [
-  // Patient Users
   {
-    id: "0-patient",
     doctor: {
-      // 
+      doctorSince: "1998-01-01T00:00:00.000Z",
+      insuranceProvider: "RBC",
+      insurancePolicyNumber: "666",
+      isCompleteProfile: false,
+      isVerified: false,
+      licensedBy: "CPSO",
+      licenseNumber: "777",
     },
     patient: {
       isCompleteProfile: true,
-      healthCards: {
-        dateOfBirth: "",
-        expiryDate: "2027-07-07",
-        insurancePolicyNumber: "666",
-        insuranceProvider: "RBC",
-        isVerified: true,
-        nameOnCard: null,
-        versionCode: "Y3",
-      },
-      emergencyContacts: {
-        email: "dummy@example.co",
-        relation: "Brother",
-        firstName: "John",
-        lastName: "Flow",
-        cellPhoneNumberString: "4163334444",
-      }
+      healthCards: [
+        {
+          dateOfBirth: "1990-12-24T18:12:21.313Z",
+          expiryDate: "2029-12-24T18:12:21.313Z",
+          insurancePolicyNumber: "666",
+          insuranceProvider: "RBC",
+          isVerified: true,
+          nameOnCard: "Scott Agi",
+          versionCode: "Y3",
+        }
+      ],
+      emergencyContacts: [
+        {
+          email: "dummy@example.co",
+          relation: "Local Ranger",
+          firstName: "Chuck",
+          lastName: "Norris",
+          cellPhoneNumberString: "4163334444",
+        }
+      ]
+    },
+    isDummy: false,
+    cellPhoneNumberString: "6136007789",
+    homePhoneNumberString: "",
+    email: "scott.agirs@gmail.com",
+    country: "CA",
+    administrativeArea: "ON",
+    locality: "Toronto",
+    postalCode: "M5J 2H2",
+    dateOfBirth: "1990-12-24T18:12:21.313Z",
+    firstName: "Scott",
+    lastName: "Agirs",
+    password:"123123123",
+    sex: "male",
+    username: "admin",
+  },
+  // Patient Users
+  {
+    doctor: {
+      doctorSince: "",
+      insuranceProvider: "RBC",
+      insurancePolicyNumber: "666",
+      isCompleteProfile: false,
+      isVerified: false,
+      licensedBy: "CPSO",
+      licenseNumber: "777",
+    },
+    patient: {
+      isCompleteProfile: true,
+      healthCards: [
+        {
+          dateOfBirth: "",
+          expiryDate: "",
+          insurancePolicyNumber: "666",
+          insuranceProvider: "RBC",
+          isVerified: true,
+          nameOnCard: "",
+          versionCode: "Y3",
+        }
+      ],
+      emergencyContacts: [
+        {
+          email: "dummy@example.co",
+          relation: "Brother",
+          firstName: "",
+          lastName: "",
+          cellPhoneNumberString: "4163334444",
+        }
+      ]
     },
     isDummy: true,
     cellPhoneNumberString: "",
@@ -33,95 +92,112 @@ export const DUMMY_USERS = [
     locality: "Toronto",
     postalCode: "M5J 2H2",
     dateOfBirth: "2000-12-21T18:12:21.313Z",
-    firstName: "P.A.T.I.E.N.T. [1]",
-    lastName: "L.A.D.O.",
+    firstName: "",
+    lastName: "",
     password:"123123123",
     sex: "male",
-    username:"UserPatient-0"
+    username: "",
   },
   {
-    id: "1-patient",
     doctor: {
-      // 
+      doctorSince: "",
+      insuranceProvider: "RBC",
+      insurancePolicyNumber: "666",
+      isCompleteProfile: false,
+      isVerified: false,
+      licensedBy: "CPSO",
+      licenseNumber: "777",
     },
     patient: {
       isCompleteProfile: true,
-      healthCards: {
-        dateOfBirth: "",
-        expiryDate: "2027-07-07",
-        insurancePolicyNumber: "666",
-        insuranceProvider: "RBC",
-        isVerified: true,
-        nameOnCard: null,
-        versionCode: "Y2",
-      },
-      emergencyContacts: {
-        email: "dummy@example.co",
-        relation: "Brother",
-        firstName: "John",
-        lastName: "Flow",
-        cellPhoneNumberString: "4163334444",
-      }
+      healthCards: [
+        {
+          dateOfBirth: "",
+          expiryDate: "",
+          insurancePolicyNumber: "666",
+          insuranceProvider: "RBC",
+          isVerified: true,
+          nameOnCard: "",
+          versionCode: "Y2",
+        }
+      ],
+      emergencyContacts: [
+        {
+          email: "dummy@example.co",
+          relation: "Brother",
+          firstName: "",
+          lastName: "",
+          cellPhoneNumberString: "4163334444",
+        }
+      ]
     },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
-    email: null,
+    // email: "",
     country: "CA",
     administrativeArea: "ON",
     locality: "Toronto",
     postalCode: "M5J 2H2",
     dateOfBirth: "2000-12-21T18:12:21.313Z",
-    firstName: "P.A.T.I.E.N.T. [0]",
-    lastName: "L.A.D.O.",
+    firstName: "",
+    lastName: "",
     password:"123123123",
     sex: "male",
-    username:"UserPatient-1"
+    username: "",
   },
   {
-    id: "2-patient",
     doctor: {
-      // 
+      doctorSince: "",
+      insuranceProvider: "RBC",
+      insurancePolicyNumber: "666",
+      isCompleteProfile: false,
+      isVerified: false,
+      licensedBy: "CPSO",
+      licenseNumber: "777",
     },
     patient: {
       isCompleteProfile: true,
-      healthCards: {
-        dateOfBirth: "",
-        expiryDate: "2027-07-07",
-        insurancePolicyNumber: "666",
-        insuranceProvider: "RBC",
-        isVerified: true,
-        nameOnCard: null,
-        versionCode: "Y1",
-      },
-      emergencyContacts: {
-        email: "dummy@example.co",
-        relation: "Brother",
-        firstName: "John",
-        lastName: "Flow",
-        cellPhoneNumberString: "4163334444",
-      }
+      healthCards: [
+        {
+          dateOfBirth: "",
+          expiryDate: "",
+          insurancePolicyNumber: "666",
+          insuranceProvider: "RBC",
+          isVerified: true,
+          nameOnCard: "",
+          versionCode: "Y1",
+        }
+      ],
+      emergencyContacts: [
+        {
+          email: "dummy@example.co",
+          relation: "Brother",
+          firstName: "",
+          lastName: "",
+          cellPhoneNumberString: "4163334444",
+        }
+      ]
     },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
-    email: null,
+    // email: "",
     country: "CA",
     administrativeArea: "ON",
     locality: "Toronto",
     postalCode: "M5J 2H2",
     dateOfBirth: "2000-12-21T18:12:21.313Z",
-    firstName: "P.A.T.I.E.N.T. [2]",
-    lastName: "L.A.D.O.",
+    firstName: "",
+    lastName: "",
     password:"123123123",
     sex: "male",
-    username:"UserPatient-2"
+    username: "",
   },
   // Doctor Users
   {
-    id: "0-doctor",
     doctor: {
-      doctorSince: "2004-07-05T00:00:00.000Z",
+      doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "666",
       isCompleteProfile: true,
@@ -131,22 +207,26 @@ export const DUMMY_USERS = [
     },
     patient: {
       isCompleteProfile: true,
-      healthCards: {
-        dateOfBirth: "",
-        expiryDate: "2027-07-07",
-        insurancePolicyNumber: "666",
-        insuranceProvider: "RBC",
-        isVerified: true,
-        nameOnCard: null,
-        versionCode: "Y4",
-      },
-      emergencyContacts: {
-        email: "dummy@example.co",
-        relation: "Brother",
-        firstName: "John",
-        lastName: "Flow",
-        cellPhoneNumberString: "4163334444",
-      }
+      healthCards: [
+        {
+          dateOfBirth: "",
+          expiryDate: "",
+          insurancePolicyNumber: "666",
+          insuranceProvider: "RBC",
+          isVerified: true,
+          nameOnCard: "",
+          versionCode: "Y4",
+        }
+      ],
+      emergencyContacts: [
+        {
+          email: "dummy@example.co",
+          relation: "Brother",
+          firstName: "",
+          lastName: "",
+          cellPhoneNumberString: "4163334444",
+        }
+      ]
     },
     isDummy: true,
     cellPhoneNumberString: "",
@@ -157,16 +237,15 @@ export const DUMMY_USERS = [
     locality: "Toronto",
     postalCode: "M8J 1A1",
     dateOfBirth: "1985-02-03T18:12:21.313Z",
-    firstName: "D.O.C.T.O.R. [0]",
-    lastName: "D.O.C.T.O.R.Y.",
+    firstName: "",
+    lastName: "",
     password:"123123123",
     sex: "male",
-    username:"UserDoctor-0"
+    username: "",
   },
   {
-    id: "1-doctor",
     doctor: {
-      doctorSince: "2005-07-05T00:00:00.000Z",
+      doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "666",
       isCompleteProfile: true,
@@ -176,42 +255,45 @@ export const DUMMY_USERS = [
     },
     patient: {
       isCompleteProfile: true,
-      healthCards: {
-        dateOfBirth: "",
-        expiryDate: "2027-07-07",
-        insurancePolicyNumber: "666",
-        insuranceProvider: "RBC",
-        isVerified: true,
-        nameOnCard: null,
-        versionCode: "Y5",
-      },
-      emergencyContacts: {
-        email: "dummy@example.co",
-        relation: "Brother",
-        firstName: "John",
-        lastName: "Flow",
-        cellPhoneNumberString: "4163334444",
-      }
+      healthCards: [
+        {
+          dateOfBirth: "",
+          expiryDate: "",
+          insurancePolicyNumber: "666",
+          insuranceProvider: "RBC",
+          isVerified: true,
+          nameOnCard: "",
+          versionCode: "Y5",
+        }
+      ],
+      emergencyContacts: [
+        {
+          email: "dummy@example.co",
+          relation: "Brother",
+          firstName: "",
+          lastName: "",
+          cellPhoneNumberString: "4163334444",
+        }
+      ]
     },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
-    email: null,
+    // email: "",
     country: "CA",
     administrativeArea: "ON",
     locality: "Toronto",
     postalCode: "M8J 1A1",
     dateOfBirth: "1985-02-03T18:12:21.313Z",
-    firstName: "D.O.C.T.O.R. [1]",
-    lastName: "D.O.C.T.O.R.Y.",
+    firstName: "",
+    lastName: "",
     password:"123123123",
     sex: "male",
-    username:"UserDoctor-1"
+    username: "",
   },
   {
-    id: "2-doctor",
     doctor: {
-      doctorSince: "2006-07-05T00:00:00.000Z",
+      doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "666",
       isCompleteProfile: true,
@@ -221,42 +303,45 @@ export const DUMMY_USERS = [
     },
     patient: {
       isCompleteProfile: true,
-      healthCards: {
-        dateOfBirth: "",
-        expiryDate: "2027-07-07",
-        insurancePolicyNumber: "666",
-        insuranceProvider: "RBC",
-        isVerified: true,
-        nameOnCard: null,
-        versionCode: "Y6",
-      },
-      emergencyContacts: {
-        email: "dummy@example.co",
-        relation: "Brother",
-        firstName: "John",
-        lastName: "Flow",
-        cellPhoneNumberString: "4163334444",
-      }
+      healthCards: [
+        {
+          dateOfBirth: "",
+          expiryDate: "",
+          insurancePolicyNumber: "666",
+          insuranceProvider: "RBC",
+          isVerified: true,
+          nameOnCard: "",
+          versionCode: "Y6",
+        }
+      ],
+      emergencyContacts: [
+        {
+          email: "dummy@example.co",
+          relation: "Brother",
+          firstName: "",
+          lastName: "",
+          cellPhoneNumberString: "4163334444",
+        }
+      ]
     },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
-    email: null,
+    // email: "",
     country: "CA",
     administrativeArea: "ON",
     locality: "Toronto",
     postalCode: "M8J 1A1",
     dateOfBirth: "1985-02-03T18:12:21.313Z",
-    firstName: "D.O.C.T.O.R. [2]",
-    lastName: "D.O.C.T.O.R.Y.",
+    firstName: "",
+    lastName: "",
     password:"123123123",
     sex: "female",
-    username:"UserDoctor-2"
+    username: "",
   },
   {
-    id: "3-doctor",
     doctor: {
-      doctorSince: "2007-07-05T00:00:00.000Z",
+      doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "666",
       isCompleteProfile: true,
@@ -266,36 +351,79 @@ export const DUMMY_USERS = [
     },
     patient: {
       isCompleteProfile: true,
-      healthCards: {
-        dateOfBirth: "",
-        expiryDate: "2027-07-07",
-        insurancePolicyNumber: "666",
-        insuranceProvider: "RBC",
-        isVerified: true,
-        nameOnCard: null,
-        versionCode: "Y7",
-      },
-      emergencyContacts: {
-        email: "dummy@example.co",
-        relation: "Brother",
-        firstName: "John",
-        lastName: "Flow",
-        cellPhoneNumberString: "4163334444",
-      }
+      healthCards: [
+        {
+          dateOfBirth: "",
+          expiryDate: "",
+          insurancePolicyNumber: "666",
+          insuranceProvider: "RBC",
+          isVerified: true,
+          nameOnCard: "",
+          versionCode: "Y7",
+        }
+      ],
+      emergencyContacts: [
+        {
+          email: "dummy@example.co",
+          relation: "Brother",
+          firstName: "",
+          lastName: "",
+          cellPhoneNumberString: "4163334444",
+        }
+      ]
     },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
-    email: null,
+    email: "",
     country: "CA",
     administrativeArea: "ON",
     locality: "Toronto",
     postalCode: "M8J 1A1",
     dateOfBirth: "1985-02-03T18:12:21.313Z",
-    firstName: "D.O.C.T.O.R. [3]",
-    lastName: "D.O.C.T.O.R.Y.",
+    firstName: "",
+    lastName: "",
     password:"123123123",
     sex: "female",
-    username:"UserDoctor-3"
+    username: "",
   },
 ];
+
+export const enrichedUsers = () => {
+  const enriched = DUMMY_USERS.map(u => {
+
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
+    const fullName = `${firstName} ${lastName}`;
+    
+    const emConFirstName = faker.name.firstName();
+    const emConLastName = faker.name.lastName();
+
+    const dob = faker.date.between('1950-01-01T00:00:00.000Z', '1990-01-01T00:00:00.000Z');
+
+    if (!u.username) {
+      u.email = `${fullName.replace(" ", ".")}@example.lv`;
+      u.firstName = firstName;
+      u.lastName = lastName;
+      u.username = `${firstName}-${lastName}`;
+      u.cellPhoneNumberString = faker.phone.phoneNumber('416######');
+
+      u.dateOfBirth = dob;
+      
+      u.doctor.doctorSince = faker.date.between('1950-01-01T00:00:00.000Z', '2019-01-01T00:00:00.000Z');
+
+      u.patient.healthCards[0].dateOfBirth = dob;
+      u.patient.healthCards[0].expiryDate = faker.date.future();
+      u.patient.healthCards[0].nameOnCard = fullName;
+      
+      u.patient.emergencyContacts[0].firstName = emConFirstName;
+      u.patient.emergencyContacts[0].lastName = emConLastName;
+      u.patient.emergencyContacts[0].relation = "Dummy";
+      u.patient.emergencyContacts[0].cellPhoneNumberString = faker.phone.phoneNumber('613######');
+    }
+
+    return u;
+  })
+
+  return enriched;
+}
