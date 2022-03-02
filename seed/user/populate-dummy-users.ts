@@ -1,136 +1,59 @@
-var faker = require('faker'); // https://fakerjs.dev/
-
-interface DummyUser {
-  id?: string;
-}
-
-import { DUMMY_DOCTORS } from "./dummy-doctors"; // total 4 doctors
-import { HEALTH_CARDS } from "./dummy-patient-health-cards";
-import { DUMMY_PATIENTS } from "./dummy-patients";
-import { DUMMY_USERS } from "./dummy-users"; // total 7 users
-
+import { DUMMY_USERS, enrichedUsers } from "./dummy-users"; // total 7 users
 
 export async function populateDummyUsers(keystone: any) {
   console.log(`-----------------------------------------------`);
   console.log(`🌱 Seeding [${DUMMY_USERS.length}] Users`);
   console.log(`-----------------------------------------------`);
 
+  const dummyUsers = enrichedUsers()
+
   let i = 0;
-  for (const user of DUMMY_USERS) {
-    let userToPopulate = {
-      ...DUMMY_USERS[i],
-    };
-
+  for (const userSeedData of dummyUsers) {
     // https://rawgit.com/Marak/faker.js/master/examples/browser/index.html#helpers
-    const fakerUser = faker.helpers.contextualCard();
 
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
-
-    const email = userToPopulate.email || fakerUser.email;
-
-    userToPopulate.firstName = firstName;
-    userToPopulate.lastName = lastName;
-    userToPopulate.email = email;
-    userToPopulate.dateOfBirth = fakerUser.dob;
-    userToPopulate.cellPhoneNumberString = fakerUser.phone;
-    userToPopulate.username = fakerUser.username;
+    const { doctor: doctorData, patient: patientData, ...user } = userSeedData;
     
-    // @ts-ignore
-    delete userToPopulate.id;
+    
+    const { emergencyContacts, healthCards, ...patient } = patientData;
+    
+    const normalizedDoctorData = doctorData ? { 
+      doctor: { create: doctorData, } 
+    } : {} 
+    console.log('populateDummyUsers :: normalizedDoctorData', normalizedDoctorData);
 
     await keystone.db.User.createOne({
-      data: userToPopulate
+      data: {
+        ...user,
+        ...normalizedDoctorData,
+        patient: {
+          create: {
+            ...patient,
+            healthCards: {
+              create: {
+                ...healthCards[0]
+              }
+            },
+            emergencyContacts: {
+              create: {
+                ...emergencyContacts[0]
+              }
+            }
+          }
+        },
+      }
     })
-      .catch((err) => console.log(`res :: err - FAILED TO CREATE A USER ${DUMMY_USERS[i].id}`, err))
+      .catch((err: any) => console.log(`res :: err - FAILED TO CREATE A USER ${DUMMY_USERS[i].username}`, err))
+      // @ts-ignore
       .then(async createdUser => {
       console.log('createdUser :: ', createdUser);
         if (!createdUser) {
-          throw new Error(`Failed to create a user ${DUMMY_USERS[i].id}`);
-        }
-        // const hasHealthCardForIndex = Boolean(HEALTH_CARDS[i]);
-        // const healthCardForCreatedUserData = hasHealthCardForIndex ? HEALTH_CARDS[i] : null;
-
-        // let healthCardForCreatedUser
-        // if (hasHealthCardForIndex) {
-        //   console.log("WILL CREATE HEALTH CARD FOR USER");
-        //   healthCardForCreatedUser = await keystone.db.HealthCard.createOne({
-        //     data: {
-        //       ...healthCardForCreatedUserData,
-        //       // patient: { connect: { id: res.id } }
-        //     }
-        //   });
-        //   console.log('DUMMY_USERS.forEach :: healthCardForCreatedUser', healthCardForCreatedUser);
-          
-        //   if (!healthCardForCreatedUser) {
-        //     console.log(`healthCardForCreatedUser :: err - FAILED TO CREATE A HEALTH CARD FOR USER ${DUMMY_USERS[i].email}`);
-        //   }
-        // }
-
-        const hasPatientForIndex = Boolean(DUMMY_DOCTORS[i]);
-        const patientForCreatedUser = hasPatientForIndex ? DUMMY_PATIENTS[i] : null;
-        if (hasPatientForIndex) {
-          console.log("WILL CREATE PATIENT FOR USER");
-          await keystone.db.Patient.createOne({
-            data: {
-              ...patientForCreatedUser,
-              user: { connect: { id: createdUser.id } }
-            }
-          }).then(async createdPatient => {
-            if (!createdPatient) {
-              console.log(`createdPatient :: err - FAILED TO CREATE A PATIENT FOR USER ${DUMMY_USERS[i].email}`);
-              return null;
-            }
-            const hasDoctorForIndex = Boolean(DUMMY_DOCTORS[i]);
-            const doctorForCreatedUserData = hasDoctorForIndex ? DUMMY_DOCTORS[i] : null;
-            
-            if (hasDoctorForIndex) {
-              console.log("WILL CREATE DOC FOR USER");
-              const createdDoctor = await keystone.db.Doctor.createOne({
-                data: {
-                  ...doctorForCreatedUserData,
-                  user: { connect: { id: createdUser.id } }
-                }
-              });
-              
-              if (!createdDoctor) {
-                throw new Error(`createdDoctor :: err - FAILED TO CREATE A DOC FOR USER ${DUMMY_USERS[i].email}`);
-              }
-
-              console.log('DUMMY_USERS.forEach :: createdDoctor', createdDoctor);
-            }
-          });
+          throw new Error(`Failed to create a user ${DUMMY_USERS[i].username}`);
         }
       });
       
-    console.log(`🦶🏼 ✅ Added [${userToPopulate.id}]: ${firstName} ${lastName}]`);
+    console.log(`🦶🏼 ✅ Seeded user [${userSeedData.username}]`);
     i = i + 1;
   }
 
-  console.log(`✅ [Seeded] ${DUMMY_USERS.length} (DUMMY) Users`);
-  console.log(`👋 Please start the process with \`yarn dev\` or \`npm run dev\``);
-  // process.exit();
+  console.log(`✅ Seeded [${DUMMY_USERS.length}] (🤪) Users 🌳`);
 }
-
-
-
-
-  // NOTE: For some reason the .forEach() doesn't work.
-  // DUMMY_USERS.forEach(async (user: any, index: number) => {
-  //   console.log('DUMMY_USERS.forEach :: index', index);
-  //   console.log(` 👨🏼‍⚕️ Adding [${user.email}] User`);
-  //   const res  = await keystone.db.User.createOne({
-  //     data: DUMMY_USERS[index]
-  //   }).catch(err => console.log("res :: err", err));
-
-  //   const hasDoctorForIndex = Boolean(DUMMY_DOCTORS[index]);
-  //   const doctorForCreatedUser = hasDoctorForIndex ? DUMMY_DOCTORS[index] : null;
-
-  //   if (hasDoctorForIndex) {
-  //     console.log("WILL CREATE DOC FOR USER");
-  //     const createdDoctor = await keystone.db.Doctor.createOne({
-  //       data: doctorForCreatedUser
-  //     });
-  //     console.log('DUMMY_USERS.forEach :: createdDoctor', createdDoctor);
-  //   }
-  // })
