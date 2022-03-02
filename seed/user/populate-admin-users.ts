@@ -9,19 +9,14 @@ export async function populateAdminUsers(keystone: any) {
   for (const userSeedData of ADMIN_USERS) {
     // https://rawgit.com/Marak/faker.js/master/examples/browser/index.html#helpers
 
-    const { doctor: doctorData, patient: patientData, ...user } = userSeedData;
+    const { patient: patientData, ...user } = userSeedData;
     
     
     const { emergencyContacts, healthCards, ...patient } = patientData;
     
-    const normalizedDoctorData = doctorData ? { 
-      doctor: { create: doctorData, } 
-    } : {} 
-
     await keystone.db.User.createOne({
       data: {
         ...user,
-        ...normalizedDoctorData,
         patient: {
           create: {
             ...patient,
