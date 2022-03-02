@@ -9,7 +9,7 @@ export const EmergencyContact = list({
     firstName: text({ validation: { isRequired: true } }),
     lastName: text({ validation: { isRequired: true } }),
     cellPhoneNumberString: text({ validation: { isRequired: true } }),
-    homePhoneNumberString: text({ validation: { isRequired: true } }),
+    homePhoneNumberString: text(),
     patient: relationship({ ref: 'Patient.emergencyContacts' }),
   },
 }) 
