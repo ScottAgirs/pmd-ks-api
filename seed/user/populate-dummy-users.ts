@@ -17,7 +17,6 @@ export async function populateDummyUsers(keystone: any) {
 
   let i = 0;
   for (const user of DUMMY_USERS) {
-    console.log('before :: i', i);
     let userToPopulate = {
       ...DUMMY_USERS[i],
     };
@@ -28,11 +27,7 @@ export async function populateDummyUsers(keystone: any) {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 
-    const email = userToPopulate.id.includes("0-doctor") 
-                    ? "doc-0@example.com" 
-                    : userToPopulate.id.includes("0-patient") 
-                    ? "pat-0@example.com"
-                    : fakerUser.email;
+    const email = userToPopulate.email || fakerUser.email;
 
     userToPopulate.firstName = firstName;
     userToPopulate.lastName = lastName;
@@ -43,7 +38,6 @@ export async function populateDummyUsers(keystone: any) {
     
     // @ts-ignore
     delete userToPopulate.id;
-    console.log('populateDummyUsers :: userToPopulate', userToPopulate);
 
     await keystone.db.User.createOne({
       data: userToPopulate
@@ -53,7 +47,6 @@ export async function populateDummyUsers(keystone: any) {
       console.log('createdUser :: ', createdUser);
         if (!createdUser) {
           throw new Error(`Failed to create a user ${DUMMY_USERS[i].id}`);
-          return null
         }
         // const hasHealthCardForIndex = Boolean(HEALTH_CARDS[i]);
         // const healthCardForCreatedUserData = hasHealthCardForIndex ? HEALTH_CARDS[i] : null;
