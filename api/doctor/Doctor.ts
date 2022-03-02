@@ -1,6 +1,6 @@
 import { checkbox, relationship, text, timestamp } from "@keystone-6/core/fields";
 import { afterCreateDoctor } from "./hooks/afterCreateDoctor";
-import { KeystoneContext, OrderByFieldInputArg } from "@keystone-6/core/types";
+import { KeystoneContext } from "@keystone-6/core/types";
 
 const { list } = require("@keystone-6/core");
 
