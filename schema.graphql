@@ -2766,6 +2766,7 @@ type PasswordState {
 input UserWhereUniqueInput {
   id: ID
   email: String
+  username: String
 }
 
 input UserWhereInput {
