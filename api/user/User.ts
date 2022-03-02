@@ -5,6 +5,7 @@ import {
   relationship,
   password,
   timestamp,
+  checkbox,
 } from '@keystone-6/core/fields';
 import { afterCreateUser } from './afterCreateUser';
 import { beforeCreateUser } from './beforeCreateUser';
@@ -45,6 +46,7 @@ export const User = list({
     firstName: text({ validation: { isRequired: true } }),
     lastName: text({ validation: { isRequired: true } }),
     middleName: text(),
+    isDummy: checkbox(),
     password: password({ validation: { isRequired: true } }),
     // Phone numbers start
     cellPhoneNumberString: text(),
