@@ -2,15 +2,6 @@ var { faker } = require('@faker-js/faker'); // https://fakerjs.dev/
 
 export const ADMIN_USERS = [
   {
-    doctor: {
-      doctorSince: "1998-01-01T00:00:00.000Z",
-      insuranceProvider: "RBC",
-      insurancePolicyNumber: "666",
-      isCompleteProfile: false,
-      isVerified: false,
-      licensedBy: "CPSO",
-      licenseNumber: "777",
-    },
     patient: {
       isCompleteProfile: true,
       healthCards: [
@@ -176,6 +167,12 @@ export const DUMMY_USERS = [
   // Doctor Users
   {
     doctor: {
+      doctorSpecialty: {
+        value: "anesthesiology"
+      },
+      doctorSubSpecialties: [
+        { value: "cardiology" }
+      ],
       doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "666",
@@ -224,6 +221,12 @@ export const DUMMY_USERS = [
   },
   {
     doctor: {
+      doctorSpecialty: {
+        value: "anesthesiology"
+      },
+      doctorSubSpecialties: [
+        { value: "cardiology" }
+      ],
       doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "666",
@@ -272,6 +275,12 @@ export const DUMMY_USERS = [
   },
   {
     doctor: {
+      doctorSpecialty: {
+        value: "anesthesiology"
+      },
+      doctorSubSpecialties: [
+        { value: "cardiology" }
+      ],
       doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "666",
@@ -320,6 +329,12 @@ export const DUMMY_USERS = [
   },
   {
     doctor: {
+      doctorSpecialty: {
+        value: "anesthesiology"
+      },
+      doctorSubSpecialties: [
+        { value: "cardiology" }
+      ],
       doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "666",
