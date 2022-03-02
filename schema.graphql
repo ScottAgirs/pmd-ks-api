@@ -1057,7 +1057,6 @@ type Booking {
   durationMins: Int
   event: CalendarEvent
   isConfirmed: Boolean
-  isPending: Boolean
   name: String
   patient: Patient
   startsAt: DateTime
@@ -1079,7 +1078,6 @@ input BookingWhereInput {
   durationMins: IntFilter
   event: CalendarEventWhereInput
   isConfirmed: BooleanFilter
-  isPending: BooleanFilter
   name: StringFilter
   patient: PatientWhereInput
   startsAt: DateTimeNullableFilter
@@ -1101,7 +1099,6 @@ input BookingOrderByInput {
   id: OrderDirection
   durationMins: OrderDirection
   isConfirmed: OrderDirection
-  isPending: OrderDirection
   name: OrderDirection
   startsAt: OrderDirection
   endsAt: OrderDirection
@@ -1114,7 +1111,6 @@ input BookingUpdateInput {
   durationMins: Int
   event: CalendarEventRelateToOneForUpdateInput
   isConfirmed: Boolean
-  isPending: Boolean
   name: String
   patient: PatientRelateToOneForUpdateInput
   startsAt: DateTime
@@ -1145,7 +1141,6 @@ input BookingCreateInput {
   durationMins: Int
   event: CalendarEventRelateToOneForCreateInput
   isConfirmed: Boolean
-  isPending: Boolean
   name: String
   patient: PatientRelateToOneForCreateInput
   startsAt: DateTime
