@@ -58,7 +58,7 @@ export const User = list({
     sex: text(),
     stepperProgs: relationship({ ref: 'StepperProg.user', many: true }),
     stepperStepProgs: relationship({ ref: 'StepperStepProg.user', many: true }),
-    username: text({ validation: { isRequired: true } }),
+    username: text({ isIndexed: 'unique', validation: { isRequired: true} }),
   },
   ui: {
     labelField: 'email',
