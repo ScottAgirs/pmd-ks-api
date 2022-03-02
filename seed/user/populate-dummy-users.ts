@@ -19,7 +19,6 @@ export async function populateDummyUsers(keystone: any) {
     const normalizedDoctorData = doctorData ? { 
       doctor: { create: doctorData, } 
     } : {} 
-    console.log('populateDummyUsers :: normalizedDoctorData', normalizedDoctorData);
 
     await keystone.db.User.createOne({
       data: {
