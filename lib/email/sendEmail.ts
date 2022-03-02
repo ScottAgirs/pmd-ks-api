@@ -12,7 +12,7 @@ interface FromEmailParams {
   email: string
   name: string
 }
-
+ 
 interface SendEmailOptions {
   from?: FromEmailParams
   subject: string
@@ -22,8 +22,8 @@ interface SendEmailOptions {
   sendToUser?: UserForEmail
 }
 
+// TODO: Add logic to send email to Ethereal.mail if in DEV mode and send via Sengdgrid.com if in PROD or PREVIEW mode
 export const sendEmail = async ({ from, sendToUser, subject, text, to, html }: SendEmailOptions) => {
-  console.log("GOT IN");
   const sendRequest = {
     to: to || sendToUser?.email,
     from: from || 'PocketMd <no-reply@pocketmd.ca>',
@@ -32,8 +32,6 @@ export const sendEmail = async ({ from, sendToUser, subject, text, to, html }: S
     html,
   };
   
-  console.log("GOT IN 2");
-  console.log('sendEmail :: process?.env?.MAIL_USER?', process?.env?.MAIL_USER);
   try {
     console.log("GOT IN 3");
     const sentEmail = await transporter.sendMail(sendRequest)
