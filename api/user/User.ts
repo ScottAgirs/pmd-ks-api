@@ -34,7 +34,6 @@ export const User = list({
     thoroughfare: text(),
     premise: text(),
     // Address end
-    calendar: relationship({ ref: 'Calendar.user' }),
     contracts: relationship({ ref: 'Contract.signedBy', many: true }),
     dateOfBirth: timestamp(),
     doctor: relationship({ ref: 'Doctor.user' }),
