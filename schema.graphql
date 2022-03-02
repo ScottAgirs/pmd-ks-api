@@ -2321,6 +2321,7 @@ type DoctorSpecialty {
 
 input DoctorSpecialtyWhereUniqueInput {
   id: ID
+  value: String
 }
 
 input DoctorSpecialtyWhereInput {

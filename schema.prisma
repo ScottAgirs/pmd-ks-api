@@ -291,7 +291,7 @@ model Language {
 model DoctorSpecialty {
   id      String   @id @default(cuid())
   label   String   @default("")
-  value   String   @default("")
+  value   String   @unique @default("")
   doctors Doctor[] @relation("Doctor_doctorSpecialty")
 }
 
