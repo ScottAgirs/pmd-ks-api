@@ -33,13 +33,15 @@ export const afterCreateUser = async ({ context, item }) => {
     },
   }})
 
-  sendEmail({
-    from:{
-      email:"test@pocketmd.ca",
-      name:"PocketMD Tester"
-    },
-    to: item.email,
-    subject:"Welcome to PocketMD",
-    text:"This is your registration confirmation with PocketMD.",
-  })
+  if (!item.isDummy) {
+    sendEmail({
+      from:{
+        email:"test@pocketmd.ca",
+        name:"PocketMD Tester"
+      },
+      to: item.email,
+      subject:"Welcome to PocketMD",
+      text:"This is your registration confirmation with PocketMD.",
+    })
+  }
 }
