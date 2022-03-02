@@ -1,3 +1,5 @@
+import { sendEmail } from "../../lib/email/sendEmail"
+
 // TODO: [TypeScript] Add context interface
 export const afterCreateUser = async ({ context, item }) => {
   if (!item) throw new Error('Failed to create User item.')
@@ -31,4 +33,13 @@ export const afterCreateUser = async ({ context, item }) => {
     },
   }})
 
+  sendEmail({
+    from:{
+      email:"test@pocketmd.ca",
+      name:"PocketMD Tester"
+    },
+    to: item.email,
+    subject:"Welcome to PocketMD",
+    text:"This is your registration confirmation with PocketMD.",
+  })
 }
