@@ -1,6 +1,6 @@
 var { faker } = require('@faker-js/faker'); // https://fakerjs.dev/
 
-export const DUMMY_USERS = [
+export const ADMIN_USERS = [
   {
     doctor: {
       doctorSince: "1998-01-01T00:00:00.000Z",
@@ -48,7 +48,10 @@ export const DUMMY_USERS = [
     password:"123123123",
     sex: "male",
     username: "admin",
-  },
+  }
+]
+
+export const DUMMY_USERS = [
   // Patient Users
   {
     doctor: {
