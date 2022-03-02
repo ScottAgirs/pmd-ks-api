@@ -54,15 +54,7 @@ export const ADMIN_USERS = [
 export const DUMMY_USERS = [
   // Patient Users
   {
-    doctor: {
-      doctorSince: "",
-      insuranceProvider: "RBC",
-      insurancePolicyNumber: "666",
-      isCompleteProfile: false,
-      isVerified: false,
-      licensedBy: "CPSO",
-      licenseNumber: "777",
-    },
+    // doctor: null,
     patient: {
       isCompleteProfile: true,
       healthCards: [
@@ -102,15 +94,7 @@ export const DUMMY_USERS = [
     username: "",
   },
   {
-    doctor: {
-      doctorSince: "",
-      insuranceProvider: "RBC",
-      insurancePolicyNumber: "666",
-      isCompleteProfile: false,
-      isVerified: false,
-      licensedBy: "CPSO",
-      licenseNumber: "777",
-    },
+    // doctor: null,
     patient: {
       isCompleteProfile: true,
       healthCards: [
@@ -150,15 +134,7 @@ export const DUMMY_USERS = [
     username: "",
   },
   {
-    doctor: {
-      doctorSince: "",
-      insuranceProvider: "RBC",
-      insurancePolicyNumber: "666",
-      isCompleteProfile: false,
-      isVerified: false,
-      licensedBy: "CPSO",
-      licenseNumber: "777",
-    },
+    // doctor: null,
     patient: {
       isCompleteProfile: true,
       healthCards: [
@@ -413,8 +389,10 @@ export const enrichedUsers = () => {
 
       u.dateOfBirth = dob;
       
-      u.doctor.doctorSince = faker.date.between('1950-01-01T00:00:00.000Z', '2019-01-01T00:00:00.000Z');
-
+      if (u.doctor) {
+        u.doctor.doctorSince = faker.date.between('1950-01-01T00:00:00.000Z', '2019-01-01T00:00:00.000Z');
+      }
+        
       u.patient.healthCards[0].dateOfBirth = dob;
       u.patient.healthCards[0].expiryDate = faker.date.future();
       u.patient.healthCards[0].nameOnCard = fullName;
