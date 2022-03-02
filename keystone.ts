@@ -10,9 +10,10 @@ import { withAuth, session } from './auth';
 import { populateSpecialties } from './seed/doctor/populate-specialties';
 import { populateSubSpecialties } from './seed/doctor/populate-sub-specialties';
 import { populateCalendarEventTypes } from './seed/doctor/populate-calendar-event-types';
+import { populateContracts } from './seed/contracts/populate-contracts';
 import { populateDummyUsers } from './seed/user/populate-dummy-users';
-import { populateSteppers } from './seed/onboard/populate-stepper';
 import { populateLanguages } from './seed/common/populate-languages';
+import { populateSteppers } from './seed/onboard/populate-stepper';
 
 const FRONTEND_URL:string = process.env.FRONTEND_URL as string;
 export default withAuth(
@@ -29,6 +30,7 @@ export default withAuth(
       async onConnect(keystone) {
         if (process.argv.includes('--seed-critical')) {
           populateCalendarEventTypes(keystone);
+          populateContracts(keystone);
           populateLanguages(keystone);
           populateSpecialties(keystone);
           populateSteppers(keystone);
