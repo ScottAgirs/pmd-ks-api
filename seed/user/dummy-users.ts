@@ -5,6 +5,25 @@ export const DUMMY_USERS = [
     doctor: {
       // 
     },
+    patient: {
+      isCompleteProfile: true,
+      healthCards: {
+        dateOfBirth: "",
+        expiryDate: "2027-07-07",
+        insurancePolicyNumber: "666",
+        insuranceProvider: "RBC",
+        isVerified: true,
+        nameOnCard: null,
+        versionCode: "Y3",
+      },
+      emergencyContacts: {
+        email: "dummy@example.co",
+        relation: "Brother",
+        firstName: "John",
+        lastName: "Flow",
+        cellPhoneNumberString: "4163334444",
+      }
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -25,6 +44,25 @@ export const DUMMY_USERS = [
     doctor: {
       // 
     },
+    patient: {
+      isCompleteProfile: true,
+      healthCards: {
+        dateOfBirth: "",
+        expiryDate: "2027-07-07",
+        insurancePolicyNumber: "666",
+        insuranceProvider: "RBC",
+        isVerified: true,
+        nameOnCard: null,
+        versionCode: "Y2",
+      },
+      emergencyContacts: {
+        email: "dummy@example.co",
+        relation: "Brother",
+        firstName: "John",
+        lastName: "Flow",
+        cellPhoneNumberString: "4163334444",
+      }
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -44,6 +82,25 @@ export const DUMMY_USERS = [
     id: "2-patient",
     doctor: {
       // 
+    },
+    patient: {
+      isCompleteProfile: true,
+      healthCards: {
+        dateOfBirth: "",
+        expiryDate: "2027-07-07",
+        insurancePolicyNumber: "666",
+        insuranceProvider: "RBC",
+        isVerified: true,
+        nameOnCard: null,
+        versionCode: "Y1",
+      },
+      emergencyContacts: {
+        email: "dummy@example.co",
+        relation: "Brother",
+        firstName: "John",
+        lastName: "Flow",
+        cellPhoneNumberString: "4163334444",
+      }
     },
     isDummy: true,
     cellPhoneNumberString: "",
@@ -72,6 +129,25 @@ export const DUMMY_USERS = [
       licensedBy: "CPSO",
       licenseNumber: "777",
     },
+    patient: {
+      isCompleteProfile: true,
+      healthCards: {
+        dateOfBirth: "",
+        expiryDate: "2027-07-07",
+        insurancePolicyNumber: "666",
+        insuranceProvider: "RBC",
+        isVerified: true,
+        nameOnCard: null,
+        versionCode: "Y4",
+      },
+      emergencyContacts: {
+        email: "dummy@example.co",
+        relation: "Brother",
+        firstName: "John",
+        lastName: "Flow",
+        cellPhoneNumberString: "4163334444",
+      }
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -97,6 +173,25 @@ export const DUMMY_USERS = [
       isVerified: true,
       licensedBy: "CPSO",
       licenseNumber: "777",
+    },
+    patient: {
+      isCompleteProfile: true,
+      healthCards: {
+        dateOfBirth: "",
+        expiryDate: "2027-07-07",
+        insurancePolicyNumber: "666",
+        insuranceProvider: "RBC",
+        isVerified: true,
+        nameOnCard: null,
+        versionCode: "Y5",
+      },
+      emergencyContacts: {
+        email: "dummy@example.co",
+        relation: "Brother",
+        firstName: "John",
+        lastName: "Flow",
+        cellPhoneNumberString: "4163334444",
+      }
     },
     isDummy: true,
     cellPhoneNumberString: "",
@@ -124,6 +219,25 @@ export const DUMMY_USERS = [
       licensedBy: "CPSO",
       licenseNumber: "777",
     },
+    patient: {
+      isCompleteProfile: true,
+      healthCards: {
+        dateOfBirth: "",
+        expiryDate: "2027-07-07",
+        insurancePolicyNumber: "666",
+        insuranceProvider: "RBC",
+        isVerified: true,
+        nameOnCard: null,
+        versionCode: "Y6",
+      },
+      emergencyContacts: {
+        email: "dummy@example.co",
+        relation: "Brother",
+        firstName: "John",
+        lastName: "Flow",
+        cellPhoneNumberString: "4163334444",
+      }
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -149,6 +263,25 @@ export const DUMMY_USERS = [
       isVerified: true,
       licensedBy: "CPSO",
       licenseNumber: "777",
+    },
+    patient: {
+      isCompleteProfile: true,
+      healthCards: {
+        dateOfBirth: "",
+        expiryDate: "2027-07-07",
+        insurancePolicyNumber: "666",
+        insuranceProvider: "RBC",
+        isVerified: true,
+        nameOnCard: null,
+        versionCode: "Y7",
+      },
+      emergencyContacts: {
+        email: "dummy@example.co",
+        relation: "Brother",
+        firstName: "John",
+        lastName: "Flow",
+        cellPhoneNumberString: "4163334444",
+      }
     },
     isDummy: true,
     cellPhoneNumberString: "",
