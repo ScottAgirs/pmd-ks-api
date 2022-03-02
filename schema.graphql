@@ -1872,7 +1872,23 @@ input UserRelateToManyForCreateInput {
 
 type Doctor {
   id: ID!
-  user: User
+  clinicName: String
+  clinicPhoneNumber: String
+  clinicFaxNumber: String
+  clinicFMN: String
+  clinicSLI: String
+  clinicOHIPBillingCode: String
+  contractSignedOn: DateTime
+  doctorSince: DateTime
+  email: String
+  insurancePolicyNumber: String
+  insuranceProvider: String
+  isCompleteProfile: Boolean
+  isVerified: Boolean
+  licensedBy: String
+  licenseNumber: String
+  province: String
+  summary: String
   appointments(
     where: AppointmentWhereInput! = {}
     orderBy: [AppointmentOrderByInput!]! = []
@@ -1902,14 +1918,6 @@ type Doctor {
   ): [CalendarEvent!]
   calendarEventsCount(where: CalendarEventWhereInput! = {}): Int
   clinicAddress: Address
-  clinicName: String
-  clinicPhoneNumber: String
-  clinicFaxNumber: String
-  clinicFMN: String
-  clinicSLI: String
-  clinicOHIPBillingCode: String
-  contractSignedOn: DateTime
-  doctorSince: DateTime
   doctorSpecialty: DoctorSpecialty
   doctorSubSpecialties(
     where: DoctorSubSpecialtyWhereInput! = {}
@@ -1918,7 +1926,6 @@ type Doctor {
     skip: Int! = 0
   ): [DoctorSubSpecialty!]
   doctorSubSpecialtiesCount(where: DoctorSubSpecialtyWhereInput! = {}): Int
-  email: String
   forms(
     where: FormWhereInput! = {}
     orderBy: [FormOrderByInput!]! = []
@@ -1926,10 +1933,6 @@ type Doctor {
     skip: Int! = 0
   ): [Form!]
   formsCount(where: FormWhereInput! = {}): Int
-  insurancePolicyNumber: String
-  insuranceProvider: String
-  isCompleteProfile: Boolean
-  isVerified: Boolean
   languages(
     where: LanguageWhereInput! = {}
     orderBy: [LanguageOrderByInput!]! = []
@@ -1937,8 +1940,6 @@ type Doctor {
     skip: Int! = 0
   ): [Language!]
   languagesCount(where: LanguageWhereInput! = {}): Int
-  licensedBy: String
-  licenseNumber: String
   patients(
     where: PatientWhereInput! = {}
     orderBy: [PatientOrderByInput!]! = []
@@ -1953,8 +1954,6 @@ type Doctor {
     skip: Int! = 0
   ): [Prescription!]
   prescriptionsCount(where: PrescriptionWhereInput! = {}): Int
-  province: String
-  summary: String
   savedByPatients(
     where: PatientWhereInput! = {}
     orderBy: [PatientOrderByInput!]! = []
@@ -1962,6 +1961,7 @@ type Doctor {
     skip: Int! = 0
   ): [Patient!]
   savedByPatientsCount(where: PatientWhereInput! = {}): Int
+  user: User
 }
 
 input DoctorWhereUniqueInput {
@@ -1973,12 +1973,6 @@ input DoctorWhereInput {
   OR: [DoctorWhereInput!]
   NOT: [DoctorWhereInput!]
   id: IDFilter
-  user: UserWhereInput
-  appointments: AppointmentManyRelationFilter
-  billings: AppointmentBillingManyRelationFilter
-  bookings: BookingManyRelationFilter
-  calendarEvents: CalendarEventManyRelationFilter
-  clinicAddress: AddressWhereInput
   clinicName: StringFilter
   clinicPhoneNumber: StringFilter
   clinicFaxNumber: StringFilter
@@ -1987,22 +1981,39 @@ input DoctorWhereInput {
   clinicOHIPBillingCode: StringFilter
   contractSignedOn: DateTimeNullableFilter
   doctorSince: DateTimeFilter
-  doctorSpecialty: DoctorSpecialtyWhereInput
-  doctorSubSpecialties: DoctorSubSpecialtyManyRelationFilter
   email: StringFilter
-  forms: FormManyRelationFilter
   insurancePolicyNumber: StringFilter
   insuranceProvider: StringFilter
   isCompleteProfile: BooleanFilter
   isVerified: BooleanFilter
-  languages: LanguageManyRelationFilter
   licensedBy: StringFilter
   licenseNumber: StringFilter
-  patients: PatientManyRelationFilter
-  prescriptions: PrescriptionManyRelationFilter
   province: StringFilter
   summary: StringFilter
+  appointments: AppointmentManyRelationFilter
+  billings: AppointmentBillingManyRelationFilter
+  bookings: BookingManyRelationFilter
+  calendarEvents: CalendarEventManyRelationFilter
+  clinicAddress: AddressWhereInput
+  doctorSpecialty: DoctorSpecialtyWhereInput
+  doctorSubSpecialties: DoctorSubSpecialtyManyRelationFilter
+  forms: FormManyRelationFilter
+  languages: LanguageManyRelationFilter
+  patients: PatientManyRelationFilter
+  prescriptions: PrescriptionManyRelationFilter
   savedByPatients: PatientManyRelationFilter
+  user: UserWhereInput
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeFilter
 }
 
 input AppointmentManyRelationFilter {
@@ -2015,17 +2026,6 @@ input AppointmentBillingManyRelationFilter {
   every: AppointmentBillingWhereInput
   some: AppointmentBillingWhereInput
   none: AppointmentBillingWhereInput
-}
-
-input DateTimeFilter {
-  equals: DateTime
-  in: [DateTime!]
-  notIn: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  gt: DateTime
-  gte: DateTime
-  not: DateTimeFilter
 }
 
 input DoctorSubSpecialtyManyRelationFilter {
@@ -2074,12 +2074,6 @@ input DoctorOrderByInput {
 }
 
 input DoctorUpdateInput {
-  user: UserRelateToOneForUpdateInput
-  appointments: AppointmentRelateToManyForUpdateInput
-  billings: AppointmentBillingRelateToManyForUpdateInput
-  bookings: BookingRelateToManyForUpdateInput
-  calendarEvents: CalendarEventRelateToManyForUpdateInput
-  clinicAddress: AddressRelateToOneForUpdateInput
   clinicName: String
   clinicPhoneNumber: String
   clinicFaxNumber: String
@@ -2088,22 +2082,28 @@ input DoctorUpdateInput {
   clinicOHIPBillingCode: String
   contractSignedOn: DateTime
   doctorSince: DateTime
-  doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
-  doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForUpdateInput
   email: String
-  forms: FormRelateToManyForUpdateInput
   insurancePolicyNumber: String
   insuranceProvider: String
   isCompleteProfile: Boolean
   isVerified: Boolean
-  languages: LanguageRelateToManyForUpdateInput
   licensedBy: String
   licenseNumber: String
-  patients: PatientRelateToManyForUpdateInput
-  prescriptions: PrescriptionRelateToManyForUpdateInput
   province: String
   summary: String
+  appointments: AppointmentRelateToManyForUpdateInput
+  billings: AppointmentBillingRelateToManyForUpdateInput
+  bookings: BookingRelateToManyForUpdateInput
+  calendarEvents: CalendarEventRelateToManyForUpdateInput
+  clinicAddress: AddressRelateToOneForUpdateInput
+  doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
+  doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForUpdateInput
+  forms: FormRelateToManyForUpdateInput
+  languages: LanguageRelateToManyForUpdateInput
+  patients: PatientRelateToManyForUpdateInput
+  prescriptions: PrescriptionRelateToManyForUpdateInput
   savedByPatients: PatientRelateToManyForUpdateInput
+  user: UserRelateToOneForUpdateInput
 }
 
 input AppointmentRelateToManyForUpdateInput {
@@ -2166,12 +2166,6 @@ input DoctorUpdateArgs {
 }
 
 input DoctorCreateInput {
-  user: UserRelateToOneForCreateInput
-  appointments: AppointmentRelateToManyForCreateInput
-  billings: AppointmentBillingRelateToManyForCreateInput
-  bookings: BookingRelateToManyForCreateInput
-  calendarEvents: CalendarEventRelateToManyForCreateInput
-  clinicAddress: AddressRelateToOneForCreateInput
   clinicName: String
   clinicPhoneNumber: String
   clinicFaxNumber: String
@@ -2180,22 +2174,28 @@ input DoctorCreateInput {
   clinicOHIPBillingCode: String
   contractSignedOn: DateTime
   doctorSince: DateTime
-  doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
-  doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForCreateInput
   email: String
-  forms: FormRelateToManyForCreateInput
   insurancePolicyNumber: String
   insuranceProvider: String
   isCompleteProfile: Boolean
   isVerified: Boolean
-  languages: LanguageRelateToManyForCreateInput
   licensedBy: String
   licenseNumber: String
-  patients: PatientRelateToManyForCreateInput
-  prescriptions: PrescriptionRelateToManyForCreateInput
   province: String
   summary: String
+  appointments: AppointmentRelateToManyForCreateInput
+  billings: AppointmentBillingRelateToManyForCreateInput
+  bookings: BookingRelateToManyForCreateInput
+  calendarEvents: CalendarEventRelateToManyForCreateInput
+  clinicAddress: AddressRelateToOneForCreateInput
+  doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
+  doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForCreateInput
+  forms: FormRelateToManyForCreateInput
+  languages: LanguageRelateToManyForCreateInput
+  patients: PatientRelateToManyForCreateInput
+  prescriptions: PrescriptionRelateToManyForCreateInput
   savedByPatients: PatientRelateToManyForCreateInput
+  user: UserRelateToOneForCreateInput
 }
 
 input AppointmentRelateToManyForCreateInput {
@@ -2728,6 +2728,7 @@ type User {
   firstName: String
   lastName: String
   middleName: String
+  isDummy: Boolean
   password: PasswordState
   cellPhoneNumberString: String
   homePhoneNumberString: String
@@ -2788,6 +2789,7 @@ input UserWhereInput {
   firstName: StringFilter
   lastName: StringFilter
   middleName: StringFilter
+  isDummy: BooleanFilter
   cellPhoneNumberString: StringFilter
   homePhoneNumberString: StringFilter
   prompts: PromptManyRelationFilter
@@ -2838,6 +2840,7 @@ input UserOrderByInput {
   firstName: OrderDirection
   lastName: OrderDirection
   middleName: OrderDirection
+  isDummy: OrderDirection
   cellPhoneNumberString: OrderDirection
   homePhoneNumberString: OrderDirection
   photoSrcString: OrderDirection
@@ -2862,6 +2865,7 @@ input UserUpdateInput {
   firstName: String
   lastName: String
   middleName: String
+  isDummy: Boolean
   password: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
@@ -2924,6 +2928,7 @@ input UserCreateInput {
   firstName: String
   lastName: String
   middleName: String
+  isDummy: Boolean
   password: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
