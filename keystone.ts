@@ -14,6 +14,7 @@ import { populateContracts } from './seed/contracts/populate-contracts';
 import { populateDummyUsers } from './seed/user/populate-dummy-users';
 import { populateLanguages } from './seed/common/populate-languages';
 import { populateSteppers } from './seed/onboard/populate-stepper';
+import { populateAdminUsers } from './seed/user/populate-admin-users';
 
 const FRONTEND_URL:string = process.env.FRONTEND_URL as string;
 export default withAuth(
@@ -54,6 +55,9 @@ export default withAuth(
         }
         if (process.argv.includes('--seed-users')) {
           populateDummyUsers(keystone);
+        }
+        if (process.argv.includes('--seed-admins')) {
+          populateAdminUsers(keystone);
         }
       },
     },
