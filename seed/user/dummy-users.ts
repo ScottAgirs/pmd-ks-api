@@ -2,6 +2,9 @@ export const DUMMY_USERS = [
   // Patient Users
   {
     id: "0-patient",
+    doctor: {
+      // 
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -19,6 +22,9 @@ export const DUMMY_USERS = [
   },
   {
     id: "1-patient",
+    doctor: {
+      // 
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -36,6 +42,9 @@ export const DUMMY_USERS = [
   },
   {
     id: "2-patient",
+    doctor: {
+      // 
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -54,6 +63,15 @@ export const DUMMY_USERS = [
   // Doctor Users
   {
     id: "0-doctor",
+    doctor: {
+      doctorSince: "2004-07-05T00:00:00.000Z",
+      insuranceProvider: "RBC",
+      insurancePolicyNumber: "666",
+      isCompleteProfile: true,
+      isVerified: true,
+      licensedBy: "CPSO",
+      licenseNumber: "777",
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -71,6 +89,15 @@ export const DUMMY_USERS = [
   },
   {
     id: "1-doctor",
+    doctor: {
+      doctorSince: "2005-07-05T00:00:00.000Z",
+      insuranceProvider: "RBC",
+      insurancePolicyNumber: "666",
+      isCompleteProfile: true,
+      isVerified: true,
+      licensedBy: "CPSO",
+      licenseNumber: "777",
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -88,6 +115,15 @@ export const DUMMY_USERS = [
   },
   {
     id: "2-doctor",
+    doctor: {
+      doctorSince: "2006-07-05T00:00:00.000Z",
+      insuranceProvider: "RBC",
+      insurancePolicyNumber: "666",
+      isCompleteProfile: true,
+      isVerified: true,
+      licensedBy: "CPSO",
+      licenseNumber: "777",
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
@@ -105,6 +141,15 @@ export const DUMMY_USERS = [
   },
   {
     id: "3-doctor",
+    doctor: {
+      doctorSince: "2007-07-05T00:00:00.000Z",
+      insuranceProvider: "RBC",
+      insurancePolicyNumber: "666",
+      isCompleteProfile: true,
+      isVerified: true,
+      licensedBy: "CPSO",
+      licenseNumber: "777",
+    },
     isDummy: true,
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
