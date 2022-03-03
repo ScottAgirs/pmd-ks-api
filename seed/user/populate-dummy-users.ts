@@ -29,20 +29,56 @@ export async function populateDummyUsers(keystone: any) {
     
     const { 
       // @ts-ignore
-      events: eventsData, 
+      events: eventsData = {}, 
       // @ts-ignore
-      defaultSchedule, 
+      defaultSchedule: scheduleData = {}, 
       ...calendar 
     } = calendarData;
     
     const hasDoctor = !!Object.keys(doctor).length;
-    console.log('populateDummyUsers :: doctor', doctor);
+    console.log('populateDummyUsers :: eventsData', eventsData);
+    const hasEvents = eventsData && !!Object.keys(eventsData).length;
+    
+    const {
+      recurringSlots,
+      ...schedule
+    } = scheduleData;
+    
+    const hasSchedule = !!Object.keys(scheduleData).length;
 
-    const createdSchedule = defaultSchedule && await keystone.db.Schedule.createOne({
-      data: defaultSchedule
+    const createdSchedule = hasSchedule && await keystone.db.Schedule.createOne({
+      data: {
+        ...schedule,
+        recurringSlots: !hasSchedule ? undefined : {
+          create: recurringSlots.map((rs: any) => {
+            const { timeIntervals, ...recSlotData } = rs;
+            
+            return {
+              ...recSlotData,
+              timeIntervals: {
+                create: timeIntervals.map((ti: any) => {
+                  const { from, to } = ti;
+                  return {
+                    from,
+                    to,
+                  }
+                })
+              }
+            }
+          }
+          )
+        }
+      }
+    });
+    const createdEvents = hasEvents && await keystone.db.CalendarEvent.createMany({
+      data: eventsData.map((event:any) => ({
+        ...event,
+        eventType: { connect: { value: event.eventType.value } }
+      }))
     });
 
-    const createDoctorData =  (!hasCalendar || !hasDoctor) ? {} : {
+    console.log('populateDummyUsers :: hasDoctor', hasDoctor);
+    const createDoctorData =  (!hasDoctor) ? {} : {
       ...doctor,
       calendar: {
         create: {
@@ -56,12 +92,12 @@ export async function populateDummyUsers(keystone: any) {
             }
           },
           events: {
-            create: eventsData.map((event:any) => ({
-              ...event,
-              eventType: { connect: { value: event.eventType.value } }
-            }))
+            connect: [...createdEvents.map((event:any) => ({id: event.id}))] 
           }
         }
+      },
+      calendarEvents: {
+        connect: [...createdEvents.map((event:any) => ({id: event.id}))] 
       },
       doctorSpecialty: {
         connect: { value: doctorSpecialty.value },
@@ -71,10 +107,11 @@ export async function populateDummyUsers(keystone: any) {
       }
     }
 
-    const createdDoctor = defaultSchedule && await keystone.db.Doctor.createOne({
+    const createdDoctor = hasSchedule && await keystone.db.Doctor.createOne({
       data: createDoctorData
     });
 
+    console.log(' :: hasDoctor', hasDoctor);
     await keystone.db.User.createOne({
       data: {
         ...user,
