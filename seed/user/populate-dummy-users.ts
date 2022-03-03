@@ -36,7 +36,6 @@ export async function populateDummyUsers(keystone: any) {
     } = calendarData;
     
     const hasDoctor = !!Object.keys(doctor).length;
-    console.log('populateDummyUsers :: eventsData', eventsData);
     const hasEvents = eventsData && !!Object.keys(eventsData).length;
     
     const {
@@ -77,7 +76,6 @@ export async function populateDummyUsers(keystone: any) {
       }))
     });
 
-    console.log('populateDummyUsers :: hasDoctor', hasDoctor);
     const createDoctorData =  (!hasDoctor) ? {} : {
       ...doctor,
       calendar: {
@@ -111,7 +109,6 @@ export async function populateDummyUsers(keystone: any) {
       data: createDoctorData
     });
 
-    console.log(' :: hasDoctor', hasDoctor);
     await keystone.db.User.createOne({
       data: {
         ...user,
