@@ -7,7 +7,6 @@ interface AfterCreateDoctorInput {
 // TODO: [TypeScript] Add context interface
 export const afterCreateDoctor = async ({ context, item: doctor }: AfterCreateDoctorInput) => {
   if (!doctor) throw new Error('Failed to create User Doctor doctor.')
-  console.log('afterCreateDoctor :: doctor', doctor);
 
   const userDB = context.db.User;
 
