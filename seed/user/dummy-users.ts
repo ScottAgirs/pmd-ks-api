@@ -8,7 +8,7 @@ export const ADMIN_USERS = [
         {
           dateOfBirth: "1990-12-24T18:12:21.313Z",
           expiryDate: "2029-12-24T18:12:21.313Z",
-          insurancePolicyNumber: "666",
+          insurancePolicyNumber: "672",
           insuranceProvider: "RBC",
           isVerified: true,
           nameOnCard: "Scott Agi",
@@ -52,7 +52,7 @@ export const DUMMY_USERS = [
         {
           dateOfBirth: "",
           expiryDate: "",
-          insurancePolicyNumber: "666",
+          insurancePolicyNumber: "667",
           insuranceProvider: "RBC",
           isVerified: true,
           nameOnCard: "",
@@ -92,7 +92,7 @@ export const DUMMY_USERS = [
         {
           dateOfBirth: "",
           expiryDate: "",
-          insurancePolicyNumber: "666",
+          insurancePolicyNumber: "668",
           insuranceProvider: "RBC",
           isVerified: true,
           nameOnCard: "",
@@ -132,7 +132,7 @@ export const DUMMY_USERS = [
         {
           dateOfBirth: "",
           expiryDate: "",
-          insurancePolicyNumber: "666",
+          insurancePolicyNumber: "669",
           insuranceProvider: "RBC",
           isVerified: true,
           nameOnCard: "",
@@ -167,6 +167,30 @@ export const DUMMY_USERS = [
   // Doctor Users
   {
     doctor: {
+      calendar: {
+        name: "",
+        defaultSchedule: {
+          description: "My Regular Working Hours",
+          title: 'Working Hours',
+          tz: 'America/Toronto',
+        },
+        events: [
+          { 
+            description: "In-person examination",
+            durationMins: 15,
+            eventType: {  value: "in-person"},
+            isActive: true,
+            title: "In-person examination",
+          },
+          { 
+            description: "Virtual Appointment",
+            durationMins: 15,
+            eventType: {  value: "virtual"},
+            isActive: true,
+            title: "Virtual Appointment",
+          }
+        ]
+      },
       doctorSpecialty: {
         value: "anesthesiology"
       },
@@ -175,11 +199,11 @@ export const DUMMY_USERS = [
       ],
       doctorSince: "",
       insuranceProvider: "RBC",
-      insurancePolicyNumber: "666",
+      insurancePolicyNumber: "670",
       isCompleteProfile: true,
       isVerified: true,
       licensedBy: "CPSO",
-      licenseNumber: "777",
+      licenseNumber: "780",
     },
     patient: {
       isCompleteProfile: true,
@@ -187,7 +211,7 @@ export const DUMMY_USERS = [
         {
           dateOfBirth: "",
           expiryDate: "",
-          insurancePolicyNumber: "666",
+          insurancePolicyNumber: "671",
           insuranceProvider: "RBC",
           isVerified: true,
           nameOnCard: "",
@@ -221,6 +245,30 @@ export const DUMMY_USERS = [
   },
   {
     doctor: {
+      calendar: {
+        name: "",
+        defaultSchedule: {
+          description: "My Regular Working Hours",
+          title: 'Working Hours',
+          tz: 'America/Toronto',
+        },
+        events: [
+          { 
+            description: "In-person examination",
+            durationMins: 15,
+            eventType: {  value: "in-person"},
+            isActive: true,
+            title: "In-person examination",
+          },
+          { 
+            description: "Virtual Appointment",
+            durationMins: 15,
+            eventType: {  value: "virtual"},
+            isActive: true,
+            title: "Virtual Appointment",
+          }
+        ]
+      },
       doctorSpecialty: {
         value: "anesthesiology"
       },
@@ -233,7 +281,7 @@ export const DUMMY_USERS = [
       isCompleteProfile: true,
       isVerified: true,
       licensedBy: "CPSO",
-      licenseNumber: "777",
+      licenseNumber: "778",
     },
     patient: {
       isCompleteProfile: true,
@@ -241,7 +289,7 @@ export const DUMMY_USERS = [
         {
           dateOfBirth: "",
           expiryDate: "",
-          insurancePolicyNumber: "666",
+          insurancePolicyNumber: "673",
           insuranceProvider: "RBC",
           isVerified: true,
           nameOnCard: "",
@@ -275,6 +323,30 @@ export const DUMMY_USERS = [
   },
   {
     doctor: {
+      calendar: {
+        name: "",
+        defaultSchedule: {
+          description: "My Regular Working Hours",
+          title: 'Working Hours',
+          tz: 'America/Toronto',
+        },
+        events: [
+          { 
+            description: "In-person examination",
+            durationMins: 15,
+            eventType: {  value: "in-person"},
+            isActive: true,
+            title: "In-person examination",
+          },
+          { 
+            description: "Virtual Appointment",
+            durationMins: 15,
+            eventType: {  value: "virtual"},
+            isActive: true,
+            title: "Virtual Appointment",
+          }
+        ]
+      },
       doctorSpecialty: {
         value: "anesthesiology"
       },
@@ -283,11 +355,11 @@ export const DUMMY_USERS = [
       ],
       doctorSince: "",
       insuranceProvider: "RBC",
-      insurancePolicyNumber: "666",
+      insurancePolicyNumber: "674",
       isCompleteProfile: true,
       isVerified: true,
       licensedBy: "CPSO",
-      licenseNumber: "777",
+      licenseNumber: "779",
     },
     patient: {
       isCompleteProfile: true,
@@ -295,7 +367,7 @@ export const DUMMY_USERS = [
         {
           dateOfBirth: "",
           expiryDate: "",
-          insurancePolicyNumber: "666",
+          insurancePolicyNumber: "675",
           insuranceProvider: "RBC",
           isVerified: true,
           nameOnCard: "",
@@ -329,6 +401,30 @@ export const DUMMY_USERS = [
   },
   {
     doctor: {
+      calendar: {
+        name: "",
+        defaultSchedule: {
+          description: "My Regular Working Hours",
+          title: 'Working Hours',
+          tz: 'America/Toronto',
+        },
+        events: [
+          { 
+            description: "In-person examination",
+            durationMins: 15,
+            eventType: {  value: "in-person"},
+            isActive: true,
+            title: "In-person examination",
+        },
+          { 
+            description: "Virtual Appointment",
+            durationMins: 15,
+            eventType: {  value: "virtual"},
+            isActive: true,
+            title: "Virtual Appointment",
+        }
+        ]
+      },
       doctorSpecialty: {
         value: "anesthesiology"
       },
@@ -337,7 +433,7 @@ export const DUMMY_USERS = [
       ],
       doctorSince: "",
       insuranceProvider: "RBC",
-      insurancePolicyNumber: "666",
+      insurancePolicyNumber: "676",
       isCompleteProfile: true,
       isVerified: true,
       licensedBy: "CPSO",
@@ -349,7 +445,7 @@ export const DUMMY_USERS = [
         {
           dateOfBirth: "",
           expiryDate: "",
-          insurancePolicyNumber: "666",
+          insurancePolicyNumber: "677",
           insuranceProvider: "RBC",
           isVerified: true,
           nameOnCard: "",
@@ -405,6 +501,7 @@ export const enrichedUsers = () => {
       u.dateOfBirth = dob;
       
       if (u.doctor) {
+        u.doctor.calendar.name = `${firstName}'s Calendar`;
         u.doctor.doctorSince = faker.date.between('1950-01-01T00:00:00.000Z', '2019-01-01T00:00:00.000Z');
       }
         
