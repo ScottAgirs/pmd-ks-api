@@ -4,14 +4,15 @@ import { sendEmail } from "../../lib/email/sendEmail"
 export const afterCreateUser = async ({ context, item }) => {
   if (!item) throw new Error('Failed to create User item.')
   
-  await context.query.StepperProg.createOne({ data: {
-    name: `${item.firstName}'s Stepper Progress`,
-    user: {
-      connect: {
-        id: item.id
-      }
-    },
-  }})
+  if (!item.isDummy) {
+    await context.query.StepperProg.createOne({ data: {
+      name: `${item.firstName}'s Stepper Progress`,
+      user: {
+        connect: {
+          id: item.id
+        }
+      },
+    }})
   
   // await context.query.Prompt.createOne({ data: {
   //   name: `${item.firstName}'s Patient Onboarding Prompt`,
@@ -23,17 +24,15 @@ export const afterCreateUser = async ({ context, item }) => {
   //     }
   //   },
   // }})
-  
-  await context.query.Patient.createOne({ data: {
-    name: `${item.firstName}'s Patient Profile`,
-    user: {
-      connect: {
-        id: item.id
-      }
-    },
-  }})
+    await context.query.Patient.createOne({ data: {
+      name: `${item.firstName}'s Patient Profile`,
+      user: {
+        connect: {
+          id: item.id
+        }
+      },
+    }})
 
-  if (!item.isDummy) {
     sendEmail({
       from:{
         email:"test@pocketmd.ca",
