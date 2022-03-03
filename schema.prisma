@@ -162,8 +162,8 @@ model Calendar {
   name              String          @default("")
   events            CalendarEvent[] @relation("CalendarEvent_calendar")
   bookings          Booking[]       @relation("Booking_calendar")
-  user              User?           @relation("Calendar_user", fields: [userId], references: [id])
-  userId            String?         @unique @map("user")
+  doctor            Doctor?         @relation("Calendar_doctor", fields: [doctorId], references: [id])
+  doctorId          String?         @unique @map("doctor")
   schedules         Schedule[]      @relation("Schedule_calendar")
   defaultSchedule   Schedule?       @relation("Calendar_defaultSchedule", fields: [defaultScheduleId], references: [id])
   defaultScheduleId String?         @unique @map("defaultSchedule")
@@ -251,6 +251,7 @@ model Doctor {
   clinicFMN             String               @default("")
   clinicSLI             String               @default("")
   clinicOHIPBillingCode String               @default("")
+  calendar              Calendar?            @relation("Calendar_doctor")
   contractSignedOn      DateTime?
   doctorSince           DateTime
   email                 String               @default("")
@@ -364,7 +365,6 @@ model User {
   postalCode            String            @default("")
   thoroughfare          String            @default("")
   premise               String            @default("")
-  calendar              Calendar?         @relation("Calendar_user")
   contracts             Contract[]        @relation("Contract_signedBy")
   dateOfBirth           DateTime?
   doctor                Doctor?           @relation("Doctor_user")

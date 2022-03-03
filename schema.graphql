@@ -1291,7 +1291,7 @@ type Calendar {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
-  user: User
+  doctor: Doctor
   schedules(
     where: ScheduleWhereInput! = {}
     orderBy: [ScheduleOrderByInput!]! = []
@@ -1314,7 +1314,7 @@ input CalendarWhereInput {
   name: StringFilter
   events: CalendarEventManyRelationFilter
   bookings: BookingManyRelationFilter
-  user: UserWhereInput
+  doctor: DoctorWhereInput
   schedules: ScheduleManyRelationFilter
   defaultSchedule: ScheduleWhereInput
 }
@@ -1346,7 +1346,7 @@ input CalendarUpdateInput {
   name: String
   events: CalendarEventRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
-  user: UserRelateToOneForUpdateInput
+  doctor: DoctorRelateToOneForUpdateInput
   schedules: ScheduleRelateToManyForUpdateInput
   defaultSchedule: ScheduleRelateToOneForUpdateInput
 }
@@ -1363,12 +1363,6 @@ input BookingRelateToManyForUpdateInput {
   set: [BookingWhereUniqueInput!]
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
-}
-
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
 }
 
 input ScheduleRelateToManyForUpdateInput {
@@ -1393,7 +1387,7 @@ input CalendarCreateInput {
   name: String
   events: CalendarEventRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
-  user: UserRelateToOneForCreateInput
+  doctor: DoctorRelateToOneForCreateInput
   schedules: ScheduleRelateToManyForCreateInput
   defaultSchedule: ScheduleRelateToOneForCreateInput
 }
@@ -1406,11 +1400,6 @@ input CalendarEventRelateToManyForCreateInput {
 input BookingRelateToManyForCreateInput {
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 input ScheduleRelateToManyForCreateInput {
@@ -1878,6 +1867,7 @@ type Doctor {
   clinicFMN: String
   clinicSLI: String
   clinicOHIPBillingCode: String
+  calendar: Calendar
   contractSignedOn: DateTime
   doctorSince: DateTime
   email: String
@@ -1979,6 +1969,7 @@ input DoctorWhereInput {
   clinicFMN: StringFilter
   clinicSLI: StringFilter
   clinicOHIPBillingCode: StringFilter
+  calendar: CalendarWhereInput
   contractSignedOn: DateTimeNullableFilter
   doctorSince: DateTimeFilter
   email: StringFilter
@@ -2080,6 +2071,7 @@ input DoctorUpdateInput {
   clinicFMN: String
   clinicSLI: String
   clinicOHIPBillingCode: String
+  calendar: CalendarRelateToOneForUpdateInput
   contractSignedOn: DateTime
   doctorSince: DateTime
   email: String
@@ -2160,6 +2152,12 @@ input PrescriptionRelateToManyForUpdateInput {
   connect: [PrescriptionWhereUniqueInput!]
 }
 
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
 input DoctorUpdateArgs {
   where: DoctorWhereUniqueInput!
   data: DoctorUpdateInput!
@@ -2172,6 +2170,7 @@ input DoctorCreateInput {
   clinicFMN: String
   clinicSLI: String
   clinicOHIPBillingCode: String
+  calendar: CalendarRelateToOneForCreateInput
   contractSignedOn: DateTime
   doctorSince: DateTime
   email: String
@@ -2236,6 +2235,11 @@ input PatientRelateToManyForCreateInput {
 input PrescriptionRelateToManyForCreateInput {
   create: [PrescriptionCreateInput!]
   connect: [PrescriptionWhereUniqueInput!]
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 type Language {
@@ -2716,7 +2720,6 @@ type User {
   postalCode: String
   thoroughfare: String
   premise: String
-  calendar: Calendar
   contracts(
     where: ContractWhereInput! = {}
     orderBy: [ContractOrderByInput!]! = []
@@ -2784,7 +2787,6 @@ input UserWhereInput {
   postalCode: StringFilter
   thoroughfare: StringFilter
   premise: StringFilter
-  calendar: CalendarWhereInput
   contracts: ContractManyRelationFilter
   dateOfBirth: DateTimeNullableFilter
   doctor: DoctorWhereInput
@@ -2860,7 +2862,6 @@ input UserUpdateInput {
   postalCode: String
   thoroughfare: String
   premise: String
-  calendar: CalendarRelateToOneForUpdateInput
   contracts: ContractRelateToManyForUpdateInput
   dateOfBirth: DateTime
   doctor: DoctorRelateToOneForUpdateInput
@@ -2923,7 +2924,6 @@ input UserCreateInput {
   postalCode: String
   thoroughfare: String
   premise: String
-  calendar: CalendarRelateToOneForCreateInput
   contracts: ContractRelateToManyForCreateInput
   dateOfBirth: DateTime
   doctor: DoctorRelateToOneForCreateInput
