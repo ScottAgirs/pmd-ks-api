@@ -401,13 +401,6 @@ type Mutation {
     where: [StepperStepProgWhereUniqueInput!]!
   ): [StepperStepProg]
   endSession: Boolean!
-  authenticateUserWithPassword(
-    email: String!
-    password: String!
-  ): UserAuthenticationWithPasswordResult
-  createInitialUser(
-    data: CreateInitialUserInput!
-  ): UserAuthenticationWithPasswordSuccess!
 }
 
 type Address {
@@ -2712,6 +2705,7 @@ input EmergencyContactCreateInput {
 
 type User {
   id: ID!
+  subjectId: String
   country: String
   addressLine1: String
   addressLine2: String
@@ -2734,7 +2728,6 @@ type User {
   lastName: String
   middleName: String
   isDummy: Boolean
-  password: PasswordState
   cellPhoneNumberString: String
   homePhoneNumberString: String
   prompts(
@@ -2764,12 +2757,9 @@ type User {
   username: String
 }
 
-type PasswordState {
-  isSet: Boolean!
-}
-
 input UserWhereUniqueInput {
   id: ID
+  subjectId: String
   email: String
   username: String
 }
@@ -2779,6 +2769,7 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
   id: IDFilter
+  subjectId: StringFilter
   country: StringFilter
   addressLine1: StringFilter
   addressLine2: StringFilter
@@ -2832,6 +2823,7 @@ input StepperStepProgManyRelationFilter {
 
 input UserOrderByInput {
   id: OrderDirection
+  subjectId: OrderDirection
   country: OrderDirection
   addressLine1: OrderDirection
   addressLine2: OrderDirection
@@ -2854,6 +2846,7 @@ input UserOrderByInput {
 }
 
 input UserUpdateInput {
+  subjectId: String
   country: String
   addressLine1: String
   addressLine2: String
@@ -2870,7 +2863,6 @@ input UserUpdateInput {
   lastName: String
   middleName: String
   isDummy: Boolean
-  password: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
   prompts: PromptRelateToManyForUpdateInput
@@ -2916,6 +2908,7 @@ input UserUpdateArgs {
 }
 
 input UserCreateInput {
+  subjectId: String
   country: String
   addressLine1: String
   addressLine2: String
@@ -2932,7 +2925,6 @@ input UserCreateInput {
   lastName: String
   middleName: String
   isDummy: Boolean
-  password: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
   prompts: PromptRelateToManyForCreateInput
@@ -3818,28 +3810,6 @@ scalar JSON
   @specifiedBy(
     url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf"
   )
-
-union UserAuthenticationWithPasswordResult =
-    UserAuthenticationWithPasswordSuccess
-  | UserAuthenticationWithPasswordFailure
-
-type UserAuthenticationWithPasswordSuccess {
-  sessionToken: String!
-  item: User!
-}
-
-type UserAuthenticationWithPasswordFailure {
-  message: String!
-}
-
-input CreateInitialUserInput {
-  email: String
-  firstName: String
-  lastName: String
-  middleName: String
-  password: String
-  username: String
-}
 
 type Query {
   addresses(

@@ -24,6 +24,9 @@ export const User = list({
     }
   },
   fields: {
+    subjectId: text({
+      isIndexed: 'unique' 
+    }),
     // Address start
     country: text(),
     addressLine1: text(),
@@ -46,7 +49,7 @@ export const User = list({
     lastName: text({ validation: { isRequired: true } }),
     middleName: text(),
     isDummy: checkbox(),
-    password: password({ validation: { isRequired: true } }),
+    // password: password({ validation: { isRequired: true } }),
     // Phone numbers start
     cellPhoneNumberString: text(),
     homePhoneNumberString: text(),

@@ -1,12 +1,16 @@
 import 'dotenv/config';
 
+import { createAuth } from '@opensaas/keystone-nextjs-auth';
+import FacebookProvider from '@opensaas/keystone-nextjs-auth/providers/facebook';
+
 import { config } from '@keystone-6/core';
 
 import { extendGraphqlSchema } from './graphql/extendGraphqlSchema';
 
 import { lists } from './schema';
 
-import { withAuth, session } from './auth';
+import { session } from './auth';
+
 import { populateSpecialties } from './seed/doctor/populate-specialties';
 import { populateSubSpecialties } from './seed/doctor/populate-sub-specialties';
 import { populateCalendarEventTypes } from './seed/doctor/populate-calendar-event-types';
@@ -16,15 +20,60 @@ import { populateLanguages } from './seed/common/populate-languages';
 import { populateSteppers } from './seed/onboard/populate-stepper';
 import { populateAdminUsers } from './seed/user/populate-admin-users';
 
-const FRONTEND_URL:string = process.env.FRONTEND_URL as string;
-export default withAuth(
+const FRONTEND_URL = process.env.FRONTEND_URL as string;
+
+let sessionSecret = process.env.SESSION_SECRET;
+
+if (!sessionSecret) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'The SESSION_SECRET environment variable must be set in production'
+    );
+  } else {
+    sessionSecret = '-- DEV COOKIE SECRET; CHANGE ME --';
+  }
+}
+
+const auth = createAuth({
+  listKey: 'User',
+  identityField: 'subjectId',
+  sessionData: `id username email`,
+  autoCreate: true,
+  accountMap: {},
+  profileMap: { email: 'email' },
+  userMap: { 
+    subjectId: 'id',
+    username: 'name'
+  },
+  keystonePath: '/admin',
+  sessionSecret,
+  providers: [
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID || 'NextAuthClientID',
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET || 'NextAuthClientSecret',
+    }),
+  ]
+});
+
+// DEFAULT KEYSTONE CONFIG
+export default auth.withAuth(
+  // Using the config function helps typescript guide you to the available options.
   config({
     server: {
+      port: process.env.PORT as any, // default: 3000
       cors: {
-        origin: [FRONTEND_URL],
+        origin: [
+          FRONTEND_URL, 
+          "http://0.0.0.0:3333",
+          "http://127.0.0.1:3333",
+         /https?:\/\/.+\.pocketmd.ca/,
+         /https?:\/\/.+\.localhost:3333/,
+        ], 
+        // origin: [], // 127.0.0.1 needs be here as well, because of an issue with CORS which causes `/admin/api/auth/session` failure, if not provided
         credentials: true,
       },
     },
+    // the db sets the database provider - we're using sqlite for the fastest startup experience
     db: {
       provider: 'postgresql',
       url: process.env.DATABASE_URL as string,
@@ -62,7 +111,9 @@ export default withAuth(
       },
     },
     extendGraphqlSchema,
+    // This config allows us to set up features of the Admin UI https://keystonejs.com/docs/apis/config#ui
     ui: {
+      // For our starter, we check that someone has session data before letting them see the Admin UI.
       isAccessAllowed: (context) => !!context.session?.data,
     },
     lists,

@@ -357,6 +357,7 @@ model EmergencyContact {
 
 model User {
   id                    String            @id @default(cuid())
+  subjectId             String            @unique @default("")
   country               String            @default("")
   addressLine1          String            @default("")
   addressLine2          String            @default("")
@@ -373,7 +374,6 @@ model User {
   lastName              String            @default("")
   middleName            String            @default("")
   isDummy               Boolean           @default(false)
-  password              String
   cellPhoneNumberString String            @default("")
   homePhoneNumberString String            @default("")
   prompts               Prompt[]          @relation("Prompt_user")
