@@ -171,8 +171,23 @@ export const DUMMY_USERS = [
         name: "",
         defaultSchedule: {
           description: "My Regular Working Hours",
+          recurringSlots: [
+            {
+              wday: "monday",
+              isActive: true,
+              interval: "week",
+              intervalCount: 1,
+              timeIntervals: [
+                {
+                  from: "09:00:00",
+                  to: "09:15:00",
+                }
+              ],
+            }
+          ],
           title: 'Working Hours',
           tz: 'America/Toronto',
+
         },
         events: [
           { 
@@ -249,8 +264,23 @@ export const DUMMY_USERS = [
         name: "",
         defaultSchedule: {
           description: "My Regular Working Hours",
+          recurringSlots: [
+            {
+              wday: "monday",
+              isActive: true,
+              interval: "week",
+              intervalCount: 1,
+              timeIntervals: [
+                {
+                  from: "09:00:00",
+                  to: "10:15:00",
+                }
+              ],
+            }
+          ],
           title: 'Working Hours',
           tz: 'America/Toronto',
+
         },
         events: [
           { 
@@ -327,8 +357,23 @@ export const DUMMY_USERS = [
         name: "",
         defaultSchedule: {
           description: "My Regular Working Hours",
+          recurringSlots: [
+            {
+              wday: "monday",
+              isActive: true,
+              interval: "week",
+              intervalCount: 1,
+              timeIntervals: [
+                {
+                  from: "09:00:00",
+                  to: "11:15:00",
+                }
+              ],
+            }
+          ],
           title: 'Working Hours',
           tz: 'America/Toronto',
+
         },
         events: [
           { 
@@ -405,8 +450,23 @@ export const DUMMY_USERS = [
         name: "",
         defaultSchedule: {
           description: "My Regular Working Hours",
+          recurringSlots: [
+            {
+              wday: "monday",
+              isActive: true,
+              interval: "week",
+              intervalCount: 1,
+              timeIntervals: [
+                {
+                  from: "09:00:00",
+                  to: "12:15:00",
+                }
+              ],
+            }
+          ],
           title: 'Working Hours',
           tz: 'America/Toronto',
+
         },
         events: [
           { 
