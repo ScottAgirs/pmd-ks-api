@@ -1,5 +1,6 @@
 import { KeystoneContext } from "@keystone-6/core/types";
 import { sendEmail } from "../../../lib/email/sendEmail";
+import { getCurrentUser } from "../../user/services/getCurrentUser";
 
 export interface CreateEventBookingInput {
   eventId: string,
@@ -20,13 +21,12 @@ export const createCalendarEventBooking = async (
   }
 
   // Check user is logged in
-  const user = context.session?.data;
+  const { patientId: currentUserPatientId, userId, ...user } = await getCurrentUser(context);
+
+
   if (!user) {
     throw new Error('User not logged in');
   }
-
-  const userId = user.id;
-  const currentUserPatientId = user.patient.id;
   
   // Check event exists
   const event = await context.db.CalendarEvent.findOne({
