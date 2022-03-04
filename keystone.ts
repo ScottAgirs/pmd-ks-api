@@ -96,7 +96,6 @@ export default auth.withAuth(
           populateSpecialties(keystone);
           populateSteppers(keystone);
           populateSubSpecialties(keystone);
-          populateAdminUsers(keystone);
         }
 
         if (process.argv.includes('--seed-languages')) {
