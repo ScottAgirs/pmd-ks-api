@@ -70,6 +70,7 @@ export const DUMMY_USERS = [
       ]
     },
     isDummy: true,
+    photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     email: "pat-0@example.com",
@@ -110,6 +111,7 @@ export const DUMMY_USERS = [
       ]
     },
     isDummy: true,
+    photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     // email: "",
@@ -150,6 +152,7 @@ export const DUMMY_USERS = [
       ]
     },
     isDummy: true,
+    photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     // email: "",
@@ -244,6 +247,7 @@ export const DUMMY_USERS = [
       ]
     },
     isDummy: true,
+    photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     email: "doc-0@example.com",
@@ -337,6 +341,7 @@ export const DUMMY_USERS = [
       ]
     },
     isDummy: true,
+    photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     // email: "",
@@ -430,6 +435,7 @@ export const DUMMY_USERS = [
       ]
     },
     isDummy: true,
+    photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     // email: "",
@@ -523,6 +529,7 @@ export const DUMMY_USERS = [
       ]
     },
     isDummy: true,
+    photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     email: "",
@@ -556,6 +563,7 @@ export const enrichedUsers = () => {
       u.firstName = firstName;
       u.lastName = lastName;
       u.username = `${firstName}-${lastName}`;
+      u.photoSrc = faker.image.avatar();
       u.cellPhoneNumberString = faker.phone.phoneNumber('416######');
 
       u.dateOfBirth = dob;
