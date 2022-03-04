@@ -3,12 +3,10 @@ import { list } from '@keystone-6/core';
 import {
   text,
   relationship,
-  password,
   timestamp,
   checkbox,
 } from '@keystone-6/core/fields';
 import { afterCreateUser } from './afterCreateUser';
-import { beforeCreateUser } from './beforeCreateUser';
 
 export const User = list({
   hooks: {
@@ -17,11 +15,6 @@ export const User = list({
         afterCreateUser({ context, item })
       }
     },
-    beforeOperation: async ({ context, item, operation }) => {
-      if (operation === 'create') {
-        beforeCreateUser({ context, item })
-      }
-    }
   },
   fields: {
     subjectId: text({
@@ -56,7 +49,7 @@ export const User = list({
     // Phone numbers end
     prompts: relationship({ ref: 'Prompt.user', many: true }),
     patient: relationship({ ref: 'Patient.user' }),
-    photoSrcString: text(),
+    photoSrc: text(),
     sex: text(),
     stepperProgs: relationship({ ref: 'StepperProg.user', many: true }),
     stepperStepProgs: relationship({ ref: 'StepperStepProg.user', many: true }),
