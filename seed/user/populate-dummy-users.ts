@@ -1,17 +1,32 @@
 import { DUMMY_USERS, enrichedUsers } from "./dummy-users"; // total 7 users
 
+let running = false;
+
 export async function populateDummyUsers(keystone: any) {
   console.log(`-----------------------------------------------`);
   console.log(`🌱 Seeding [${DUMMY_USERS.length}] Users`);
   console.log(`-----------------------------------------------`);
 
+  
+
   const dummyUsers = enrichedUsers()
 
   let i = 0;
   for (const userSeedData of dummyUsers) {
+    console.log('populateDummyUsers :: total dummyUsers', dummyUsers.length, " - current user", i);
     // https://rawgit.com/Marak/faker.js/master/examples/browser/index.html#helpers
-
+    
     const { doctor: doctorData = {}, patient: patientData, ...user } = userSeedData;
+    const existingUser = await keystone.db.User.findOne({
+      where: {
+        subjectId: user.subjectId
+      }
+    })
+    console.log('populateDummyUsers :: existingUser', existingUser?.username);
+    console.log('populateDummyUsers :: user', user?.username);
+    if (existingUser) {
+      console.log("User found, skipping...", user.username, user.subjectId);
+      return null;}
     
     const { emergencyContacts, healthCards, ...patient } = patientData;
     
@@ -44,6 +59,7 @@ export async function populateDummyUsers(keystone: any) {
     } = scheduleData;
     
     const hasSchedule = !!Object.keys(scheduleData).length;
+    console.log("0");
 
     const createdSchedule = hasSchedule && await keystone.db.Schedule.createOne({
       data: {
@@ -69,12 +85,14 @@ export async function populateDummyUsers(keystone: any) {
         }
       }
     });
-    const createdEvents = hasEvents && await keystone.db.CalendarEvent.createMany({
+    console.log("1");
+    const createdEvents = hasCalendar && hasEvents && await keystone.db.CalendarEvent.createMany({
       data: eventsData.map((event:any) => ({
         ...event,
         eventType: { connect: { value: event.eventType.value } }
       }))
     });
+    console.log("2");
 
     const createDoctorData =  (!hasDoctor) ? {} : {
       ...doctor,
@@ -108,7 +126,8 @@ export async function populateDummyUsers(keystone: any) {
     const createdDoctor = hasSchedule && await keystone.db.Doctor.createOne({
       data: createDoctorData
     });
-
+    console.log("3");
+    
     await keystone.db.User.createOne({
       data: {
         ...user,
@@ -138,9 +157,11 @@ export async function populateDummyUsers(keystone: any) {
           throw new Error(`Failed to create a user ${DUMMY_USERS[i].username}`);
         }
       });
+      console.log("4");
       
     console.log(`🦶🏼 ✅ Seeded user [${userSeedData.username}]`);
     i = i + 1;
+    console.log('DONE :: i', i);
   }
 
   console.log(`✅ Seeded [${DUMMY_USERS.length}] (🤪) Users 🌳`);
