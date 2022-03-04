@@ -15,7 +15,9 @@
     "@opensaas/keystone-nextjs-auth": "^20.2.0",
     "@sendgrid/mail": "^7.6.0",
     "dotenv": "^10.0.0",
+    "keystone-6-oauth-next": "^0.0.2",
     "nodemailer": "^6.4.17",
+    "slugify": "^1.6.5",
     "typescript": "^4.5.2"
   },
   "engines": {

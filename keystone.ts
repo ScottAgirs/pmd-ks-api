@@ -1,7 +1,8 @@
 import 'dotenv/config';
 
-import { createAuth } from '@opensaas/keystone-nextjs-auth';
-import FacebookProvider from '@opensaas/keystone-nextjs-auth/providers/facebook';
+import slugify from 'slugify';
+import { createAuth } from 'keystone-6-oauth-next';
+import FacebookProvider from 'keystone-6-oauth-next/providers/facebook';
 
 import { config } from '@keystone-6/core';
 
@@ -37,13 +38,22 @@ if (!sessionSecret) {
 const auth = createAuth({
   listKey: 'User',
   identityField: 'subjectId',
-  sessionData: `id username email`,
+  sessionData: `id username email firstName lastName photoSrc`,
   autoCreate: true,
-  accountMap: {},
-  profileMap: { email: 'email' },
-  userMap: { 
-    subjectId: 'id',
-    username: 'name'
+  resolver: async (props: any) => {
+    const username = slugify(props.user.name as string, {
+      replacement: '-', // replace spaces with replacement character, defaults to `-`
+      lower: true, // convert to lower case, defaults to `false`
+      strict: true, // strip special characters except replacement, defaults to `false`
+      trim: true // trim leading and trailing replacement chars, defaults to `true`
+    });
+
+    const email = props.user.email as string;
+    const firstName = props.user.name.split(' ').slice(0, -1).join(' ') as string;
+    const lastName = props.user.name.split(' ').slice(-1).join(' ') as string;
+    const photoSrc = props.user.image as string;
+        
+    return { email, photoSrc, firstName, lastName, username }
   },
   keystonePath: '/admin',
   sessionSecret,
@@ -54,6 +64,7 @@ const auth = createAuth({
     }),
   ]
 });
+
 
 // DEFAULT KEYSTONE CONFIG
 export default auth.withAuth(
@@ -85,6 +96,7 @@ export default auth.withAuth(
           populateSpecialties(keystone);
           populateSteppers(keystone);
           populateSubSpecialties(keystone);
+          populateAdminUsers(keystone);
         }
 
         if (process.argv.includes('--seed-languages')) {
