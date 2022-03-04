@@ -1,5 +1,3 @@
-import { createAuth } from '@keystone-6/auth';
-
 import { statelessSessions } from '@keystone-6/core/session';
 
 let sessionSecret = process.env.SESSION_SECRET;
@@ -14,16 +12,6 @@ if (!sessionSecret) {
   }
 }
 
-const { withAuth } = createAuth({
-  listKey: 'User',
-  identityField: 'email',
-  sessionData: 'firstName id lastName middleName email doctor { id } patient { id }',
-  secretField: 'password',
-  initFirstItem: {
-    fields: ['firstName', 'middleName', 'lastName', 'email', 'password', 'username'],
-  },
-});
-
 let sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
 
 const session = statelessSessions({
@@ -31,4 +19,4 @@ const session = statelessSessions({
   secret: sessionSecret!,
 });
 
-export { withAuth, session };
+export { session };
