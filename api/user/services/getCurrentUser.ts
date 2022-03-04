@@ -4,9 +4,11 @@ export const getCurrentUser = async (context: KeystoneContext) => {
   const userId = context.session?.data?.id;
   if (!userId) return null;
 
-  const currentUser = await context.db.User.findOne({ 
-    where: { id: userId }
-  });
+  try {
+    const currentUser = await context.query.User.findOne({ 
+      where: { id: userId },
+      query: 'id username patient { id user { id } }',
+    });
 
   const enrichedCurrentUser = {
     ...currentUser,
@@ -16,4 +18,10 @@ export const getCurrentUser = async (context: KeystoneContext) => {
   }
 
   return enrichedCurrentUser;
+    
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+    
 }
