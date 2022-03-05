@@ -8,63 +8,83 @@ interface AfterCreateDoctorInput {
 export const afterCreateDoctor = async ({ context, item: doctor }: AfterCreateDoctorInput) => {
   if (!doctor) throw new Error('Failed to create User Doctor doctor.')
 
-  const userDB = context.db.User;
+  const userQuery = context.query.User;
 
   // This account for when we're Seeding as doctor.userId in afterCreate for some reason doesn't appear right away.
   if (!doctor.userId) return null;
   
-  try {
-    const user = await userDB.findOne({ where: { id: doctor.userId as string } });
+  const user = await userQuery.findOne({
+    where: { id: doctor.userId as string },
+    query: "id firstName lastName doctor { id } patient { id }"
+  });
 
-    const createdCalendar = await context.db.Calendar.createOne({ data: {
+  const doctorId = user.doctor.id;
+
+  let createdCalendar = { id: null };
+  let calendarId;
+  try {
+    createdCalendar = await context.db.Calendar.createOne({ data: {
       name: `${user.firstName}'s Calendar`,
-      user: {
+      doctor: {
         connect: {
-          id: user.id
+          id: doctorId
         }
       },
     }})
-
+    calendarId = createdCalendar.id;
+  } catch (error) {
+    console.log('Calendar.createOne :: error', error);
+  }
+  console.log('afterCreate :: calendarId', calendarId);
+  
+  try {
     await context.db.Schedule.createOne({ data: {
       title: `${user.firstName}'s Work Hours`,
       tz: "America/Toronto",
       calendar: {
         connect: {
-          id: createdCalendar.id
+          id: calendarId
         }
       },
       defaultOn: {
         connect: {
-          id: createdCalendar.id
+          id: calendarId
         }
       }
     }})
-    
+  } catch (error) {
+    console.log('Schedule.createOne :: error', error);
+  }
+  
+  try {
     await context.db.Address.createOne({ data: {
       doctorClinic: {
         connect: {
-          id: doctor.id
+          id: doctorId
         }
       }
     }})
-
-    const eventTypes = await context.db.CalendarEventType.findMany()
-
+  } catch (error) {
+    console.log('Address.createOne :: error', error);
+  }
+  
+  try {
     const sharedCreateCalendarEventParams = {
       calendar: {
         connect: {
-          id: createdCalendar.id
+          id: calendarId
         }
       },
       doctor: {
         connect: {
-          id: doctor.id
+          id: doctorId
         }
       },
       durationMins: 15,
       isConfirmationRequired: false,
     }
 
+    const eventTypes = await context.db.CalendarEventType.findMany()
     const createdCalendarEventsData = eventTypes.map(eventType => ({
       ...sharedCreateCalendarEventParams,
       eventType: {
@@ -76,8 +96,13 @@ export const afterCreateDoctor = async ({ context, item: doctor }: AfterCreateDo
       description: `${eventType.label} appointment with Dr. ${user.firstName} ${user.firstName}`,
     }))
 
-    await context.db.CalendarEvent.createMany({ data: createdCalendarEventsData });
+    try {
+      await context.db.CalendarEvent.createMany({ data: createdCalendarEventsData });
+    } catch (error) {
+      console.log('CalendarEvent.createMany :: error', error);
+    }
+    console.log("After Create Doctor completed.");
   } catch (error) {
-    console.log('afterCreateDoctor :: error', doctor, error);
+    console.log('CalendarEvent.createMany :: error', error);
   }
 }
