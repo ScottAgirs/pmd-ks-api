@@ -2,6 +2,7 @@ import 'dotenv/config';
 
 import slugify from 'slugify';
 import { createAuth } from 'keystone-6-oauth-next';
+import GoogleProvider from 'keystone-6-oauth-next/providers/google';
 import FacebookProvider from 'keystone-6-oauth-next/providers/facebook';
 
 import { config } from '@keystone-6/core';
@@ -38,7 +39,7 @@ if (!sessionSecret) {
 const auth = createAuth({
   listKey: 'User',
   identityField: 'subjectId',
-  sessionData: `id doctor { id } username email firstName lastName photoSrc patient { id }`,
+  sessionData: `id username email firstName lastName photoSrc`,
   autoCreate: true,
   resolver: async (props: any) => {
     const username = slugify(props.user.name as string, {
@@ -58,6 +59,10 @@ const auth = createAuth({
   keystonePath: '/admin',
   sessionSecret,
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || 'GoogleNextAuthClientID',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'GoogleNextAuthClientSecret',
+    }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID || 'NextAuthClientID',
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET || 'NextAuthClientSecret',
