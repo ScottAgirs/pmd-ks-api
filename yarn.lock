@@ -3152,10 +3152,10 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-keystone-6-oauth-next@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/keystone-6-oauth-next/-/keystone-6-oauth-next-0.0.2.tgz#3d34de8b6814e4ce50102768224a25a78fdf5ff2"
-  integrity sha512-gWiUdX1ATDMspy6fBl87uv+QruBF22f/CDL3ezxb/ESgn7lgUhHmv9KTBjOd3RQkjE7z1TTqtQ38ZaeIUpoGoA==
+keystone-6-oauth@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/keystone-6-oauth/-/keystone-6-oauth-0.0.3.tgz#d31291860157e16babb33e82a5fb09c1e8fd6b31"
+  integrity sha512-9jOcBuixOnGRzkgUyZvWXAj9l3Y+R5Qz482N0hTc81XCkPEPZdaDq7yNgLpS7HkkKfGcX0Vi+4T/qFOLTLSaBA==
   dependencies:
     "@babel/runtime" "^7.16.7"
     "@babel/runtime-corejs3" "^7.16.8"

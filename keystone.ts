@@ -1,9 +1,9 @@
 import 'dotenv/config';
 
 import slugify from 'slugify';
-import { createAuth } from 'keystone-6-oauth-next';
-import GoogleProvider from 'keystone-6-oauth-next/providers/google';
-import FacebookProvider from 'keystone-6-oauth-next/providers/facebook';
+import { createAuth } from 'keystone-6-oauth';
+import GoogleProvider from 'keystone-6-oauth/providers/google';
+import FacebookProvider from 'keystone-6-oauth/providers/facebook';
 
 import { config } from '@keystone-6/core';
 
