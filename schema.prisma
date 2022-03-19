@@ -371,6 +371,7 @@ model User {
   doctor                Doctor?           @relation("Doctor_user")
   email                 String            @unique @default("")
   firstName             String            @default("")
+  isAdmin               Boolean           @default(false)
   isDummy               Boolean           @default(false)
   isOnboarded           Boolean           @default(false)
   isOnboardedDoctor     Boolean           @default(false)

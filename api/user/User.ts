@@ -38,6 +38,7 @@ export const User = list({
       isFilterable: true,
     }),
     firstName: text(),
+    isAdmin: checkbox(),
     isDummy: checkbox(),
     isOnboarded: checkbox(),
     isOnboardedDoctor: checkbox(),

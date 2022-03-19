@@ -2727,6 +2727,7 @@ type User {
   doctor: Doctor
   email: String
   firstName: String
+  isAdmin: Boolean
   isDummy: Boolean
   isOnboarded: Boolean
   isOnboardedDoctor: Boolean
@@ -2787,6 +2788,7 @@ input UserWhereInput {
   doctor: DoctorWhereInput
   email: StringFilter
   firstName: StringFilter
+  isAdmin: BooleanFilter
   isDummy: BooleanFilter
   isOnboarded: BooleanFilter
   isOnboardedDoctor: BooleanFilter
@@ -2841,6 +2843,7 @@ input UserOrderByInput {
   dateOfBirth: OrderDirection
   email: OrderDirection
   firstName: OrderDirection
+  isAdmin: OrderDirection
   isDummy: OrderDirection
   isOnboarded: OrderDirection
   isOnboardedDoctor: OrderDirection
@@ -2868,6 +2871,7 @@ input UserUpdateInput {
   doctor: DoctorRelateToOneForUpdateInput
   email: String
   firstName: String
+  isAdmin: Boolean
   isDummy: Boolean
   isOnboarded: Boolean
   isOnboardedDoctor: Boolean
@@ -2932,6 +2936,7 @@ input UserCreateInput {
   doctor: DoctorRelateToOneForCreateInput
   email: String
   firstName: String
+  isAdmin: Boolean
   isDummy: Boolean
   isOnboarded: Boolean
   isOnboardedDoctor: Boolean
