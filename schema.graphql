@@ -3664,6 +3664,7 @@ type StepperStep {
 
 input StepperStepWhereUniqueInput {
   id: ID
+  slug: String
 }
 
 input StepperStepWhereInput {

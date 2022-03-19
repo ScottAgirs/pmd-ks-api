@@ -502,7 +502,7 @@ model StepperStep {
   isFinal           Boolean          @default(false)
   label             String           @default("")
   order             Int
-  slug              String           @default("")
+  slug              String           @unique @default("")
   stepper           Stepper?         @relation("StepperStep_stepper", fields: [stepperId], references: [id])
   stepperId         String?          @map("stepper")
   stepperStepProg   StepperStepProg? @relation("StepperStep_stepperStepProg", fields: [stepperStepProgId], references: [id])
