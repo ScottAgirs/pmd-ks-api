@@ -3,63 +3,66 @@ import { BaseItem, KeystoneContext } from "@keystone-6/core/types";
 const requiredPatientFields = [
   // @TODO: [ONBOARDING] Add required address field
   // 'address',
-  'user',
-  'healthCards',
-  'emergencyContacts',
+  "user",
+  "healthCards",
+  "emergencyContacts",
 ];
 const requiredPatientUserProfileFields = [
-  'dateOfBirth',
-  'firstName',
-  'lastName',
-  'email',
-  'sex',
+  "dateOfBirth",
+  "firstName",
+  "lastName",
+  "email",
+  "sex",
   // Address
-  'administrativeArea',
-  'postalCode',
+  "administrativeArea",
+  "postalCode",
 ];
 
 export const completePatientOnboarding = async (
-    context: KeystoneContext,
-    stepperStepProg: any,
-  ) => {
+  context: KeystoneContext,
+  stepperStepProg: any
+) => {
   const patientUser = stepperStepProg.user;
 
-  if (stepperStepProg?.stepper?.slug === 'patient') {
+  if (stepperStepProg?.stepper?.slug === "patient") {
     const userId = patientUser.id;
 
     const patientDB = context.db.Patient;
-    const userMatchedPatients = await patientDB.findMany({ 
+    const userMatchedPatients = await patientDB.findMany({
       where: {
         user: {
           id: { equals: userId },
-        }
-      }
+        },
+      },
     });
 
-    const patient = userMatchedPatients.length > 0 ? userMatchedPatients[0] : null;
+    const patient =
+      userMatchedPatients.length > 0 ? userMatchedPatients[0] : null;
 
     if (!patient) {
-      throw new Error('Patient not found');
+      throw new Error("Patient not found");
     }
-    
+
     const patientId = patient.id;
 
     let isCompleteProfile = true;
 
     // check if patient has all the required fields
-    requiredPatientFields.forEach(field => {
+    requiredPatientFields.forEach((field) => {
       if (patient[field] === null) {
-        console.warn('patient[field]', `${field} is missing.`);
+        console.warn("patient[field]", `${field} is missing.`);
         isCompleteProfile = false;
       }
     });
 
     // check if patient user profile has all the required fields
-    requiredPatientUserProfileFields.forEach(field => {
+    requiredPatientUserProfileFields.forEach((field) => {
       if (patientUser[field] === null) {
-        console.warn('patient user profile[field]', `${field} is missing.`);
+        console.warn("patient user profile[field]", `${field} is missing.`);
         isCompleteProfile = false;
-        throw new Error(`Patient user profile is missing required field: ${field}`);
+        throw new Error(
+          `Patient user profile is missing required field: ${field}`
+        );
       }
     });
 
@@ -68,31 +71,17 @@ export const completePatientOnboarding = async (
         where: {
           id: patientId as string,
         },
-        data: {
-          isCompleteProfile: true,
-        },
+        data: { isCompleteProfile: true },
       });
-      
 
-    const promptDB = context.db.Prompt;
+      const userDB = context.db.User;
 
-    const matchUserToOnboardPrompt = await promptDB.findMany({
-      where: {
-        user: {
-          id: { equals: userId },
-        },
-        promptValue: { equals: '/onboard/patient' },  
-      },
-    });
-    const matchUserToOnboardPromptId = matchUserToOnboardPrompt.length > 0 ? matchUserToOnboardPrompt[0].id : null;
-
-    if (matchUserToOnboardPromptId) {
-     await promptDB.deleteOne({
+      const onboardedUser = await userDB.updateOne({
         where: {
-          id: matchUserToOnboardPromptId as string,
+          id: userId as string,
         },
+        data: { isOnboarded: true },
       });
-    }
 
       // TODO: send email to patient user
 
@@ -105,4 +94,4 @@ export const completePatientOnboarding = async (
     }
   }
   return false;
-}
+};
