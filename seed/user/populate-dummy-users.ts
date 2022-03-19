@@ -63,7 +63,6 @@ export async function populateDummyUsers(keystone: any) {
     const { recurringSlots, ...schedule } = scheduleData;
 
     const hasSchedule = !!Object.keys(scheduleData).length;
-    console.log("0");
 
     const createdSchedule =
       hasSchedule &&
@@ -143,7 +142,6 @@ export async function populateDummyUsers(keystone: any) {
       (await keystone.db.Doctor.createOne({
         data: createDoctorData,
       }));
-    console.log("3");
 
     await keystone.db.User.createOne({
       data: {
@@ -179,11 +177,9 @@ export async function populateDummyUsers(keystone: any) {
           throw new Error(`Failed to create a user ${DUMMY_USERS[i].username}`);
         }
       });
-    console.log("4");
 
     console.log(`🦶🏼 ✅ Seeded user [${userSeedData.username}]`);
     i = i + 1;
-    console.log("DONE :: i", i);
   }
 
   console.log(`✅ Seeded [${DUMMY_USERS.length}] (🤪) Users 🌳`);
