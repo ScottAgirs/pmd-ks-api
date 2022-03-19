@@ -5,7 +5,7 @@ const DOCTOR_ONBOARDING_STEPS = [
     isFinal: false,
     label: "Public Profile",
     order: 0,
-    slug: "profile",
+    slug: "doctor-profile",
     title: "Public Profile",
   },
   {
@@ -14,7 +14,7 @@ const DOCTOR_ONBOARDING_STEPS = [
     isFinal: false,
     label: "Professional Information",
     order: 1,
-    slug: "profession",
+    slug: "doctor-profession",
     title: "Professional Information",
   },
   {
@@ -32,7 +32,7 @@ const DOCTOR_ONBOARDING_STEPS = [
     isFinal: true,
     label: "Review and Confirm",
     order: 3,
-    slug: "review",
+    slug: "doctor-review",
     title: "Review and Confirm",
   },
   {
@@ -41,10 +41,10 @@ const DOCTOR_ONBOARDING_STEPS = [
     isFinal: true,
     label: "Complete",
     order: 4,
-    slug: "final",
+    slug: "doctor-complete",
     title: "Complete",
   },
-]
+];
 
 const PATIENT_ONBOARDING_STEPS = [
   {
@@ -53,7 +53,7 @@ const PATIENT_ONBOARDING_STEPS = [
     isFinal: false,
     label: "Personal Information",
     order: 0,
-    slug: "personal-data-form",
+    slug: "patient-personal-data-form",
     title: "Personal Information",
   },
   {
@@ -62,7 +62,7 @@ const PATIENT_ONBOARDING_STEPS = [
     isFinal: false,
     label: "Contact Information",
     order: 1,
-    slug: "contacts",
+    slug: "patient-contacts",
     title: "Contact Information",
   },
   {
@@ -71,7 +71,7 @@ const PATIENT_ONBOARDING_STEPS = [
     isFinal: false,
     label: "Add Health Card Information",
     order: 2,
-    slug: "healthcard",
+    slug: "patient-healthcard",
     title: "Add Health Card Information",
   },
   {
@@ -80,7 +80,7 @@ const PATIENT_ONBOARDING_STEPS = [
     isFinal: true,
     label: "Review & Confirm",
     order: 3,
-    slug: "review",
+    slug: "patient-review",
     title: "Review & Confirm",
   },
   {
@@ -89,21 +89,20 @@ const PATIENT_ONBOARDING_STEPS = [
     isFinal: true,
     label: "Done",
     order: 4,
-    slug: "final",
+    slug: "complete-patient",
     title: "You are all set and ready to book doctors!",
   },
-]
-
+];
 
 export const STEPPERS = [
-  { 
+  {
     description: "",
     name: "Patient onboarding",
     slug: "patient",
     stepperSteps: PATIENT_ONBOARDING_STEPS,
     title: "Welcome to PocketMD",
   },
-  { 
+  {
     description: "",
     name: "Doctor Onboarding",
     slug: "doctor",
