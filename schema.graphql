@@ -1407,6 +1407,11 @@ input ScheduleRelateToOneForCreateInput {
 
 type CalendarEvent {
   id: ID!
+  description: String
+  durationMins: Int
+  isActive: Boolean
+  isConfirmationRequired: Boolean
+  title: String
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -1415,13 +1420,8 @@ type CalendarEvent {
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
   calendar: Calendar
-  description: String
-  doctor: Doctor
-  durationMins: Int
   eventType: CalendarEventType
-  isActive: Boolean
-  isConfirmationRequired: Boolean
-  title: String
+  doctor: Doctor
 }
 
 input CalendarEventWhereUniqueInput {
@@ -1433,15 +1433,15 @@ input CalendarEventWhereInput {
   OR: [CalendarEventWhereInput!]
   NOT: [CalendarEventWhereInput!]
   id: IDFilter
-  bookings: BookingManyRelationFilter
-  calendar: CalendarWhereInput
   description: StringFilter
-  doctor: DoctorWhereInput
   durationMins: IntFilter
-  eventType: CalendarEventTypeWhereInput
   isActive: BooleanFilter
   isConfirmationRequired: BooleanFilter
   title: StringFilter
+  bookings: BookingManyRelationFilter
+  calendar: CalendarWhereInput
+  eventType: CalendarEventTypeWhereInput
+  doctor: DoctorWhereInput
 }
 
 input CalendarEventOrderByInput {
@@ -1454,15 +1454,15 @@ input CalendarEventOrderByInput {
 }
 
 input CalendarEventUpdateInput {
-  bookings: BookingRelateToManyForUpdateInput
-  calendar: CalendarRelateToOneForUpdateInput
   description: String
-  doctor: DoctorRelateToOneForUpdateInput
   durationMins: Int
-  eventType: CalendarEventTypeRelateToOneForUpdateInput
   isActive: Boolean
   isConfirmationRequired: Boolean
   title: String
+  bookings: BookingRelateToManyForUpdateInput
+  calendar: CalendarRelateToOneForUpdateInput
+  eventType: CalendarEventTypeRelateToOneForUpdateInput
+  doctor: DoctorRelateToOneForUpdateInput
 }
 
 input CalendarEventTypeRelateToOneForUpdateInput {
@@ -1477,15 +1477,15 @@ input CalendarEventUpdateArgs {
 }
 
 input CalendarEventCreateInput {
-  bookings: BookingRelateToManyForCreateInput
-  calendar: CalendarRelateToOneForCreateInput
   description: String
-  doctor: DoctorRelateToOneForCreateInput
   durationMins: Int
-  eventType: CalendarEventTypeRelateToOneForCreateInput
   isActive: Boolean
   isConfirmationRequired: Boolean
   title: String
+  bookings: BookingRelateToManyForCreateInput
+  calendar: CalendarRelateToOneForCreateInput
+  eventType: CalendarEventTypeRelateToOneForCreateInput
+  doctor: DoctorRelateToOneForCreateInput
 }
 
 input CalendarEventTypeRelateToOneForCreateInput {
@@ -1785,6 +1785,7 @@ type Contract_body_Document {
 
 input ContractWhereUniqueInput {
   id: ID
+  slug: String
 }
 
 input ContractWhereInput {
@@ -2250,6 +2251,7 @@ type Language {
 
 input LanguageWhereUniqueInput {
   id: ID
+  value: String
 }
 
 input LanguageWhereInput {
@@ -2725,9 +2727,11 @@ type User {
   doctor: Doctor
   email: String
   firstName: String
+  isDummy: Boolean
+  isOnboarded: Boolean
+  isOnboardedDoctor: Boolean
   lastName: String
   middleName: String
-  isDummy: Boolean
   cellPhoneNumberString: String
   homePhoneNumberString: String
   prompts(
@@ -2783,9 +2787,11 @@ input UserWhereInput {
   doctor: DoctorWhereInput
   email: StringFilter
   firstName: StringFilter
+  isDummy: BooleanFilter
+  isOnboarded: BooleanFilter
+  isOnboardedDoctor: BooleanFilter
   lastName: StringFilter
   middleName: StringFilter
-  isDummy: BooleanFilter
   cellPhoneNumberString: StringFilter
   homePhoneNumberString: StringFilter
   prompts: PromptManyRelationFilter
@@ -2835,9 +2841,11 @@ input UserOrderByInput {
   dateOfBirth: OrderDirection
   email: OrderDirection
   firstName: OrderDirection
+  isDummy: OrderDirection
+  isOnboarded: OrderDirection
+  isOnboardedDoctor: OrderDirection
   lastName: OrderDirection
   middleName: OrderDirection
-  isDummy: OrderDirection
   cellPhoneNumberString: OrderDirection
   homePhoneNumberString: OrderDirection
   photoSrc: OrderDirection
@@ -2860,9 +2868,11 @@ input UserUpdateInput {
   doctor: DoctorRelateToOneForUpdateInput
   email: String
   firstName: String
+  isDummy: Boolean
+  isOnboarded: Boolean
+  isOnboardedDoctor: Boolean
   lastName: String
   middleName: String
-  isDummy: Boolean
   cellPhoneNumberString: String
   homePhoneNumberString: String
   prompts: PromptRelateToManyForUpdateInput
@@ -2922,9 +2932,11 @@ input UserCreateInput {
   doctor: DoctorRelateToOneForCreateInput
   email: String
   firstName: String
+  isDummy: Boolean
+  isOnboarded: Boolean
+  isOnboardedDoctor: Boolean
   lastName: String
   middleName: String
-  isDummy: Boolean
   cellPhoneNumberString: String
   homePhoneNumberString: String
   prompts: PromptRelateToManyForCreateInput
@@ -3493,6 +3505,7 @@ type Stepper {
 
 input StepperWhereUniqueInput {
   id: ID
+  slug: String
 }
 
 input StepperWhereInput {

@@ -171,22 +171,22 @@ model Calendar {
 
 model CalendarEvent {
   id                     String             @id @default(cuid())
-  bookings               Booking[]          @relation("Booking_event")
-  calendar               Calendar?          @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
-  calendarId             String?            @map("calendar")
   description            String             @default("")
-  doctor                 Doctor?            @relation("CalendarEvent_doctor", fields: [doctorId], references: [id])
-  doctorId               String?            @map("doctor")
   durationMins           Int
-  eventType              CalendarEventType? @relation("CalendarEvent_eventType", fields: [eventTypeId], references: [id])
-  eventTypeId            String?            @map("eventType")
   isActive               Boolean            @default(false)
   isConfirmationRequired Boolean            @default(false)
   title                  String             @default("")
+  bookings               Booking[]          @relation("Booking_event")
+  calendar               Calendar?          @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
+  calendarId             String?            @map("calendar")
+  eventType              CalendarEventType? @relation("CalendarEvent_eventType", fields: [eventTypeId], references: [id])
+  eventTypeId            String?            @map("eventType")
+  doctor                 Doctor?            @relation("CalendarEvent_doctor", fields: [doctorId], references: [id])
+  doctorId               String?            @map("doctor")
 
   @@index([calendarId])
-  @@index([doctorId])
   @@index([eventTypeId])
+  @@index([doctorId])
 }
 
 model CalendarEventType {
@@ -238,7 +238,7 @@ model Contract {
   isActive      Boolean   @default(false)
   body          Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   name          String    @default("")
-  slug          String    @default("")
+  slug          String    @unique @default("")
   effectiveFrom DateTime?
   lastUpdated   DateTime?
 }
@@ -285,7 +285,7 @@ model Doctor {
 model Language {
   id      String   @id @default(cuid())
   label   String   @default("")
-  value   String   @default("")
+  value   String   @unique @default("")
   doctors Doctor[] @relation("Doctor_languages")
 }
 
@@ -371,9 +371,11 @@ model User {
   doctor                Doctor?           @relation("Doctor_user")
   email                 String            @unique @default("")
   firstName             String            @default("")
+  isDummy               Boolean           @default(false)
+  isOnboarded           Boolean           @default(false)
+  isOnboardedDoctor     Boolean           @default(false)
   lastName              String            @default("")
   middleName            String            @default("")
-  isDummy               Boolean           @default(false)
   cellPhoneNumberString String            @default("")
   homePhoneNumberString String            @default("")
   prompts               Prompt[]          @relation("Prompt_user")
@@ -470,7 +472,7 @@ model Stepper {
   id               String            @id @default(cuid())
   title            String            @default("")
   name             String            @default("")
-  slug             String            @default("")
+  slug             String            @unique @default("")
   description      String            @default("")
   eyebrow          String            @default("")
   prompt           Prompt?           @relation("Prompt_stepper")
