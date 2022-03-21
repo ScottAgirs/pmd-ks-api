@@ -7,13 +7,13 @@ export async function populateSpecialties(keystone: any) {
     console.log(`----------------------------------------`);
 
     for (const specialty of SPECIALTIES) {
-      console.log(` 👨🏼‍⚕️ Adding [${specialty.label}] Specialty`);
+      console.log(` 💉 Adding [${specialty.label}] Specialty`);
       const existing = await keystone.db.DoctorSpecialty.findOne({
         where: { value: specialty.value },
       });
       if (existing) {
         console.log(
-          ` 💉 Specialty [${specialty.label}] already exists - skipping.`
+          ` 💀 Specialty [${specialty.label}] already exists - skipping.`
         );
       } else {
         try {
