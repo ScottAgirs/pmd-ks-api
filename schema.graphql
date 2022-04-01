@@ -3485,6 +3485,7 @@ type Stepper {
   description: String
   eyebrow: String
   prompt: Prompt
+  stepsOrderBySlugs: String
   stepperSteps(
     where: StepperStepWhereInput! = {}
     orderBy: [StepperStepOrderByInput!]! = []
@@ -3524,6 +3525,7 @@ input StepperWhereInput {
   description: StringFilter
   eyebrow: StringFilter
   prompt: PromptWhereInput
+  stepsOrderBySlugs: StringFilter
   stepperSteps: StepperStepManyRelationFilter
   stepperProgs: StepperProgManyRelationFilter
   stepperStepProgs: StepperStepProgManyRelationFilter
@@ -3542,6 +3544,7 @@ input StepperOrderByInput {
   slug: OrderDirection
   description: OrderDirection
   eyebrow: OrderDirection
+  stepsOrderBySlugs: OrderDirection
 }
 
 input StepperUpdateInput {
@@ -3551,6 +3554,7 @@ input StepperUpdateInput {
   description: String
   eyebrow: String
   prompt: PromptRelateToOneForUpdateInput
+  stepsOrderBySlugs: String
   stepperSteps: StepperStepRelateToManyForUpdateInput
   stepperProgs: StepperProgRelateToManyForUpdateInput
   stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
@@ -3581,6 +3585,7 @@ input StepperCreateInput {
   description: String
   eyebrow: String
   prompt: PromptRelateToOneForCreateInput
+  stepsOrderBySlugs: String
   stepperSteps: StepperStepRelateToManyForCreateInput
   stepperProgs: StepperProgRelateToManyForCreateInput
   stepperStepProgs: StepperStepProgRelateToManyForCreateInput

@@ -470,16 +470,17 @@ model Prompt {
 }
 
 model Stepper {
-  id               String            @id @default(cuid())
-  title            String            @default("")
-  name             String            @default("")
-  slug             String            @unique @default("")
-  description      String            @default("")
-  eyebrow          String            @default("")
-  prompt           Prompt?           @relation("Prompt_stepper")
-  stepperSteps     StepperStep[]     @relation("StepperStep_stepper")
-  stepperProgs     StepperProg[]     @relation("StepperProg_stepper")
-  stepperStepProgs StepperStepProg[] @relation("StepperStepProg_stepper")
+  id                String            @id @default(cuid())
+  title             String            @default("")
+  name              String            @default("")
+  slug              String            @unique @default("")
+  description       String            @default("")
+  eyebrow           String            @default("")
+  prompt            Prompt?           @relation("Prompt_stepper")
+  stepsOrderBySlugs String            @default("")
+  stepperSteps      StepperStep[]     @relation("StepperStep_stepper")
+  stepperProgs      StepperProg[]     @relation("StepperProg_stepper")
+  stepperStepProgs  StepperStepProg[] @relation("StepperStepProg_stepper")
 }
 
 model StepperProg {

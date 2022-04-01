@@ -12,6 +12,7 @@ export const Stepper = list({
     description: text(),
     eyebrow: text(),
     prompt: relationship({ ref: "Prompt.stepper" }),
+    stepsOrderBySlugs: text(),
     stepperSteps: relationship({ ref: "StepperStep.stepper", many: true }),
     stepperProgs: relationship({ ref: "StepperProg.stepper", many: true }),
     stepperStepProgs: relationship({
