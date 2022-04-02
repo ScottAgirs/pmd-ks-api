@@ -3549,8 +3549,6 @@ input StepperRelateToOneForCreateInput {
 type Pharmacy {
   id: ID!
   companyName: String
-  phoneString: String
-  faxString: String
   locations(
     where: PharmacyLocationWhereInput! = {}
     orderBy: [PharmacyLocationOrderByInput!]! = []
@@ -3571,22 +3569,16 @@ input PharmacyWhereInput {
   NOT: [PharmacyWhereInput!]
   id: IDFilter
   companyName: StringFilter
-  phoneString: StringFilter
-  faxString: StringFilter
   locations: PharmacyLocationManyRelationFilter
 }
 
 input PharmacyOrderByInput {
   id: OrderDirection
   companyName: OrderDirection
-  phoneString: OrderDirection
-  faxString: OrderDirection
 }
 
 input PharmacyUpdateInput {
   companyName: String
-  phoneString: String
-  faxString: String
   locations: PharmacyLocationRelateToManyForUpdateInput
 }
 
@@ -3597,14 +3589,15 @@ input PharmacyUpdateArgs {
 
 input PharmacyCreateInput {
   companyName: String
-  phoneString: String
-  faxString: String
   locations: PharmacyLocationRelateToManyForCreateInput
 }
 
 type PharmacyLocation {
   id: ID!
   accreditationNumber: String
+  status: String
+  phoneString: String
+  faxString: String
   address: Address
   pharmacy: Pharmacy
   patients(
@@ -3627,6 +3620,9 @@ input PharmacyLocationWhereInput {
   NOT: [PharmacyLocationWhereInput!]
   id: IDFilter
   accreditationNumber: StringFilter
+  status: StringFilter
+  phoneString: StringFilter
+  faxString: StringFilter
   address: AddressWhereInput
   pharmacy: PharmacyWhereInput
   patients: PatientManyRelationFilter
@@ -3635,10 +3631,16 @@ input PharmacyLocationWhereInput {
 input PharmacyLocationOrderByInput {
   id: OrderDirection
   accreditationNumber: OrderDirection
+  status: OrderDirection
+  phoneString: OrderDirection
+  faxString: OrderDirection
 }
 
 input PharmacyLocationUpdateInput {
   accreditationNumber: String
+  status: String
+  phoneString: String
+  faxString: String
   address: AddressRelateToOneForUpdateInput
   pharmacy: PharmacyRelateToOneForUpdateInput
   patients: PatientRelateToManyForUpdateInput
@@ -3657,6 +3659,9 @@ input PharmacyLocationUpdateArgs {
 
 input PharmacyLocationCreateInput {
   accreditationNumber: String
+  status: String
+  phoneString: String
+  faxString: String
   address: AddressRelateToOneForCreateInput
   pharmacy: PharmacyRelateToOneForCreateInput
   patients: PatientRelateToManyForCreateInput

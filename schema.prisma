@@ -475,14 +475,15 @@ model Prompt {
 model Pharmacy {
   id          String             @id @default(cuid())
   companyName String             @unique @default("")
-  phoneString String             @default("")
-  faxString   String             @default("")
   locations   PharmacyLocation[] @relation("PharmacyLocation_pharmacy")
 }
 
 model PharmacyLocation {
   id                  String    @id @default(cuid())
   accreditationNumber String    @unique @default("")
+  status              String    @default("")
+  phoneString         String    @default("")
+  faxString           String    @default("")
   address             Address?  @relation("Address_pharmacyLocation")
   pharmacy            Pharmacy? @relation("PharmacyLocation_pharmacy", fields: [pharmacyId], references: [id])
   pharmacyId          String?   @map("pharmacy")
