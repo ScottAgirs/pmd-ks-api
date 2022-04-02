@@ -26,6 +26,8 @@ import { HealthCard } from "./api/health-card/HealthCard";
 import { EmergencyContact } from "./api/emergency-contact/EmergencyContact";
 
 import { Patient } from "./api/patient/Patient";
+import { Pharmacy } from "./api/pharmacy/Pharmacy";
+import { PharmacyLocation } from "./api/pharmacy-location/PharmacyLocation";
 import { Prescription } from "./api/prescription/Prescription";
 import { PrescriptionItem } from "./api/prescription-item/PrescriptionItem";
 import { Prompt } from "./api/prompt/Prompt";
@@ -79,6 +81,9 @@ export const lists = {
   Prescription,
   PrescriptionItem,
   Prompt,
+  // Pharmacy
+  Pharmacy,
+  PharmacyLocation,
   // Stepper
   Stepper,
   StepperProg,
