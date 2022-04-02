@@ -3152,10 +3152,10 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-keystone-6-oauth@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/keystone-6-oauth/-/keystone-6-oauth-0.0.3.tgz#d31291860157e16babb33e82a5fb09c1e8fd6b31"
-  integrity sha512-9jOcBuixOnGRzkgUyZvWXAj9l3Y+R5Qz482N0hTc81XCkPEPZdaDq7yNgLpS7HkkKfGcX0Vi+4T/qFOLTLSaBA==
+keystone-6-oauth@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/keystone-6-oauth/-/keystone-6-oauth-0.0.18.tgz#c0fbfa6bc04bd4b0e02ae4566c1b98edcde36355"
+  integrity sha512-KNPJoobL9O9YawkIQ+cyDGBvESxFW3dO4QpJ334gphOfJwLwfUJKF5Zvw37YDf0auuLzD6Q6H3UivzXvC1Wcjw==
   dependencies:
     "@babel/runtime" "^7.16.7"
     "@babel/runtime-corejs3" "^7.16.8"
@@ -3164,8 +3164,7 @@ keystone-6-oauth@^0.0.3:
     cross-fetch "^3.1.5"
     ejs "^3.1.6"
     fast-deep-equal "^3.1.3"
-    graphql "^15.8.0"
-    next-auth "^4.1.2"
+    next-auth "^4.3.1"
 
 kind-of@^6.0.3:
   version "6.0.3"
@@ -3575,6 +3574,21 @@ next-auth@^4.1.2:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.2.1.tgz#042e4858d9f67b4f702d3a55bae0d2f04db3cac3"
   integrity sha512-XDtt7nqevkNf4EJ2zKAKkI+MFsURf11kx11vPwxrBYA1MHeqWwaWbGOUOI2ekNTvfAg4nTEJJUH3LV2cLrH3Tg==
+  dependencies:
+    "@babel/runtime" "^7.16.3"
+    "@panva/hkdf" "^1.0.1"
+    cookie "^0.4.1"
+    jose "^4.3.7"
+    oauth "^0.9.15"
+    openid-client "^5.1.0"
+    preact "^10.6.3"
+    preact-render-to-string "^5.1.19"
+    uuid "^8.3.2"
+
+next-auth@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.3.1.tgz#94520592d1d1851eb66ca3ad2758637e1df950e1"
+  integrity sha512-DBYEPBLq5naIqh/1i2zEHljcA1OXXecKW3NRU1W4s6R3UX3RdLZ2lWlqgBHUiZQ1zdNikFM/bYQxVGyG7bx8oA==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@panva/hkdf" "^1.0.1"
