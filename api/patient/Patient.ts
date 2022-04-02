@@ -23,6 +23,10 @@ export const Patient = list({
     forms: relationship({ ref: "Form.patient", many: true }),
     healthCards: relationship({ ref: "HealthCard.patient", many: true }),
     medications: relationship({ ref: "Medication.patient", many: true }),
+    pharmacyLocations: relationship({
+      ref: "PharmacyLocation.patients",
+      many: true,
+    }),
     prescriptions: relationship({ ref: "Prescription.patient", many: true }),
     savedDoctors: relationship({ ref: "Doctor.savedByPatients", many: true }),
     user: relationship({ ref: "User.patient" }),
