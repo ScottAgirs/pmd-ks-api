@@ -358,6 +358,32 @@ type Mutation {
   updatePrompts(data: [PromptUpdateArgs!]!): [Prompt]
   deletePrompt(where: PromptWhereUniqueInput!): Prompt
   deletePrompts(where: [PromptWhereUniqueInput!]!): [Prompt]
+  createPharmacy(data: PharmacyCreateInput!): Pharmacy
+  createPharmacies(data: [PharmacyCreateInput!]!): [Pharmacy]
+  updatePharmacy(
+    where: PharmacyWhereUniqueInput!
+    data: PharmacyUpdateInput!
+  ): Pharmacy
+  updatePharmacies(data: [PharmacyUpdateArgs!]!): [Pharmacy]
+  deletePharmacy(where: PharmacyWhereUniqueInput!): Pharmacy
+  deletePharmacies(where: [PharmacyWhereUniqueInput!]!): [Pharmacy]
+  createPharmacyLocation(data: PharmacyLocationCreateInput!): PharmacyLocation
+  createPharmacyLocations(
+    data: [PharmacyLocationCreateInput!]!
+  ): [PharmacyLocation]
+  updatePharmacyLocation(
+    where: PharmacyLocationWhereUniqueInput!
+    data: PharmacyLocationUpdateInput!
+  ): PharmacyLocation
+  updatePharmacyLocations(
+    data: [PharmacyLocationUpdateArgs!]!
+  ): [PharmacyLocation]
+  deletePharmacyLocation(
+    where: PharmacyLocationWhereUniqueInput!
+  ): PharmacyLocation
+  deletePharmacyLocations(
+    where: [PharmacyLocationWhereUniqueInput!]!
+  ): [PharmacyLocation]
   createStepper(data: StepperCreateInput!): Stepper
   createSteppers(data: [StepperCreateInput!]!): [Stepper]
   updateStepper(
@@ -414,6 +440,7 @@ type Address {
   premise: String
   thoroughfare: String
   doctorClinic: Doctor
+  pharmacyLocation: PharmacyLocation
 }
 
 input AddressWhereUniqueInput {
@@ -434,6 +461,7 @@ input AddressWhereInput {
   premise: StringFilter
   thoroughfare: StringFilter
   doctorClinic: DoctorWhereInput
+  pharmacyLocation: PharmacyLocationWhereInput
 }
 
 input IDFilter {
@@ -508,11 +536,18 @@ input AddressUpdateInput {
   premise: String
   thoroughfare: String
   doctorClinic: DoctorRelateToOneForUpdateInput
+  pharmacyLocation: PharmacyLocationRelateToOneForUpdateInput
 }
 
 input DoctorRelateToOneForUpdateInput {
   create: DoctorCreateInput
   connect: DoctorWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PharmacyLocationRelateToOneForUpdateInput {
+  create: PharmacyLocationCreateInput
+  connect: PharmacyLocationWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -531,11 +566,17 @@ input AddressCreateInput {
   premise: String
   thoroughfare: String
   doctorClinic: DoctorRelateToOneForCreateInput
+  pharmacyLocation: PharmacyLocationRelateToOneForCreateInput
 }
 
 input DoctorRelateToOneForCreateInput {
   create: DoctorCreateInput
   connect: DoctorWhereUniqueInput
+}
+
+input PharmacyLocationRelateToOneForCreateInput {
+  create: PharmacyLocationCreateInput
+  connect: PharmacyLocationWhereUniqueInput
 }
 
 type Appointment {
@@ -2975,6 +3016,8 @@ input StepperStepProgRelateToManyForCreateInput {
 
 type Patient {
   id: ID!
+  isCompleteProfile: Boolean
+  name: String
   appointments(
     where: AppointmentWhereInput! = {}
     orderBy: [AppointmentOrderByInput!]! = []
@@ -3003,6 +3046,13 @@ type Patient {
     skip: Int! = 0
   ): [Booking!]
   bookingsCount(where: BookingWhereInput! = {}): Int
+  emergencyContacts(
+    where: EmergencyContactWhereInput! = {}
+    orderBy: [EmergencyContactOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [EmergencyContact!]
+  emergencyContactsCount(where: EmergencyContactWhereInput! = {}): Int
   forms(
     where: FormWhereInput! = {}
     orderBy: [FormOrderByInput!]! = []
@@ -3017,8 +3067,6 @@ type Patient {
     skip: Int! = 0
   ): [HealthCard!]
   healthCardsCount(where: HealthCardWhereInput! = {}): Int
-  isCompleteProfile: Boolean
-  name: String
   medications(
     where: MedicationWhereInput! = {}
     orderBy: [MedicationOrderByInput!]! = []
@@ -3026,6 +3074,13 @@ type Patient {
     skip: Int! = 0
   ): [Medication!]
   medicationsCount(where: MedicationWhereInput! = {}): Int
+  pharmacyLocations(
+    where: PharmacyLocationWhereInput! = {}
+    orderBy: [PharmacyLocationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [PharmacyLocation!]
+  pharmacyLocationsCount(where: PharmacyLocationWhereInput! = {}): Int
   prescriptions(
     where: PrescriptionWhereInput! = {}
     orderBy: [PrescriptionOrderByInput!]! = []
@@ -3048,13 +3103,6 @@ type Patient {
     skip: Int! = 0
   ): [Doctor!]
   visitedDoctorsCount(where: DoctorWhereInput! = {}): Int
-  emergencyContacts(
-    where: EmergencyContactWhereInput! = {}
-    orderBy: [EmergencyContactOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [EmergencyContact!]
-  emergencyContactsCount(where: EmergencyContactWhereInput! = {}): Int
 }
 
 input PatientWhereUniqueInput {
@@ -3066,20 +3114,21 @@ input PatientWhereInput {
   OR: [PatientWhereInput!]
   NOT: [PatientWhereInput!]
   id: IDFilter
+  isCompleteProfile: BooleanFilter
+  name: StringFilter
   appointments: AppointmentManyRelationFilter
   appointmentVitals: AppointmentVitalManyRelationFilter
   appointmentNotes: AppointmentNoteManyRelationFilter
   bookings: BookingManyRelationFilter
+  emergencyContacts: EmergencyContactManyRelationFilter
   forms: FormManyRelationFilter
   healthCards: HealthCardManyRelationFilter
-  isCompleteProfile: BooleanFilter
-  name: StringFilter
   medications: MedicationManyRelationFilter
+  pharmacyLocations: PharmacyLocationManyRelationFilter
   prescriptions: PrescriptionManyRelationFilter
   savedDoctors: DoctorManyRelationFilter
   user: UserWhereInput
   visitedDoctors: DoctorManyRelationFilter
-  emergencyContacts: EmergencyContactManyRelationFilter
 }
 
 input AppointmentVitalManyRelationFilter {
@@ -3088,16 +3137,22 @@ input AppointmentVitalManyRelationFilter {
   none: AppointmentVitalWhereInput
 }
 
+input EmergencyContactManyRelationFilter {
+  every: EmergencyContactWhereInput
+  some: EmergencyContactWhereInput
+  none: EmergencyContactWhereInput
+}
+
 input MedicationManyRelationFilter {
   every: MedicationWhereInput
   some: MedicationWhereInput
   none: MedicationWhereInput
 }
 
-input EmergencyContactManyRelationFilter {
-  every: EmergencyContactWhereInput
-  some: EmergencyContactWhereInput
-  none: EmergencyContactWhereInput
+input PharmacyLocationManyRelationFilter {
+  every: PharmacyLocationWhereInput
+  some: PharmacyLocationWhereInput
+  none: PharmacyLocationWhereInput
 }
 
 input PatientOrderByInput {
@@ -3107,20 +3162,21 @@ input PatientOrderByInput {
 }
 
 input PatientUpdateInput {
+  isCompleteProfile: Boolean
+  name: String
   appointments: AppointmentRelateToManyForUpdateInput
   appointmentVitals: AppointmentVitalRelateToManyForUpdateInput
   appointmentNotes: AppointmentNoteRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
+  emergencyContacts: EmergencyContactRelateToManyForUpdateInput
   forms: FormRelateToManyForUpdateInput
   healthCards: HealthCardRelateToManyForUpdateInput
-  isCompleteProfile: Boolean
-  name: String
   medications: MedicationRelateToManyForUpdateInput
+  pharmacyLocations: PharmacyLocationRelateToManyForUpdateInput
   prescriptions: PrescriptionRelateToManyForUpdateInput
   savedDoctors: DoctorRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
   visitedDoctors: DoctorRelateToManyForUpdateInput
-  emergencyContacts: EmergencyContactRelateToManyForUpdateInput
 }
 
 input AppointmentVitalRelateToManyForUpdateInput {
@@ -3130,6 +3186,13 @@ input AppointmentVitalRelateToManyForUpdateInput {
   connect: [AppointmentVitalWhereUniqueInput!]
 }
 
+input EmergencyContactRelateToManyForUpdateInput {
+  disconnect: [EmergencyContactWhereUniqueInput!]
+  set: [EmergencyContactWhereUniqueInput!]
+  create: [EmergencyContactCreateInput!]
+  connect: [EmergencyContactWhereUniqueInput!]
+}
+
 input MedicationRelateToManyForUpdateInput {
   disconnect: [MedicationWhereUniqueInput!]
   set: [MedicationWhereUniqueInput!]
@@ -3137,11 +3200,11 @@ input MedicationRelateToManyForUpdateInput {
   connect: [MedicationWhereUniqueInput!]
 }
 
-input EmergencyContactRelateToManyForUpdateInput {
-  disconnect: [EmergencyContactWhereUniqueInput!]
-  set: [EmergencyContactWhereUniqueInput!]
-  create: [EmergencyContactCreateInput!]
-  connect: [EmergencyContactWhereUniqueInput!]
+input PharmacyLocationRelateToManyForUpdateInput {
+  disconnect: [PharmacyLocationWhereUniqueInput!]
+  set: [PharmacyLocationWhereUniqueInput!]
+  create: [PharmacyLocationCreateInput!]
+  connect: [PharmacyLocationWhereUniqueInput!]
 }
 
 input PatientUpdateArgs {
@@ -3150,20 +3213,21 @@ input PatientUpdateArgs {
 }
 
 input PatientCreateInput {
+  isCompleteProfile: Boolean
+  name: String
   appointments: AppointmentRelateToManyForCreateInput
   appointmentVitals: AppointmentVitalRelateToManyForCreateInput
   appointmentNotes: AppointmentNoteRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
+  emergencyContacts: EmergencyContactRelateToManyForCreateInput
   forms: FormRelateToManyForCreateInput
   healthCards: HealthCardRelateToManyForCreateInput
-  isCompleteProfile: Boolean
-  name: String
   medications: MedicationRelateToManyForCreateInput
+  pharmacyLocations: PharmacyLocationRelateToManyForCreateInput
   prescriptions: PrescriptionRelateToManyForCreateInput
   savedDoctors: DoctorRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
   visitedDoctors: DoctorRelateToManyForCreateInput
-  emergencyContacts: EmergencyContactRelateToManyForCreateInput
 }
 
 input AppointmentVitalRelateToManyForCreateInput {
@@ -3171,14 +3235,19 @@ input AppointmentVitalRelateToManyForCreateInput {
   connect: [AppointmentVitalWhereUniqueInput!]
 }
 
+input EmergencyContactRelateToManyForCreateInput {
+  create: [EmergencyContactCreateInput!]
+  connect: [EmergencyContactWhereUniqueInput!]
+}
+
 input MedicationRelateToManyForCreateInput {
   create: [MedicationCreateInput!]
   connect: [MedicationWhereUniqueInput!]
 }
 
-input EmergencyContactRelateToManyForCreateInput {
-  create: [EmergencyContactCreateInput!]
-  connect: [EmergencyContactWhereUniqueInput!]
+input PharmacyLocationRelateToManyForCreateInput {
+  create: [PharmacyLocationCreateInput!]
+  connect: [PharmacyLocationWhereUniqueInput!]
 }
 
 type Medication {
@@ -3475,6 +3544,127 @@ input PromptCreateInput {
 input StepperRelateToOneForCreateInput {
   create: StepperCreateInput
   connect: StepperWhereUniqueInput
+}
+
+type Pharmacy {
+  id: ID!
+  companyName: String
+  phoneString: String
+  faxString: String
+  locations(
+    where: PharmacyLocationWhereInput! = {}
+    orderBy: [PharmacyLocationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [PharmacyLocation!]
+  locationsCount(where: PharmacyLocationWhereInput! = {}): Int
+}
+
+input PharmacyWhereUniqueInput {
+  id: ID
+  companyName: String
+}
+
+input PharmacyWhereInput {
+  AND: [PharmacyWhereInput!]
+  OR: [PharmacyWhereInput!]
+  NOT: [PharmacyWhereInput!]
+  id: IDFilter
+  companyName: StringFilter
+  phoneString: StringFilter
+  faxString: StringFilter
+  locations: PharmacyLocationManyRelationFilter
+}
+
+input PharmacyOrderByInput {
+  id: OrderDirection
+  companyName: OrderDirection
+  phoneString: OrderDirection
+  faxString: OrderDirection
+}
+
+input PharmacyUpdateInput {
+  companyName: String
+  phoneString: String
+  faxString: String
+  locations: PharmacyLocationRelateToManyForUpdateInput
+}
+
+input PharmacyUpdateArgs {
+  where: PharmacyWhereUniqueInput!
+  data: PharmacyUpdateInput!
+}
+
+input PharmacyCreateInput {
+  companyName: String
+  phoneString: String
+  faxString: String
+  locations: PharmacyLocationRelateToManyForCreateInput
+}
+
+type PharmacyLocation {
+  id: ID!
+  accreditationNumber: String
+  address: Address
+  pharmacy: Pharmacy
+  patients(
+    where: PatientWhereInput! = {}
+    orderBy: [PatientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Patient!]
+  patientsCount(where: PatientWhereInput! = {}): Int
+}
+
+input PharmacyLocationWhereUniqueInput {
+  id: ID
+  accreditationNumber: String
+}
+
+input PharmacyLocationWhereInput {
+  AND: [PharmacyLocationWhereInput!]
+  OR: [PharmacyLocationWhereInput!]
+  NOT: [PharmacyLocationWhereInput!]
+  id: IDFilter
+  accreditationNumber: StringFilter
+  address: AddressWhereInput
+  pharmacy: PharmacyWhereInput
+  patients: PatientManyRelationFilter
+}
+
+input PharmacyLocationOrderByInput {
+  id: OrderDirection
+  accreditationNumber: OrderDirection
+}
+
+input PharmacyLocationUpdateInput {
+  accreditationNumber: String
+  address: AddressRelateToOneForUpdateInput
+  pharmacy: PharmacyRelateToOneForUpdateInput
+  patients: PatientRelateToManyForUpdateInput
+}
+
+input PharmacyRelateToOneForUpdateInput {
+  create: PharmacyCreateInput
+  connect: PharmacyWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PharmacyLocationUpdateArgs {
+  where: PharmacyLocationWhereUniqueInput!
+  data: PharmacyLocationUpdateInput!
+}
+
+input PharmacyLocationCreateInput {
+  accreditationNumber: String
+  address: AddressRelateToOneForCreateInput
+  pharmacy: PharmacyRelateToOneForCreateInput
+  patients: PatientRelateToManyForCreateInput
+}
+
+input PharmacyRelateToOneForCreateInput {
+  create: PharmacyCreateInput
+  connect: PharmacyWhereUniqueInput
 }
 
 type Stepper {
@@ -4088,6 +4278,22 @@ type Query {
   ): [Prompt!]
   prompt(where: PromptWhereUniqueInput!): Prompt
   promptsCount(where: PromptWhereInput! = {}): Int
+  pharmacies(
+    where: PharmacyWhereInput! = {}
+    orderBy: [PharmacyOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Pharmacy!]
+  pharmacy(where: PharmacyWhereUniqueInput!): Pharmacy
+  pharmaciesCount(where: PharmacyWhereInput! = {}): Int
+  pharmacyLocations(
+    where: PharmacyLocationWhereInput! = {}
+    orderBy: [PharmacyLocationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [PharmacyLocation!]
+  pharmacyLocation(where: PharmacyLocationWhereUniqueInput!): PharmacyLocation
+  pharmacyLocationsCount(where: PharmacyLocationWhereInput! = {}): Int
   steppers(
     where: StepperWhereInput! = {}
     orderBy: [StepperOrderByInput!]! = []
