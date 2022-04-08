@@ -439,6 +439,7 @@ type Address {
   postalCode: String
   premise: String
   thoroughfare: String
+  user: User
   doctorClinic: Doctor
   pharmacyLocation: PharmacyLocation
 }
@@ -460,6 +461,7 @@ input AddressWhereInput {
   postalCode: StringFilter
   premise: StringFilter
   thoroughfare: StringFilter
+  user: UserWhereInput
   doctorClinic: DoctorWhereInput
   pharmacyLocation: PharmacyLocationWhereInput
 }
@@ -535,8 +537,15 @@ input AddressUpdateInput {
   postalCode: String
   premise: String
   thoroughfare: String
+  user: UserRelateToOneForUpdateInput
   doctorClinic: DoctorRelateToOneForUpdateInput
   pharmacyLocation: PharmacyLocationRelateToOneForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input DoctorRelateToOneForUpdateInput {
@@ -565,8 +574,14 @@ input AddressCreateInput {
   postalCode: String
   premise: String
   thoroughfare: String
+  user: UserRelateToOneForCreateInput
   doctorClinic: DoctorRelateToOneForCreateInput
   pharmacyLocation: PharmacyLocationRelateToOneForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input DoctorRelateToOneForCreateInput {
@@ -2187,12 +2202,6 @@ input PrescriptionRelateToManyForUpdateInput {
   connect: [PrescriptionWhereUniqueInput!]
 }
 
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
-}
-
 input DoctorUpdateArgs {
   where: DoctorWhereUniqueInput!
   data: DoctorUpdateInput!
@@ -2270,11 +2279,6 @@ input PatientRelateToManyForCreateInput {
 input PrescriptionRelateToManyForCreateInput {
   create: [PrescriptionCreateInput!]
   connect: [PrescriptionWhereUniqueInput!]
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 type Language {
@@ -2776,6 +2780,7 @@ type User {
   middleName: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
+  address: Address
   prompts(
     where: PromptWhereInput! = {}
     orderBy: [PromptOrderByInput!]! = []
@@ -2837,6 +2842,7 @@ input UserWhereInput {
   middleName: StringFilter
   cellPhoneNumberString: StringFilter
   homePhoneNumberString: StringFilter
+  address: AddressWhereInput
   prompts: PromptManyRelationFilter
   patient: PatientWhereInput
   photoSrc: StringFilter
@@ -2920,6 +2926,7 @@ input UserUpdateInput {
   middleName: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
+  address: AddressRelateToOneForUpdateInput
   prompts: PromptRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
   photoSrc: String
@@ -2985,6 +2992,7 @@ input UserCreateInput {
   middleName: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
+  address: AddressRelateToOneForCreateInput
   prompts: PromptRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
   photoSrc: String
