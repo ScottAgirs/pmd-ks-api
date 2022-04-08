@@ -49,6 +49,7 @@ export const User = list({
     cellPhoneNumberString: text(),
     homePhoneNumberString: text(),
     // Phone numbers end
+    address: relationship({ ref: "Address.user" }),
     prompts: relationship({ ref: "Prompt.user", many: true }),
     patient: relationship({ ref: "Patient.user" }),
     photoSrc: text(),
