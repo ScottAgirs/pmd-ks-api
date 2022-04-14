@@ -9,7 +9,6 @@
     "postinstall": "keystone postinstall --fix"
   },
   "dependencies": {
-    "@keystone-6/auth": "^1.0.2",
     "@keystone-6/core": "^1.0.1",
     "@keystone-6/fields-document": "^1.0.0",
     "@opensaas/keystone-nextjs-auth": "^20.2.0",
