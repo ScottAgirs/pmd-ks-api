@@ -39,10 +39,27 @@ if (!sessionSecret) {
 }
 
 const auth = createAuth({
-  listKey: "User",
-  identityField: "subjectId",
-  sessionData: `id username email firstName lastName photoSrc`,
   autoCreate: true,
+  keystonePath: "/admin",
+  identityField: "subjectId",
+  listKey: "User",
+  sessionData: `id username email firstName lastName photoSrc`,
+  // pages: {
+  //   error: "/auth/error",
+  //   signIn: "/auth/sign-in",
+  // },
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "GoogleNextAuthClientID",
+      clientSecret:
+        process.env.GOOGLE_CLIENT_SECRET || "GoogleNextAuthClientSecret",
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID || "NextAuthClientID",
+      clientSecret:
+        process.env.FACEBOOK_CLIENT_SECRET || "NextAuthClientSecret",
+    }),
+  ],
   resolver: async (props: any) => {
     const username = slugify(props.user.name as string, {
       replacement: "-", // replace spaces with replacement character, defaults to `-`
@@ -61,25 +78,11 @@ const auth = createAuth({
 
     return { email, photoSrc, firstName, lastName, username };
   },
-  keystonePath: "/admin",
   sessionSecret,
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "GoogleNextAuthClientID",
-      clientSecret:
-        process.env.GOOGLE_CLIENT_SECRET || "GoogleNextAuthClientSecret",
-    }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID || "NextAuthClientID",
-      clientSecret:
-        process.env.FACEBOOK_CLIENT_SECRET || "NextAuthClientSecret",
-    }),
-  ],
 });
 
 // DEFAULT KEYSTONE CONFIG
 export default auth.withAuth(
-  // Using the config function helps typescript guide you to the available options.
   config({
     server: {
       port: process.env.PORT as any, // default: 3000
@@ -115,7 +118,6 @@ export default auth.withAuth(
           populateCalendarEventTypes(keystone);
           populateContracts(keystone);
           populateLanguages(keystone);
-          populatePharmacies(keystone);
           populateSpecialties(keystone);
           populateSteppers(keystone);
           populateSubSpecialties(keystone);
