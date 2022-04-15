@@ -115,6 +115,7 @@ export default auth.withAuth(
           populateCalendarEventTypes(keystone);
           populateContracts(keystone);
           populateLanguages(keystone);
+          populatePharmacies(keystone);
           populateSpecialties(keystone);
           populateSteppers(keystone);
           populateSubSpecialties(keystone);
