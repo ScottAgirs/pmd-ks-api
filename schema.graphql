@@ -358,6 +358,15 @@ type Mutation {
   updatePrompts(data: [PromptUpdateArgs!]!): [Prompt]
   deletePrompt(where: PromptWhereUniqueInput!): Prompt
   deletePrompts(where: [PromptWhereUniqueInput!]!): [Prompt]
+  createProfilePhoto(data: ProfilePhotoCreateInput!): ProfilePhoto
+  createProfilePhotos(data: [ProfilePhotoCreateInput!]!): [ProfilePhoto]
+  updateProfilePhoto(
+    where: ProfilePhotoWhereUniqueInput!
+    data: ProfilePhotoUpdateInput!
+  ): ProfilePhoto
+  updateProfilePhotos(data: [ProfilePhotoUpdateArgs!]!): [ProfilePhoto]
+  deleteProfilePhoto(where: ProfilePhotoWhereUniqueInput!): ProfilePhoto
+  deleteProfilePhotos(where: [ProfilePhotoWhereUniqueInput!]!): [ProfilePhoto]
   createPharmacy(data: PharmacyCreateInput!): Pharmacy
   createPharmacies(data: [PharmacyCreateInput!]!): [Pharmacy]
   updatePharmacy(
@@ -2780,6 +2789,9 @@ type User {
   middleName: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
+  photoSrc: String
+  sex: String
+  username: String
   address: Address
   prompts(
     where: PromptWhereInput! = {}
@@ -2788,9 +2800,8 @@ type User {
     skip: Int! = 0
   ): [Prompt!]
   promptsCount(where: PromptWhereInput! = {}): Int
+  profilePhoto: ProfilePhoto
   patient: Patient
-  photoSrc: String
-  sex: String
   stepperProgs(
     where: StepperProgWhereInput! = {}
     orderBy: [StepperProgOrderByInput!]! = []
@@ -2805,7 +2816,6 @@ type User {
     skip: Int! = 0
   ): [StepperStepProg!]
   stepperStepProgsCount(where: StepperStepProgWhereInput! = {}): Int
-  username: String
 }
 
 input UserWhereUniqueInput {
@@ -2842,14 +2852,15 @@ input UserWhereInput {
   middleName: StringFilter
   cellPhoneNumberString: StringFilter
   homePhoneNumberString: StringFilter
-  address: AddressWhereInput
-  prompts: PromptManyRelationFilter
-  patient: PatientWhereInput
   photoSrc: StringFilter
   sex: StringFilter
+  username: StringFilter
+  address: AddressWhereInput
+  prompts: PromptManyRelationFilter
+  profilePhoto: ProfilePhotoWhereInput
+  patient: PatientWhereInput
   stepperProgs: StepperProgManyRelationFilter
   stepperStepProgs: StepperStepProgManyRelationFilter
-  username: StringFilter
 }
 
 input ContractManyRelationFilter {
@@ -2926,14 +2937,15 @@ input UserUpdateInput {
   middleName: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
-  address: AddressRelateToOneForUpdateInput
-  prompts: PromptRelateToManyForUpdateInput
-  patient: PatientRelateToOneForUpdateInput
   photoSrc: String
   sex: String
+  username: String
+  address: AddressRelateToOneForUpdateInput
+  prompts: PromptRelateToManyForUpdateInput
+  profilePhoto: ProfilePhotoRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
   stepperProgs: StepperProgRelateToManyForUpdateInput
   stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
-  username: String
 }
 
 input ContractRelateToManyForUpdateInput {
@@ -2948,6 +2960,12 @@ input PromptRelateToManyForUpdateInput {
   set: [PromptWhereUniqueInput!]
   create: [PromptCreateInput!]
   connect: [PromptWhereUniqueInput!]
+}
+
+input ProfilePhotoRelateToOneForUpdateInput {
+  create: ProfilePhotoCreateInput
+  connect: ProfilePhotoWhereUniqueInput
+  disconnect: Boolean
 }
 
 input StepperProgRelateToManyForUpdateInput {
@@ -2992,14 +3010,15 @@ input UserCreateInput {
   middleName: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
-  address: AddressRelateToOneForCreateInput
-  prompts: PromptRelateToManyForCreateInput
-  patient: PatientRelateToOneForCreateInput
   photoSrc: String
   sex: String
+  username: String
+  address: AddressRelateToOneForCreateInput
+  prompts: PromptRelateToManyForCreateInput
+  profilePhoto: ProfilePhotoRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
   stepperProgs: StepperProgRelateToManyForCreateInput
   stepperStepProgs: StepperStepProgRelateToManyForCreateInput
-  username: String
 }
 
 input ContractRelateToManyForCreateInput {
@@ -3010,6 +3029,11 @@ input ContractRelateToManyForCreateInput {
 input PromptRelateToManyForCreateInput {
   create: [PromptCreateInput!]
   connect: [PromptWhereUniqueInput!]
+}
+
+input ProfilePhotoRelateToOneForCreateInput {
+  create: ProfilePhotoCreateInput
+  connect: ProfilePhotoWhereUniqueInput
 }
 
 input StepperProgRelateToManyForCreateInput {
@@ -3552,6 +3576,102 @@ input PromptCreateInput {
 input StepperRelateToOneForCreateInput {
   create: StepperCreateInput
   connect: StepperWhereUniqueInput
+}
+
+type ProfilePhoto {
+  id: ID!
+  src: CloudinaryImage_File
+  altText: String
+  user: User
+}
+
+type CloudinaryImage_File {
+  id: ID
+  filename: String
+  originalFilename: String
+  mimetype: String
+  encoding: String
+  publicUrl: String
+  publicUrlTransformed(transformation: CloudinaryImageFormat): String
+}
+
+"""
+Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+All options are strings as they ultimately end up in a URL.
+"""
+input CloudinaryImageFormat {
+  """
+   Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  """
+  prettyName: String
+  width: String
+  height: String
+  crop: String
+  aspect_ratio: String
+  gravity: String
+  zoom: String
+  x: String
+  y: String
+  format: String
+  fetch_format: String
+  quality: String
+  radius: String
+  angle: String
+  effect: String
+  opacity: String
+  border: String
+  background: String
+  overlay: String
+  underlay: String
+  default_image: String
+  delay: String
+  color: String
+  color_space: String
+  dpr: String
+  page: String
+  density: String
+  flags: String
+  transformation: String
+}
+
+input ProfilePhotoWhereUniqueInput {
+  id: ID
+}
+
+input ProfilePhotoWhereInput {
+  AND: [ProfilePhotoWhereInput!]
+  OR: [ProfilePhotoWhereInput!]
+  NOT: [ProfilePhotoWhereInput!]
+  id: IDFilter
+  altText: StringFilter
+  user: UserWhereInput
+}
+
+input ProfilePhotoOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
+}
+
+input ProfilePhotoUpdateInput {
+  src: Upload
+  altText: String
+  user: UserRelateToOneForUpdateInput
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input ProfilePhotoUpdateArgs {
+  where: ProfilePhotoWhereUniqueInput!
+  data: ProfilePhotoUpdateInput!
+}
+
+input ProfilePhotoCreateInput {
+  src: Upload
+  altText: String
+  user: UserRelateToOneForCreateInput
 }
 
 type Pharmacy {
@@ -4291,6 +4411,14 @@ type Query {
   ): [Prompt!]
   prompt(where: PromptWhereUniqueInput!): Prompt
   promptsCount(where: PromptWhereInput! = {}): Int
+  profilePhotos(
+    where: ProfilePhotoWhereInput! = {}
+    orderBy: [ProfilePhotoOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ProfilePhoto!]
+  profilePhoto(where: ProfilePhotoWhereUniqueInput!): ProfilePhoto
+  profilePhotosCount(where: ProfilePhotoWhereInput! = {}): Int
   pharmacies(
     where: PharmacyWhereInput! = {}
     orderBy: [PharmacyOrderByInput!]! = []
