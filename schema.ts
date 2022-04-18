@@ -29,6 +29,7 @@ import { Patient } from "./api/patient/Patient";
 import { Pharmacy } from "./api/pharmacy/Pharmacy";
 import { PharmacyLocation } from "./api/pharmacy-location/PharmacyLocation";
 import { Prescription } from "./api/prescription/Prescription";
+import { ProfilePhoto } from "./api/profile-photo/model/ProfilePhoto";
 import { PrescriptionItem } from "./api/prescription-item/PrescriptionItem";
 import { Prompt } from "./api/prompt/Prompt";
 
@@ -81,6 +82,7 @@ export const lists = {
   Prescription,
   PrescriptionItem,
   Prompt,
+  ProfilePhoto,
   // Pharmacy
   Pharmacy,
   PharmacyLocation,

@@ -4,7 +4,8 @@ const { list } = require("@keystone-6/core");
 
 export const EmergencyContact = list({
   fields: {
-    email: text({ validation: { isRequired: true } }),
+    // Maybe add a relationship to the patient?
+    email: text({ validation: { isRequired: false } }),
     relation: text(),
     firstName: text({ validation: { isRequired: true } }),
     lastName: text({ validation: { isRequired: true } }),

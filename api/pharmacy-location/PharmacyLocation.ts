@@ -7,6 +7,9 @@ export const PharmacyLocation = list({
     accreditationNumber: text({
       isIndexed: "unique",
     }),
+    status: text(),
+    phoneString: text(),
+    faxString: text(),
     // Relationships
     address: relationship({ ref: "Address.pharmacyLocation" }),
     pharmacy: relationship({ ref: "Pharmacy.locations" }),

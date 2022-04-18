@@ -21,6 +21,7 @@ import { populateDummyUsers } from "./seed/user/populate-dummy-users";
 import { populateLanguages } from "./seed/common/populate-languages";
 import { populateSteppers } from "./seed/onboard/populate-stepper";
 import { populateAdminUsers } from "./seed/user/populate-admin-users";
+import { populatePharmacies } from "./seed/common/populate-pharmacies";
 // import { resetList } from "./utils/resetList";
 
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
@@ -38,10 +39,27 @@ if (!sessionSecret) {
 }
 
 const auth = createAuth({
-  listKey: "User",
-  identityField: "subjectId",
-  sessionData: `id username email firstName lastName photoSrc`,
   autoCreate: true,
+  keystonePath: "/admin",
+  identityField: "subjectId",
+  listKey: "User",
+  sessionData: `id username email firstName lastName photoSrc`,
+  // pages: {
+  //   error: "/auth/error",
+  //   signIn: "/auth/sign-in",
+  // },
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "GoogleNextAuthClientID",
+      clientSecret:
+        process.env.GOOGLE_CLIENT_SECRET || "GoogleNextAuthClientSecret",
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID || "NextAuthClientID",
+      clientSecret:
+        process.env.FACEBOOK_CLIENT_SECRET || "NextAuthClientSecret",
+    }),
+  ],
   resolver: async (props: any) => {
     const username = slugify(props.user.name as string, {
       replacement: "-", // replace spaces with replacement character, defaults to `-`
@@ -60,25 +78,11 @@ const auth = createAuth({
 
     return { email, photoSrc, firstName, lastName, username };
   },
-  keystonePath: "/admin",
   sessionSecret,
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "GoogleNextAuthClientID",
-      clientSecret:
-        process.env.GOOGLE_CLIENT_SECRET || "GoogleNextAuthClientSecret",
-    }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID || "NextAuthClientID",
-      clientSecret:
-        process.env.FACEBOOK_CLIENT_SECRET || "NextAuthClientSecret",
-    }),
-  ],
 });
 
 // DEFAULT KEYSTONE CONFIG
 export default auth.withAuth(
-  // Using the config function helps typescript guide you to the available options.
   config({
     server: {
       port: process.env.PORT as any, // default: 3000
@@ -102,6 +106,14 @@ export default auth.withAuth(
         // if (process.argv.includes("--reset-steppers")) {
         //   resetList("StepperStep", keystone);
         // }
+        // if (process.argv.includes("--reset-pharmas")) {
+        //   console.log("Got request to reset Pharmas");
+        //   // resetList("Pharmacy", keystone);
+        //   resetList("PharmacyLocation", keystone);
+        // }
+        if (process.argv.includes("--seed-pharmas")) {
+          populatePharmacies(keystone);
+        }
         if (process.argv.includes("--seed-critical")) {
           populateCalendarEventTypes(keystone);
           populateContracts(keystone);

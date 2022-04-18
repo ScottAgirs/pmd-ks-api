@@ -21,6 +21,8 @@ model Address {
   postalCode         String            @default("")
   premise            String            @default("")
   thoroughfare       String            @default("")
+  user               User?             @relation("Address_user", fields: [userId], references: [id])
+  userId             String?           @unique @map("user")
   doctorClinic       Doctor?           @relation("Address_doctorClinic", fields: [doctorClinicId], references: [id])
   doctorClinicId     String?           @unique @map("doctorClinic")
   pharmacyLocation   PharmacyLocation? @relation("Address_pharmacyLocation", fields: [pharmacyLocationId], references: [id])
@@ -381,13 +383,15 @@ model User {
   middleName            String            @default("")
   cellPhoneNumberString String            @default("")
   homePhoneNumberString String            @default("")
-  prompts               Prompt[]          @relation("Prompt_user")
-  patient               Patient?          @relation("Patient_user")
   photoSrc              String            @default("")
   sex                   String            @default("")
+  username              String            @unique @default("")
+  address               Address?          @relation("Address_user")
+  prompts               Prompt[]          @relation("Prompt_user")
+  profilePhoto          ProfilePhoto?     @relation("ProfilePhoto_user")
+  patient               Patient?          @relation("Patient_user")
   stepperProgs          StepperProg[]     @relation("StepperProg_user")
   stepperStepProgs      StepperStepProg[] @relation("StepperStepProg_user")
-  username              String            @unique @default("")
 }
 
 model Patient {
@@ -472,17 +476,26 @@ model Prompt {
   @@index([userId])
 }
 
+model ProfilePhoto {
+  id      String  @id @default(cuid())
+  src     Json?
+  altText String  @default("")
+  user    User?   @relation("ProfilePhoto_user", fields: [userId], references: [id])
+  userId  String? @unique @map("user")
+}
+
 model Pharmacy {
   id          String             @id @default(cuid())
   companyName String             @unique @default("")
-  phoneString String             @default("")
-  faxString   String             @default("")
   locations   PharmacyLocation[] @relation("PharmacyLocation_pharmacy")
 }
 
 model PharmacyLocation {
   id                  String    @id @default(cuid())
   accreditationNumber String    @unique @default("")
+  status              String    @default("")
+  phoneString         String    @default("")
+  faxString           String    @default("")
   address             Address?  @relation("Address_pharmacyLocation")
   pharmacy            Pharmacy? @relation("PharmacyLocation_pharmacy", fields: [pharmacyId], references: [id])
   pharmacyId          String?   @map("pharmacy")

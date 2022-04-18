@@ -358,6 +358,15 @@ type Mutation {
   updatePrompts(data: [PromptUpdateArgs!]!): [Prompt]
   deletePrompt(where: PromptWhereUniqueInput!): Prompt
   deletePrompts(where: [PromptWhereUniqueInput!]!): [Prompt]
+  createProfilePhoto(data: ProfilePhotoCreateInput!): ProfilePhoto
+  createProfilePhotos(data: [ProfilePhotoCreateInput!]!): [ProfilePhoto]
+  updateProfilePhoto(
+    where: ProfilePhotoWhereUniqueInput!
+    data: ProfilePhotoUpdateInput!
+  ): ProfilePhoto
+  updateProfilePhotos(data: [ProfilePhotoUpdateArgs!]!): [ProfilePhoto]
+  deleteProfilePhoto(where: ProfilePhotoWhereUniqueInput!): ProfilePhoto
+  deleteProfilePhotos(where: [ProfilePhotoWhereUniqueInput!]!): [ProfilePhoto]
   createPharmacy(data: PharmacyCreateInput!): Pharmacy
   createPharmacies(data: [PharmacyCreateInput!]!): [Pharmacy]
   updatePharmacy(
@@ -439,6 +448,7 @@ type Address {
   postalCode: String
   premise: String
   thoroughfare: String
+  user: User
   doctorClinic: Doctor
   pharmacyLocation: PharmacyLocation
 }
@@ -460,6 +470,7 @@ input AddressWhereInput {
   postalCode: StringFilter
   premise: StringFilter
   thoroughfare: StringFilter
+  user: UserWhereInput
   doctorClinic: DoctorWhereInput
   pharmacyLocation: PharmacyLocationWhereInput
 }
@@ -535,8 +546,15 @@ input AddressUpdateInput {
   postalCode: String
   premise: String
   thoroughfare: String
+  user: UserRelateToOneForUpdateInput
   doctorClinic: DoctorRelateToOneForUpdateInput
   pharmacyLocation: PharmacyLocationRelateToOneForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input DoctorRelateToOneForUpdateInput {
@@ -565,8 +583,14 @@ input AddressCreateInput {
   postalCode: String
   premise: String
   thoroughfare: String
+  user: UserRelateToOneForCreateInput
   doctorClinic: DoctorRelateToOneForCreateInput
   pharmacyLocation: PharmacyLocationRelateToOneForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input DoctorRelateToOneForCreateInput {
@@ -2187,12 +2211,6 @@ input PrescriptionRelateToManyForUpdateInput {
   connect: [PrescriptionWhereUniqueInput!]
 }
 
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
-}
-
 input DoctorUpdateArgs {
   where: DoctorWhereUniqueInput!
   data: DoctorUpdateInput!
@@ -2270,11 +2288,6 @@ input PatientRelateToManyForCreateInput {
 input PrescriptionRelateToManyForCreateInput {
   create: [PrescriptionCreateInput!]
   connect: [PrescriptionWhereUniqueInput!]
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 type Language {
@@ -2776,6 +2789,10 @@ type User {
   middleName: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
+  photoSrc: String
+  sex: String
+  username: String
+  address: Address
   prompts(
     where: PromptWhereInput! = {}
     orderBy: [PromptOrderByInput!]! = []
@@ -2783,9 +2800,8 @@ type User {
     skip: Int! = 0
   ): [Prompt!]
   promptsCount(where: PromptWhereInput! = {}): Int
+  profilePhoto: ProfilePhoto
   patient: Patient
-  photoSrc: String
-  sex: String
   stepperProgs(
     where: StepperProgWhereInput! = {}
     orderBy: [StepperProgOrderByInput!]! = []
@@ -2800,7 +2816,6 @@ type User {
     skip: Int! = 0
   ): [StepperStepProg!]
   stepperStepProgsCount(where: StepperStepProgWhereInput! = {}): Int
-  username: String
 }
 
 input UserWhereUniqueInput {
@@ -2837,13 +2852,15 @@ input UserWhereInput {
   middleName: StringFilter
   cellPhoneNumberString: StringFilter
   homePhoneNumberString: StringFilter
-  prompts: PromptManyRelationFilter
-  patient: PatientWhereInput
   photoSrc: StringFilter
   sex: StringFilter
+  username: StringFilter
+  address: AddressWhereInput
+  prompts: PromptManyRelationFilter
+  profilePhoto: ProfilePhotoWhereInput
+  patient: PatientWhereInput
   stepperProgs: StepperProgManyRelationFilter
   stepperStepProgs: StepperStepProgManyRelationFilter
-  username: StringFilter
 }
 
 input ContractManyRelationFilter {
@@ -2920,13 +2937,15 @@ input UserUpdateInput {
   middleName: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
-  prompts: PromptRelateToManyForUpdateInput
-  patient: PatientRelateToOneForUpdateInput
   photoSrc: String
   sex: String
+  username: String
+  address: AddressRelateToOneForUpdateInput
+  prompts: PromptRelateToManyForUpdateInput
+  profilePhoto: ProfilePhotoRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
   stepperProgs: StepperProgRelateToManyForUpdateInput
   stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
-  username: String
 }
 
 input ContractRelateToManyForUpdateInput {
@@ -2941,6 +2960,12 @@ input PromptRelateToManyForUpdateInput {
   set: [PromptWhereUniqueInput!]
   create: [PromptCreateInput!]
   connect: [PromptWhereUniqueInput!]
+}
+
+input ProfilePhotoRelateToOneForUpdateInput {
+  create: ProfilePhotoCreateInput
+  connect: ProfilePhotoWhereUniqueInput
+  disconnect: Boolean
 }
 
 input StepperProgRelateToManyForUpdateInput {
@@ -2985,13 +3010,15 @@ input UserCreateInput {
   middleName: String
   cellPhoneNumberString: String
   homePhoneNumberString: String
-  prompts: PromptRelateToManyForCreateInput
-  patient: PatientRelateToOneForCreateInput
   photoSrc: String
   sex: String
+  username: String
+  address: AddressRelateToOneForCreateInput
+  prompts: PromptRelateToManyForCreateInput
+  profilePhoto: ProfilePhotoRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
   stepperProgs: StepperProgRelateToManyForCreateInput
   stepperStepProgs: StepperStepProgRelateToManyForCreateInput
-  username: String
 }
 
 input ContractRelateToManyForCreateInput {
@@ -3002,6 +3029,11 @@ input ContractRelateToManyForCreateInput {
 input PromptRelateToManyForCreateInput {
   create: [PromptCreateInput!]
   connect: [PromptWhereUniqueInput!]
+}
+
+input ProfilePhotoRelateToOneForCreateInput {
+  create: ProfilePhotoCreateInput
+  connect: ProfilePhotoWhereUniqueInput
 }
 
 input StepperProgRelateToManyForCreateInput {
@@ -3546,11 +3578,105 @@ input StepperRelateToOneForCreateInput {
   connect: StepperWhereUniqueInput
 }
 
+type ProfilePhoto {
+  id: ID!
+  src: CloudinaryImage_File
+  altText: String
+  user: User
+}
+
+type CloudinaryImage_File {
+  id: ID
+  filename: String
+  originalFilename: String
+  mimetype: String
+  encoding: String
+  publicUrl: String
+  publicUrlTransformed(transformation: CloudinaryImageFormat): String
+}
+
+"""
+Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+All options are strings as they ultimately end up in a URL.
+"""
+input CloudinaryImageFormat {
+  """
+   Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  """
+  prettyName: String
+  width: String
+  height: String
+  crop: String
+  aspect_ratio: String
+  gravity: String
+  zoom: String
+  x: String
+  y: String
+  format: String
+  fetch_format: String
+  quality: String
+  radius: String
+  angle: String
+  effect: String
+  opacity: String
+  border: String
+  background: String
+  overlay: String
+  underlay: String
+  default_image: String
+  delay: String
+  color: String
+  color_space: String
+  dpr: String
+  page: String
+  density: String
+  flags: String
+  transformation: String
+}
+
+input ProfilePhotoWhereUniqueInput {
+  id: ID
+}
+
+input ProfilePhotoWhereInput {
+  AND: [ProfilePhotoWhereInput!]
+  OR: [ProfilePhotoWhereInput!]
+  NOT: [ProfilePhotoWhereInput!]
+  id: IDFilter
+  altText: StringFilter
+  user: UserWhereInput
+}
+
+input ProfilePhotoOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
+}
+
+input ProfilePhotoUpdateInput {
+  src: Upload
+  altText: String
+  user: UserRelateToOneForUpdateInput
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input ProfilePhotoUpdateArgs {
+  where: ProfilePhotoWhereUniqueInput!
+  data: ProfilePhotoUpdateInput!
+}
+
+input ProfilePhotoCreateInput {
+  src: Upload
+  altText: String
+  user: UserRelateToOneForCreateInput
+}
+
 type Pharmacy {
   id: ID!
   companyName: String
-  phoneString: String
-  faxString: String
   locations(
     where: PharmacyLocationWhereInput! = {}
     orderBy: [PharmacyLocationOrderByInput!]! = []
@@ -3571,22 +3697,16 @@ input PharmacyWhereInput {
   NOT: [PharmacyWhereInput!]
   id: IDFilter
   companyName: StringFilter
-  phoneString: StringFilter
-  faxString: StringFilter
   locations: PharmacyLocationManyRelationFilter
 }
 
 input PharmacyOrderByInput {
   id: OrderDirection
   companyName: OrderDirection
-  phoneString: OrderDirection
-  faxString: OrderDirection
 }
 
 input PharmacyUpdateInput {
   companyName: String
-  phoneString: String
-  faxString: String
   locations: PharmacyLocationRelateToManyForUpdateInput
 }
 
@@ -3597,14 +3717,15 @@ input PharmacyUpdateArgs {
 
 input PharmacyCreateInput {
   companyName: String
-  phoneString: String
-  faxString: String
   locations: PharmacyLocationRelateToManyForCreateInput
 }
 
 type PharmacyLocation {
   id: ID!
   accreditationNumber: String
+  status: String
+  phoneString: String
+  faxString: String
   address: Address
   pharmacy: Pharmacy
   patients(
@@ -3627,6 +3748,9 @@ input PharmacyLocationWhereInput {
   NOT: [PharmacyLocationWhereInput!]
   id: IDFilter
   accreditationNumber: StringFilter
+  status: StringFilter
+  phoneString: StringFilter
+  faxString: StringFilter
   address: AddressWhereInput
   pharmacy: PharmacyWhereInput
   patients: PatientManyRelationFilter
@@ -3635,10 +3759,16 @@ input PharmacyLocationWhereInput {
 input PharmacyLocationOrderByInput {
   id: OrderDirection
   accreditationNumber: OrderDirection
+  status: OrderDirection
+  phoneString: OrderDirection
+  faxString: OrderDirection
 }
 
 input PharmacyLocationUpdateInput {
   accreditationNumber: String
+  status: String
+  phoneString: String
+  faxString: String
   address: AddressRelateToOneForUpdateInput
   pharmacy: PharmacyRelateToOneForUpdateInput
   patients: PatientRelateToManyForUpdateInput
@@ -3657,6 +3787,9 @@ input PharmacyLocationUpdateArgs {
 
 input PharmacyLocationCreateInput {
   accreditationNumber: String
+  status: String
+  phoneString: String
+  faxString: String
   address: AddressRelateToOneForCreateInput
   pharmacy: PharmacyRelateToOneForCreateInput
   patients: PatientRelateToManyForCreateInput
@@ -4278,6 +4411,14 @@ type Query {
   ): [Prompt!]
   prompt(where: PromptWhereUniqueInput!): Prompt
   promptsCount(where: PromptWhereInput! = {}): Int
+  profilePhotos(
+    where: ProfilePhotoWhereInput! = {}
+    orderBy: [ProfilePhotoOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ProfilePhoto!]
+  profilePhoto(where: ProfilePhotoWhereUniqueInput!): ProfilePhoto
+  profilePhotosCount(where: ProfilePhotoWhereInput! = {}): Int
   pharmacies(
     where: PharmacyWhereInput! = {}
     orderBy: [PharmacyOrderByInput!]! = []
