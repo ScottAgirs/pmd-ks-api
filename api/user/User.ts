@@ -48,15 +48,16 @@ export const User = list({
     // Phone numbers start
     cellPhoneNumberString: text(),
     homePhoneNumberString: text(),
+    photoSrc: text(),
+    sex: text(),
+    username: text({ isIndexed: "unique", validation: { isRequired: true } }),
     // Phone numbers end
     address: relationship({ ref: "Address.user" }),
     prompts: relationship({ ref: "Prompt.user", many: true }),
+    profilePhoto: relationship({ ref: "ProfilePhoto.user" }),
     patient: relationship({ ref: "Patient.user" }),
-    photoSrc: text(),
-    sex: text(),
     stepperProgs: relationship({ ref: "StepperProg.user", many: true }),
     stepperStepProgs: relationship({ ref: "StepperStepProg.user", many: true }),
-    username: text({ isIndexed: "unique", validation: { isRequired: true } }),
   },
   ui: {
     labelField: "email",
