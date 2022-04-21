@@ -21,8 +21,8 @@ import { populateDummyUsers } from "./seed/user/populate-dummy-users";
 import { populateLanguages } from "./seed/common/populate-languages";
 import { populateSteppers } from "./seed/onboard/populate-stepper";
 import { populateAdminUsers } from "./seed/user/populate-admin-users";
+import { resetList } from "./utils/resetList";
 import { populatePharmacies } from "./seed/common/populate-pharmacies";
-// import { resetList } from "./utils/resetList";
 
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
 
@@ -106,11 +106,11 @@ export default auth.withAuth(
         // if (process.argv.includes("--reset-steppers")) {
         //   resetList("StepperStep", keystone);
         // }
-        // if (process.argv.includes("--reset-pharmas")) {
-        //   console.log("Got request to reset Pharmas");
-        //   // resetList("Pharmacy", keystone);
-        //   resetList("PharmacyLocation", keystone);
-        // }
+        if (process.argv.includes("--reset-pharmas")) {
+          console.log("Got request to reset Pharmas");
+          resetList("Pharmacy", keystone);
+          resetList("PharmacyLocation", keystone);
+        }
         if (process.argv.includes("--seed-pharmas")) {
           populatePharmacies(keystone);
         }

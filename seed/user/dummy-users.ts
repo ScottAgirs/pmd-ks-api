@@ -1,4 +1,4 @@
-var { faker } = require('@faker-js/faker'); // https://fakerjs.dev/
+var { faker } = require("@faker-js/faker"); // https://fakerjs.dev/
 
 export const ADMIN_USERS = [
   {
@@ -13,7 +13,7 @@ export const ADMIN_USERS = [
           isVerified: true,
           nameOnCard: "Scott Agi",
           versionCode: "Y3",
-        }
+        },
       ],
       emergencyContacts: [
         {
@@ -22,25 +22,21 @@ export const ADMIN_USERS = [
           firstName: "Chuck",
           lastName: "Norris",
           cellPhoneNumberString: "4163334444",
-        }
-      ]
+        },
+      ],
     },
     isDummy: false,
     cellPhoneNumberString: "6136007789",
     homePhoneNumberString: "",
     email: "scott.agirs@gmail.com",
-    country: "CA",
-    administrativeArea: "ON",
-    locality: "Toronto",
-    postalCode: "M5J 2H2",
     dateOfBirth: "1990-12-24T18:12:21.313Z",
     firstName: "Scott",
     lastName: "Agirs",
-    subjectId:"123123123",
+    subjectId: "123123123",
     sex: "male",
     username: "admin",
-  }
-]
+  },
+];
 
 export const DUMMY_USERS = [
   // Patient Users
@@ -57,7 +53,7 @@ export const DUMMY_USERS = [
           isVerified: true,
           nameOnCard: "",
           versionCode: "Y3",
-        }
+        },
       ],
       emergencyContacts: [
         {
@@ -66,22 +62,18 @@ export const DUMMY_USERS = [
           firstName: "",
           lastName: "",
           cellPhoneNumberString: "4163334444",
-        }
-      ]
+        },
+      ],
     },
     isDummy: true,
     photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     email: "pat-0@example.com",
-    country: "CA",
-    administrativeArea: "ON",
-    locality: "Toronto",
-    postalCode: "M5J 2H2",
     dateOfBirth: "",
     firstName: "",
     lastName: "",
-    subjectId:"123123124",
+    subjectId: "123123124",
     sex: "male",
     username: "",
   },
@@ -98,7 +90,7 @@ export const DUMMY_USERS = [
           isVerified: true,
           nameOnCard: "",
           versionCode: "Y2",
-        }
+        },
       ],
       emergencyContacts: [
         {
@@ -107,22 +99,18 @@ export const DUMMY_USERS = [
           firstName: "",
           lastName: "",
           cellPhoneNumberString: "4163334444",
-        }
-      ]
+        },
+      ],
     },
     isDummy: true,
     photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     // email: "",
-    country: "CA",
-    administrativeArea: "ON",
-    locality: "Toronto",
-    postalCode: "M5J 2H2",
     dateOfBirth: "",
     firstName: "",
     lastName: "",
-    subjectId:"123123125",
+    subjectId: "123123125",
     sex: "male",
     username: "",
   },
@@ -139,7 +127,7 @@ export const DUMMY_USERS = [
           isVerified: true,
           nameOnCard: "",
           versionCode: "Y1",
-        }
+        },
       ],
       emergencyContacts: [
         {
@@ -148,22 +136,18 @@ export const DUMMY_USERS = [
           firstName: "",
           lastName: "",
           cellPhoneNumberString: "4163334444",
-        }
-      ]
+        },
+      ],
     },
     isDummy: true,
     photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     // email: "",
-    country: "CA",
-    administrativeArea: "ON",
-    locality: "Toronto",
-    postalCode: "M5J 2H2",
     dateOfBirth: "",
     firstName: "",
     lastName: "",
-    subjectId:"123123126",
+    subjectId: "123123126",
     sex: "male",
     username: "",
   },
@@ -184,37 +168,34 @@ export const DUMMY_USERS = [
                 {
                   from: "09:00:00",
                   to: "09:15:00",
-                }
+                },
               ],
-            }
+            },
           ],
-          title: 'Working Hours',
-          tz: 'America/Toronto',
-
+          title: "Working Hours",
+          tz: "America/Toronto",
         },
         events: [
-          { 
+          {
             description: "In-person examination",
             durationMins: 15,
-            eventType: {  value: "in-person"},
+            eventType: { value: "in-person" },
             isActive: true,
             title: "In-person examination",
           },
-          { 
+          {
             description: "Virtual Appointment",
             durationMins: 15,
-            eventType: {  value: "virtual"},
+            eventType: { value: "virtual" },
             isActive: true,
             title: "Virtual Appointment",
-          }
-        ]
+          },
+        ],
       },
       doctorSpecialty: {
-        value: "anesthesiology"
+        value: "anesthesiology",
       },
-      doctorSubSpecialties: [
-        { value: "cardiology" }
-      ],
+      doctorSubSpecialties: [{ value: "cardiology" }],
       doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "670",
@@ -234,7 +215,7 @@ export const DUMMY_USERS = [
           isVerified: true,
           nameOnCard: "",
           versionCode: "Y4",
-        }
+        },
       ],
       emergencyContacts: [
         {
@@ -243,22 +224,18 @@ export const DUMMY_USERS = [
           firstName: "",
           lastName: "",
           cellPhoneNumberString: "4163334444",
-        }
-      ]
+        },
+      ],
     },
     isDummy: true,
     photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     email: "doc-0@example.com",
-    country: "CA",
-    administrativeArea: "ON",
-    locality: "Toronto",
-    postalCode: "M8J 1A1",
     dateOfBirth: "",
     firstName: "",
     lastName: "",
-    subjectId:"123123127",
+    subjectId: "123123127",
     sex: "male",
     username: "",
   },
@@ -278,37 +255,34 @@ export const DUMMY_USERS = [
                 {
                   from: "09:00:00",
                   to: "10:15:00",
-                }
+                },
               ],
-            }
+            },
           ],
-          title: 'Working Hours',
-          tz: 'America/Toronto',
-
+          title: "Working Hours",
+          tz: "America/Toronto",
         },
         events: [
-          { 
+          {
             description: "In-person examination",
             durationMins: 15,
-            eventType: {  value: "in-person"},
+            eventType: { value: "in-person" },
             isActive: true,
             title: "In-person examination",
           },
-          { 
+          {
             description: "Virtual Appointment",
             durationMins: 15,
-            eventType: {  value: "virtual"},
+            eventType: { value: "virtual" },
             isActive: true,
             title: "Virtual Appointment",
-          }
-        ]
+          },
+        ],
       },
       doctorSpecialty: {
-        value: "anesthesiology"
+        value: "anesthesiology",
       },
-      doctorSubSpecialties: [
-        { value: "cardiology" }
-      ],
+      doctorSubSpecialties: [{ value: "cardiology" }],
       doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "666",
@@ -328,7 +302,7 @@ export const DUMMY_USERS = [
           isVerified: true,
           nameOnCard: "",
           versionCode: "Y5",
-        }
+        },
       ],
       emergencyContacts: [
         {
@@ -337,22 +311,18 @@ export const DUMMY_USERS = [
           firstName: "",
           lastName: "",
           cellPhoneNumberString: "4163334444",
-        }
-      ]
+        },
+      ],
     },
     isDummy: true,
     photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     // email: "",
-    country: "CA",
-    administrativeArea: "ON",
-    locality: "Toronto",
-    postalCode: "M8J 1A1",
     dateOfBirth: "",
     firstName: "",
     lastName: "",
-    subjectId:"123123128",
+    subjectId: "123123128",
     sex: "male",
     username: "",
   },
@@ -372,37 +342,34 @@ export const DUMMY_USERS = [
                 {
                   from: "09:00:00",
                   to: "11:15:00",
-                }
+                },
               ],
-            }
+            },
           ],
-          title: 'Working Hours',
-          tz: 'America/Toronto',
-
+          title: "Working Hours",
+          tz: "America/Toronto",
         },
         events: [
-          { 
+          {
             description: "In-person examination",
             durationMins: 15,
-            eventType: {  value: "in-person"},
+            eventType: { value: "in-person" },
             isActive: true,
             title: "In-person examination",
           },
-          { 
+          {
             description: "Virtual Appointment",
             durationMins: 15,
-            eventType: {  value: "virtual"},
+            eventType: { value: "virtual" },
             isActive: true,
             title: "Virtual Appointment",
-          }
-        ]
+          },
+        ],
       },
       doctorSpecialty: {
-        value: "anesthesiology"
+        value: "anesthesiology",
       },
-      doctorSubSpecialties: [
-        { value: "cardiology" }
-      ],
+      doctorSubSpecialties: [{ value: "cardiology" }],
       doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "674",
@@ -422,7 +389,7 @@ export const DUMMY_USERS = [
           isVerified: true,
           nameOnCard: "",
           versionCode: "Y6",
-        }
+        },
       ],
       emergencyContacts: [
         {
@@ -431,22 +398,18 @@ export const DUMMY_USERS = [
           firstName: "",
           lastName: "",
           cellPhoneNumberString: "4163334444",
-        }
-      ]
+        },
+      ],
     },
     isDummy: true,
     photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     // email: "",
-    country: "CA",
-    administrativeArea: "ON",
-    locality: "Toronto",
-    postalCode: "M8J 1A1",
     dateOfBirth: "",
     firstName: "",
     lastName: "",
-    subjectId:"123123129",
+    subjectId: "123123129",
     sex: "female",
     username: "",
   },
@@ -466,37 +429,34 @@ export const DUMMY_USERS = [
                 {
                   from: "09:00:00",
                   to: "12:15:00",
-                }
+                },
               ],
-            }
+            },
           ],
-          title: 'Working Hours',
-          tz: 'America/Toronto',
-
+          title: "Working Hours",
+          tz: "America/Toronto",
         },
         events: [
-          { 
+          {
             description: "In-person examination",
             durationMins: 15,
-            eventType: {  value: "in-person"},
+            eventType: { value: "in-person" },
             isActive: true,
             title: "In-person examination",
-        },
-          { 
+          },
+          {
             description: "Virtual Appointment",
             durationMins: 15,
-            eventType: {  value: "virtual"},
+            eventType: { value: "virtual" },
             isActive: true,
             title: "Virtual Appointment",
-        }
-        ]
+          },
+        ],
       },
       doctorSpecialty: {
-        value: "anesthesiology"
+        value: "anesthesiology",
       },
-      doctorSubSpecialties: [
-        { value: "cardiology" }
-      ],
+      doctorSubSpecialties: [{ value: "cardiology" }],
       doctorSince: "",
       insuranceProvider: "RBC",
       insurancePolicyNumber: "676",
@@ -516,7 +476,7 @@ export const DUMMY_USERS = [
           isVerified: true,
           nameOnCard: "",
           versionCode: "Y7",
-        }
+        },
       ],
       emergencyContacts: [
         {
@@ -525,38 +485,36 @@ export const DUMMY_USERS = [
           firstName: "",
           lastName: "",
           cellPhoneNumberString: "4163334444",
-        }
-      ]
+        },
+      ],
     },
     isDummy: true,
     photoSrc: "",
     cellPhoneNumberString: "",
     homePhoneNumberString: "",
     email: "",
-    country: "CA",
-    administrativeArea: "ON",
-    locality: "Toronto",
-    postalCode: "M8J 1A1",
     dateOfBirth: "",
     firstName: "",
     lastName: "",
-    subjectId:"123123130",
+    subjectId: "123123130",
     sex: "female",
     username: "",
   },
 ];
 
 export const enrichedUsers = () => {
-  const enriched = DUMMY_USERS.map(u => {
-
+  const enriched = DUMMY_USERS.map((u) => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
     const fullName = `${firstName} ${lastName}`;
-    
+
     const emConFirstName = faker.name.firstName();
     const emConLastName = faker.name.lastName();
 
-    const dob = faker.date.between('1950-01-01T00:00:00.000Z', '1990-01-01T00:00:00.000Z');
+    const dob = faker.date.between(
+      "1950-01-01T00:00:00.000Z",
+      "1990-01-01T00:00:00.000Z"
+    );
 
     if (!u.username) {
       u.email = `${fullName.replace(" ", ".")}@example.lv`;
@@ -564,27 +522,31 @@ export const enrichedUsers = () => {
       u.lastName = lastName;
       u.username = `${firstName}-${lastName}`;
       u.photoSrc = faker.image.avatar();
-      u.cellPhoneNumberString = faker.phone.phoneNumber('416######');
+      u.cellPhoneNumberString = faker.phone.phoneNumber("416######");
 
       u.dateOfBirth = dob;
-      
+
       if (u.doctor) {
         u.doctor.calendar.name = `${firstName}'s Calendar`;
-        u.doctor.doctorSince = faker.date.between('1950-01-01T00:00:00.000Z', '2019-01-01T00:00:00.000Z');
+        u.doctor.doctorSince = faker.date.between(
+          "1950-01-01T00:00:00.000Z",
+          "2019-01-01T00:00:00.000Z"
+        );
       }
-        
+
       u.patient.healthCards[0].dateOfBirth = dob;
       u.patient.healthCards[0].expiryDate = faker.date.future();
       u.patient.healthCards[0].nameOnCard = fullName;
-      
+
       u.patient.emergencyContacts[0].firstName = emConFirstName;
       u.patient.emergencyContacts[0].lastName = emConLastName;
       u.patient.emergencyContacts[0].relation = "Dummy";
-      u.patient.emergencyContacts[0].cellPhoneNumberString = faker.phone.phoneNumber('613######');
+      u.patient.emergencyContacts[0].cellPhoneNumberString =
+        faker.phone.phoneNumber("613######");
     }
 
     return u;
-  })
+  });
 
   return enriched;
-}
+};

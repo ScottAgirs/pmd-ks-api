@@ -362,14 +362,6 @@ model EmergencyContact {
 model User {
   id                    String            @id @default(cuid())
   subjectId             String            @unique @default("")
-  country               String            @default("")
-  addressLine1          String            @default("")
-  addressLine2          String            @default("")
-  administrativeArea    String            @default("")
-  locality              String            @default("")
-  postalCode            String            @default("")
-  thoroughfare          String            @default("")
-  premise               String            @default("")
   contracts             Contract[]        @relation("Contract_signedBy")
   dateOfBirth           DateTime?
   doctor                Doctor?           @relation("Doctor_user")

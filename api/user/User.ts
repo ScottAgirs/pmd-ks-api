@@ -19,16 +19,6 @@ export const User = list({
     subjectId: text({
       isIndexed: "unique",
     }),
-    // Address start
-    country: text(),
-    addressLine1: text(),
-    addressLine2: text(),
-    administrativeArea: text(),
-    locality: text(),
-    postalCode: text(),
-    thoroughfare: text(),
-    premise: text(),
-    // Address end
     contracts: relationship({ ref: "Contract.signedBy", many: true }),
     dateOfBirth: timestamp(),
     doctor: relationship({ ref: "Doctor.user" }),

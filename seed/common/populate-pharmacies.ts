@@ -1,6 +1,8 @@
 import { PHARMACIES } from "./pharmacy-locations";
 
 export async function populatePharmacies(keystone: any) {
+  const pharmaDB = keystone.db.Pharmacy;
+  const pharmaLocDB = keystone.db.PharmacyLocation;
   try {
     console.log(`----------------------------------------`);
     console.log(`🌱 Seeding [${PHARMACIES.length}] Pharmacy Locations 🏥`);
@@ -10,7 +12,7 @@ export async function populatePharmacies(keystone: any) {
       console.log(
         ` 👨🏼‍⚕️ Adding [${pharmacyLocation.companyName}] pharmacyLocation`
       );
-      const existing = await keystone.db.PharmacyLocation.findOne({
+      const existing = await pharmaLocDB.findOne({
         where: { accreditationNumber: pharmacyLocation.accreditationNumber },
       });
       console.log(" :: existing", existing?.accreditationNumber);
@@ -22,7 +24,7 @@ export async function populatePharmacies(keystone: any) {
       } else {
         console.log("Will create new PharmacyLocation");
         let pharmaBrandName;
-        const existingPharmaBrand = await keystone.db.Pharmacy.findOne({
+        const existingPharmaBrand = await pharmaDB.findOne({
           where: { companyName: pharmacyLocation.companyName },
         });
 
@@ -31,7 +33,7 @@ export async function populatePharmacies(keystone: any) {
         if (existingPharmaBrand) {
           pharmaBrandName = existingPharmaBrand.companyName;
         } else {
-          const newPharmaBrand = await keystone.db.Pharmacy.createOne({
+          const newPharmaBrand = await pharmaDB.createOne({
             data: {
               companyName: pharmacyLocation.companyName,
             },
@@ -42,7 +44,7 @@ export async function populatePharmacies(keystone: any) {
 
         // Create new Pharmacy Location
         try {
-          await keystone.db.PharmacyLocation.createOne({
+          await pharmaLocDB.createOne({
             data: {
               accreditationNumber: pharmacyLocation.accreditationNumber,
               address: {

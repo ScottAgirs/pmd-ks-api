@@ -2762,14 +2762,6 @@ input EmergencyContactCreateInput {
 type User {
   id: ID!
   subjectId: String
-  country: String
-  addressLine1: String
-  addressLine2: String
-  administrativeArea: String
-  locality: String
-  postalCode: String
-  thoroughfare: String
-  premise: String
   contracts(
     where: ContractWhereInput! = {}
     orderBy: [ContractOrderByInput!]! = []
@@ -2831,14 +2823,6 @@ input UserWhereInput {
   NOT: [UserWhereInput!]
   id: IDFilter
   subjectId: StringFilter
-  country: StringFilter
-  addressLine1: StringFilter
-  addressLine2: StringFilter
-  administrativeArea: StringFilter
-  locality: StringFilter
-  postalCode: StringFilter
-  thoroughfare: StringFilter
-  premise: StringFilter
   contracts: ContractManyRelationFilter
   dateOfBirth: DateTimeNullableFilter
   doctor: DoctorWhereInput
@@ -2890,14 +2874,6 @@ input StepperStepProgManyRelationFilter {
 input UserOrderByInput {
   id: OrderDirection
   subjectId: OrderDirection
-  country: OrderDirection
-  addressLine1: OrderDirection
-  addressLine2: OrderDirection
-  administrativeArea: OrderDirection
-  locality: OrderDirection
-  postalCode: OrderDirection
-  thoroughfare: OrderDirection
-  premise: OrderDirection
   dateOfBirth: OrderDirection
   email: OrderDirection
   firstName: OrderDirection
@@ -2916,14 +2892,6 @@ input UserOrderByInput {
 
 input UserUpdateInput {
   subjectId: String
-  country: String
-  addressLine1: String
-  addressLine2: String
-  administrativeArea: String
-  locality: String
-  postalCode: String
-  thoroughfare: String
-  premise: String
   contracts: ContractRelateToManyForUpdateInput
   dateOfBirth: DateTime
   doctor: DoctorRelateToOneForUpdateInput
@@ -2989,14 +2957,6 @@ input UserUpdateArgs {
 
 input UserCreateInput {
   subjectId: String
-  country: String
-  addressLine1: String
-  addressLine2: String
-  administrativeArea: String
-  locality: String
-  postalCode: String
-  thoroughfare: String
-  premise: String
   contracts: ContractRelateToManyForCreateInput
   dateOfBirth: DateTime
   doctor: DoctorRelateToOneForCreateInput
