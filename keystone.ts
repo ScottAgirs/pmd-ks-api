@@ -111,9 +111,9 @@ export default auth.withAuth(
           resetList("Pharmacy", keystone);
           resetList("PharmacyLocation", keystone);
         }
-        // if (process.argv.includes("--seed-pharmas")) {
-        populatePharmacies(keystone);
-        // }
+        if (process.argv.includes("--seed-pharmas")) {
+          populatePharmacies(keystone);
+        }
         if (process.argv.includes("--seed-critical")) {
           populateCalendarEventTypes(keystone);
           populateContracts(keystone);
