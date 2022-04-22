@@ -76,6 +76,15 @@ const PATIENT_ONBOARDING_STEPS = [
   },
   {
     description: "",
+    component: "healthcard",
+    isFinal: false,
+    label: "Add Health Card Information",
+    order: 2,
+    slug: "emergency-contacts",
+    title: "Add Health Card Information",
+  },
+  {
+    description: "",
     component: "review",
     isFinal: true,
     label: "Review & Confirm",
