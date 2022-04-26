@@ -109,6 +109,8 @@ export const STEPPERS = [
     name: "Patient onboarding",
     slug: "patient",
     stepperSteps: PATIENT_ONBOARDING_STEPS,
+    stepsOrderBySlugs:
+      "patient-personal-data-form, patient-contacts, patient-healthcard, emergency-contacts, patient-review, complete-patient",
     title: "Welcome to PocketMD",
   },
   {
@@ -116,6 +118,8 @@ export const STEPPERS = [
     name: "Doctor Onboarding",
     slug: "doctor",
     stepperSteps: DOCTOR_ONBOARDING_STEPS,
+    stepsOrderBySlugs:
+      "doctor-profile, doctor-profession, doctor-contract, doctor-review, doctor-complete",
     title: "Next Generation Health Care",
   },
 ];
