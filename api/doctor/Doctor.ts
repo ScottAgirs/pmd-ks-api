@@ -1,4 +1,9 @@
-import { checkbox, relationship, text, timestamp } from "@keystone-6/core/fields";
+import {
+  checkbox,
+  relationship,
+  text,
+  timestamp,
+} from "@keystone-6/core/fields";
 import { afterCreateDoctor } from "./hooks/afterCreateDoctor";
 import { KeystoneContext } from "@keystone-6/core/types";
 
@@ -20,7 +25,7 @@ export const Doctor = list({
     clinicOHIPBillingCode: text(),
     // TODO: doctorSpecializations
     // TODO: contractSignedOn time must be max 1 hour in the future and min 15 mins in the past
-    calendar: relationship({ ref: 'Calendar.doctor' }),
+    calendar: relationship({ ref: "Calendar.doctor" }),
     contractSignedOn: timestamp(),
     doctorSince: timestamp({ validation: { isRequired: true } }),
     email: text(),
@@ -33,25 +38,37 @@ export const Doctor = list({
     province: text(),
     summary: text(),
     // Links
-    appointments: relationship({ ref: 'Appointment.doctor', many: true  }),
-    billings: relationship({ ref: 'AppointmentBilling.doctor', many: true }),
-    bookings: relationship({ ref: 'Booking.doctor', many: true }),
-    calendarEvents: relationship({ ref: 'CalendarEvent.doctor', many: true }),
-    clinicAddress: relationship({ ref: 'Address.doctorClinic' }),
-    doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors' }),
-    doctorSubSpecialties: relationship({ ref: 'DoctorSubSpecialty.doctors', many: true }),
-    forms: relationship({ ref: 'Form.doctor', many: true }),
-    languages: relationship({ ref: 'Language.doctors', many: true }),
-    patients: relationship({ ref: 'Patient.visitedDoctors', many: true }),
-    prescriptions: relationship({ ref: 'Prescription.doctor', many: true }),
-    savedByPatients: relationship({ ref: 'Patient.savedDoctors', many: true }),
-    user: relationship({ ref: 'User.doctor' }),
+    appointments: relationship({ ref: "Appointment.doctor", many: true }),
+    billings: relationship({ ref: "AppointmentBilling.doctor", many: true }),
+    bookings: relationship({ ref: "Booking.doctor", many: true }),
+    calendarEvents: relationship({ ref: "CalendarEvent.doctor", many: true }),
+    clinicAddress: relationship({ ref: "Address.doctorClinic" }),
+    doctorSpecialty: relationship({ ref: "DoctorSpecialty.doctors" }),
+    doctorSubSpecialties: relationship({
+      ref: "DoctorSubSpecialty.doctors",
+      many: true,
+    }),
+    forms: relationship({ ref: "Form.doctor", many: true }),
+    languages: relationship({ ref: "Language.doctors", many: true }),
+    patients: relationship({ ref: "Patient.visitedDoctors", many: true }),
+    prescriptions: relationship({ ref: "Prescription.doctor", many: true }),
+    proofOfIdentification: relationship({
+      ref: "ProofOfIdentification.doctor",
+    }),
+    proofOfInsurance: relationship({ ref: "ProofOfInsurance.doctor" }),
+    proofOfLicense: relationship({ ref: "ProofOfLicense.doctor" }),
+    savedByPatients: relationship({ ref: "Patient.savedDoctors", many: true }),
+    user: relationship({ ref: "User.doctor" }),
   },
   hooks: {
-    afterOperation: async ({ context, item, operation }:AfterCreateItemArgs) => {
-      if (operation === 'create') {
-        afterCreateDoctor({ context, item })
+    afterOperation: async ({
+      context,
+      item,
+      operation,
+    }: AfterCreateItemArgs) => {
+      if (operation === "create") {
+        afterCreateDoctor({ context, item });
       }
     },
   },
-}) 
+});
