@@ -31,6 +31,11 @@ import { PharmacyLocation } from "./api/pharmacy-location/PharmacyLocation";
 import { Prescription } from "./api/prescription/Prescription";
 import { ProfilePhoto } from "./api/profile-photo/model/ProfilePhoto";
 import { PrescriptionItem } from "./api/prescription-item/PrescriptionItem";
+
+import { ProofOfIdentification } from "./api/proof-of-identification/model/ProofOfIdentification";
+import { ProofOfInsurance } from "./api/proof-of-insurance/model/ProofOfInsurance";
+import { ProofOfLicense } from "./api/proof-of-license/model/ProofOfLicense";
+
 import { Prompt } from "./api/prompt/Prompt";
 
 import { Stepper } from "./api/stepper/Stepper";
@@ -83,6 +88,9 @@ export const lists = {
   PrescriptionItem,
   Prompt,
   ProfilePhoto,
+  ProofOfIdentification,
+  ProofOfInsurance,
+  ProofOfLicense,
   // Pharmacy
   Pharmacy,
   PharmacyLocation,
