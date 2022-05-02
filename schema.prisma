@@ -248,40 +248,46 @@ model Contract {
 }
 
 model Doctor {
-  id                    String               @id @default(cuid())
-  clinicName            String               @default("")
-  clinicPhoneNumber     String               @default("")
-  clinicFaxNumber       String               @default("")
-  clinicFMN             String               @default("")
-  clinicSLI             String               @default("")
-  clinicOHIPBillingCode String               @default("")
-  calendar              Calendar?            @relation("Calendar_doctor")
-  contractSignedOn      DateTime?
-  doctorSince           DateTime
-  email                 String               @default("")
-  insurancePolicyNumber String               @default("")
-  insuranceProvider     String               @default("")
-  isCompleteProfile     Boolean              @default(false)
-  isVerified            Boolean              @default(false)
-  licensedBy            String               @default("")
-  licenseNumber         String               @default("")
-  province              String               @default("")
-  summary               String               @default("")
-  appointments          Appointment[]        @relation("Appointment_doctor")
-  billings              AppointmentBilling[] @relation("AppointmentBilling_doctor")
-  bookings              Booking[]            @relation("Booking_doctor")
-  calendarEvents        CalendarEvent[]      @relation("CalendarEvent_doctor")
-  clinicAddress         Address?             @relation("Address_doctorClinic")
-  doctorSpecialty       DoctorSpecialty?     @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])
-  doctorSpecialtyId     String?              @map("doctorSpecialty")
-  doctorSubSpecialties  DoctorSubSpecialty[] @relation("Doctor_doctorSubSpecialties")
-  forms                 Form[]               @relation("Form_doctor")
-  languages             Language[]           @relation("Doctor_languages")
-  patients              Patient[]            @relation("Doctor_patients")
-  prescriptions         Prescription[]       @relation("Prescription_doctor")
-  savedByPatients       Patient[]            @relation("Doctor_savedByPatients")
-  user                  User?                @relation("Doctor_user", fields: [userId], references: [id])
-  userId                String?              @unique @map("user")
+  id                      String                 @id @default(cuid())
+  clinicName              String                 @default("")
+  clinicPhoneNumber       String                 @default("")
+  clinicFaxNumber         String                 @default("")
+  clinicFMN               String                 @default("")
+  clinicSLI               String                 @default("")
+  clinicOHIPBillingCode   String                 @default("")
+  calendar                Calendar?              @relation("Calendar_doctor")
+  contractSignedOn        DateTime?
+  doctorSince             DateTime
+  email                   String                 @default("")
+  insurancePolicyNumber   String                 @default("")
+  insuranceProvider       String                 @default("")
+  isCompleteProfile       Boolean                @default(false)
+  isVerified              Boolean                @default(false)
+  licensedBy              String                 @default("")
+  licenseNumber           String                 @default("")
+  province                String                 @default("")
+  summary                 String                 @default("")
+  appointments            Appointment[]          @relation("Appointment_doctor")
+  billings                AppointmentBilling[]   @relation("AppointmentBilling_doctor")
+  bookings                Booking[]              @relation("Booking_doctor")
+  calendarEvents          CalendarEvent[]        @relation("CalendarEvent_doctor")
+  clinicAddress           Address?               @relation("Address_doctorClinic")
+  doctorSpecialty         DoctorSpecialty?       @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])
+  doctorSpecialtyId       String?                @map("doctorSpecialty")
+  doctorSubSpecialties    DoctorSubSpecialty[]   @relation("Doctor_doctorSubSpecialties")
+  forms                   Form[]                 @relation("Form_doctor")
+  languages               Language[]             @relation("Doctor_languages")
+  patients                Patient[]              @relation("Doctor_patients")
+  prescriptions           Prescription[]         @relation("Prescription_doctor")
+  proofOfIdentification   ProofOfIdentification? @relation("Doctor_proofOfIdentification", fields: [proofOfIdentificationId], references: [id])
+  proofOfIdentificationId String?                @unique @map("proofOfIdentification")
+  proofOfInsurance        ProofOfInsurance?      @relation("Doctor_proofOfInsurance", fields: [proofOfInsuranceId], references: [id])
+  proofOfInsuranceId      String?                @unique @map("proofOfInsurance")
+  proofOfLicense          ProofOfLicense?        @relation("Doctor_proofOfLicense", fields: [proofOfLicenseId], references: [id])
+  proofOfLicenseId        String?                @unique @map("proofOfLicense")
+  savedByPatients         Patient[]              @relation("Doctor_savedByPatients")
+  user                    User?                  @relation("Doctor_user", fields: [userId], references: [id])
+  userId                  String?                @unique @map("user")
 
   @@index([doctorSpecialtyId])
 }
@@ -474,6 +480,30 @@ model ProfilePhoto {
   altText String  @default("")
   user    User?   @relation("ProfilePhoto_user", fields: [userId], references: [id])
   userId  String? @unique @map("user")
+}
+
+model ProofOfIdentification {
+  id         String  @id @default(cuid())
+  src        Json?
+  altText    String  @default("")
+  doctor     Doctor? @relation("Doctor_proofOfIdentification")
+  isVerified Boolean @default(false)
+}
+
+model ProofOfInsurance {
+  id         String  @id @default(cuid())
+  src        Json?
+  altText    String  @default("")
+  doctor     Doctor? @relation("Doctor_proofOfInsurance")
+  isVerified Boolean @default(false)
+}
+
+model ProofOfLicense {
+  id         String  @id @default(cuid())
+  src        Json?
+  altText    String  @default("")
+  doctor     Doctor? @relation("Doctor_proofOfLicense")
+  isVerified Boolean @default(false)
 }
 
 model Pharmacy {

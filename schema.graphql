@@ -367,6 +367,53 @@ type Mutation {
   updateProfilePhotos(data: [ProfilePhotoUpdateArgs!]!): [ProfilePhoto]
   deleteProfilePhoto(where: ProfilePhotoWhereUniqueInput!): ProfilePhoto
   deleteProfilePhotos(where: [ProfilePhotoWhereUniqueInput!]!): [ProfilePhoto]
+  createProofOfIdentification(
+    data: ProofOfIdentificationCreateInput!
+  ): ProofOfIdentification
+  createProofOfIdentifications(
+    data: [ProofOfIdentificationCreateInput!]!
+  ): [ProofOfIdentification]
+  updateProofOfIdentification(
+    where: ProofOfIdentificationWhereUniqueInput!
+    data: ProofOfIdentificationUpdateInput!
+  ): ProofOfIdentification
+  updateProofOfIdentifications(
+    data: [ProofOfIdentificationUpdateArgs!]!
+  ): [ProofOfIdentification]
+  deleteProofOfIdentification(
+    where: ProofOfIdentificationWhereUniqueInput!
+  ): ProofOfIdentification
+  deleteProofOfIdentifications(
+    where: [ProofOfIdentificationWhereUniqueInput!]!
+  ): [ProofOfIdentification]
+  createProofOfInsurance(data: ProofOfInsuranceCreateInput!): ProofOfInsurance
+  createProofOfInsurances(
+    data: [ProofOfInsuranceCreateInput!]!
+  ): [ProofOfInsurance]
+  updateProofOfInsurance(
+    where: ProofOfInsuranceWhereUniqueInput!
+    data: ProofOfInsuranceUpdateInput!
+  ): ProofOfInsurance
+  updateProofOfInsurances(
+    data: [ProofOfInsuranceUpdateArgs!]!
+  ): [ProofOfInsurance]
+  deleteProofOfInsurance(
+    where: ProofOfInsuranceWhereUniqueInput!
+  ): ProofOfInsurance
+  deleteProofOfInsurances(
+    where: [ProofOfInsuranceWhereUniqueInput!]!
+  ): [ProofOfInsurance]
+  createProofOfLicense(data: ProofOfLicenseCreateInput!): ProofOfLicense
+  createProofOfLicenses(data: [ProofOfLicenseCreateInput!]!): [ProofOfLicense]
+  updateProofOfLicense(
+    where: ProofOfLicenseWhereUniqueInput!
+    data: ProofOfLicenseUpdateInput!
+  ): ProofOfLicense
+  updateProofOfLicenses(data: [ProofOfLicenseUpdateArgs!]!): [ProofOfLicense]
+  deleteProofOfLicense(where: ProofOfLicenseWhereUniqueInput!): ProofOfLicense
+  deleteProofOfLicenses(
+    where: [ProofOfLicenseWhereUniqueInput!]!
+  ): [ProofOfLicense]
   createPharmacy(data: PharmacyCreateInput!): Pharmacy
   createPharmacies(data: [PharmacyCreateInput!]!): [Pharmacy]
   updatePharmacy(
@@ -2003,6 +2050,9 @@ type Doctor {
     skip: Int! = 0
   ): [Prescription!]
   prescriptionsCount(where: PrescriptionWhereInput! = {}): Int
+  proofOfIdentification: ProofOfIdentification
+  proofOfInsurance: ProofOfInsurance
+  proofOfLicense: ProofOfLicense
   savedByPatients(
     where: PatientWhereInput! = {}
     orderBy: [PatientOrderByInput!]! = []
@@ -2051,6 +2101,9 @@ input DoctorWhereInput {
   languages: LanguageManyRelationFilter
   patients: PatientManyRelationFilter
   prescriptions: PrescriptionManyRelationFilter
+  proofOfIdentification: ProofOfIdentificationWhereInput
+  proofOfInsurance: ProofOfInsuranceWhereInput
+  proofOfLicense: ProofOfLicenseWhereInput
   savedByPatients: PatientManyRelationFilter
   user: UserWhereInput
 }
@@ -2153,6 +2206,9 @@ input DoctorUpdateInput {
   languages: LanguageRelateToManyForUpdateInput
   patients: PatientRelateToManyForUpdateInput
   prescriptions: PrescriptionRelateToManyForUpdateInput
+  proofOfIdentification: ProofOfIdentificationRelateToOneForUpdateInput
+  proofOfInsurance: ProofOfInsuranceRelateToOneForUpdateInput
+  proofOfLicense: ProofOfLicenseRelateToOneForUpdateInput
   savedByPatients: PatientRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
 }
@@ -2211,6 +2267,24 @@ input PrescriptionRelateToManyForUpdateInput {
   connect: [PrescriptionWhereUniqueInput!]
 }
 
+input ProofOfIdentificationRelateToOneForUpdateInput {
+  create: ProofOfIdentificationCreateInput
+  connect: ProofOfIdentificationWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ProofOfInsuranceRelateToOneForUpdateInput {
+  create: ProofOfInsuranceCreateInput
+  connect: ProofOfInsuranceWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ProofOfLicenseRelateToOneForUpdateInput {
+  create: ProofOfLicenseCreateInput
+  connect: ProofOfLicenseWhereUniqueInput
+  disconnect: Boolean
+}
+
 input DoctorUpdateArgs {
   where: DoctorWhereUniqueInput!
   data: DoctorUpdateInput!
@@ -2246,6 +2320,9 @@ input DoctorCreateInput {
   languages: LanguageRelateToManyForCreateInput
   patients: PatientRelateToManyForCreateInput
   prescriptions: PrescriptionRelateToManyForCreateInput
+  proofOfIdentification: ProofOfIdentificationRelateToOneForCreateInput
+  proofOfInsurance: ProofOfInsuranceRelateToOneForCreateInput
+  proofOfLicense: ProofOfLicenseRelateToOneForCreateInput
   savedByPatients: PatientRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
 }
@@ -2288,6 +2365,21 @@ input PatientRelateToManyForCreateInput {
 input PrescriptionRelateToManyForCreateInput {
   create: [PrescriptionCreateInput!]
   connect: [PrescriptionWhereUniqueInput!]
+}
+
+input ProofOfIdentificationRelateToOneForCreateInput {
+  create: ProofOfIdentificationCreateInput
+  connect: ProofOfIdentificationWhereUniqueInput
+}
+
+input ProofOfInsuranceRelateToOneForCreateInput {
+  create: ProofOfInsuranceCreateInput
+  connect: ProofOfInsuranceWhereUniqueInput
+}
+
+input ProofOfLicenseRelateToOneForCreateInput {
+  create: ProofOfLicenseCreateInput
+  connect: ProofOfLicenseWhereUniqueInput
 }
 
 type Language {
@@ -3634,6 +3726,147 @@ input ProfilePhotoCreateInput {
   user: UserRelateToOneForCreateInput
 }
 
+type ProofOfIdentification {
+  id: ID!
+  src: CloudinaryImage_File
+  altText: String
+  doctor: Doctor
+  isVerified: Boolean
+}
+
+input ProofOfIdentificationWhereUniqueInput {
+  id: ID
+}
+
+input ProofOfIdentificationWhereInput {
+  AND: [ProofOfIdentificationWhereInput!]
+  OR: [ProofOfIdentificationWhereInput!]
+  NOT: [ProofOfIdentificationWhereInput!]
+  id: IDFilter
+  altText: StringFilter
+  doctor: DoctorWhereInput
+  isVerified: BooleanFilter
+}
+
+input ProofOfIdentificationOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
+  isVerified: OrderDirection
+}
+
+input ProofOfIdentificationUpdateInput {
+  src: Upload
+  altText: String
+  doctor: DoctorRelateToOneForUpdateInput
+  isVerified: Boolean
+}
+
+input ProofOfIdentificationUpdateArgs {
+  where: ProofOfIdentificationWhereUniqueInput!
+  data: ProofOfIdentificationUpdateInput!
+}
+
+input ProofOfIdentificationCreateInput {
+  src: Upload
+  altText: String
+  doctor: DoctorRelateToOneForCreateInput
+  isVerified: Boolean
+}
+
+type ProofOfInsurance {
+  id: ID!
+  src: CloudinaryImage_File
+  altText: String
+  doctor: Doctor
+  isVerified: Boolean
+}
+
+input ProofOfInsuranceWhereUniqueInput {
+  id: ID
+}
+
+input ProofOfInsuranceWhereInput {
+  AND: [ProofOfInsuranceWhereInput!]
+  OR: [ProofOfInsuranceWhereInput!]
+  NOT: [ProofOfInsuranceWhereInput!]
+  id: IDFilter
+  altText: StringFilter
+  doctor: DoctorWhereInput
+  isVerified: BooleanFilter
+}
+
+input ProofOfInsuranceOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
+  isVerified: OrderDirection
+}
+
+input ProofOfInsuranceUpdateInput {
+  src: Upload
+  altText: String
+  doctor: DoctorRelateToOneForUpdateInput
+  isVerified: Boolean
+}
+
+input ProofOfInsuranceUpdateArgs {
+  where: ProofOfInsuranceWhereUniqueInput!
+  data: ProofOfInsuranceUpdateInput!
+}
+
+input ProofOfInsuranceCreateInput {
+  src: Upload
+  altText: String
+  doctor: DoctorRelateToOneForCreateInput
+  isVerified: Boolean
+}
+
+type ProofOfLicense {
+  id: ID!
+  src: CloudinaryImage_File
+  altText: String
+  doctor: Doctor
+  isVerified: Boolean
+}
+
+input ProofOfLicenseWhereUniqueInput {
+  id: ID
+}
+
+input ProofOfLicenseWhereInput {
+  AND: [ProofOfLicenseWhereInput!]
+  OR: [ProofOfLicenseWhereInput!]
+  NOT: [ProofOfLicenseWhereInput!]
+  id: IDFilter
+  altText: StringFilter
+  doctor: DoctorWhereInput
+  isVerified: BooleanFilter
+}
+
+input ProofOfLicenseOrderByInput {
+  id: OrderDirection
+  altText: OrderDirection
+  isVerified: OrderDirection
+}
+
+input ProofOfLicenseUpdateInput {
+  src: Upload
+  altText: String
+  doctor: DoctorRelateToOneForUpdateInput
+  isVerified: Boolean
+}
+
+input ProofOfLicenseUpdateArgs {
+  where: ProofOfLicenseWhereUniqueInput!
+  data: ProofOfLicenseUpdateInput!
+}
+
+input ProofOfLicenseCreateInput {
+  src: Upload
+  altText: String
+  doctor: DoctorRelateToOneForCreateInput
+  isVerified: Boolean
+}
+
 type Pharmacy {
   id: ID!
   companyName: String
@@ -4379,6 +4612,32 @@ type Query {
   ): [ProfilePhoto!]
   profilePhoto(where: ProfilePhotoWhereUniqueInput!): ProfilePhoto
   profilePhotosCount(where: ProfilePhotoWhereInput! = {}): Int
+  proofOfIdentifications(
+    where: ProofOfIdentificationWhereInput! = {}
+    orderBy: [ProofOfIdentificationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ProofOfIdentification!]
+  proofOfIdentification(
+    where: ProofOfIdentificationWhereUniqueInput!
+  ): ProofOfIdentification
+  proofOfIdentificationsCount(where: ProofOfIdentificationWhereInput! = {}): Int
+  proofOfInsurances(
+    where: ProofOfInsuranceWhereInput! = {}
+    orderBy: [ProofOfInsuranceOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ProofOfInsurance!]
+  proofOfInsurance(where: ProofOfInsuranceWhereUniqueInput!): ProofOfInsurance
+  proofOfInsurancesCount(where: ProofOfInsuranceWhereInput! = {}): Int
+  proofOfLicenses(
+    where: ProofOfLicenseWhereInput! = {}
+    orderBy: [ProofOfLicenseOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ProofOfLicense!]
+  proofOfLicense(where: ProofOfLicenseWhereUniqueInput!): ProofOfLicense
+  proofOfLicensesCount(where: ProofOfLicenseWhereInput! = {}): Int
   pharmacies(
     where: PharmacyWhereInput! = {}
     orderBy: [PharmacyOrderByInput!]! = []
