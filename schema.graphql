@@ -1977,12 +1977,12 @@ type Doctor {
   contractSignedOn: DateTime
   doctorSince: DateTime
   email: String
-  insurancePolicyNumber: String
-  insuranceProvider: String
   isCompleteProfile: Boolean
   isVerified: Boolean
-  licensedBy: String
   licenseNumber: String
+  licenseProvider: String
+  medicalLiabilityProvider: String
+  medicalLiabilityNumber: String
   province: String
   summary: String
   appointments(
@@ -2082,12 +2082,12 @@ input DoctorWhereInput {
   contractSignedOn: DateTimeNullableFilter
   doctorSince: DateTimeFilter
   email: StringFilter
-  insurancePolicyNumber: StringFilter
-  insuranceProvider: StringFilter
   isCompleteProfile: BooleanFilter
   isVerified: BooleanFilter
-  licensedBy: StringFilter
   licenseNumber: StringFilter
+  licenseProvider: StringFilter
+  medicalLiabilityProvider: StringFilter
+  medicalLiabilityNumber: StringFilter
   province: StringFilter
   summary: StringFilter
   appointments: AppointmentManyRelationFilter
@@ -2166,12 +2166,12 @@ input DoctorOrderByInput {
   contractSignedOn: OrderDirection
   doctorSince: OrderDirection
   email: OrderDirection
-  insurancePolicyNumber: OrderDirection
-  insuranceProvider: OrderDirection
   isCompleteProfile: OrderDirection
   isVerified: OrderDirection
-  licensedBy: OrderDirection
   licenseNumber: OrderDirection
+  licenseProvider: OrderDirection
+  medicalLiabilityProvider: OrderDirection
+  medicalLiabilityNumber: OrderDirection
   province: OrderDirection
   summary: OrderDirection
 }
@@ -2187,12 +2187,12 @@ input DoctorUpdateInput {
   contractSignedOn: DateTime
   doctorSince: DateTime
   email: String
-  insurancePolicyNumber: String
-  insuranceProvider: String
   isCompleteProfile: Boolean
   isVerified: Boolean
-  licensedBy: String
   licenseNumber: String
+  licenseProvider: String
+  medicalLiabilityProvider: String
+  medicalLiabilityNumber: String
   province: String
   summary: String
   appointments: AppointmentRelateToManyForUpdateInput
@@ -2301,12 +2301,12 @@ input DoctorCreateInput {
   contractSignedOn: DateTime
   doctorSince: DateTime
   email: String
-  insurancePolicyNumber: String
-  insuranceProvider: String
   isCompleteProfile: Boolean
   isVerified: Boolean
-  licensedBy: String
   licenseNumber: String
+  licenseProvider: String
+  medicalLiabilityProvider: String
+  medicalLiabilityNumber: String
   province: String
   summary: String
   appointments: AppointmentRelateToManyForCreateInput
