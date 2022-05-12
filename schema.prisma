@@ -257,7 +257,7 @@ model Doctor {
   clinicOHIPBillingCode    String                 @default("")
   calendar                 Calendar?              @relation("Calendar_doctor")
   contractSignedOn         DateTime?
-  doctorSince              DateTime
+  doctorSince              DateTime?
   email                    String                 @default("")
   isCompleteProfile        Boolean                @default(false)
   isVerified               Boolean                @default(false)
