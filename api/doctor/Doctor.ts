@@ -27,7 +27,7 @@ export const Doctor = list({
     calendar: relationship({ ref: "Calendar.doctor" }),
     // TODO: contractSignedOn time must be max 1 hour in the future and min 15 mins in the past
     contractSignedOn: timestamp(),
-    doctorSince: timestamp({ validation: { isRequired: true } }),
+    doctorSince: timestamp(),
     email: text(),
     isCompleteProfile: checkbox(),
     isVerified: checkbox(),
