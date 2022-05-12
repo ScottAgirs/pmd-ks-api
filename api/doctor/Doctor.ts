@@ -24,8 +24,8 @@ export const Doctor = list({
     clinicSLI: text(),
     clinicOHIPBillingCode: text(),
     // TODO: doctorSpecializations
-    // TODO: contractSignedOn time must be max 1 hour in the future and min 15 mins in the past
     calendar: relationship({ ref: "Calendar.doctor" }),
+    // TODO: contractSignedOn time must be max 1 hour in the future and min 15 mins in the past
     contractSignedOn: timestamp(),
     doctorSince: timestamp({ validation: { isRequired: true } }),
     email: text(),
