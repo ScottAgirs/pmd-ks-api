@@ -43,7 +43,7 @@ const auth = createAuth({
   keystonePath: "/admin",
   identityField: "subjectId",
   listKey: "User",
-  sessionData: `id username email firstName lastName photoSrc`,
+  sessionData: `id username email firstName lastName photoSrc doctor { id }`,
   // pages: {
   //   error: "/auth/error",
   //   signIn: "/auth/sign-in",
