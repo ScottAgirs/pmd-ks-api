@@ -3,108 +3,108 @@ import { sendEmail } from "../../../lib/email/sendEmail";
 import { getCurrentUser } from "../../user/services/getCurrentUser";
 
 export interface CreateEventBookingInput {
-  eventId: string,
-  reason: string,
-  startsAt: string,
+  eventId: string;
+  reason: string;
+  startsAt: string;
 }
 
 export const createCalendarEventBooking = async (
-  root: any, {
-    eventId,
-    reason,
-    startsAt,
-  }: CreateEventBookingInput, context:KeystoneContext
-  // TODO: [TypeScript] Add type for `Promise`
+  root: any,
+  { eventId, reason, startsAt }: CreateEventBookingInput,
+  context: KeystoneContext
 ): Promise<any> => {
   if (!eventId) {
     throw new Error("eventId is required");
   }
 
   // Check user is logged in
-  const { patientId: currentUserPatientId, userId, ...user } = await getCurrentUser(context);
-
+  const {
+    patientId: currentUserPatientId,
+    userId,
+    ...user
+  } = await getCurrentUser(context);
 
   if (!user) {
-    throw new Error('User not logged in');
+    throw new Error("User not logged in");
   }
-  
+
   // Check event exists
   const event = await context.db.CalendarEvent.findOne({
     where: {
       id: eventId,
     },
-  })
+  });
   if (!event) {
-    throw new Error('event not found')
+    throw new Error("event not found");
   }
-  
-  const createdBooking = await context.db.Booking.createOne({ 
+
+  const createdBooking = await context.db.Booking.createOne({
     data: {
-      appointment:{
+      appointment: {
         // TODO: [performance] can be improved by creating in afterCreate hook
-        create:{
+        create: {
           billing: {
             create: {
               doctor: {
                 connect: {
-                  id: event.doctorId
-                }
+                  id: event.doctorId,
+                },
               },
               status: "OPEN",
-            }
+            },
           },
-          doctor:{
-            connect:{
-              id: event.doctorId
-            }
+          doctor: {
+            connect: {
+              id: event.doctorId,
+            },
           },
           notes: {
             create: {
-              title: ""
-            }
+              title: "",
+            },
           },
-          patient:{
-            connect:{
-              id: currentUserPatientId
-            }
+          patient: {
+            connect: {
+              id: currentUserPatientId,
+            },
           },
           reason,
           prescription: {
             create: {
               patient: {
                 connect: {
-                  id: currentUserPatientId
+                  id: currentUserPatientId,
                 },
               },
               doctor: {
                 connect: {
-                  id: event.doctorId
-                }
+                  id: event.doctorId,
+                },
               },
-            }
+            },
           },
           vitalsData: {
             create: {
-              resp: 0
-            }
-          }
-        }
+              resp: 0,
+            },
+          },
+        },
       },
       calendar: {
         connect: {
           id: event.calendarId,
-        }
+        },
       },
       doctor: {
         connect: {
           id: event.doctorId,
-        }
+        },
       },
       durationMins: event.durationMins,
       event: {
         connect: {
           id: eventId,
-        }
+        },
       },
       // TODO: Implement isConfirmed
       // isConfirmed: false,
@@ -112,7 +112,7 @@ export const createCalendarEventBooking = async (
       patient: {
         connect: {
           id: currentUserPatientId,
-        }
+        },
       },
       startsAt,
     },
@@ -131,4 +131,4 @@ export const createCalendarEventBooking = async (
   // })
 
   return createdBooking;
-}
+};
