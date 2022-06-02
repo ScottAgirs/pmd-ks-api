@@ -18,13 +18,8 @@ export const addPatientToDoctor = async (
   context: KeystoneContext
 ): Promise<any> => {
   const currentUser = context.session?.data;
-  console.log("currentUser", currentUser);
-  console.log("cellPhoneNumberString", cellPhoneNumberString);
-  console.log("email", email);
-  console.log("lastName", lastName);
-  console.log("firstName", firstName);
   const patientDB = context.db.Patient;
-  const doctorDB = context.db.Patient;
+
   const userMatchedPatients = await patientDB.findMany({
     where: {
       AND: [
@@ -35,14 +30,21 @@ export const addPatientToDoctor = async (
       ],
     },
   });
-  console.log("userMatchedPatients", userMatchedPatients);
 
   const existingPatient =
     userMatchedPatients.length > 0 ? userMatchedPatients[0] : null;
 
   if (!existingPatient) {
-    // Create new patient
-    // Send invite notification
+    // Check if user with email already exists
+    const emailExists = await patientDB.findMany({
+      where: { user: { email: { equals: email } } },
+    });
+
+    if (emailExists.length > 0) {
+      throw new Error("Email already exists");
+    } else {
+      throw new Error("Patient does not exist"); // THIS ERROR MSG IS TIED TO CLIENT - CHANGE WITH CAUTION AND COMPARE AGAINST CLIENT
+    }
   } else {
     const patientId = existingPatient.id;
     if (!currentUser.doctor.id) throw new Error("User is not a doctor");
