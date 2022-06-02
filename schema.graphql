@@ -2560,15 +2560,15 @@ input DoctorSubSpecialtyCreateInput {
 
 type HealthCard {
   id: ID!
-  country: Country
   dateOfBirth: DateTime
   expiryDate: DateTime
   insurancePolicyNumber: String
   insuranceProvider: String
   isVerified: Boolean
   nameOnCard: String
-  patient: Patient
   versionCode: String
+  country: Country
+  patient: Patient
 }
 
 input HealthCardWhereUniqueInput {
@@ -2580,15 +2580,15 @@ input HealthCardWhereInput {
   OR: [HealthCardWhereInput!]
   NOT: [HealthCardWhereInput!]
   id: IDFilter
-  country: CountryWhereInput
   dateOfBirth: DateTimeFilter
   expiryDate: DateTimeFilter
   insurancePolicyNumber: StringFilter
   insuranceProvider: StringFilter
   isVerified: BooleanFilter
   nameOnCard: StringFilter
-  patient: PatientWhereInput
   versionCode: StringFilter
+  country: CountryWhereInput
+  patient: PatientWhereInput
 }
 
 input DateTimeFilter {
@@ -2614,15 +2614,15 @@ input HealthCardOrderByInput {
 }
 
 input HealthCardUpdateInput {
-  country: CountryRelateToOneForUpdateInput
   dateOfBirth: DateTime
   expiryDate: DateTime
   insurancePolicyNumber: String
   insuranceProvider: String
   isVerified: Boolean
   nameOnCard: String
-  patient: PatientRelateToOneForUpdateInput
   versionCode: String
+  country: CountryRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
 }
 
 input CountryRelateToOneForUpdateInput {
@@ -2637,15 +2637,15 @@ input HealthCardUpdateArgs {
 }
 
 input HealthCardCreateInput {
-  country: CountryRelateToOneForCreateInput
   dateOfBirth: DateTime
   expiryDate: DateTime
   insurancePolicyNumber: String
   insuranceProvider: String
   isVerified: Boolean
   nameOnCard: String
-  patient: PatientRelateToOneForCreateInput
   versionCode: String
+  country: CountryRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
 }
 
 input CountryRelateToOneForCreateInput {

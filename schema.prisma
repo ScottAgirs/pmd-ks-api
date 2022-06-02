@@ -316,17 +316,17 @@ model DoctorSubSpecialty {
 
 model HealthCard {
   id                    String   @id @default(cuid())
-  country               Country? @relation("HealthCard_country", fields: [countryId], references: [id])
-  countryId             String?  @map("country")
   dateOfBirth           DateTime
   expiryDate            DateTime
   insurancePolicyNumber String   @default("")
   insuranceProvider     String   @default("")
   isVerified            Boolean  @default(false)
   nameOnCard            String   @default("")
+  versionCode           String   @default("")
+  country               Country? @relation("HealthCard_country", fields: [countryId], references: [id])
+  countryId             String?  @map("country")
   patient               Patient? @relation("HealthCard_patient", fields: [patientId], references: [id])
   patientId             String?  @map("patient")
-  versionCode           String   @default("")
 
   @@index([countryId])
   @@index([patientId])
