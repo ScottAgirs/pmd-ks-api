@@ -16,7 +16,6 @@ export const HealthCard = list({
     isVerified: checkbox(),
     nameOnCard: text({ validation: { isRequired: true } }),
     versionCode: text({ validation: { isRequired: true } }),
-    country: relationship({ ref: "Country.healthCards" }),
     patient: relationship({ ref: "Patient.healthCards" }),
   },
 });
