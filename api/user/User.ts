@@ -48,6 +48,7 @@ export const User = list({
     patient: relationship({ ref: "Patient.user" }),
     stepperProgs: relationship({ ref: "StepperProg.user", many: true }),
     stepperStepProgs: relationship({ ref: "StepperStepProg.user", many: true }),
+    userInvites: relationship({ ref: "UserInvite.invitedByUser", many: true }),
   },
   ui: {
     labelField: "email",
