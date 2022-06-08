@@ -63,6 +63,10 @@ export const Doctor = list({
     proofOfLicense: relationship({ ref: "ProofOfLicense.doctor" }),
     savedByPatients: relationship({ ref: "Patient.savedDoctors", many: true }),
     user: relationship({ ref: "User.doctor" }),
+    userInvites: relationship({
+      ref: "UserInvite.invitedByDoctor",
+      many: true,
+    }),
   },
   hooks: {
     afterOperation: async ({
