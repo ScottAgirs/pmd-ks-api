@@ -92,4 +92,6 @@ export const inviteUserByDoctor = async (
   } catch (error) {
     console.log("createHealthCard - error", error);
   }
+
+  return createdUserInvite;
 };
