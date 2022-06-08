@@ -289,6 +289,7 @@ model Doctor {
   savedByPatients          Patient[]              @relation("Doctor_savedByPatients")
   user                     User?                  @relation("Doctor_user", fields: [userId], references: [id])
   userId                   String?                @unique @map("user")
+  userInvites              UserInvite[]           @relation("UserInvite_invitedByDoctor")
 
   @@index([doctorSpecialtyId])
 }
@@ -315,26 +316,22 @@ model DoctorSubSpecialty {
 }
 
 model HealthCard {
-  id                    String   @id @default(cuid())
+  id                    String      @id @default(cuid())
   dateOfBirth           DateTime
   expiryDate            DateTime
-  insurancePolicyNumber String   @default("")
-  insuranceProvider     String   @default("")
-  isVerified            Boolean  @default(false)
-  nameOnCard            String   @default("")
-  versionCode           String   @default("")
-  country               Country? @relation("HealthCard_country", fields: [countryId], references: [id])
-  countryId             String?  @map("country")
-  patient               Patient? @relation("HealthCard_patient", fields: [patientId], references: [id])
-  patientId             String?  @map("patient")
+  insurancePolicyNumber String      @default("")
+  nameOnCard            String      @default("")
+  versionCode           String      @default("")
+  patient               Patient?    @relation("HealthCard_patient", fields: [patientId], references: [id])
+  patientId             String?     @map("patient")
+  userInvite            UserInvite? @relation("HealthCard_userInvite", fields: [userInviteId], references: [id])
+  userInviteId          String?     @unique @map("userInvite")
 
-  @@index([countryId])
   @@index([patientId])
 }
 
 model Country {
   id                  String               @id @default(cuid())
-  healthCards         HealthCard[]         @relation("HealthCard_country")
   administrativeAreas AdministrativeArea[] @relation("AdministrativeArea_country")
   isActive            Boolean              @default(false)
   label               String               @default("")
@@ -391,6 +388,26 @@ model User {
   patient               Patient?          @relation("Patient_user")
   stepperProgs          StepperProg[]     @relation("StepperProg_user")
   stepperStepProgs      StepperStepProg[] @relation("StepperStepProg_user")
+  userInvites           UserInvite[]      @relation("UserInvite_invitedByUser")
+}
+
+model UserInvite {
+  id                    String      @id @default(cuid())
+  dateOfBirth           DateTime?
+  email                 String      @unique @default("")
+  firstName             String      @default("")
+  lastName              String      @default("")
+  middleName            String      @default("")
+  cellPhoneNumberString String      @default("")
+  sex                   String      @default("")
+  invitedByDoctor       Doctor?     @relation("UserInvite_invitedByDoctor", fields: [invitedByDoctorId], references: [id])
+  invitedByDoctorId     String?     @map("invitedByDoctor")
+  invitedByUser         User?       @relation("UserInvite_invitedByUser", fields: [invitedByUserId], references: [id])
+  invitedByUserId       String?     @map("invitedByUser")
+  healthCard            HealthCard? @relation("HealthCard_userInvite")
+
+  @@index([invitedByDoctorId])
+  @@index([invitedByUserId])
 }
 
 model Patient {
