@@ -15,5 +15,6 @@ export const HealthCard = list({
     nameOnCard: text({ validation: { isRequired: true } }),
     versionCode: text({ validation: { isRequired: true } }),
     patient: relationship({ ref: "Patient.healthCards" }),
+    userInvite: relationship({ ref: "UserInvite.healthCard" }),
   },
 });
