@@ -62,7 +62,7 @@ export const inviteUserByDoctor = async (
         cellPhoneNumberString,
         sex,
         invitedByDoctor: {
-          connect: [{ id: currentUser.doctor.id }],
+          connect: { id: currentUser.doctor.id },
         },
         invitedByUser: {
           connect: { id: currentUser.id },
@@ -81,11 +81,12 @@ export const inviteUserByDoctor = async (
     createHealthCard = await context.db.HealthCard.createOne({
       data: {
         dateOfBirth,
+        nameOnCard: firstName + " " + lastName,
         expiryDate: healthCardExpiryDate,
         insurancePolicyNumber: healthCardNumber,
         versionCode: healthCardVersionCode,
         userInvite: {
-          connect: [{ id: createdUserInvite.id }],
+          connect: { id: createdUserInvite.id },
         },
       },
     });
