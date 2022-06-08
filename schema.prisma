@@ -320,6 +320,7 @@ model HealthCard {
   dateOfBirth           DateTime
   expiryDate            DateTime
   insurancePolicyNumber String      @default("")
+  insuranceProvider     String      @default("")
   nameOnCard            String      @default("")
   versionCode           String      @default("")
   patient               Patient?    @relation("HealthCard_patient", fields: [patientId], references: [id])
