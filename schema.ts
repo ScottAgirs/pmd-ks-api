@@ -44,6 +44,7 @@ import { StepperStep } from "./api/stepper-step/StepperStep";
 import { StepperStepProg } from "./api/stepper-step-prog/StepperStepProg";
 
 import { User } from "./api/user/User";
+import { UserInvite } from "./api/user-invite/UserInvite";
 
 // Location
 import { AdministrativeArea } from "./api/administrative-area/AdministrativeArea";
@@ -82,6 +83,7 @@ export const lists = {
   // EmergencyContact,
   EmergencyContact,
   User,
+  UserInvite,
   Patient,
   Medication,
   Prescription,
