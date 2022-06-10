@@ -1,4 +1,5 @@
 import { KeystoneContext } from "@keystone-6/core/types";
+import { sendEmail } from "../../../lib/email/sendEmail";
 
 interface InviteUserByDoctorInput {
   healthCardNumber: string;
@@ -88,6 +89,21 @@ export const inviteUserByDoctor = async (
         userInvite: {
           connect: { id: createdUserInvite.id },
         },
+      },
+    });
+  } catch (error) {
+    console.log("createHealthCard - error", error);
+  }
+
+  // Send email
+  try {
+    sendEmail({
+      to: email,
+      templateAlias: "user-invitation",
+      templateModel: {
+        firstName,
+        actionUrl: "https://pocketmd.ca/signup",
+        doctorName: currentUser.firstName,
       },
     });
   } catch (error) {
