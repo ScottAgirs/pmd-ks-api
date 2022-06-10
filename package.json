@@ -16,6 +16,7 @@
     "dotenv": "^10.0.0",
     "keystone-6-oauth": "^0.0.18",
     "nodemailer": "^6.4.17",
+    "postmark": "^3.0.11",
     "slugify": "^1.6.5",
     "typescript": "^4.5.2"
   },
