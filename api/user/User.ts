@@ -43,6 +43,7 @@ export const User = list({
     username: text({ isIndexed: "unique", validation: { isRequired: true } }),
     // Phone numbers end
     address: relationship({ ref: "Address.user" }),
+    invite: relationship({ ref: "UserInvite.signedUpUser" }),
     prompts: relationship({ ref: "Prompt.user", many: true }),
     profilePhoto: relationship({ ref: "ProfilePhoto.user" }),
     patient: relationship({ ref: "Patient.user" }),
