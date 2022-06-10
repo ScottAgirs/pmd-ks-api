@@ -384,6 +384,8 @@ model User {
   sex                   String            @default("")
   username              String            @unique @default("")
   address               Address?          @relation("Address_user")
+  invite                UserInvite?       @relation("User_invite", fields: [inviteId], references: [id])
+  inviteId              String?           @unique @map("invite")
   prompts               Prompt[]          @relation("Prompt_user")
   profilePhoto          ProfilePhoto?     @relation("ProfilePhoto_user")
   patient               Patient?          @relation("Patient_user")
@@ -405,6 +407,7 @@ model UserInvite {
   invitedByDoctorId     String?     @map("invitedByDoctor")
   invitedByUser         User?       @relation("UserInvite_invitedByUser", fields: [invitedByUserId], references: [id])
   invitedByUserId       String?     @map("invitedByUser")
+  signedUpUser          User?       @relation("User_invite")
   healthCard            HealthCard? @relation("HealthCard_userInvite")
 
   @@index([invitedByDoctorId])

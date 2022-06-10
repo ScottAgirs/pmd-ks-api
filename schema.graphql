@@ -2920,6 +2920,7 @@ type User {
   sex: String
   username: String
   address: Address
+  invite: UserInvite
   prompts(
     where: PromptWhereInput! = {}
     orderBy: [PromptOrderByInput!]! = []
@@ -2982,6 +2983,7 @@ input UserWhereInput {
   sex: StringFilter
   username: StringFilter
   address: AddressWhereInput
+  invite: UserInviteWhereInput
   prompts: PromptManyRelationFilter
   profilePhoto: ProfilePhotoWhereInput
   patient: PatientWhereInput
@@ -3052,6 +3054,7 @@ input UserUpdateInput {
   sex: String
   username: String
   address: AddressRelateToOneForUpdateInput
+  invite: UserInviteRelateToOneForUpdateInput
   prompts: PromptRelateToManyForUpdateInput
   profilePhoto: ProfilePhotoRelateToOneForUpdateInput
   patient: PatientRelateToOneForUpdateInput
@@ -3118,6 +3121,7 @@ input UserCreateInput {
   sex: String
   username: String
   address: AddressRelateToOneForCreateInput
+  invite: UserInviteRelateToOneForCreateInput
   prompts: PromptRelateToManyForCreateInput
   profilePhoto: ProfilePhotoRelateToOneForCreateInput
   patient: PatientRelateToOneForCreateInput
@@ -3162,6 +3166,7 @@ type UserInvite {
   sex: String
   invitedByDoctor: Doctor
   invitedByUser: User
+  signedUpUser: User
   healthCard: HealthCard
 }
 
@@ -3184,6 +3189,7 @@ input UserInviteWhereInput {
   sex: StringFilter
   invitedByDoctor: DoctorWhereInput
   invitedByUser: UserWhereInput
+  signedUpUser: UserWhereInput
   healthCard: HealthCardWhereInput
 }
 
@@ -3208,6 +3214,7 @@ input UserInviteUpdateInput {
   sex: String
   invitedByDoctor: DoctorRelateToOneForUpdateInput
   invitedByUser: UserRelateToOneForUpdateInput
+  signedUpUser: UserRelateToOneForUpdateInput
   healthCard: HealthCardRelateToOneForUpdateInput
 }
 
@@ -3232,6 +3239,7 @@ input UserInviteCreateInput {
   sex: String
   invitedByDoctor: DoctorRelateToOneForCreateInput
   invitedByUser: UserRelateToOneForCreateInput
+  signedUpUser: UserRelateToOneForCreateInput
   healthCard: HealthCardRelateToOneForCreateInput
 }
 
