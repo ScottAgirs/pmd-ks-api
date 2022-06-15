@@ -9,11 +9,12 @@
     "postinstall": "keystone postinstall --fix"
   },
   "dependencies": {
-    "@keystone-6/cloudinary": "^2.0.0",
-    "@keystone-6/core": "^1.0.1",
-    "@keystone-6/fields-document": "^1.0.0",
+    "@keystone-6/cloudinary": "^3.0.0",
+    "@keystone-6/core": "^2.0.0",
+    "@keystone-6/fields-document": "^3.0.0",
+    "@opensaas/keystone-nextjs-auth": "^23.0.0",
     "dotenv": "^10.0.0",
-    "keystone-6-oauth": "^0.0.18",
+    "keystone-6-oauth": "^0.1.0",
     "nodemailer": "^6.4.17",
     "postmark": "^3.0.11",
     "slugify": "^1.6.5",
@@ -21,6 +22,9 @@
   },
   "engines": {
     "node": "^14.15 || ^16.13"
+  },
+  "resolutions": {
+    "next": "^12.1.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7"
