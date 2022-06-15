@@ -1,9 +1,12 @@
 import "dotenv/config";
 
 import slugify from "slugify";
-import { createAuth } from "keystone-6-oauth";
-import GoogleProvider from "keystone-6-oauth/providers/google";
-import FacebookProvider from "keystone-6-oauth/providers/facebook";
+import { createAuth } from "@opensaas/keystone-nextjs-auth";
+import GoogleProvider from "@opensaas/keystone-nextjs-auth/providers/google";
+import FacebookProvider from "@opensaas/keystone-nextjs-auth/providers/facebook";
+// import { createAuth } from "keystone-6-oauth";
+// import GoogleProvider from "keystone-6-oauth/providers/google";
+// import FacebookProvider from "keystone-6-oauth/providers/facebook";
 
 import { config } from "@keystone-6/core";
 
@@ -44,10 +47,10 @@ const auth = createAuth({
   identityField: "subjectId",
   listKey: "User",
   sessionData: `id username email firstName lastName photoSrc doctor { id }`,
-  // pages: {
-  //   error: "/auth/error",
-  //   signIn: "/auth/sign-in",
-  // },
+  pages: {
+    error: "/auth/error",
+    signIn: "/auth/sign-in",
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "GoogleNextAuthClientID",
