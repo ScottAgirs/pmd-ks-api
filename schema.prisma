@@ -289,7 +289,6 @@ model Doctor {
   savedByPatients          Patient[]              @relation("Doctor_savedByPatients")
   user                     User?                  @relation("Doctor_user", fields: [userId], references: [id])
   userId                   String?                @unique @map("user")
-  userInvites              UserInvite[]           @relation("UserInvite_invitedByDoctor")
 
   @@index([doctorSpecialtyId])
 }
@@ -403,14 +402,11 @@ model UserInvite {
   middleName            String      @default("")
   cellPhoneNumberString String      @default("")
   sex                   String      @default("")
-  invitedByDoctor       Doctor?     @relation("UserInvite_invitedByDoctor", fields: [invitedByDoctorId], references: [id])
-  invitedByDoctorId     String?     @map("invitedByDoctor")
   invitedByUser         User?       @relation("UserInvite_invitedByUser", fields: [invitedByUserId], references: [id])
   invitedByUserId       String?     @map("invitedByUser")
   signedUpUser          User?       @relation("User_invite")
   healthCard            HealthCard? @relation("HealthCard_userInvite")
 
-  @@index([invitedByDoctorId])
   @@index([invitedByUserId])
 }
 

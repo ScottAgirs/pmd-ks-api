@@ -2095,13 +2095,6 @@ type Doctor {
   ): [Patient!]
   savedByPatientsCount(where: PatientWhereInput! = {}): Int
   user: User
-  userInvites(
-    where: UserInviteWhereInput! = {}
-    orderBy: [UserInviteOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [UserInvite!]
-  userInvitesCount(where: UserInviteWhereInput! = {}): Int
 }
 
 input DoctorWhereUniqueInput {
@@ -2148,7 +2141,6 @@ input DoctorWhereInput {
   proofOfLicense: ProofOfLicenseWhereInput
   savedByPatients: PatientManyRelationFilter
   user: UserWhereInput
-  userInvites: UserInviteManyRelationFilter
 }
 
 input AppointmentManyRelationFilter {
@@ -2185,12 +2177,6 @@ input PrescriptionManyRelationFilter {
   every: PrescriptionWhereInput
   some: PrescriptionWhereInput
   none: PrescriptionWhereInput
-}
-
-input UserInviteManyRelationFilter {
-  every: UserInviteWhereInput
-  some: UserInviteWhereInput
-  none: UserInviteWhereInput
 }
 
 input DoctorOrderByInput {
@@ -2250,7 +2236,6 @@ input DoctorUpdateInput {
   proofOfLicense: ProofOfLicenseRelateToOneForUpdateInput
   savedByPatients: PatientRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
-  userInvites: UserInviteRelateToManyForUpdateInput
 }
 
 input AppointmentRelateToManyForUpdateInput {
@@ -2325,13 +2310,6 @@ input ProofOfLicenseRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input UserInviteRelateToManyForUpdateInput {
-  disconnect: [UserInviteWhereUniqueInput!]
-  set: [UserInviteWhereUniqueInput!]
-  create: [UserInviteCreateInput!]
-  connect: [UserInviteWhereUniqueInput!]
-}
-
 input DoctorUpdateArgs {
   where: DoctorWhereUniqueInput!
   data: DoctorUpdateInput!
@@ -2373,7 +2351,6 @@ input DoctorCreateInput {
   proofOfLicense: ProofOfLicenseRelateToOneForCreateInput
   savedByPatients: PatientRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
-  userInvites: UserInviteRelateToManyForCreateInput
 }
 
 input AppointmentRelateToManyForCreateInput {
@@ -2429,11 +2406,6 @@ input ProofOfInsuranceRelateToOneForCreateInput {
 input ProofOfLicenseRelateToOneForCreateInput {
   create: ProofOfLicenseCreateInput
   connect: ProofOfLicenseWhereUniqueInput
-}
-
-input UserInviteRelateToManyForCreateInput {
-  create: [UserInviteCreateInput!]
-  connect: [UserInviteWhereUniqueInput!]
 }
 
 type Language {
@@ -3016,6 +2988,12 @@ input StepperStepProgManyRelationFilter {
   none: StepperStepProgWhereInput
 }
 
+input UserInviteManyRelationFilter {
+  every: UserInviteWhereInput
+  some: UserInviteWhereInput
+  none: UserInviteWhereInput
+}
+
 input UserOrderByInput {
   id: OrderDirection
   subjectId: OrderDirection
@@ -3097,6 +3075,13 @@ input StepperStepProgRelateToManyForUpdateInput {
   connect: [StepperStepProgWhereUniqueInput!]
 }
 
+input UserInviteRelateToManyForUpdateInput {
+  disconnect: [UserInviteWhereUniqueInput!]
+  set: [UserInviteWhereUniqueInput!]
+  create: [UserInviteCreateInput!]
+  connect: [UserInviteWhereUniqueInput!]
+}
+
 input UserUpdateArgs {
   where: UserWhereUniqueInput!
   data: UserUpdateInput!
@@ -3155,6 +3140,11 @@ input StepperStepProgRelateToManyForCreateInput {
   connect: [StepperStepProgWhereUniqueInput!]
 }
 
+input UserInviteRelateToManyForCreateInput {
+  create: [UserInviteCreateInput!]
+  connect: [UserInviteWhereUniqueInput!]
+}
+
 type UserInvite {
   id: ID!
   dateOfBirth: DateTime
@@ -3164,7 +3154,6 @@ type UserInvite {
   middleName: String
   cellPhoneNumberString: String
   sex: String
-  invitedByDoctor: Doctor
   invitedByUser: User
   signedUpUser: User
   healthCard: HealthCard
@@ -3187,7 +3176,6 @@ input UserInviteWhereInput {
   middleName: StringFilter
   cellPhoneNumberString: StringFilter
   sex: StringFilter
-  invitedByDoctor: DoctorWhereInput
   invitedByUser: UserWhereInput
   signedUpUser: UserWhereInput
   healthCard: HealthCardWhereInput
@@ -3212,7 +3200,6 @@ input UserInviteUpdateInput {
   middleName: String
   cellPhoneNumberString: String
   sex: String
-  invitedByDoctor: DoctorRelateToOneForUpdateInput
   invitedByUser: UserRelateToOneForUpdateInput
   signedUpUser: UserRelateToOneForUpdateInput
   healthCard: HealthCardRelateToOneForUpdateInput
@@ -3237,7 +3224,6 @@ input UserInviteCreateInput {
   middleName: String
   cellPhoneNumberString: String
   sex: String
-  invitedByDoctor: DoctorRelateToOneForCreateInput
   invitedByUser: UserRelateToOneForCreateInput
   signedUpUser: UserRelateToOneForCreateInput
   healthCard: HealthCardRelateToOneForCreateInput
