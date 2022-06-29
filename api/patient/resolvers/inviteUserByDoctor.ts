@@ -98,9 +98,9 @@ export const inviteUserByDoctor = async (
       to: email,
       templateAlias: "user-invitation",
       templateModel: {
-        firstName,
-        actionUrl: "https://pocketmd.ca/signup",
-        doctorName: currentUser.firstName,
+        doctorFirstName: currentUser.firstName,
+        doctorLastName: currentUser.lastName,
+        actionUrl: `${process.env.FRONTEND_URL}/r/join/${createdUserInvite.id}`,
       },
     });
   } catch (error) {
