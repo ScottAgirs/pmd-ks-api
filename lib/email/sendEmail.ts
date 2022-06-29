@@ -33,7 +33,7 @@ export const sendEmail = async ({
 }: SendEmailWithTemplateOptions) => {
   const sendRequest = {
     To: to,
-    From: from || "Scott at PocketMd <scott@pocketmd.ca>",
+    From: from || "No-Reply PocketMD <no-reply@pocketmd.ca>",
     TemplateAlias: templateAlias,
     TemplateModel: templateModel,
     MessageStream: "outbound",
