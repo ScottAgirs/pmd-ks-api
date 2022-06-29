@@ -62,9 +62,6 @@ export const inviteUserByDoctor = async (
         middleName,
         cellPhoneNumberString,
         sex,
-        invitedByDoctor: {
-          connect: { id: currentUser.doctor.id },
-        },
         invitedByUser: {
           connect: { id: currentUser.id },
         },
