@@ -16,7 +16,6 @@ export const UserInvite = list({
     cellPhoneNumberString: text(),
     sex: text(),
     // Phone numbers end
-    invitedByDoctor: relationship({ ref: "Doctor.userInvites" }),
     invitedByUser: relationship({ ref: "User.userInvites" }),
     signedUpUser: relationship({ ref: "User.invite" }),
     healthCard: relationship({ ref: "HealthCard.userInvite" }),
