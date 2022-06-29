@@ -14,6 +14,7 @@ export const typeDefs = graphql`
       email: String!
       cellPhoneNumberString: String!
     ): Patient
+    acceptInvite(inviteId: ID!): User
     inviteUserByDoctor(
       healthCardNumber: String!
       healthCardVersionCode: String!
