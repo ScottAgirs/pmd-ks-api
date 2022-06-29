@@ -49,7 +49,7 @@ const auth = createAuth({
   sessionData: `id username email firstName lastName photoSrc doctor { id }`,
   pages: {
     error: "/auth/error",
-    signIn: "/auth/sign-in",
+    signIn: "/login",
   },
   providers: [
     GoogleProvider({
@@ -70,7 +70,7 @@ const auth = createAuth({
       strict: true, // strip special characters except replacement, defaults to `false`
       trim: true, // trim leading and trailing replacement chars, defaults to `true`
     });
-
+ 
     const email = props.user.email as string;
     const firstName = props.user.name
       .split(" ")
