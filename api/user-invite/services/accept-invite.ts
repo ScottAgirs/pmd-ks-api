@@ -37,6 +37,14 @@ export const acceptInvite = async (
         },
       },
     });
+    await context.db.Doctor.updateOne({
+      where: { id: doctor.id as string },
+    data: {
+      caringForPatients: {
+          connect: [{ id: patientInCare.id }],
+        },
+      },
+    });
 
     return patientInCare;
   } catch (error) {
