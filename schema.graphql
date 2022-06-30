@@ -2893,7 +2893,7 @@ type User {
   sex: String
   username: String
   address: Address
-  invite: UserInvite
+  signUpInvite: UserInvite
   prompts(
     where: PromptWhereInput! = {}
     orderBy: [PromptOrderByInput!]! = []
@@ -2956,7 +2956,7 @@ input UserWhereInput {
   sex: StringFilter
   username: StringFilter
   address: AddressWhereInput
-  invite: UserInviteWhereInput
+  signUpInvite: UserInviteWhereInput
   prompts: PromptManyRelationFilter
   profilePhoto: ProfilePhotoWhereInput
   patient: PatientWhereInput
@@ -3033,7 +3033,7 @@ input UserUpdateInput {
   sex: String
   username: String
   address: AddressRelateToOneForUpdateInput
-  invite: UserInviteRelateToOneForUpdateInput
+  signUpInvite: UserInviteRelateToOneForUpdateInput
   prompts: PromptRelateToManyForUpdateInput
   profilePhoto: ProfilePhotoRelateToOneForUpdateInput
   patient: PatientRelateToOneForUpdateInput
@@ -3107,7 +3107,7 @@ input UserCreateInput {
   sex: String
   username: String
   address: AddressRelateToOneForCreateInput
-  invite: UserInviteRelateToOneForCreateInput
+  signUpInvite: UserInviteRelateToOneForCreateInput
   prompts: PromptRelateToManyForCreateInput
   profilePhoto: ProfilePhotoRelateToOneForCreateInput
   patient: PatientRelateToOneForCreateInput
