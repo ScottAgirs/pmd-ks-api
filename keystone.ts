@@ -26,6 +26,7 @@ import { populateSteppers } from "./seed/onboard/populate-stepper";
 import { populateAdminUsers } from "./seed/user/populate-admin-users";
 import { resetList } from "./utils/resetList";
 import { populatePharmacies } from "./seed/common/populate-pharmacies";
+import { uuid } from "./utils/uuid";
 
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
 
@@ -64,12 +65,7 @@ const auth = createAuth({
     }),
   ],
   resolver: async (props: any) => {
-    const username = slugify(props.user.name as string, {
-      replacement: "-", // replace spaces with replacement character, defaults to `-`
-      lower: true, // convert to lower case, defaults to `false`
-      strict: true, // strip special characters except replacement, defaults to `false`
-      trim: true, // trim leading and trailing replacement chars, defaults to `true`
-    });
+    const username = uuid;
  
     const email = props.user.email as string;
     const firstName = props.user.name
