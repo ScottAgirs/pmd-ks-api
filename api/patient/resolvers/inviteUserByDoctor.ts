@@ -98,6 +98,7 @@ export const inviteUserByDoctor = async (
       to: email,
       templateAlias: "user-invitation",
       templateModel: {
+        firstName,
         doctorFirstName: currentUser.firstName,
         doctorLastName: currentUser.lastName,
         actionUrl: `${process.env.FRONTEND_URL}/r/join/${createdUserInvite.id}`,
