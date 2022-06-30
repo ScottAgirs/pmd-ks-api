@@ -42,6 +42,7 @@ export const afterCreateUser = async ({
         firstName: createdUser.firstName,
         lastName: createdUser.lastName,
         actionUrl: `${process.env.FRONTEND_URL}/onboard/patient`,
+        loginUrl: `${process.env.FRONTEND_URL}/login`,
         settingsUrl: `${process.env.FRONTEND_URL}/profile`,
       },
     });
