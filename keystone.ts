@@ -64,7 +64,6 @@ const auth = createAuth({
     }),
   ],
   resolver: async (props: any) => {
-    console.log("🚀 ~ file: keystone.ts ~ line 67 ~ resolver: ~ props", props)
     const username = slugify(props.user.name as string, {
       replacement: "-", // replace spaces with replacement character, defaults to `-`
       lower: true, // convert to lower case, defaults to `false`
