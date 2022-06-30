@@ -41,7 +41,7 @@ export const afterCreateUser = async ({
       templateModel: {
         firstName: createdUser.firstName,
         lastName: createdUser.lastName,
-        actionUrl: `${process.env.FRONTEND_URL}/onboard/patient`,
+        actionUrl: `${process.env.FRONTEND_URL}`,
         loginUrl: `${process.env.FRONTEND_URL}/login`,
         settingsUrl: `${process.env.FRONTEND_URL}/profile`,
       },
