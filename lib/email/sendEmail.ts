@@ -52,7 +52,7 @@ export const sendEmail = async ({
 
     return sentEmail;
   } catch (error: any) {
-    console.log("GOT IN err", error);
+    console.log("sendEmail.ts ~ sendEmailWithTemplate error", error);
     return { error, message: "Failed sending email", code: error.code };
   }
 };
