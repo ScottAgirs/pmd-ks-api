@@ -26,7 +26,6 @@ import { populateSteppers } from "./seed/onboard/populate-stepper";
 import { populateAdminUsers } from "./seed/user/populate-admin-users";
 import { resetList } from "./utils/resetList";
 import { populatePharmacies } from "./seed/common/populate-pharmacies";
-import { uuid } from "./utils/uuid";
 
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
 
@@ -65,7 +64,7 @@ const auth = createAuth({
     }),
   ],
   resolver: async (props: any) => {
-    const username = uuid;
+    const username = props.user.email;
  
     const email = props.user.email as string;
     const firstName = props.user.name
