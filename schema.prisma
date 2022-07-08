@@ -127,6 +127,7 @@ model Booking {
   patient      Patient?       @relation("Booking_patient", fields: [patientId], references: [id])
   patientId    String?        @map("patient")
   startsAt     DateTime?
+  tzTarget     String         @default("")
   endsAt       DateTime?
 
   @@index([calendarId])

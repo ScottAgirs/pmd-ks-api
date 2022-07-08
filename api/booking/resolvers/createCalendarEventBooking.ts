@@ -6,11 +6,12 @@ export interface CreateEventBookingInput {
   eventId: string;
   reason: string;
   startsAt: string;
+  tzTarget: string;
 }
 
 export const createCalendarEventBooking = async (
   root: any,
-  { eventId, reason, startsAt }: CreateEventBookingInput,
+  { eventId, reason, tzTarget, startsAt }: CreateEventBookingInput,
   context: KeystoneContext
 ): Promise<any> => {
   if (!eventId) {
@@ -115,6 +116,7 @@ export const createCalendarEventBooking = async (
         },
       },
       startsAt,
+      tzTarget,
     },
   });
 

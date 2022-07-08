@@ -13,6 +13,7 @@ export const Booking = list({
     name: text(),
     patient: relationship({ ref: 'Patient.bookings' }),
     startsAt: timestamp(),
+    tzTarget: text(),
     endsAt: timestamp(),
   },
 })

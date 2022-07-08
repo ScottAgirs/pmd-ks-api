@@ -5,6 +5,7 @@ type Mutation {
   createCalendarEventBooking(
     eventId: ID!
     reason: String
+    tzTarget: String
     startsAt: DateTime
   ): StepperStepProg
   addPatientToDoctor(
@@ -1193,6 +1194,7 @@ type Booking {
   name: String
   patient: Patient
   startsAt: DateTime
+  tzTarget: String
   endsAt: DateTime
 }
 
@@ -1214,6 +1216,7 @@ input BookingWhereInput {
   name: StringFilter
   patient: PatientWhereInput
   startsAt: DateTimeNullableFilter
+  tzTarget: StringFilter
   endsAt: DateTimeNullableFilter
 }
 
@@ -1234,6 +1237,7 @@ input BookingOrderByInput {
   isConfirmed: OrderDirection
   name: OrderDirection
   startsAt: OrderDirection
+  tzTarget: OrderDirection
   endsAt: OrderDirection
 }
 
@@ -1247,6 +1251,7 @@ input BookingUpdateInput {
   name: String
   patient: PatientRelateToOneForUpdateInput
   startsAt: DateTime
+  tzTarget: String
   endsAt: DateTime
 }
 
@@ -1277,6 +1282,7 @@ input BookingCreateInput {
   name: String
   patient: PatientRelateToOneForCreateInput
   startsAt: DateTime
+  tzTarget: String
   endsAt: DateTime
 }
 

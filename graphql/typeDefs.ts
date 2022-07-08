@@ -6,6 +6,7 @@ export const typeDefs = graphql`
     createCalendarEventBooking(
       eventId: ID!
       reason: String
+      tzTarget: String
       startsAt: DateTime
     ): StepperStepProg
     addPatientToDoctor(
