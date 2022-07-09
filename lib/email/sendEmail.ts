@@ -25,7 +25,7 @@ interface SendEmailWithTemplateOptions {
 }
 
 // TODO: Add logic to send email to Ethereal.mail if in DEV mode and send via Sengdgrid.com if in PROD or PREVIEW mode
-export const sendEmail = async ({
+export const sendTemplatedEmail = async ({
   from,
   to,
   templateAlias,
@@ -35,7 +35,14 @@ export const sendEmail = async ({
     To: to,
     From: from || "No-Reply PocketMD <no-reply@pocketmd.ca>",
     TemplateAlias: templateAlias,
-    TemplateModel: templateModel,
+    TemplateModel: {
+      ...templateModel,
+      company_name: "PocketMD",
+      company_address: "Toronto, ON",
+      product_name: "PocketMD",
+      product_url: process.env.FRONTEND_URL,
+      support_url: process.env.SUPPORT_URL,
+    },
     MessageStream: "outbound",
   };
 

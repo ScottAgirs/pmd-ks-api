@@ -1,5 +1,7 @@
+import moment from 'moment';
+import momentTz from 'moment-timezone';
 import { KeystoneContext } from "@keystone-6/core/types";
-import { sendEmail } from "../../../lib/email/sendEmail";
+import { sendTemplatedEmail } from "../../../lib/email/sendEmail";
 import { getCurrentUser } from "../../user/services/getCurrentUser";
 
 export interface CreateEventBookingInput {
@@ -13,19 +15,21 @@ export const createCalendarEventBooking = async (
   root: any,
   { eventId, reason, tzTarget, startsAt }: CreateEventBookingInput,
   context: KeystoneContext
-): Promise<any> => {
-  if (!eventId) {
-    throw new Error("eventId is required");
-  }
-
+  ): Promise<any> => {
+    if (!eventId) {
+      throw new Error("eventId is required");
+    }
+    
   // Check user is logged in
   const {
+    // @ts-ignore
     patientId: currentUserPatientId,
+    // @ts-ignore
     userId,
-    ...user
+    ...currentUser
   } = await getCurrentUser(context);
 
-  if (!user) {
+  if (!currentUser) {
     throw new Error("User not logged in");
   }
 
@@ -34,7 +38,22 @@ export const createCalendarEventBooking = async (
     where: {
       id: eventId,
     },
-  });
+  }) as any;
+
+  let doctorUser;
+  try {
+    const matched = await context.db.User.findMany({
+      where: {
+        doctor:{ id:{equals: event.doctorId}},
+      },
+    }) as any;
+
+    doctorUser = matched[0];
+  } catch (error: any) {
+    throw new Error(error)
+    
+  }
+
   if (!event) {
     throw new Error("event not found");
   }
@@ -119,18 +138,34 @@ export const createCalendarEventBooking = async (
       tzTarget,
     },
   });
-
+  
   if (!createdBooking.id) throw new Error("Failed to create a booking");
 
-  // sendEmail({
-  //   from:{
-  //     email:"test@pocketmd.ca",
-  //     name:"PocketMD Tester"
-  //   },
-  //   to:"scott.agirs@gmail.com",
-  //   subject:"Test suvjest",
-  //   text:"Test text",
-  // })
+  const utcStartsAt = moment(createdBooking.startsAt as string).tz(tzTarget);
+  const displayApptDate = utcStartsAt.tz(tzTarget).format("MMM D, YYYY, HH:mm");
+
+  sendTemplatedEmail({
+    from: "no-reply@pocketmd.ca",
+    to: doctorUser.email,
+    templateAlias: "dr-new-booking",
+    templateModel: {
+      doctorFirstName: doctorUser.firstName,
+      patientFirstName: currentUser.firstName,
+      displayApptDate,
+      doctorApptDetailsUrl: `${process.env.FRONTEND_URL}/doctor/appointments/upcoming?bookingId=${createdBooking.id}`,
+    }
+  })
+  sendTemplatedEmail({
+    from: "no-reply@pocketmd.ca",
+    to: currentUser.email,
+    templateAlias: "pt-new-booking",
+    templateModel: {
+      doctorFirstName: doctorUser.firstName,
+      patientFirstName: currentUser.firstName,
+      displayApptDate,
+      patientApptDetailsUrl: `${process.env.FRONTEND_URL}/appointments/upcoming?bookingId=${createdBooking.id}`,
+    }
+  })
 
   return createdBooking;
 };

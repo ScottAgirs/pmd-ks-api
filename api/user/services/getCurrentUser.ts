@@ -17,7 +17,7 @@ export const getCurrentUser = async (context: KeystoneContext) => {
   try {
     const currentUser = await context.query.User.findOne({
       where: { id: userId },
-      query: "id username patient { id user { id } }",
+      query: "id username firstName lastName email patient { id user { id } }",
     });
 
     const enrichedCurrentUser = {
@@ -26,7 +26,7 @@ export const getCurrentUser = async (context: KeystoneContext) => {
       patientId: currentUser.patient?.id,
       userId: currentUser.id,
     } as EnrichedCurrentUser;
-
+    
     return enrichedCurrentUser;
   } catch (error) {
     console.log(error);
