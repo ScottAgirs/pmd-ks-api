@@ -1703,6 +1703,7 @@ type Schedule {
   ): [RecurringSlot!]
   recurringSlotsCount(where: RecurringSlotWhereInput! = {}): Int
   tz: String
+  slotInterval: Int
   title: String
 }
 
@@ -1720,6 +1721,7 @@ input ScheduleWhereInput {
   defaultOn: CalendarWhereInput
   recurringSlots: RecurringSlotManyRelationFilter
   tz: StringFilter
+  slotInterval: IntNullableFilter
   title: StringFilter
 }
 
@@ -1733,6 +1735,7 @@ input ScheduleOrderByInput {
   id: OrderDirection
   description: OrderDirection
   tz: OrderDirection
+  slotInterval: OrderDirection
   title: OrderDirection
 }
 
@@ -1742,6 +1745,7 @@ input ScheduleUpdateInput {
   defaultOn: CalendarRelateToOneForUpdateInput
   recurringSlots: RecurringSlotRelateToManyForUpdateInput
   tz: String
+  slotInterval: Int
   title: String
 }
 
@@ -1763,6 +1767,7 @@ input ScheduleCreateInput {
   defaultOn: CalendarRelateToOneForCreateInput
   recurringSlots: RecurringSlotRelateToManyForCreateInput
   tz: String
+  slotInterval: Int
   title: String
 }
 

@@ -1,4 +1,4 @@
-import { relationship, text } from "@keystone-6/core/fields";
+import { integer, relationship, text } from "@keystone-6/core/fields";
 
 const { list } = require("@keystone-6/core");
 
@@ -11,6 +11,7 @@ export const Schedule = list({
     defaultOn: relationship({ ref: 'Calendar.defaultSchedule' }),
     recurringSlots: relationship({ ref: 'RecurringSlot.schedule', many: true }),
     tz: text(),
+    slotInterval: integer(),
     title: text({ validation: { isRequired: true } }),
   },
 }) 

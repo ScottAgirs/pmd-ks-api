@@ -209,6 +209,7 @@ model Schedule {
   defaultOn      Calendar?       @relation("Calendar_defaultSchedule")
   recurringSlots RecurringSlot[] @relation("RecurringSlot_schedule")
   tz             String          @default("")
+  slotInterval   Int?
   title          String          @default("")
 
   @@index([calendarId])
