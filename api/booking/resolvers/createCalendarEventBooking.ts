@@ -1,4 +1,3 @@
-import moment from 'moment';
 import momentTz from 'moment-timezone';
 import { KeystoneContext } from "@keystone-6/core/types";
 import { sendTemplatedEmail } from "../../../lib/email/sendEmail";
@@ -16,10 +15,15 @@ export const createCalendarEventBooking = async (
   { eventId, reason, tzTarget, startsAt }: CreateEventBookingInput,
   context: KeystoneContext
   ): Promise<any> => {
-    if (!eventId) {
-      throw new Error("eventId is required");
-    }
-    
+
+  if (!eventId) {
+    throw new Error("eventId is required");
+  }
+
+  console.log(`🚀 ~ createCalendarEventBooking.startsAt`, startsAt)
+  const utcStartsAt = momentTz(startsAt as string);
+  const displayApptDate = utcStartsAt.tz(tzTarget).format("MMM D, YYYY, HH:mm");
+
   // Check user is logged in
   const {
     // @ts-ignore
@@ -141,8 +145,6 @@ export const createCalendarEventBooking = async (
   
   if (!createdBooking.id) throw new Error("Failed to create a booking");
 
-  const utcStartsAt = moment(createdBooking.startsAt as string).tz(tzTarget);
-  const displayApptDate = utcStartsAt.tz(tzTarget).format("MMM D, YYYY, HH:mm");
 
   sendTemplatedEmail({
     from: "no-reply@pocketmd.ca",
