@@ -15,6 +15,7 @@ export const CalendarEvent = list({
     isActive: checkbox(),
     isConfirmationRequired: checkbox(),
     title: text({ validation: { isRequired: true } }),
+    address: relationship({ ref: "Address.calendarEvents" }),
     bookings: relationship({ ref: "Booking.event", many: true }),
     calendar: relationship({ ref: "Calendar.events" }),
     eventType: relationship({ ref: "CalendarEventType.events" }),

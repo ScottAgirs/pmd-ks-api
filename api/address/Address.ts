@@ -13,6 +13,7 @@ export const Address = list({
     premise: text(),
     thoroughfare: text(),
     user: relationship({ ref: "User.address" }),
+    calendarEvents: relationship({ ref: "CalendarEvent.address", many: true }),
     doctorClinic: relationship({ ref: "Doctor.clinicAddress" }),
     pharmacyLocation: relationship({ ref: "PharmacyLocation.address" }),
   },
