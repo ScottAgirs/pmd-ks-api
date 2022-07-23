@@ -18,9 +18,9 @@ export const Address = list({
       isIndexed: "unique"
     }),
     thoroughfare: text(),
-    user: relationship({ ref: "User.address" }),
     calendarEvents: relationship({ ref: "CalendarEvent.address", many: true }),
     companyLocation: relationship({ ref: "CompanyLocation.address" }),
     pharmacyLocation: relationship({ ref: "PharmacyLocation.address" }),
+    user: relationship({ ref: "User.address" }),
   },
 });
