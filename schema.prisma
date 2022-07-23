@@ -12,22 +12,24 @@ generator client {
 }
 
 model Address {
-  id                 String            @id @default(cuid())
-  addressLine1       String            @default("")
-  addressLine2       String            @default("")
-  administrativeArea String            @default("")
-  country            String            @default("")
-  locality           String            @default("")
-  postalCode         String            @default("")
-  premise            String            @default("")
-  thoroughfare       String            @default("")
-  user               User?             @relation("Address_user", fields: [userId], references: [id])
-  userId             String?           @unique @map("user")
-  calendarEvents     CalendarEvent[]   @relation("CalendarEvent_address")
-  doctorClinic       Doctor?           @relation("Address_doctorClinic", fields: [doctorClinicId], references: [id])
-  doctorClinicId     String?           @unique @map("doctorClinic")
-  pharmacyLocation   PharmacyLocation? @relation("Address_pharmacyLocation", fields: [pharmacyLocationId], references: [id])
-  pharmacyLocationId String?           @unique @map("pharmacyLocation")
+  id                       String            @id @default(cuid())
+  addressLine1             String            @default("")
+  addressLine2             String            @default("")
+  administrativeArea       String            @default("")
+  country                  String            @default("")
+  facilityMasterNumber     String            @unique @default("")
+  locality                 String            @default("")
+  postalCode               String            @default("")
+  premise                  String            @default("")
+  serviceLocationIndicator String            @unique @default("")
+  thoroughfare             String            @default("")
+  calendarEvents           CalendarEvent[]   @relation("CalendarEvent_address")
+  companyLocation          CompanyLocation?  @relation("Address_companyLocation", fields: [companyLocationId], references: [id])
+  companyLocationId        String?           @unique @map("companyLocation")
+  pharmacyLocation         PharmacyLocation? @relation("Address_pharmacyLocation", fields: [pharmacyLocationId], references: [id])
+  pharmacyLocationId       String?           @unique @map("pharmacyLocation")
+  user                     User?             @relation("Address_user", fields: [userId], references: [id])
+  userId                   String?           @unique @map("user")
 }
 
 model Appointment {
@@ -242,6 +244,29 @@ model TimeInterval {
   @@index([recurringSlotId])
 }
 
+model Company {
+  id               String            @id @default(cuid())
+  name             String            @unique @default("")
+  slug             String            @unique @default("")
+  companyLocations CompanyLocation[] @relation("CompanyLocation_company")
+  registeredBy     User[]            @relation("Company_registeredBy")
+}
+
+model CompanyLocation {
+  id                       String   @id @default(cuid())
+  name                     String   @default("")
+  slug                     String   @default("")
+  facilityMasterNumber     String   @unique @default("")
+  locationType             String   @default("")
+  serviceLocationIndicator String   @unique @default("")
+  address                  Address? @relation("Address_companyLocation")
+  company                  Company? @relation("CompanyLocation_company", fields: [companyId], references: [id])
+  companyId                String?  @map("company")
+  registeredBy             User[]   @relation("CompanyLocation_registeredBy")
+
+  @@index([companyId])
+}
+
 model Contract {
   id            String    @id @default(cuid())
   signedBy      User[]    @relation("Contract_signedBy")
@@ -278,7 +303,6 @@ model Doctor {
   bookings                 Booking[]              @relation("Booking_doctor")
   caringForPatients        Patient[]              @relation("Doctor_caringForPatients")
   calendarEvents           CalendarEvent[]        @relation("CalendarEvent_doctor")
-  clinicAddress            Address?               @relation("Address_doctorClinic")
   doctorSpecialty          DoctorSpecialty?       @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])
   doctorSpecialtyId        String?                @map("doctorSpecialty")
   doctorSubSpecialties     DoctorSubSpecialty[]   @relation("Doctor_doctorSubSpecialties")
@@ -389,11 +413,13 @@ model User {
   sex                   String            @default("")
   username              String            @unique @default("")
   address               Address?          @relation("Address_user")
-  signUpInvite          UserInvite?       @relation("User_signUpInvite", fields: [signUpInviteId], references: [id])
-  signUpInviteId        String?           @unique @map("signUpInvite")
+  companies             Company[]         @relation("Company_registeredBy")
+  locations             CompanyLocation[] @relation("CompanyLocation_registeredBy")
+  patient               Patient?          @relation("Patient_user")
   prompts               Prompt[]          @relation("Prompt_user")
   profilePhoto          ProfilePhoto?     @relation("ProfilePhoto_user")
-  patient               Patient?          @relation("Patient_user")
+  signUpInvite          UserInvite?       @relation("User_signUpInvite", fields: [signUpInviteId], references: [id])
+  signUpInviteId        String?           @unique @map("signUpInvite")
   stepperProgs          StepperProg[]     @relation("StepperProg_user")
   stepperStepProgs      StepperStepProg[] @relation("StepperStepProg_user")
   userInvites           UserInvite[]      @relation("UserInvite_invitedByUser")
