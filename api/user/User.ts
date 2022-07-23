@@ -44,6 +44,8 @@ export const User = list({
     // Phone numbers end
     address: relationship({ ref: "Address.user" }),
     signUpInvite: relationship({ ref: "UserInvite.signedUpUser" }),
+    companies: relationship({ ref: "Company.registeredBy", many: true }),
+    locations: relationship({ ref: "CompanyLocation.registeredBy", many: true }),
     prompts: relationship({ ref: "Prompt.user", many: true }),
     profilePhoto: relationship({ ref: "ProfilePhoto.user" }),
     patient: relationship({ ref: "Patient.user" }),
