@@ -8,13 +8,19 @@ export const Address = list({
     addressLine2: text(),
     administrativeArea: text(),
     country: text(),
+    facilityMasterNumber: text({
+      isIndexed: "unique"
+    }),
     locality: text(),
     postalCode: text(),
     premise: text(),
+    serviceLocationIndicator: text({
+      isIndexed: "unique"
+    }),
     thoroughfare: text(),
     user: relationship({ ref: "User.address" }),
     calendarEvents: relationship({ ref: "CalendarEvent.address", many: true }),
-    doctorClinic: relationship({ ref: "Doctor.clinicAddress" }),
+    companyLocation: relationship({ ref: "CompanyLocation.address" }),
     pharmacyLocation: relationship({ ref: "PharmacyLocation.address" }),
   },
 });
