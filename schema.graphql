@@ -1989,13 +1989,13 @@ type Company {
   id: ID!
   name: String
   slug: String
-  companyLocations(
+  locations(
     where: CompanyLocationWhereInput! = {}
     orderBy: [CompanyLocationOrderByInput!]! = []
     take: Int
     skip: Int! = 0
   ): [CompanyLocation!]
-  companyLocationsCount(where: CompanyLocationWhereInput! = {}): Int
+  locationsCount(where: CompanyLocationWhereInput! = {}): Int
   registeredBy(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []
@@ -2018,7 +2018,7 @@ input CompanyWhereInput {
   id: IDFilter
   name: StringFilter
   slug: StringFilter
-  companyLocations: CompanyLocationManyRelationFilter
+  locations: CompanyLocationManyRelationFilter
   registeredBy: UserManyRelationFilter
 }
 
@@ -2043,7 +2043,7 @@ input CompanyOrderByInput {
 input CompanyUpdateInput {
   name: String
   slug: String
-  companyLocations: CompanyLocationRelateToManyForUpdateInput
+  locations: CompanyLocationRelateToManyForUpdateInput
   registeredBy: UserRelateToManyForUpdateInput
 }
 
@@ -2069,7 +2069,7 @@ input CompanyUpdateArgs {
 input CompanyCreateInput {
   name: String
   slug: String
-  companyLocations: CompanyLocationRelateToManyForCreateInput
+  locations: CompanyLocationRelateToManyForCreateInput
   registeredBy: UserRelateToManyForCreateInput
 }
 

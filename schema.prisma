@@ -245,11 +245,11 @@ model TimeInterval {
 }
 
 model Company {
-  id               String            @id @default(cuid())
-  name             String            @unique @default("")
-  slug             String            @unique @default("")
-  companyLocations CompanyLocation[] @relation("CompanyLocation_company")
-  registeredBy     User[]            @relation("Company_registeredBy")
+  id           String            @id @default(cuid())
+  name         String            @unique @default("")
+  slug         String            @unique @default("")
+  locations    CompanyLocation[] @relation("CompanyLocation_company")
+  registeredBy User[]            @relation("Company_registeredBy")
 }
 
 model CompanyLocation {
