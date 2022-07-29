@@ -14,9 +14,8 @@ export const CompanyLocation = list({
     serviceLocationIndicator: text({
       isIndexed: "unique"
     }),
-    address: relationship({ ref: "Address.companyLocation" }),
     company: relationship({ ref: "Company.locations"  }),
-    registeredBy: relationship({ ref: "User.locations", many:  true }),
+    // registeredBy: relationship({ ref: "User.locations", many:  true }),
   },
   hooks: {
     // @ts-ignore

@@ -544,28 +544,17 @@ type Address {
   addressLine2: String
   administrativeArea: String
   country: String
-  facilityMasterNumber: String
   locality: String
   postalCode: String
   premise: String
-  serviceLocationIndicator: String
   thoroughfare: String
-  calendarEvents(
-    where: CalendarEventWhereInput! = {}
-    orderBy: [CalendarEventOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [CalendarEvent!]
-  calendarEventsCount(where: CalendarEventWhereInput! = {}): Int
-  companyLocation: CompanyLocation
+  event: CalendarEvent
   pharmacyLocation: PharmacyLocation
   user: User
 }
 
 input AddressWhereUniqueInput {
   id: ID
-  facilityMasterNumber: String
-  serviceLocationIndicator: String
 }
 
 input AddressWhereInput {
@@ -577,14 +566,11 @@ input AddressWhereInput {
   addressLine2: StringFilter
   administrativeArea: StringFilter
   country: StringFilter
-  facilityMasterNumber: StringFilter
   locality: StringFilter
   postalCode: StringFilter
   premise: StringFilter
-  serviceLocationIndicator: StringFilter
   thoroughfare: StringFilter
-  calendarEvents: CalendarEventManyRelationFilter
-  companyLocation: CompanyLocationWhereInput
+  event: CalendarEventWhereInput
   pharmacyLocation: PharmacyLocationWhereInput
   user: UserWhereInput
 }
@@ -634,23 +620,15 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input CalendarEventManyRelationFilter {
-  every: CalendarEventWhereInput
-  some: CalendarEventWhereInput
-  none: CalendarEventWhereInput
-}
-
 input AddressOrderByInput {
   id: OrderDirection
   addressLine1: OrderDirection
   addressLine2: OrderDirection
   administrativeArea: OrderDirection
   country: OrderDirection
-  facilityMasterNumber: OrderDirection
   locality: OrderDirection
   postalCode: OrderDirection
   premise: OrderDirection
-  serviceLocationIndicator: OrderDirection
   thoroughfare: OrderDirection
 }
 
@@ -664,28 +642,18 @@ input AddressUpdateInput {
   addressLine2: String
   administrativeArea: String
   country: String
-  facilityMasterNumber: String
   locality: String
   postalCode: String
   premise: String
-  serviceLocationIndicator: String
   thoroughfare: String
-  calendarEvents: CalendarEventRelateToManyForUpdateInput
-  companyLocation: CompanyLocationRelateToOneForUpdateInput
+  event: CalendarEventRelateToOneForUpdateInput
   pharmacyLocation: PharmacyLocationRelateToOneForUpdateInput
   user: UserRelateToOneForUpdateInput
 }
 
-input CalendarEventRelateToManyForUpdateInput {
-  disconnect: [CalendarEventWhereUniqueInput!]
-  set: [CalendarEventWhereUniqueInput!]
-  create: [CalendarEventCreateInput!]
-  connect: [CalendarEventWhereUniqueInput!]
-}
-
-input CompanyLocationRelateToOneForUpdateInput {
-  create: CompanyLocationCreateInput
-  connect: CompanyLocationWhereUniqueInput
+input CalendarEventRelateToOneForUpdateInput {
+  create: CalendarEventCreateInput
+  connect: CalendarEventWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -711,26 +679,18 @@ input AddressCreateInput {
   addressLine2: String
   administrativeArea: String
   country: String
-  facilityMasterNumber: String
   locality: String
   postalCode: String
   premise: String
-  serviceLocationIndicator: String
   thoroughfare: String
-  calendarEvents: CalendarEventRelateToManyForCreateInput
-  companyLocation: CompanyLocationRelateToOneForCreateInput
+  event: CalendarEventRelateToOneForCreateInput
   pharmacyLocation: PharmacyLocationRelateToOneForCreateInput
   user: UserRelateToOneForCreateInput
 }
 
-input CalendarEventRelateToManyForCreateInput {
-  create: [CalendarEventCreateInput!]
-  connect: [CalendarEventWhereUniqueInput!]
-}
-
-input CompanyLocationRelateToOneForCreateInput {
-  create: CompanyLocationCreateInput
-  connect: CompanyLocationWhereUniqueInput
+input CalendarEventRelateToOneForCreateInput {
+  create: CalendarEventCreateInput
+  connect: CalendarEventWhereUniqueInput
 }
 
 input PharmacyLocationRelateToOneForCreateInput {
@@ -1336,12 +1296,6 @@ input CalendarRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input CalendarEventRelateToOneForUpdateInput {
-  create: CalendarEventCreateInput
-  connect: CalendarEventWhereUniqueInput
-  disconnect: Boolean
-}
-
 input BookingUpdateArgs {
   where: BookingWhereUniqueInput!
   data: BookingUpdateInput!
@@ -1364,11 +1318,6 @@ input BookingCreateInput {
 input CalendarRelateToOneForCreateInput {
   create: CalendarCreateInput
   connect: CalendarWhereUniqueInput
-}
-
-input CalendarEventRelateToOneForCreateInput {
-  create: CalendarEventCreateInput
-  connect: CalendarEventWhereUniqueInput
 }
 
 type Form {
@@ -1533,6 +1482,12 @@ input CalendarWhereInput {
   defaultSchedule: ScheduleWhereInput
 }
 
+input CalendarEventManyRelationFilter {
+  every: CalendarEventWhereInput
+  some: CalendarEventWhereInput
+  none: CalendarEventWhereInput
+}
+
 input BookingManyRelationFilter {
   every: BookingWhereInput
   some: BookingWhereInput
@@ -1557,6 +1512,13 @@ input CalendarUpdateInput {
   doctor: DoctorRelateToOneForUpdateInput
   schedules: ScheduleRelateToManyForUpdateInput
   defaultSchedule: ScheduleRelateToOneForUpdateInput
+}
+
+input CalendarEventRelateToManyForUpdateInput {
+  disconnect: [CalendarEventWhereUniqueInput!]
+  set: [CalendarEventWhereUniqueInput!]
+  create: [CalendarEventCreateInput!]
+  connect: [CalendarEventWhereUniqueInput!]
 }
 
 input BookingRelateToManyForUpdateInput {
@@ -1593,6 +1555,11 @@ input CalendarCreateInput {
   defaultSchedule: ScheduleRelateToOneForCreateInput
 }
 
+input CalendarEventRelateToManyForCreateInput {
+  create: [CalendarEventCreateInput!]
+  connect: [CalendarEventWhereUniqueInput!]
+}
+
 input BookingRelateToManyForCreateInput {
   create: [BookingCreateInput!]
   connect: [BookingWhereUniqueInput!]
@@ -1612,6 +1579,9 @@ type CalendarEvent {
   id: ID!
   description: String
   durationMins: Int
+  companyName: String
+  facilityMasterNumber: String
+  serviceLocationIndicator: String
   isActive: Boolean
   isConfirmationRequired: Boolean
   title: String
@@ -1639,6 +1609,9 @@ input CalendarEventWhereInput {
   id: IDFilter
   description: StringFilter
   durationMins: IntFilter
+  companyName: StringFilter
+  facilityMasterNumber: StringFilter
+  serviceLocationIndicator: StringFilter
   isActive: BooleanFilter
   isConfirmationRequired: BooleanFilter
   title: StringFilter
@@ -1653,6 +1626,9 @@ input CalendarEventOrderByInput {
   id: OrderDirection
   description: OrderDirection
   durationMins: OrderDirection
+  companyName: OrderDirection
+  facilityMasterNumber: OrderDirection
+  serviceLocationIndicator: OrderDirection
   isActive: OrderDirection
   isConfirmationRequired: OrderDirection
   title: OrderDirection
@@ -1661,6 +1637,9 @@ input CalendarEventOrderByInput {
 input CalendarEventUpdateInput {
   description: String
   durationMins: Int
+  companyName: String
+  facilityMasterNumber: String
+  serviceLocationIndicator: String
   isActive: Boolean
   isConfirmationRequired: Boolean
   title: String
@@ -1691,6 +1670,9 @@ input CalendarEventUpdateArgs {
 input CalendarEventCreateInput {
   description: String
   durationMins: Int
+  companyName: String
+  facilityMasterNumber: String
+  serviceLocationIndicator: String
   isActive: Boolean
   isConfirmationRequired: Boolean
   title: String
@@ -1996,13 +1978,6 @@ type Company {
     skip: Int! = 0
   ): [CompanyLocation!]
   locationsCount(where: CompanyLocationWhereInput! = {}): Int
-  registeredBy(
-    where: UserWhereInput! = {}
-    orderBy: [UserOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [User!]
-  registeredByCount(where: UserWhereInput! = {}): Int
 }
 
 input CompanyWhereUniqueInput {
@@ -2019,19 +1994,12 @@ input CompanyWhereInput {
   name: StringFilter
   slug: StringFilter
   locations: CompanyLocationManyRelationFilter
-  registeredBy: UserManyRelationFilter
 }
 
 input CompanyLocationManyRelationFilter {
   every: CompanyLocationWhereInput
   some: CompanyLocationWhereInput
   none: CompanyLocationWhereInput
-}
-
-input UserManyRelationFilter {
-  every: UserWhereInput
-  some: UserWhereInput
-  none: UserWhereInput
 }
 
 input CompanyOrderByInput {
@@ -2044,7 +2012,6 @@ input CompanyUpdateInput {
   name: String
   slug: String
   locations: CompanyLocationRelateToManyForUpdateInput
-  registeredBy: UserRelateToManyForUpdateInput
 }
 
 input CompanyLocationRelateToManyForUpdateInput {
@@ -2052,13 +2019,6 @@ input CompanyLocationRelateToManyForUpdateInput {
   set: [CompanyLocationWhereUniqueInput!]
   create: [CompanyLocationCreateInput!]
   connect: [CompanyLocationWhereUniqueInput!]
-}
-
-input UserRelateToManyForUpdateInput {
-  disconnect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
 }
 
 input CompanyUpdateArgs {
@@ -2070,17 +2030,11 @@ input CompanyCreateInput {
   name: String
   slug: String
   locations: CompanyLocationRelateToManyForCreateInput
-  registeredBy: UserRelateToManyForCreateInput
 }
 
 input CompanyLocationRelateToManyForCreateInput {
   create: [CompanyLocationCreateInput!]
   connect: [CompanyLocationWhereUniqueInput!]
-}
-
-input UserRelateToManyForCreateInput {
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
 }
 
 type CompanyLocation {
@@ -2090,15 +2044,7 @@ type CompanyLocation {
   facilityMasterNumber: String
   locationType: String
   serviceLocationIndicator: String
-  address: Address
   company: Company
-  registeredBy(
-    where: UserWhereInput! = {}
-    orderBy: [UserOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [User!]
-  registeredByCount(where: UserWhereInput! = {}): Int
 }
 
 input CompanyLocationWhereUniqueInput {
@@ -2117,9 +2063,7 @@ input CompanyLocationWhereInput {
   facilityMasterNumber: StringFilter
   locationType: StringFilter
   serviceLocationIndicator: StringFilter
-  address: AddressWhereInput
   company: CompanyWhereInput
-  registeredBy: UserManyRelationFilter
 }
 
 input CompanyLocationOrderByInput {
@@ -2137,9 +2081,7 @@ input CompanyLocationUpdateInput {
   facilityMasterNumber: String
   locationType: String
   serviceLocationIndicator: String
-  address: AddressRelateToOneForUpdateInput
   company: CompanyRelateToOneForUpdateInput
-  registeredBy: UserRelateToManyForUpdateInput
 }
 
 input CompanyRelateToOneForUpdateInput {
@@ -2159,9 +2101,7 @@ input CompanyLocationCreateInput {
   facilityMasterNumber: String
   locationType: String
   serviceLocationIndicator: String
-  address: AddressRelateToOneForCreateInput
   company: CompanyRelateToOneForCreateInput
-  registeredBy: UserRelateToManyForCreateInput
 }
 
 input CompanyRelateToOneForCreateInput {
@@ -2208,6 +2148,12 @@ input ContractWhereInput {
   lastUpdated: DateTimeNullableFilter
 }
 
+input UserManyRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
+}
+
 input ContractOrderByInput {
   id: OrderDirection
   isActive: OrderDirection
@@ -2227,6 +2173,13 @@ input ContractUpdateInput {
   lastUpdated: DateTime
 }
 
+input UserRelateToManyForUpdateInput {
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
 input ContractUpdateArgs {
   where: ContractWhereUniqueInput!
   data: ContractUpdateInput!
@@ -2240,6 +2193,11 @@ input ContractCreateInput {
   slug: String
   effectiveFrom: DateTime
   lastUpdated: DateTime
+}
+
+input UserRelateToManyForCreateInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 type Doctor {
@@ -3127,20 +3085,6 @@ type User {
   sex: String
   username: String
   address: Address
-  companies(
-    where: CompanyWhereInput! = {}
-    orderBy: [CompanyOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Company!]
-  companiesCount(where: CompanyWhereInput! = {}): Int
-  locations(
-    where: CompanyLocationWhereInput! = {}
-    orderBy: [CompanyLocationOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [CompanyLocation!]
-  locationsCount(where: CompanyLocationWhereInput! = {}): Int
   patient: Patient
   prompts(
     where: PromptWhereInput! = {}
@@ -3204,8 +3148,6 @@ input UserWhereInput {
   sex: StringFilter
   username: StringFilter
   address: AddressWhereInput
-  companies: CompanyManyRelationFilter
-  locations: CompanyLocationManyRelationFilter
   patient: PatientWhereInput
   prompts: PromptManyRelationFilter
   profilePhoto: ProfilePhotoWhereInput
@@ -3219,12 +3161,6 @@ input ContractManyRelationFilter {
   every: ContractWhereInput
   some: ContractWhereInput
   none: ContractWhereInput
-}
-
-input CompanyManyRelationFilter {
-  every: CompanyWhereInput
-  some: CompanyWhereInput
-  none: CompanyWhereInput
 }
 
 input PromptManyRelationFilter {
@@ -3289,8 +3225,6 @@ input UserUpdateInput {
   sex: String
   username: String
   address: AddressRelateToOneForUpdateInput
-  companies: CompanyRelateToManyForUpdateInput
-  locations: CompanyLocationRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
   prompts: PromptRelateToManyForUpdateInput
   profilePhoto: ProfilePhotoRelateToOneForUpdateInput
@@ -3305,13 +3239,6 @@ input ContractRelateToManyForUpdateInput {
   set: [ContractWhereUniqueInput!]
   create: [ContractCreateInput!]
   connect: [ContractWhereUniqueInput!]
-}
-
-input CompanyRelateToManyForUpdateInput {
-  disconnect: [CompanyWhereUniqueInput!]
-  set: [CompanyWhereUniqueInput!]
-  create: [CompanyCreateInput!]
-  connect: [CompanyWhereUniqueInput!]
 }
 
 input PromptRelateToManyForUpdateInput {
@@ -3372,8 +3299,6 @@ input UserCreateInput {
   sex: String
   username: String
   address: AddressRelateToOneForCreateInput
-  companies: CompanyRelateToManyForCreateInput
-  locations: CompanyLocationRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
   prompts: PromptRelateToManyForCreateInput
   profilePhoto: ProfilePhotoRelateToOneForCreateInput
@@ -3386,11 +3311,6 @@ input UserCreateInput {
 input ContractRelateToManyForCreateInput {
   create: [ContractCreateInput!]
   connect: [ContractWhereUniqueInput!]
-}
-
-input CompanyRelateToManyForCreateInput {
-  create: [CompanyCreateInput!]
-  connect: [CompanyWhereUniqueInput!]
 }
 
 input PromptRelateToManyForCreateInput {

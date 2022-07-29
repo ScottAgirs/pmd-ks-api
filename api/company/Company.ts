@@ -13,7 +13,7 @@ export const Company = list({
       isIndexed: "unique"
     }),
     locations: relationship({ ref: "CompanyLocation.company", many:  true }),
-    registeredBy: relationship({ ref: "User.companies", many:  true }),
+    // registeredBy: relationship({ ref: "User.companies", many:  true }),
   },
   hooks: {
     // @ts-ignore
