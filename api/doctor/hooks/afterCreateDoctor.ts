@@ -56,17 +56,17 @@ export const afterCreateDoctor = async ({ context, item: doctor }: AfterCreateDo
     console.log('Schedule.createOne :: error', error);
   }
   
-  try {
-    await context.db.Address.createOne({ data: {
-      doctorClinic: {
-        connect: {
-          id: doctorId
-        }
-      }
-    }})
-  } catch (error) {
-    console.log('Address.createOne :: error', error);
-  }
+  // try {
+  //   await context.db.Address.createOne({ data: {
+  //     doctorClinic: {
+  //       connect: {
+  //         id: doctorId
+  //       }
+  //     }
+  //   }})
+  // } catch (error) {
+  //   console.log('Address.createOne :: error', error);
+  // }
   
   try {
     const sharedCreateCalendarEventParams = {
