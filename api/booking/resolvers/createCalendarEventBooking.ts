@@ -11,7 +11,7 @@ export interface CreateEventBookingInput {
 }
 
 export const createCalendarEventBooking = async (
-  root: any,
+  _: any,
   { eventId, reason, tzTarget, startsAt }: CreateEventBookingInput,
   context: KeystoneContext
   ): Promise<any> => {
@@ -20,7 +20,6 @@ export const createCalendarEventBooking = async (
     throw new Error("eventId is required");
   }
 
-  console.log(`🚀 ~ createCalendarEventBooking.startsAt`, startsAt)
   const utcStartsAt = momentTz(startsAt as string);
   const displayApptDate = utcStartsAt.tz(tzTarget).format("MMM D, YYYY, HH:mm");
 
@@ -168,6 +167,31 @@ export const createCalendarEventBooking = async (
       patientApptDetailsUrl: `${process.env.FRONTEND_URL}/appointments/upcoming?bookingId=${createdBooking.id}`,
     }
   })
+
+  try {
+    // Check if doctor has requested this appointment
+    const matchedAppointmentRequests = await context.db.AppointmentRequest.findMany({
+      where: {
+        doctor: { id: { equals: event.doctorId } },
+        event: { id: { equals: event.id } },
+        patient: { id: { equals: currentUserPatientId } },
+      },
+    }) as any;
+
+    if (matchedAppointmentRequests?.length > 0) {
+      const appointmentRequest = matchedAppointmentRequests[0];
+
+      // Delete appointment request
+      await context.db.AppointmentRequest.deleteOne({
+        where: {
+          id: appointmentRequest.id,
+        },
+      });
+    }
+  } catch (error) {
+    // TODO: [HIGH] Log error to Sentry
+    throw new Error(error as any);
+  }
 
   return createdBooking;
 };

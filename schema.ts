@@ -2,6 +2,7 @@ import { Address } from "./api/address/Address";
 import { AppointmentBilling } from "./api/appointment-billing/AppointmentBilling";
 import { AppointmentBillingItem } from "./api/appointment-billing-item/AppointmentBillingItem";
 import { AppointmentNote } from "./api/appointment-note/AppointmentNote";
+import { AppointmentRequest } from "./api/appointment-request/AppointmentRequest";
 import { AppointmentVital } from "./api/appointment-vital/AppointmentVital";
 import { Appointment } from "./api/appointment/Appointment";
 import { Booking } from "./api/booking/Booking";
@@ -61,6 +62,7 @@ export const lists = {
   AppointmentBilling,
   AppointmentBillingItem,
   AppointmentNote,
+  AppointmentRequest,
   AppointmentVital,
   Booking,
   Form,
