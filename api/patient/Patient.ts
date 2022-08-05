@@ -15,6 +15,7 @@ export const Patient = list({
       ref: "AppointmentNote.patient",
       many: true,
     }),
+    appointmentRequests: relationship({ ref: "AppointmentRequest.patient", many: true }),
     bookings: relationship({ ref: "Booking.patient", many: true }),
     caredByDoctors: relationship({
       ref: "Doctor.caringForPatients",
