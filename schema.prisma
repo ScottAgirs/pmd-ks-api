@@ -96,15 +96,15 @@ model AppointmentNote {
 }
 
 model AppointmentRequest {
-  id          String             @id @default(cuid())
-  createdAt   DateTime?          @default(now())
-  reason      String             @default("")
-  doctor      Doctor?            @relation("AppointmentRequest_doctor", fields: [doctorId], references: [id])
-  doctorId    String?            @map("doctor")
-  eventType   CalendarEventType? @relation("AppointmentRequest_eventType", fields: [eventTypeId], references: [id])
-  eventTypeId String?            @unique @map("eventType")
-  patient     Patient?           @relation("AppointmentRequest_patient", fields: [patientId], references: [id])
-  patientId   String?            @map("patient")
+  id        String         @id @default(cuid())
+  createdAt DateTime?      @default(now())
+  reason    String         @default("")
+  doctor    Doctor?        @relation("AppointmentRequest_doctor", fields: [doctorId], references: [id])
+  doctorId  String?        @map("doctor")
+  event     CalendarEvent? @relation("AppointmentRequest_event", fields: [eventId], references: [id])
+  eventId   String?        @unique @map("event")
+  patient   Patient?       @relation("AppointmentRequest_patient", fields: [patientId], references: [id])
+  patientId String?        @map("patient")
 
   @@index([doctorId])
   @@index([patientId])
@@ -190,23 +190,24 @@ model Calendar {
 }
 
 model CalendarEvent {
-  id                       String             @id @default(cuid())
-  description              String             @default("")
+  id                       String              @id @default(cuid())
+  description              String              @default("")
   durationMins             Int
-  companyName              String             @default("")
-  facilityMasterNumber     String             @default("")
-  serviceLocationIndicator String             @default("")
-  isActive                 Boolean            @default(false)
-  isConfirmationRequired   Boolean            @default(false)
-  title                    String             @default("")
-  address                  Address?           @relation("Address_event")
-  bookings                 Booking[]          @relation("Booking_event")
-  calendar                 Calendar?          @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
-  calendarId               String?            @map("calendar")
-  eventType                CalendarEventType? @relation("CalendarEvent_eventType", fields: [eventTypeId], references: [id])
-  eventTypeId              String?            @map("eventType")
-  doctor                   Doctor?            @relation("CalendarEvent_doctor", fields: [doctorId], references: [id])
-  doctorId                 String?            @map("doctor")
+  companyName              String              @default("")
+  facilityMasterNumber     String              @default("")
+  serviceLocationIndicator String              @default("")
+  isActive                 Boolean             @default(false)
+  isConfirmationRequired   Boolean             @default(false)
+  title                    String              @default("")
+  address                  Address?            @relation("Address_event")
+  appointmentRequests      AppointmentRequest? @relation("AppointmentRequest_event")
+  bookings                 Booking[]           @relation("Booking_event")
+  calendar                 Calendar?           @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
+  calendarId               String?             @map("calendar")
+  eventType                CalendarEventType?  @relation("CalendarEvent_eventType", fields: [eventTypeId], references: [id])
+  eventTypeId              String?             @map("eventType")
+  doctor                   Doctor?             @relation("CalendarEvent_doctor", fields: [doctorId], references: [id])
+  doctorId                 String?             @map("doctor")
 
   @@index([calendarId])
   @@index([eventTypeId])
@@ -214,11 +215,10 @@ model CalendarEvent {
 }
 
 model CalendarEventType {
-  id                  String              @id @default(cuid())
-  label               String              @default("")
-  value               String              @unique @default("")
-  appointmentRequests AppointmentRequest? @relation("AppointmentRequest_eventType")
-  events              CalendarEvent[]     @relation("CalendarEvent_eventType")
+  id     String          @id @default(cuid())
+  label  String          @default("")
+  value  String          @unique @default("")
+  events CalendarEvent[] @relation("CalendarEvent_eventType")
 }
 
 model Schedule {

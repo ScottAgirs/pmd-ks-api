@@ -1153,7 +1153,7 @@ type AppointmentRequest {
   createdAt: DateTime
   reason: String
   doctor: Doctor
-  eventType: CalendarEventType
+  event: CalendarEvent
   patient: Patient
 }
 
@@ -1169,7 +1169,7 @@ input AppointmentRequestWhereInput {
   createdAt: DateTimeNullableFilter
   reason: StringFilter
   doctor: DoctorWhereInput
-  eventType: CalendarEventTypeWhereInput
+  event: CalendarEventWhereInput
   patient: PatientWhereInput
 }
 
@@ -1183,14 +1183,8 @@ input AppointmentRequestUpdateInput {
   createdAt: DateTime
   reason: String
   doctor: DoctorRelateToOneForUpdateInput
-  eventType: CalendarEventTypeRelateToOneForUpdateInput
+  event: CalendarEventRelateToOneForUpdateInput
   patient: PatientRelateToOneForUpdateInput
-}
-
-input CalendarEventTypeRelateToOneForUpdateInput {
-  create: CalendarEventTypeCreateInput
-  connect: CalendarEventTypeWhereUniqueInput
-  disconnect: Boolean
 }
 
 input AppointmentRequestUpdateArgs {
@@ -1202,13 +1196,8 @@ input AppointmentRequestCreateInput {
   createdAt: DateTime
   reason: String
   doctor: DoctorRelateToOneForCreateInput
-  eventType: CalendarEventTypeRelateToOneForCreateInput
+  event: CalendarEventRelateToOneForCreateInput
   patient: PatientRelateToOneForCreateInput
-}
-
-input CalendarEventTypeRelateToOneForCreateInput {
-  create: CalendarEventTypeCreateInput
-  connect: CalendarEventTypeWhereUniqueInput
 }
 
 type AppointmentVital {
@@ -1668,6 +1657,7 @@ type CalendarEvent {
   isConfirmationRequired: Boolean
   title: String
   address: Address
+  appointmentRequests: AppointmentRequest
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -1698,6 +1688,7 @@ input CalendarEventWhereInput {
   isConfirmationRequired: BooleanFilter
   title: StringFilter
   address: AddressWhereInput
+  appointmentRequests: AppointmentRequestWhereInput
   bookings: BookingManyRelationFilter
   calendar: CalendarWhereInput
   eventType: CalendarEventTypeWhereInput
@@ -1726,6 +1717,7 @@ input CalendarEventUpdateInput {
   isConfirmationRequired: Boolean
   title: String
   address: AddressRelateToOneForUpdateInput
+  appointmentRequests: AppointmentRequestRelateToOneForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   calendar: CalendarRelateToOneForUpdateInput
   eventType: CalendarEventTypeRelateToOneForUpdateInput
@@ -1735,6 +1727,18 @@ input CalendarEventUpdateInput {
 input AddressRelateToOneForUpdateInput {
   create: AddressCreateInput
   connect: AddressWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AppointmentRequestRelateToOneForUpdateInput {
+  create: AppointmentRequestCreateInput
+  connect: AppointmentRequestWhereUniqueInput
+  disconnect: Boolean
+}
+
+input CalendarEventTypeRelateToOneForUpdateInput {
+  create: CalendarEventTypeCreateInput
+  connect: CalendarEventTypeWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1753,6 +1757,7 @@ input CalendarEventCreateInput {
   isConfirmationRequired: Boolean
   title: String
   address: AddressRelateToOneForCreateInput
+  appointmentRequests: AppointmentRequestRelateToOneForCreateInput
   bookings: BookingRelateToManyForCreateInput
   calendar: CalendarRelateToOneForCreateInput
   eventType: CalendarEventTypeRelateToOneForCreateInput
@@ -1764,11 +1769,20 @@ input AddressRelateToOneForCreateInput {
   connect: AddressWhereUniqueInput
 }
 
+input AppointmentRequestRelateToOneForCreateInput {
+  create: AppointmentRequestCreateInput
+  connect: AppointmentRequestWhereUniqueInput
+}
+
+input CalendarEventTypeRelateToOneForCreateInput {
+  create: CalendarEventTypeCreateInput
+  connect: CalendarEventTypeWhereUniqueInput
+}
+
 type CalendarEventType {
   id: ID!
   label: String
   value: String
-  appointmentRequests: AppointmentRequest
   events(
     where: CalendarEventWhereInput! = {}
     orderBy: [CalendarEventOrderByInput!]! = []
@@ -1790,7 +1804,6 @@ input CalendarEventTypeWhereInput {
   id: IDFilter
   label: StringFilter
   value: StringFilter
-  appointmentRequests: AppointmentRequestWhereInput
   events: CalendarEventManyRelationFilter
 }
 
@@ -1803,14 +1816,7 @@ input CalendarEventTypeOrderByInput {
 input CalendarEventTypeUpdateInput {
   label: String
   value: String
-  appointmentRequests: AppointmentRequestRelateToOneForUpdateInput
   events: CalendarEventRelateToManyForUpdateInput
-}
-
-input AppointmentRequestRelateToOneForUpdateInput {
-  create: AppointmentRequestCreateInput
-  connect: AppointmentRequestWhereUniqueInput
-  disconnect: Boolean
 }
 
 input CalendarEventTypeUpdateArgs {
@@ -1821,13 +1827,7 @@ input CalendarEventTypeUpdateArgs {
 input CalendarEventTypeCreateInput {
   label: String
   value: String
-  appointmentRequests: AppointmentRequestRelateToOneForCreateInput
   events: CalendarEventRelateToManyForCreateInput
-}
-
-input AppointmentRequestRelateToOneForCreateInput {
-  create: AppointmentRequestCreateInput
-  connect: AppointmentRequestWhereUniqueInput
 }
 
 type Schedule {
