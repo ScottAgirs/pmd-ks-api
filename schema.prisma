@@ -95,6 +95,21 @@ model AppointmentNote {
   @@index([patientId])
 }
 
+model AppointmentRequest {
+  id          String             @id @default(cuid())
+  createdAt   DateTime?          @default(now())
+  reason      String             @default("")
+  doctor      Doctor?            @relation("AppointmentRequest_doctor", fields: [doctorId], references: [id])
+  doctorId    String?            @map("doctor")
+  eventType   CalendarEventType? @relation("AppointmentRequest_eventType", fields: [eventTypeId], references: [id])
+  eventTypeId String?            @unique @map("eventType")
+  patient     Patient?           @relation("AppointmentRequest_patient", fields: [patientId], references: [id])
+  patientId   String?            @map("patient")
+
+  @@index([doctorId])
+  @@index([patientId])
+}
+
 model AppointmentVital {
   id               String       @id @default(cuid())
   appointment      Appointment? @relation("Appointment_vitalsData")
@@ -199,10 +214,11 @@ model CalendarEvent {
 }
 
 model CalendarEventType {
-  id     String          @id @default(cuid())
-  label  String          @default("")
-  value  String          @unique @default("")
-  events CalendarEvent[] @relation("CalendarEvent_eventType")
+  id                  String              @id @default(cuid())
+  label               String              @default("")
+  value               String              @unique @default("")
+  appointmentRequests AppointmentRequest? @relation("AppointmentRequest_eventType")
+  events              CalendarEvent[]     @relation("CalendarEvent_eventType")
 }
 
 model Schedule {
@@ -294,6 +310,7 @@ model Doctor {
   province                 String                 @default("")
   summary                  String                 @default("")
   appointments             Appointment[]          @relation("Appointment_doctor")
+  appointmentRequests      AppointmentRequest[]   @relation("AppointmentRequest_doctor")
   billings                 AppointmentBilling[]   @relation("AppointmentBilling_doctor")
   bookings                 Booking[]              @relation("Booking_doctor")
   caringForPatients        Patient[]              @relation("Doctor_caringForPatients")
@@ -436,24 +453,25 @@ model UserInvite {
 }
 
 model Patient {
-  id                String             @id @default(cuid())
-  isCompleteProfile Boolean            @default(false)
-  name              String             @default("")
-  appointments      Appointment[]      @relation("Appointment_patient")
-  appointmentVitals AppointmentVital[] @relation("AppointmentVital_patient")
-  appointmentNotes  AppointmentNote[]  @relation("AppointmentNote_patient")
-  bookings          Booking[]          @relation("Booking_patient")
-  caredByDoctors    Doctor[]           @relation("Doctor_caringForPatients")
-  emergencyContacts EmergencyContact[] @relation("EmergencyContact_patient")
-  forms             Form[]             @relation("Form_patient")
-  healthCards       HealthCard[]       @relation("HealthCard_patient")
-  medications       Medication[]       @relation("Medication_patient")
-  pharmacyLocations PharmacyLocation[] @relation("Patient_pharmacyLocations")
-  prescriptions     Prescription[]     @relation("Prescription_patient")
-  savedDoctors      Doctor[]           @relation("Doctor_savedByPatients")
-  user              User?              @relation("Patient_user", fields: [userId], references: [id])
-  userId            String?            @unique @map("user")
-  visitedDoctors    Doctor[]           @relation("Doctor_patients")
+  id                  String               @id @default(cuid())
+  isCompleteProfile   Boolean              @default(false)
+  name                String               @default("")
+  appointments        Appointment[]        @relation("Appointment_patient")
+  appointmentVitals   AppointmentVital[]   @relation("AppointmentVital_patient")
+  appointmentNotes    AppointmentNote[]    @relation("AppointmentNote_patient")
+  appointmentRequests AppointmentRequest[] @relation("AppointmentRequest_patient")
+  bookings            Booking[]            @relation("Booking_patient")
+  caredByDoctors      Doctor[]             @relation("Doctor_caringForPatients")
+  emergencyContacts   EmergencyContact[]   @relation("EmergencyContact_patient")
+  forms               Form[]               @relation("Form_patient")
+  healthCards         HealthCard[]         @relation("HealthCard_patient")
+  medications         Medication[]         @relation("Medication_patient")
+  pharmacyLocations   PharmacyLocation[]   @relation("Patient_pharmacyLocations")
+  prescriptions       Prescription[]       @relation("Prescription_patient")
+  savedDoctors        Doctor[]             @relation("Doctor_savedByPatients")
+  user                User?                @relation("Patient_user", fields: [userId], references: [id])
+  userId              String?              @unique @map("user")
+  visitedDoctors      Doctor[]             @relation("Doctor_patients")
 }
 
 model Medication {

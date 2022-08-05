@@ -99,6 +99,25 @@ type Mutation {
   deleteAppointmentNotes(
     where: [AppointmentNoteWhereUniqueInput!]!
   ): [AppointmentNote]
+  createAppointmentRequest(
+    data: AppointmentRequestCreateInput!
+  ): AppointmentRequest
+  createAppointmentRequests(
+    data: [AppointmentRequestCreateInput!]!
+  ): [AppointmentRequest]
+  updateAppointmentRequest(
+    where: AppointmentRequestWhereUniqueInput!
+    data: AppointmentRequestUpdateInput!
+  ): AppointmentRequest
+  updateAppointmentRequests(
+    data: [AppointmentRequestUpdateArgs!]!
+  ): [AppointmentRequest]
+  deleteAppointmentRequest(
+    where: AppointmentRequestWhereUniqueInput!
+  ): AppointmentRequest
+  deleteAppointmentRequests(
+    where: [AppointmentRequestWhereUniqueInput!]!
+  ): [AppointmentRequest]
   createAppointmentVital(data: AppointmentVitalCreateInput!): AppointmentVital
   createAppointmentVitals(
     data: [AppointmentVitalCreateInput!]!
@@ -1129,6 +1148,69 @@ input AppointmentNoteCreateInput {
   title: String
 }
 
+type AppointmentRequest {
+  id: ID!
+  createdAt: DateTime
+  reason: String
+  doctor: Doctor
+  eventType: CalendarEventType
+  patient: Patient
+}
+
+input AppointmentRequestWhereUniqueInput {
+  id: ID
+}
+
+input AppointmentRequestWhereInput {
+  AND: [AppointmentRequestWhereInput!]
+  OR: [AppointmentRequestWhereInput!]
+  NOT: [AppointmentRequestWhereInput!]
+  id: IDFilter
+  createdAt: DateTimeNullableFilter
+  reason: StringFilter
+  doctor: DoctorWhereInput
+  eventType: CalendarEventTypeWhereInput
+  patient: PatientWhereInput
+}
+
+input AppointmentRequestOrderByInput {
+  id: OrderDirection
+  createdAt: OrderDirection
+  reason: OrderDirection
+}
+
+input AppointmentRequestUpdateInput {
+  createdAt: DateTime
+  reason: String
+  doctor: DoctorRelateToOneForUpdateInput
+  eventType: CalendarEventTypeRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
+}
+
+input CalendarEventTypeRelateToOneForUpdateInput {
+  create: CalendarEventTypeCreateInput
+  connect: CalendarEventTypeWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AppointmentRequestUpdateArgs {
+  where: AppointmentRequestWhereUniqueInput!
+  data: AppointmentRequestUpdateInput!
+}
+
+input AppointmentRequestCreateInput {
+  createdAt: DateTime
+  reason: String
+  doctor: DoctorRelateToOneForCreateInput
+  eventType: CalendarEventTypeRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
+}
+
+input CalendarEventTypeRelateToOneForCreateInput {
+  create: CalendarEventTypeCreateInput
+  connect: CalendarEventTypeWhereUniqueInput
+}
+
 type AppointmentVital {
   id: ID!
   appointment: Appointment
@@ -1656,12 +1738,6 @@ input AddressRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input CalendarEventTypeRelateToOneForUpdateInput {
-  create: CalendarEventTypeCreateInput
-  connect: CalendarEventTypeWhereUniqueInput
-  disconnect: Boolean
-}
-
 input CalendarEventUpdateArgs {
   where: CalendarEventWhereUniqueInput!
   data: CalendarEventUpdateInput!
@@ -1688,15 +1764,11 @@ input AddressRelateToOneForCreateInput {
   connect: AddressWhereUniqueInput
 }
 
-input CalendarEventTypeRelateToOneForCreateInput {
-  create: CalendarEventTypeCreateInput
-  connect: CalendarEventTypeWhereUniqueInput
-}
-
 type CalendarEventType {
   id: ID!
   label: String
   value: String
+  appointmentRequests: AppointmentRequest
   events(
     where: CalendarEventWhereInput! = {}
     orderBy: [CalendarEventOrderByInput!]! = []
@@ -1718,6 +1790,7 @@ input CalendarEventTypeWhereInput {
   id: IDFilter
   label: StringFilter
   value: StringFilter
+  appointmentRequests: AppointmentRequestWhereInput
   events: CalendarEventManyRelationFilter
 }
 
@@ -1730,7 +1803,14 @@ input CalendarEventTypeOrderByInput {
 input CalendarEventTypeUpdateInput {
   label: String
   value: String
+  appointmentRequests: AppointmentRequestRelateToOneForUpdateInput
   events: CalendarEventRelateToManyForUpdateInput
+}
+
+input AppointmentRequestRelateToOneForUpdateInput {
+  create: AppointmentRequestCreateInput
+  connect: AppointmentRequestWhereUniqueInput
+  disconnect: Boolean
 }
 
 input CalendarEventTypeUpdateArgs {
@@ -1741,7 +1821,13 @@ input CalendarEventTypeUpdateArgs {
 input CalendarEventTypeCreateInput {
   label: String
   value: String
+  appointmentRequests: AppointmentRequestRelateToOneForCreateInput
   events: CalendarEventRelateToManyForCreateInput
+}
+
+input AppointmentRequestRelateToOneForCreateInput {
+  create: AppointmentRequestCreateInput
+  connect: AppointmentRequestWhereUniqueInput
 }
 
 type Schedule {
@@ -2227,6 +2313,13 @@ type Doctor {
     skip: Int! = 0
   ): [Appointment!]
   appointmentsCount(where: AppointmentWhereInput! = {}): Int
+  appointmentRequests(
+    where: AppointmentRequestWhereInput! = {}
+    orderBy: [AppointmentRequestOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentRequest!]
+  appointmentRequestsCount(where: AppointmentRequestWhereInput! = {}): Int
   billings(
     where: AppointmentBillingWhereInput! = {}
     orderBy: [AppointmentBillingOrderByInput!]! = []
@@ -2332,6 +2425,7 @@ input DoctorWhereInput {
   province: StringFilter
   summary: StringFilter
   appointments: AppointmentManyRelationFilter
+  appointmentRequests: AppointmentRequestManyRelationFilter
   billings: AppointmentBillingManyRelationFilter
   bookings: BookingManyRelationFilter
   caringForPatients: PatientManyRelationFilter
@@ -2353,6 +2447,12 @@ input AppointmentManyRelationFilter {
   every: AppointmentWhereInput
   some: AppointmentWhereInput
   none: AppointmentWhereInput
+}
+
+input AppointmentRequestManyRelationFilter {
+  every: AppointmentRequestWhereInput
+  some: AppointmentRequestWhereInput
+  none: AppointmentRequestWhereInput
 }
 
 input AppointmentBillingManyRelationFilter {
@@ -2426,6 +2526,7 @@ input DoctorUpdateInput {
   province: String
   summary: String
   appointments: AppointmentRelateToManyForUpdateInput
+  appointmentRequests: AppointmentRequestRelateToManyForUpdateInput
   billings: AppointmentBillingRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   caringForPatients: PatientRelateToManyForUpdateInput
@@ -2448,6 +2549,13 @@ input AppointmentRelateToManyForUpdateInput {
   set: [AppointmentWhereUniqueInput!]
   create: [AppointmentCreateInput!]
   connect: [AppointmentWhereUniqueInput!]
+}
+
+input AppointmentRequestRelateToManyForUpdateInput {
+  disconnect: [AppointmentRequestWhereUniqueInput!]
+  set: [AppointmentRequestWhereUniqueInput!]
+  create: [AppointmentRequestCreateInput!]
+  connect: [AppointmentRequestWhereUniqueInput!]
 }
 
 input AppointmentBillingRelateToManyForUpdateInput {
@@ -2534,6 +2642,7 @@ input DoctorCreateInput {
   province: String
   summary: String
   appointments: AppointmentRelateToManyForCreateInput
+  appointmentRequests: AppointmentRequestRelateToManyForCreateInput
   billings: AppointmentBillingRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
   caringForPatients: PatientRelateToManyForCreateInput
@@ -2554,6 +2663,11 @@ input DoctorCreateInput {
 input AppointmentRelateToManyForCreateInput {
   create: [AppointmentCreateInput!]
   connect: [AppointmentWhereUniqueInput!]
+}
+
+input AppointmentRequestRelateToManyForCreateInput {
+  create: [AppointmentRequestCreateInput!]
+  connect: [AppointmentRequestWhereUniqueInput!]
 }
 
 input AppointmentBillingRelateToManyForCreateInput {
@@ -3452,6 +3566,13 @@ type Patient {
     skip: Int! = 0
   ): [AppointmentNote!]
   appointmentNotesCount(where: AppointmentNoteWhereInput! = {}): Int
+  appointmentRequests(
+    where: AppointmentRequestWhereInput! = {}
+    orderBy: [AppointmentRequestOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentRequest!]
+  appointmentRequestsCount(where: AppointmentRequestWhereInput! = {}): Int
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -3539,6 +3660,7 @@ input PatientWhereInput {
   appointments: AppointmentManyRelationFilter
   appointmentVitals: AppointmentVitalManyRelationFilter
   appointmentNotes: AppointmentNoteManyRelationFilter
+  appointmentRequests: AppointmentRequestManyRelationFilter
   bookings: BookingManyRelationFilter
   caredByDoctors: DoctorManyRelationFilter
   emergencyContacts: EmergencyContactManyRelationFilter
@@ -3594,6 +3716,7 @@ input PatientUpdateInput {
   appointments: AppointmentRelateToManyForUpdateInput
   appointmentVitals: AppointmentVitalRelateToManyForUpdateInput
   appointmentNotes: AppointmentNoteRelateToManyForUpdateInput
+  appointmentRequests: AppointmentRequestRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   caredByDoctors: DoctorRelateToManyForUpdateInput
   emergencyContacts: EmergencyContactRelateToManyForUpdateInput
@@ -3653,6 +3776,7 @@ input PatientCreateInput {
   appointments: AppointmentRelateToManyForCreateInput
   appointmentVitals: AppointmentVitalRelateToManyForCreateInput
   appointmentNotes: AppointmentNoteRelateToManyForCreateInput
+  appointmentRequests: AppointmentRequestRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
   caredByDoctors: DoctorRelateToManyForCreateInput
   emergencyContacts: EmergencyContactRelateToManyForCreateInput
@@ -4755,6 +4879,16 @@ type Query {
   ): [AppointmentNote!]
   appointmentNote(where: AppointmentNoteWhereUniqueInput!): AppointmentNote
   appointmentNotesCount(where: AppointmentNoteWhereInput! = {}): Int
+  appointmentRequests(
+    where: AppointmentRequestWhereInput! = {}
+    orderBy: [AppointmentRequestOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentRequest!]
+  appointmentRequest(
+    where: AppointmentRequestWhereUniqueInput!
+  ): AppointmentRequest
+  appointmentRequestsCount(where: AppointmentRequestWhereInput! = {}): Int
   appointmentVitals(
     where: AppointmentVitalWhereInput! = {}
     orderBy: [AppointmentVitalOrderByInput!]! = []
