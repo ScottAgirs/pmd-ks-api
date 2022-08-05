@@ -9,7 +9,6 @@ export const CalendarEventType = list({
       validation: { isRequired: true }, 
       isIndexed: 'unique',
     }),
-    appointmentRequests: relationship({ ref: 'AppointmentRequest.eventType' }),
     events: relationship({ ref: 'CalendarEvent.eventType', many: true }),
   },
 })
