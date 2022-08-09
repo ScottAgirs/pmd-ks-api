@@ -1,5 +1,5 @@
 import { KeystoneContext } from "@keystone-6/core/types";
-import { sendEmail } from "../../../lib/email/sendEmail";
+import { sendTemplatedEmail } from "../../../lib/email/sendEmail";
 
 interface InviteUserByDoctorInput {
   healthCardNumber: string;
@@ -94,7 +94,7 @@ export const inviteUserByDoctor = async (
 
   // Send email
   try {
-    sendEmail({
+    sendTemplatedEmail({
       to: email,
       templateAlias: "user-invitation",
       templateModel: {

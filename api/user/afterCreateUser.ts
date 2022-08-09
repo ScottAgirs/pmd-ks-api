@@ -1,5 +1,5 @@
 import { BaseItem, KeystoneContext } from "@keystone-6/core/types";
-import { sendEmail } from "../../lib/email/sendEmail";
+import { sendTemplatedEmail } from "../../lib/email/sendEmail";
 
 // TODO: [TypeScript] Add context interface
 export const afterCreateUser = async ({
@@ -34,7 +34,7 @@ export const afterCreateUser = async ({
       },
     });
 
-    sendEmail({
+    sendTemplatedEmail({
       from: "no-reply@pocketmd.ca",
       to: createdUser.email as string,
       templateAlias: "welcome",
