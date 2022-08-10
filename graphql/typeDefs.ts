@@ -9,6 +9,11 @@ export const typeDefs = graphql`
       tzTarget: String
       startsAt: DateTime
     ): StepperStepProg
+    createWalkInAppointment(
+      eventId: ID!
+      reason: String!
+      patientId: ID!
+    ): Appointment
     addPatientToDoctor(
       firstName: String!
       lastName: String!

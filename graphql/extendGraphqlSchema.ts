@@ -5,6 +5,7 @@ import { acceptInvite } from "../api/user-invite/services/accept-invite";
 import { addPatientToDoctor } from "../api/patient/resolvers/addPatientToDoctor";
 import { completeMyStepProg } from "../api/stepper-step-prog/resolvers/completeMyStepProg";
 import { createCalendarEventBooking } from "../api/booking/resolvers/createCalendarEventBooking";
+import { createWalkInAppointment } from "../api/appointment/resolvers/createWalkInAppointment";
 
 import { typeDefs } from "./typeDefs";
 
@@ -16,6 +17,7 @@ export const extendGraphqlSchema = graphQLSchemaExtension({
       addPatientToDoctor,
       inviteUserByDoctor,
       createCalendarEventBooking,
+      createWalkInAppointment,
       // Stepper
       completeMyStepProg,
       // User Invites
