@@ -20,6 +20,7 @@ export const CalendarEvent = list({
     title: text({ validation: { isRequired: true } }),
     address: relationship({ ref: "Address.event" }),
     appointmentRequests: relationship({ ref: 'AppointmentRequest.event' }),
+    appointments: relationship({ ref: 'Appointment.event', many: true }),
     bookings: relationship({ ref: "Booking.event", many: true }),
     calendar: relationship({ ref: "Calendar.events" }),
     eventType: relationship({ ref: "CalendarEventType.events" }),
