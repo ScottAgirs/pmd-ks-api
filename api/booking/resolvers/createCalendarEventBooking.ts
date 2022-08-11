@@ -81,6 +81,11 @@ export const createCalendarEventBooking = async (
               id: event.doctorId,
             },
           },
+          event: {
+            connect: {
+              id: eventId,
+            },
+          },
           notes: {
             create: {
               title: "",
