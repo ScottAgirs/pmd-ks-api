@@ -734,6 +734,7 @@ type Appointment {
   doctor: Doctor
   isSigned: Boolean
   isSignedOn: DateTime
+  event: CalendarEvent
   forms(
     where: FormWhereInput! = {}
     orderBy: [FormOrderByInput!]! = []
@@ -781,6 +782,7 @@ input AppointmentWhereInput {
   doctor: DoctorWhereInput
   isSigned: BooleanFilter
   isSignedOn: DateTimeNullableFilter
+  event: CalendarEventWhereInput
   forms: FormManyRelationFilter
   notes: AppointmentNoteManyRelationFilter
   patient: PatientWhereInput
@@ -840,6 +842,7 @@ input AppointmentUpdateInput {
   doctor: DoctorRelateToOneForUpdateInput
   isSigned: Boolean
   isSignedOn: DateTime
+  event: CalendarEventRelateToOneForUpdateInput
   forms: FormRelateToManyForUpdateInput
   notes: AppointmentNoteRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
@@ -915,6 +918,7 @@ input AppointmentCreateInput {
   doctor: DoctorRelateToOneForCreateInput
   isSigned: Boolean
   isSignedOn: DateTime
+  event: CalendarEventRelateToOneForCreateInput
   forms: FormRelateToManyForCreateInput
   notes: AppointmentNoteRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
@@ -1663,6 +1667,13 @@ type CalendarEvent {
   title: String
   address: Address
   appointmentRequests: AppointmentRequest
+  appointments(
+    where: AppointmentWhereInput! = {}
+    orderBy: [AppointmentOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Appointment!]
+  appointmentsCount(where: AppointmentWhereInput! = {}): Int
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
@@ -1694,10 +1705,17 @@ input CalendarEventWhereInput {
   title: StringFilter
   address: AddressWhereInput
   appointmentRequests: AppointmentRequestWhereInput
+  appointments: AppointmentManyRelationFilter
   bookings: BookingManyRelationFilter
   calendar: CalendarWhereInput
   eventType: CalendarEventTypeWhereInput
   doctor: DoctorWhereInput
+}
+
+input AppointmentManyRelationFilter {
+  every: AppointmentWhereInput
+  some: AppointmentWhereInput
+  none: AppointmentWhereInput
 }
 
 input CalendarEventOrderByInput {
@@ -1723,6 +1741,7 @@ input CalendarEventUpdateInput {
   title: String
   address: AddressRelateToOneForUpdateInput
   appointmentRequests: AppointmentRequestRelateToOneForUpdateInput
+  appointments: AppointmentRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   calendar: CalendarRelateToOneForUpdateInput
   eventType: CalendarEventTypeRelateToOneForUpdateInput
@@ -1739,6 +1758,13 @@ input AppointmentRequestRelateToOneForUpdateInput {
   create: AppointmentRequestCreateInput
   connect: AppointmentRequestWhereUniqueInput
   disconnect: Boolean
+}
+
+input AppointmentRelateToManyForUpdateInput {
+  disconnect: [AppointmentWhereUniqueInput!]
+  set: [AppointmentWhereUniqueInput!]
+  create: [AppointmentCreateInput!]
+  connect: [AppointmentWhereUniqueInput!]
 }
 
 input CalendarEventTypeRelateToOneForUpdateInput {
@@ -1763,6 +1789,7 @@ input CalendarEventCreateInput {
   title: String
   address: AddressRelateToOneForCreateInput
   appointmentRequests: AppointmentRequestRelateToOneForCreateInput
+  appointments: AppointmentRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
   calendar: CalendarRelateToOneForCreateInput
   eventType: CalendarEventTypeRelateToOneForCreateInput
@@ -1777,6 +1804,11 @@ input AddressRelateToOneForCreateInput {
 input AppointmentRequestRelateToOneForCreateInput {
   create: AppointmentRequestCreateInput
   connect: AppointmentRequestWhereUniqueInput
+}
+
+input AppointmentRelateToManyForCreateInput {
+  create: [AppointmentCreateInput!]
+  connect: [AppointmentWhereUniqueInput!]
 }
 
 input CalendarEventTypeRelateToOneForCreateInput {
@@ -2448,12 +2480,6 @@ input DoctorWhereInput {
   user: UserWhereInput
 }
 
-input AppointmentManyRelationFilter {
-  every: AppointmentWhereInput
-  some: AppointmentWhereInput
-  none: AppointmentWhereInput
-}
-
 input AppointmentRequestManyRelationFilter {
   every: AppointmentRequestWhereInput
   some: AppointmentRequestWhereInput
@@ -2547,13 +2573,6 @@ input DoctorUpdateInput {
   proofOfLicense: ProofOfLicenseRelateToOneForUpdateInput
   savedByPatients: PatientRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
-}
-
-input AppointmentRelateToManyForUpdateInput {
-  disconnect: [AppointmentWhereUniqueInput!]
-  set: [AppointmentWhereUniqueInput!]
-  create: [AppointmentCreateInput!]
-  connect: [AppointmentWhereUniqueInput!]
 }
 
 input AppointmentRequestRelateToManyForUpdateInput {
@@ -2663,11 +2682,6 @@ input DoctorCreateInput {
   proofOfLicense: ProofOfLicenseRelateToOneForCreateInput
   savedByPatients: PatientRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
-}
-
-input AppointmentRelateToManyForCreateInput {
-  create: [AppointmentCreateInput!]
-  connect: [AppointmentWhereUniqueInput!]
 }
 
 input AppointmentRequestRelateToManyForCreateInput {

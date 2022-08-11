@@ -39,6 +39,8 @@ model Appointment {
   doctorId          String?             @map("doctor")
   isSigned          Boolean             @default(false)
   isSignedOn        DateTime?           @default(now())
+  event             CalendarEvent?      @relation("Appointment_event", fields: [eventId], references: [id])
+  eventId           String?             @map("event")
   forms             Form[]              @relation("Form_appointment")
   notes             AppointmentNote[]   @relation("AppointmentNote_appointment")
   patient           Patient?            @relation("Appointment_patient", fields: [patientId], references: [id])
@@ -56,6 +58,7 @@ model Appointment {
   endedAt           DateTime?
 
   @@index([doctorId])
+  @@index([eventId])
   @@index([patientId])
 }
 
@@ -201,6 +204,7 @@ model CalendarEvent {
   title                    String              @default("")
   address                  Address?            @relation("Address_event")
   appointmentRequests      AppointmentRequest? @relation("AppointmentRequest_event")
+  appointments             Appointment[]       @relation("Appointment_event")
   bookings                 Booking[]           @relation("Booking_event")
   calendar                 Calendar?           @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
   calendarId               String?             @map("calendar")
