@@ -33,6 +33,23 @@ type Mutation {
     sex: String!
   ): UserInvite
   completeMyStepProg(stepId: ID!): StepperStepProg
+  createActiveIngredient(data: ActiveIngredientCreateInput!): ActiveIngredient
+  createActiveIngredients(
+    data: [ActiveIngredientCreateInput!]!
+  ): [ActiveIngredient]
+  updateActiveIngredient(
+    where: ActiveIngredientWhereUniqueInput!
+    data: ActiveIngredientUpdateInput!
+  ): ActiveIngredient
+  updateActiveIngredients(
+    data: [ActiveIngredientUpdateArgs!]!
+  ): [ActiveIngredient]
+  deleteActiveIngredient(
+    where: ActiveIngredientWhereUniqueInput!
+  ): ActiveIngredient
+  deleteActiveIngredients(
+    where: [ActiveIngredientWhereUniqueInput!]!
+  ): [ActiveIngredient]
   createAddress(data: AddressCreateInput!): Address
   createAddresses(data: [AddressCreateInput!]!): [Address]
   updateAddress(
@@ -42,6 +59,25 @@ type Mutation {
   updateAddresses(data: [AddressUpdateArgs!]!): [Address]
   deleteAddress(where: AddressWhereUniqueInput!): Address
   deleteAddresses(where: [AddressWhereUniqueInput!]!): [Address]
+  createAdministrativeArea(
+    data: AdministrativeAreaCreateInput!
+  ): AdministrativeArea
+  createAdministrativeAreas(
+    data: [AdministrativeAreaCreateInput!]!
+  ): [AdministrativeArea]
+  updateAdministrativeArea(
+    where: AdministrativeAreaWhereUniqueInput!
+    data: AdministrativeAreaUpdateInput!
+  ): AdministrativeArea
+  updateAdministrativeAreas(
+    data: [AdministrativeAreaUpdateArgs!]!
+  ): [AdministrativeArea]
+  deleteAdministrativeArea(
+    where: AdministrativeAreaWhereUniqueInput!
+  ): AdministrativeArea
+  deleteAdministrativeAreas(
+    where: [AdministrativeAreaWhereUniqueInput!]!
+  ): [AdministrativeArea]
   createAppointment(data: AppointmentCreateInput!): Appointment
   createAppointments(data: [AppointmentCreateInput!]!): [Appointment]
   updateAppointment(
@@ -149,21 +185,6 @@ type Mutation {
   updateBookings(data: [BookingUpdateArgs!]!): [Booking]
   deleteBooking(where: BookingWhereUniqueInput!): Booking
   deleteBookings(where: [BookingWhereUniqueInput!]!): [Booking]
-  createForm(data: FormCreateInput!): Form
-  createForms(data: [FormCreateInput!]!): [Form]
-  updateForm(where: FormWhereUniqueInput!, data: FormUpdateInput!): Form
-  updateForms(data: [FormUpdateArgs!]!): [Form]
-  deleteForm(where: FormWhereUniqueInput!): Form
-  deleteForms(where: [FormWhereUniqueInput!]!): [Form]
-  createFormType(data: FormTypeCreateInput!): FormType
-  createFormTypes(data: [FormTypeCreateInput!]!): [FormType]
-  updateFormType(
-    where: FormTypeWhereUniqueInput!
-    data: FormTypeUpdateInput!
-  ): FormType
-  updateFormTypes(data: [FormTypeUpdateArgs!]!): [FormType]
-  deleteFormType(where: FormTypeWhereUniqueInput!): FormType
-  deleteFormTypes(where: [FormTypeWhereUniqueInput!]!): [FormType]
   createCalendar(data: CalendarCreateInput!): Calendar
   createCalendars(data: [CalendarCreateInput!]!): [Calendar]
   updateCalendar(
@@ -203,35 +224,6 @@ type Mutation {
   deleteCalendarEventTypes(
     where: [CalendarEventTypeWhereUniqueInput!]!
   ): [CalendarEventType]
-  createSchedule(data: ScheduleCreateInput!): Schedule
-  createSchedules(data: [ScheduleCreateInput!]!): [Schedule]
-  updateSchedule(
-    where: ScheduleWhereUniqueInput!
-    data: ScheduleUpdateInput!
-  ): Schedule
-  updateSchedules(data: [ScheduleUpdateArgs!]!): [Schedule]
-  deleteSchedule(where: ScheduleWhereUniqueInput!): Schedule
-  deleteSchedules(where: [ScheduleWhereUniqueInput!]!): [Schedule]
-  createRecurringSlot(data: RecurringSlotCreateInput!): RecurringSlot
-  createRecurringSlots(data: [RecurringSlotCreateInput!]!): [RecurringSlot]
-  updateRecurringSlot(
-    where: RecurringSlotWhereUniqueInput!
-    data: RecurringSlotUpdateInput!
-  ): RecurringSlot
-  updateRecurringSlots(data: [RecurringSlotUpdateArgs!]!): [RecurringSlot]
-  deleteRecurringSlot(where: RecurringSlotWhereUniqueInput!): RecurringSlot
-  deleteRecurringSlots(
-    where: [RecurringSlotWhereUniqueInput!]!
-  ): [RecurringSlot]
-  createTimeInterval(data: TimeIntervalCreateInput!): TimeInterval
-  createTimeIntervals(data: [TimeIntervalCreateInput!]!): [TimeInterval]
-  updateTimeInterval(
-    where: TimeIntervalWhereUniqueInput!
-    data: TimeIntervalUpdateInput!
-  ): TimeInterval
-  updateTimeIntervals(data: [TimeIntervalUpdateArgs!]!): [TimeInterval]
-  deleteTimeInterval(where: TimeIntervalWhereUniqueInput!): TimeInterval
-  deleteTimeIntervals(where: [TimeIntervalWhereUniqueInput!]!): [TimeInterval]
   createCompany(data: CompanyCreateInput!): Company
   createCompanies(data: [CompanyCreateInput!]!): [Company]
   updateCompany(
@@ -265,21 +257,21 @@ type Mutation {
   updateContracts(data: [ContractUpdateArgs!]!): [Contract]
   deleteContract(where: ContractWhereUniqueInput!): Contract
   deleteContracts(where: [ContractWhereUniqueInput!]!): [Contract]
+  createCountry(data: CountryCreateInput!): Country
+  createCountries(data: [CountryCreateInput!]!): [Country]
+  updateCountry(
+    where: CountryWhereUniqueInput!
+    data: CountryUpdateInput!
+  ): Country
+  updateCountries(data: [CountryUpdateArgs!]!): [Country]
+  deleteCountry(where: CountryWhereUniqueInput!): Country
+  deleteCountries(where: [CountryWhereUniqueInput!]!): [Country]
   createDoctor(data: DoctorCreateInput!): Doctor
   createDoctors(data: [DoctorCreateInput!]!): [Doctor]
   updateDoctor(where: DoctorWhereUniqueInput!, data: DoctorUpdateInput!): Doctor
   updateDoctors(data: [DoctorUpdateArgs!]!): [Doctor]
   deleteDoctor(where: DoctorWhereUniqueInput!): Doctor
   deleteDoctors(where: [DoctorWhereUniqueInput!]!): [Doctor]
-  createLanguage(data: LanguageCreateInput!): Language
-  createLanguages(data: [LanguageCreateInput!]!): [Language]
-  updateLanguage(
-    where: LanguageWhereUniqueInput!
-    data: LanguageUpdateInput!
-  ): Language
-  updateLanguages(data: [LanguageUpdateArgs!]!): [Language]
-  deleteLanguage(where: LanguageWhereUniqueInput!): Language
-  deleteLanguages(where: [LanguageWhereUniqueInput!]!): [Language]
   createDoctorSpecialty(data: DoctorSpecialtyCreateInput!): DoctorSpecialty
   createDoctorSpecialties(
     data: [DoctorSpecialtyCreateInput!]!
@@ -316,43 +308,6 @@ type Mutation {
   deleteDoctorSubSpecialties(
     where: [DoctorSubSpecialtyWhereUniqueInput!]!
   ): [DoctorSubSpecialty]
-  createHealthCard(data: HealthCardCreateInput!): HealthCard
-  createHealthCards(data: [HealthCardCreateInput!]!): [HealthCard]
-  updateHealthCard(
-    where: HealthCardWhereUniqueInput!
-    data: HealthCardUpdateInput!
-  ): HealthCard
-  updateHealthCards(data: [HealthCardUpdateArgs!]!): [HealthCard]
-  deleteHealthCard(where: HealthCardWhereUniqueInput!): HealthCard
-  deleteHealthCards(where: [HealthCardWhereUniqueInput!]!): [HealthCard]
-  createCountry(data: CountryCreateInput!): Country
-  createCountries(data: [CountryCreateInput!]!): [Country]
-  updateCountry(
-    where: CountryWhereUniqueInput!
-    data: CountryUpdateInput!
-  ): Country
-  updateCountries(data: [CountryUpdateArgs!]!): [Country]
-  deleteCountry(where: CountryWhereUniqueInput!): Country
-  deleteCountries(where: [CountryWhereUniqueInput!]!): [Country]
-  createAdministrativeArea(
-    data: AdministrativeAreaCreateInput!
-  ): AdministrativeArea
-  createAdministrativeAreas(
-    data: [AdministrativeAreaCreateInput!]!
-  ): [AdministrativeArea]
-  updateAdministrativeArea(
-    where: AdministrativeAreaWhereUniqueInput!
-    data: AdministrativeAreaUpdateInput!
-  ): AdministrativeArea
-  updateAdministrativeAreas(
-    data: [AdministrativeAreaUpdateArgs!]!
-  ): [AdministrativeArea]
-  deleteAdministrativeArea(
-    where: AdministrativeAreaWhereUniqueInput!
-  ): AdministrativeArea
-  deleteAdministrativeAreas(
-    where: [AdministrativeAreaWhereUniqueInput!]!
-  ): [AdministrativeArea]
   createEmergencyContact(data: EmergencyContactCreateInput!): EmergencyContact
   createEmergencyContacts(
     data: [EmergencyContactCreateInput!]!
@@ -370,30 +325,39 @@ type Mutation {
   deleteEmergencyContacts(
     where: [EmergencyContactWhereUniqueInput!]!
   ): [EmergencyContact]
-  createUser(data: UserCreateInput!): User
-  createUsers(data: [UserCreateInput!]!): [User]
-  updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
-  updateUsers(data: [UserUpdateArgs!]!): [User]
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteUsers(where: [UserWhereUniqueInput!]!): [User]
-  createUserInvite(data: UserInviteCreateInput!): UserInvite
-  createUserInvites(data: [UserInviteCreateInput!]!): [UserInvite]
-  updateUserInvite(
-    where: UserInviteWhereUniqueInput!
-    data: UserInviteUpdateInput!
-  ): UserInvite
-  updateUserInvites(data: [UserInviteUpdateArgs!]!): [UserInvite]
-  deleteUserInvite(where: UserInviteWhereUniqueInput!): UserInvite
-  deleteUserInvites(where: [UserInviteWhereUniqueInput!]!): [UserInvite]
-  createPatient(data: PatientCreateInput!): Patient
-  createPatients(data: [PatientCreateInput!]!): [Patient]
-  updatePatient(
-    where: PatientWhereUniqueInput!
-    data: PatientUpdateInput!
-  ): Patient
-  updatePatients(data: [PatientUpdateArgs!]!): [Patient]
-  deletePatient(where: PatientWhereUniqueInput!): Patient
-  deletePatients(where: [PatientWhereUniqueInput!]!): [Patient]
+  createForm(data: FormCreateInput!): Form
+  createForms(data: [FormCreateInput!]!): [Form]
+  updateForm(where: FormWhereUniqueInput!, data: FormUpdateInput!): Form
+  updateForms(data: [FormUpdateArgs!]!): [Form]
+  deleteForm(where: FormWhereUniqueInput!): Form
+  deleteForms(where: [FormWhereUniqueInput!]!): [Form]
+  createFormType(data: FormTypeCreateInput!): FormType
+  createFormTypes(data: [FormTypeCreateInput!]!): [FormType]
+  updateFormType(
+    where: FormTypeWhereUniqueInput!
+    data: FormTypeUpdateInput!
+  ): FormType
+  updateFormTypes(data: [FormTypeUpdateArgs!]!): [FormType]
+  deleteFormType(where: FormTypeWhereUniqueInput!): FormType
+  deleteFormTypes(where: [FormTypeWhereUniqueInput!]!): [FormType]
+  createHealthCard(data: HealthCardCreateInput!): HealthCard
+  createHealthCards(data: [HealthCardCreateInput!]!): [HealthCard]
+  updateHealthCard(
+    where: HealthCardWhereUniqueInput!
+    data: HealthCardUpdateInput!
+  ): HealthCard
+  updateHealthCards(data: [HealthCardUpdateArgs!]!): [HealthCard]
+  deleteHealthCard(where: HealthCardWhereUniqueInput!): HealthCard
+  deleteHealthCards(where: [HealthCardWhereUniqueInput!]!): [HealthCard]
+  createLanguage(data: LanguageCreateInput!): Language
+  createLanguages(data: [LanguageCreateInput!]!): [Language]
+  updateLanguage(
+    where: LanguageWhereUniqueInput!
+    data: LanguageUpdateInput!
+  ): Language
+  updateLanguages(data: [LanguageUpdateArgs!]!): [Language]
+  deleteLanguage(where: LanguageWhereUniqueInput!): Language
+  deleteLanguages(where: [LanguageWhereUniqueInput!]!): [Language]
   createMedication(data: MedicationCreateInput!): Medication
   createMedications(data: [MedicationCreateInput!]!): [Medication]
   updateMedication(
@@ -403,6 +367,41 @@ type Mutation {
   updateMedications(data: [MedicationUpdateArgs!]!): [Medication]
   deleteMedication(where: MedicationWhereUniqueInput!): Medication
   deleteMedications(where: [MedicationWhereUniqueInput!]!): [Medication]
+  createPatient(data: PatientCreateInput!): Patient
+  createPatients(data: [PatientCreateInput!]!): [Patient]
+  updatePatient(
+    where: PatientWhereUniqueInput!
+    data: PatientUpdateInput!
+  ): Patient
+  updatePatients(data: [PatientUpdateArgs!]!): [Patient]
+  deletePatient(where: PatientWhereUniqueInput!): Patient
+  deletePatients(where: [PatientWhereUniqueInput!]!): [Patient]
+  createPharmacy(data: PharmacyCreateInput!): Pharmacy
+  createPharmacies(data: [PharmacyCreateInput!]!): [Pharmacy]
+  updatePharmacy(
+    where: PharmacyWhereUniqueInput!
+    data: PharmacyUpdateInput!
+  ): Pharmacy
+  updatePharmacies(data: [PharmacyUpdateArgs!]!): [Pharmacy]
+  deletePharmacy(where: PharmacyWhereUniqueInput!): Pharmacy
+  deletePharmacies(where: [PharmacyWhereUniqueInput!]!): [Pharmacy]
+  createPharmacyLocation(data: PharmacyLocationCreateInput!): PharmacyLocation
+  createPharmacyLocations(
+    data: [PharmacyLocationCreateInput!]!
+  ): [PharmacyLocation]
+  updatePharmacyLocation(
+    where: PharmacyLocationWhereUniqueInput!
+    data: PharmacyLocationUpdateInput!
+  ): PharmacyLocation
+  updatePharmacyLocations(
+    data: [PharmacyLocationUpdateArgs!]!
+  ): [PharmacyLocation]
+  deletePharmacyLocation(
+    where: PharmacyLocationWhereUniqueInput!
+  ): PharmacyLocation
+  deletePharmacyLocations(
+    where: [PharmacyLocationWhereUniqueInput!]!
+  ): [PharmacyLocation]
   createPrescription(data: PrescriptionCreateInput!): Prescription
   createPrescriptions(data: [PrescriptionCreateInput!]!): [Prescription]
   updatePrescription(
@@ -429,12 +428,6 @@ type Mutation {
   deletePrescriptionItems(
     where: [PrescriptionItemWhereUniqueInput!]!
   ): [PrescriptionItem]
-  createPrompt(data: PromptCreateInput!): Prompt
-  createPrompts(data: [PromptCreateInput!]!): [Prompt]
-  updatePrompt(where: PromptWhereUniqueInput!, data: PromptUpdateInput!): Prompt
-  updatePrompts(data: [PromptUpdateArgs!]!): [Prompt]
-  deletePrompt(where: PromptWhereUniqueInput!): Prompt
-  deletePrompts(where: [PromptWhereUniqueInput!]!): [Prompt]
   createProfilePhoto(data: ProfilePhotoCreateInput!): ProfilePhoto
   createProfilePhotos(data: [ProfilePhotoCreateInput!]!): [ProfilePhoto]
   updateProfilePhoto(
@@ -444,6 +437,12 @@ type Mutation {
   updateProfilePhotos(data: [ProfilePhotoUpdateArgs!]!): [ProfilePhoto]
   deleteProfilePhoto(where: ProfilePhotoWhereUniqueInput!): ProfilePhoto
   deleteProfilePhotos(where: [ProfilePhotoWhereUniqueInput!]!): [ProfilePhoto]
+  createPrompt(data: PromptCreateInput!): Prompt
+  createPrompts(data: [PromptCreateInput!]!): [Prompt]
+  updatePrompt(where: PromptWhereUniqueInput!, data: PromptUpdateInput!): Prompt
+  updatePrompts(data: [PromptUpdateArgs!]!): [Prompt]
+  deletePrompt(where: PromptWhereUniqueInput!): Prompt
+  deletePrompts(where: [PromptWhereUniqueInput!]!): [Prompt]
   createProofOfIdentification(
     data: ProofOfIdentificationCreateInput!
   ): ProofOfIdentification
@@ -491,32 +490,26 @@ type Mutation {
   deleteProofOfLicenses(
     where: [ProofOfLicenseWhereUniqueInput!]!
   ): [ProofOfLicense]
-  createPharmacy(data: PharmacyCreateInput!): Pharmacy
-  createPharmacies(data: [PharmacyCreateInput!]!): [Pharmacy]
-  updatePharmacy(
-    where: PharmacyWhereUniqueInput!
-    data: PharmacyUpdateInput!
-  ): Pharmacy
-  updatePharmacies(data: [PharmacyUpdateArgs!]!): [Pharmacy]
-  deletePharmacy(where: PharmacyWhereUniqueInput!): Pharmacy
-  deletePharmacies(where: [PharmacyWhereUniqueInput!]!): [Pharmacy]
-  createPharmacyLocation(data: PharmacyLocationCreateInput!): PharmacyLocation
-  createPharmacyLocations(
-    data: [PharmacyLocationCreateInput!]!
-  ): [PharmacyLocation]
-  updatePharmacyLocation(
-    where: PharmacyLocationWhereUniqueInput!
-    data: PharmacyLocationUpdateInput!
-  ): PharmacyLocation
-  updatePharmacyLocations(
-    data: [PharmacyLocationUpdateArgs!]!
-  ): [PharmacyLocation]
-  deletePharmacyLocation(
-    where: PharmacyLocationWhereUniqueInput!
-  ): PharmacyLocation
-  deletePharmacyLocations(
-    where: [PharmacyLocationWhereUniqueInput!]!
-  ): [PharmacyLocation]
+  createRecurringSlot(data: RecurringSlotCreateInput!): RecurringSlot
+  createRecurringSlots(data: [RecurringSlotCreateInput!]!): [RecurringSlot]
+  updateRecurringSlot(
+    where: RecurringSlotWhereUniqueInput!
+    data: RecurringSlotUpdateInput!
+  ): RecurringSlot
+  updateRecurringSlots(data: [RecurringSlotUpdateArgs!]!): [RecurringSlot]
+  deleteRecurringSlot(where: RecurringSlotWhereUniqueInput!): RecurringSlot
+  deleteRecurringSlots(
+    where: [RecurringSlotWhereUniqueInput!]!
+  ): [RecurringSlot]
+  createSchedule(data: ScheduleCreateInput!): Schedule
+  createSchedules(data: [ScheduleCreateInput!]!): [Schedule]
+  updateSchedule(
+    where: ScheduleWhereUniqueInput!
+    data: ScheduleUpdateInput!
+  ): Schedule
+  updateSchedules(data: [ScheduleUpdateArgs!]!): [Schedule]
+  deleteSchedule(where: ScheduleWhereUniqueInput!): Schedule
+  deleteSchedules(where: [ScheduleWhereUniqueInput!]!): [Schedule]
   createStepper(data: StepperCreateInput!): Stepper
   createSteppers(data: [StepperCreateInput!]!): [Stepper]
   updateStepper(
@@ -559,44 +552,62 @@ type Mutation {
   deleteStepperStepProgs(
     where: [StepperStepProgWhereUniqueInput!]!
   ): [StepperStepProg]
+  createTimeInterval(data: TimeIntervalCreateInput!): TimeInterval
+  createTimeIntervals(data: [TimeIntervalCreateInput!]!): [TimeInterval]
+  updateTimeInterval(
+    where: TimeIntervalWhereUniqueInput!
+    data: TimeIntervalUpdateInput!
+  ): TimeInterval
+  updateTimeIntervals(data: [TimeIntervalUpdateArgs!]!): [TimeInterval]
+  deleteTimeInterval(where: TimeIntervalWhereUniqueInput!): TimeInterval
+  deleteTimeIntervals(where: [TimeIntervalWhereUniqueInput!]!): [TimeInterval]
+  createUser(data: UserCreateInput!): User
+  createUsers(data: [UserCreateInput!]!): [User]
+  updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
+  updateUsers(data: [UserUpdateArgs!]!): [User]
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createUserInvite(data: UserInviteCreateInput!): UserInvite
+  createUserInvites(data: [UserInviteCreateInput!]!): [UserInvite]
+  updateUserInvite(
+    where: UserInviteWhereUniqueInput!
+    data: UserInviteUpdateInput!
+  ): UserInvite
+  updateUserInvites(data: [UserInviteUpdateArgs!]!): [UserInvite]
+  deleteUserInvite(where: UserInviteWhereUniqueInput!): UserInvite
+  deleteUserInvites(where: [UserInviteWhereUniqueInput!]!): [UserInvite]
   endSession: Boolean!
 }
 
-type Address {
+type ActiveIngredient {
   id: ID!
-  addressLine1: String
-  addressLine2: String
-  administrativeArea: String
-  country: String
-  locality: String
-  postalCode: String
-  premise: String
-  thoroughfare: String
-  event: CalendarEvent
-  pharmacyLocation: PharmacyLocation
-  user: User
+  brandName: String
+  drugCode: Int
+  strengthCount: Float
+  strengthUnit: String
+  medication(
+    where: MedicationWhereInput! = {}
+    orderBy: [MedicationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Medication!]
+  medicationCount(where: MedicationWhereInput! = {}): Int
 }
 
-input AddressWhereUniqueInput {
+input ActiveIngredientWhereUniqueInput {
   id: ID
 }
 
-input AddressWhereInput {
-  AND: [AddressWhereInput!]
-  OR: [AddressWhereInput!]
-  NOT: [AddressWhereInput!]
+input ActiveIngredientWhereInput {
+  AND: [ActiveIngredientWhereInput!]
+  OR: [ActiveIngredientWhereInput!]
+  NOT: [ActiveIngredientWhereInput!]
   id: IDFilter
-  addressLine1: StringFilter
-  addressLine2: StringFilter
-  administrativeArea: StringFilter
-  country: StringFilter
-  locality: StringFilter
-  postalCode: StringFilter
-  premise: StringFilter
-  thoroughfare: StringFilter
-  event: CalendarEventWhereInput
-  pharmacyLocation: PharmacyLocationWhereInput
-  user: UserWhereInput
+  brandName: StringFilter
+  drugCode: IntNullableFilter
+  strengthCount: FloatNullableFilter
+  strengthUnit: StringFilter
+  medication: MedicationManyRelationFilter
 }
 
 input IDFilter {
@@ -644,6 +655,117 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input FloatNullableFilter {
+  equals: Float
+  in: [Float!]
+  notIn: [Float!]
+  lt: Float
+  lte: Float
+  gt: Float
+  gte: Float
+  not: FloatNullableFilter
+}
+
+input MedicationManyRelationFilter {
+  every: MedicationWhereInput
+  some: MedicationWhereInput
+  none: MedicationWhereInput
+}
+
+input ActiveIngredientOrderByInput {
+  id: OrderDirection
+  brandName: OrderDirection
+  drugCode: OrderDirection
+  strengthCount: OrderDirection
+  strengthUnit: OrderDirection
+}
+
+enum OrderDirection {
+  asc
+  desc
+}
+
+input ActiveIngredientUpdateInput {
+  brandName: String
+  drugCode: Int
+  strengthCount: Float
+  strengthUnit: String
+  medication: MedicationRelateToManyForUpdateInput
+}
+
+input MedicationRelateToManyForUpdateInput {
+  disconnect: [MedicationWhereUniqueInput!]
+  set: [MedicationWhereUniqueInput!]
+  create: [MedicationCreateInput!]
+  connect: [MedicationWhereUniqueInput!]
+}
+
+input ActiveIngredientUpdateArgs {
+  where: ActiveIngredientWhereUniqueInput!
+  data: ActiveIngredientUpdateInput!
+}
+
+input ActiveIngredientCreateInput {
+  brandName: String
+  drugCode: Int
+  strengthCount: Float
+  strengthUnit: String
+  medication: MedicationRelateToManyForCreateInput
+}
+
+input MedicationRelateToManyForCreateInput {
+  create: [MedicationCreateInput!]
+  connect: [MedicationWhereUniqueInput!]
+}
+
+type Address {
+  id: ID!
+  addressLine1: String
+  addressLine2: String
+  administrativeArea: String
+  country: String
+  locality: String
+  postalCode: String
+  premise: String
+  thoroughfare: String
+  event: CalendarEvent
+  pharmacyLocation: PharmacyLocation
+  user: User
+}
+
+input AddressWhereUniqueInput {
+  id: ID
+}
+
+input AddressWhereInput {
+  AND: [AddressWhereInput!]
+  OR: [AddressWhereInput!]
+  NOT: [AddressWhereInput!]
+  id: IDFilter
+  addressLine1: StringFilter
+  addressLine2: StringFilter
+  administrativeArea: StringFilter
+  country: StringFilter
+  locality: StringFilter
+  postalCode: StringFilter
+  premise: StringFilter
+  thoroughfare: StringFilter
+  event: CalendarEventWhereInput
+  pharmacyLocation: PharmacyLocationWhereInput
+  user: UserWhereInput
+}
+
 input AddressOrderByInput {
   id: OrderDirection
   addressLine1: OrderDirection
@@ -654,11 +776,6 @@ input AddressOrderByInput {
   postalCode: OrderDirection
   premise: OrderDirection
   thoroughfare: OrderDirection
-}
-
-enum OrderDirection {
-  asc
-  desc
 }
 
 input AddressUpdateInput {
@@ -725,6 +842,71 @@ input PharmacyLocationRelateToOneForCreateInput {
 input UserRelateToOneForCreateInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
+}
+
+type AdministrativeArea {
+  id: ID!
+  country: Country
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input AdministrativeAreaWhereUniqueInput {
+  id: ID
+}
+
+input AdministrativeAreaWhereInput {
+  AND: [AdministrativeAreaWhereInput!]
+  OR: [AdministrativeAreaWhereInput!]
+  NOT: [AdministrativeAreaWhereInput!]
+  id: IDFilter
+  country: CountryWhereInput
+  isActive: BooleanFilter
+  label: StringFilter
+  value: StringFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input AdministrativeAreaOrderByInput {
+  id: OrderDirection
+  isActive: OrderDirection
+  label: OrderDirection
+  value: OrderDirection
+}
+
+input AdministrativeAreaUpdateInput {
+  country: CountryRelateToOneForUpdateInput
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input CountryRelateToOneForUpdateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AdministrativeAreaUpdateArgs {
+  where: AdministrativeAreaWhereUniqueInput!
+  data: AdministrativeAreaUpdateInput!
+}
+
+input AdministrativeAreaCreateInput {
+  country: CountryRelateToOneForCreateInput
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input CountryRelateToOneForCreateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
 }
 
 type Appointment {
@@ -794,11 +976,6 @@ input AppointmentWhereInput {
   startedAt: DateTimeNullableFilter
   summaryString: StringFilter
   endedAt: DateTimeNullableFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
 }
 
 input DateTimeNullableFilter {
@@ -1213,6 +1390,7 @@ type AppointmentVital {
   id: ID!
   appointment: Appointment
   patient: Patient
+  headCm: Int
   meters: Int
   cm: Int
   kg: Int
@@ -1234,6 +1412,7 @@ input AppointmentVitalWhereInput {
   id: IDFilter
   appointment: AppointmentWhereInput
   patient: PatientWhereInput
+  headCm: IntNullableFilter
   meters: IntNullableFilter
   cm: IntNullableFilter
   kg: IntNullableFilter
@@ -1244,19 +1423,9 @@ input AppointmentVitalWhereInput {
   resp: IntNullableFilter
 }
 
-input IntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntNullableFilter
-}
-
 input AppointmentVitalOrderByInput {
   id: OrderDirection
+  headCm: OrderDirection
   meters: OrderDirection
   cm: OrderDirection
   kg: OrderDirection
@@ -1270,6 +1439,7 @@ input AppointmentVitalOrderByInput {
 input AppointmentVitalUpdateInput {
   appointment: AppointmentRelateToOneForUpdateInput
   patient: PatientRelateToOneForUpdateInput
+  headCm: Int
   meters: Int
   cm: Int
   kg: Int
@@ -1288,6 +1458,7 @@ input AppointmentVitalUpdateArgs {
 input AppointmentVitalCreateInput {
   appointment: AppointmentRelateToOneForCreateInput
   patient: PatientRelateToOneForCreateInput
+  headCm: Int
   meters: Int
   cm: Int
   kg: Int
@@ -1398,123 +1569,6 @@ input BookingCreateInput {
 input CalendarRelateToOneForCreateInput {
   create: CalendarCreateInput
   connect: CalendarWhereUniqueInput
-}
-
-type Form {
-  id: ID!
-  appointment: Appointment
-  formType: FormType
-  name: String
-  doctor: Doctor
-  patient: Patient
-  slug: String
-}
-
-input FormWhereUniqueInput {
-  id: ID
-}
-
-input FormWhereInput {
-  AND: [FormWhereInput!]
-  OR: [FormWhereInput!]
-  NOT: [FormWhereInput!]
-  id: IDFilter
-  appointment: AppointmentWhereInput
-  formType: FormTypeWhereInput
-  name: StringFilter
-  doctor: DoctorWhereInput
-  patient: PatientWhereInput
-  slug: StringFilter
-}
-
-input FormOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  slug: OrderDirection
-}
-
-input FormUpdateInput {
-  appointment: AppointmentRelateToOneForUpdateInput
-  formType: FormTypeRelateToOneForUpdateInput
-  name: String
-  doctor: DoctorRelateToOneForUpdateInput
-  patient: PatientRelateToOneForUpdateInput
-  slug: String
-}
-
-input FormTypeRelateToOneForUpdateInput {
-  create: FormTypeCreateInput
-  connect: FormTypeWhereUniqueInput
-  disconnect: Boolean
-}
-
-input FormUpdateArgs {
-  where: FormWhereUniqueInput!
-  data: FormUpdateInput!
-}
-
-input FormCreateInput {
-  appointment: AppointmentRelateToOneForCreateInput
-  formType: FormTypeRelateToOneForCreateInput
-  name: String
-  doctor: DoctorRelateToOneForCreateInput
-  patient: PatientRelateToOneForCreateInput
-  slug: String
-}
-
-input FormTypeRelateToOneForCreateInput {
-  create: FormTypeCreateInput
-  connect: FormTypeWhereUniqueInput
-}
-
-type FormType {
-  id: ID!
-  name: String
-  forms(
-    where: FormWhereInput! = {}
-    orderBy: [FormOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Form!]
-  formsCount(where: FormWhereInput! = {}): Int
-  slug: String
-}
-
-input FormTypeWhereUniqueInput {
-  id: ID
-}
-
-input FormTypeWhereInput {
-  AND: [FormTypeWhereInput!]
-  OR: [FormTypeWhereInput!]
-  NOT: [FormTypeWhereInput!]
-  id: IDFilter
-  name: StringFilter
-  forms: FormManyRelationFilter
-  slug: StringFilter
-}
-
-input FormTypeOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  slug: OrderDirection
-}
-
-input FormTypeUpdateInput {
-  name: String
-  forms: FormRelateToManyForUpdateInput
-  slug: String
-}
-
-input FormTypeUpdateArgs {
-  where: FormTypeWhereUniqueInput!
-  data: FormTypeUpdateInput!
-}
-
-input FormTypeCreateInput {
-  name: String
-  forms: FormRelateToManyForCreateInput
-  slug: String
 }
 
 type Calendar {
@@ -1867,229 +1921,6 @@ input CalendarEventTypeCreateInput {
   events: CalendarEventRelateToManyForCreateInput
 }
 
-type Schedule {
-  id: ID!
-  calendar: Calendar
-  description: String
-  defaultOn: Calendar
-  recurringSlots(
-    where: RecurringSlotWhereInput! = {}
-    orderBy: [RecurringSlotOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [RecurringSlot!]
-  recurringSlotsCount(where: RecurringSlotWhereInput! = {}): Int
-  tz: String
-  slotInterval: Int
-  title: String
-}
-
-input ScheduleWhereUniqueInput {
-  id: ID
-}
-
-input ScheduleWhereInput {
-  AND: [ScheduleWhereInput!]
-  OR: [ScheduleWhereInput!]
-  NOT: [ScheduleWhereInput!]
-  id: IDFilter
-  calendar: CalendarWhereInput
-  description: StringFilter
-  defaultOn: CalendarWhereInput
-  recurringSlots: RecurringSlotManyRelationFilter
-  tz: StringFilter
-  slotInterval: IntNullableFilter
-  title: StringFilter
-}
-
-input RecurringSlotManyRelationFilter {
-  every: RecurringSlotWhereInput
-  some: RecurringSlotWhereInput
-  none: RecurringSlotWhereInput
-}
-
-input ScheduleOrderByInput {
-  id: OrderDirection
-  description: OrderDirection
-  tz: OrderDirection
-  slotInterval: OrderDirection
-  title: OrderDirection
-}
-
-input ScheduleUpdateInput {
-  calendar: CalendarRelateToOneForUpdateInput
-  description: String
-  defaultOn: CalendarRelateToOneForUpdateInput
-  recurringSlots: RecurringSlotRelateToManyForUpdateInput
-  tz: String
-  slotInterval: Int
-  title: String
-}
-
-input RecurringSlotRelateToManyForUpdateInput {
-  disconnect: [RecurringSlotWhereUniqueInput!]
-  set: [RecurringSlotWhereUniqueInput!]
-  create: [RecurringSlotCreateInput!]
-  connect: [RecurringSlotWhereUniqueInput!]
-}
-
-input ScheduleUpdateArgs {
-  where: ScheduleWhereUniqueInput!
-  data: ScheduleUpdateInput!
-}
-
-input ScheduleCreateInput {
-  calendar: CalendarRelateToOneForCreateInput
-  description: String
-  defaultOn: CalendarRelateToOneForCreateInput
-  recurringSlots: RecurringSlotRelateToManyForCreateInput
-  tz: String
-  slotInterval: Int
-  title: String
-}
-
-input RecurringSlotRelateToManyForCreateInput {
-  create: [RecurringSlotCreateInput!]
-  connect: [RecurringSlotWhereUniqueInput!]
-}
-
-type RecurringSlot {
-  id: ID!
-  wday: String
-  isActive: Boolean
-  interval: String
-  intervalCount: Int
-  schedule: Schedule
-  timeIntervals(
-    where: TimeIntervalWhereInput! = {}
-    orderBy: [TimeIntervalOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [TimeInterval!]
-  timeIntervalsCount(where: TimeIntervalWhereInput! = {}): Int
-}
-
-input RecurringSlotWhereUniqueInput {
-  id: ID
-}
-
-input RecurringSlotWhereInput {
-  AND: [RecurringSlotWhereInput!]
-  OR: [RecurringSlotWhereInput!]
-  NOT: [RecurringSlotWhereInput!]
-  id: IDFilter
-  wday: StringFilter
-  isActive: BooleanFilter
-  interval: StringFilter
-  intervalCount: IntNullableFilter
-  schedule: ScheduleWhereInput
-  timeIntervals: TimeIntervalManyRelationFilter
-}
-
-input TimeIntervalManyRelationFilter {
-  every: TimeIntervalWhereInput
-  some: TimeIntervalWhereInput
-  none: TimeIntervalWhereInput
-}
-
-input RecurringSlotOrderByInput {
-  id: OrderDirection
-  wday: OrderDirection
-  isActive: OrderDirection
-  interval: OrderDirection
-  intervalCount: OrderDirection
-}
-
-input RecurringSlotUpdateInput {
-  wday: String
-  isActive: Boolean
-  interval: String
-  intervalCount: Int
-  schedule: ScheduleRelateToOneForUpdateInput
-  timeIntervals: TimeIntervalRelateToManyForUpdateInput
-}
-
-input TimeIntervalRelateToManyForUpdateInput {
-  disconnect: [TimeIntervalWhereUniqueInput!]
-  set: [TimeIntervalWhereUniqueInput!]
-  create: [TimeIntervalCreateInput!]
-  connect: [TimeIntervalWhereUniqueInput!]
-}
-
-input RecurringSlotUpdateArgs {
-  where: RecurringSlotWhereUniqueInput!
-  data: RecurringSlotUpdateInput!
-}
-
-input RecurringSlotCreateInput {
-  wday: String
-  isActive: Boolean
-  interval: String
-  intervalCount: Int
-  schedule: ScheduleRelateToOneForCreateInput
-  timeIntervals: TimeIntervalRelateToManyForCreateInput
-}
-
-input TimeIntervalRelateToManyForCreateInput {
-  create: [TimeIntervalCreateInput!]
-  connect: [TimeIntervalWhereUniqueInput!]
-}
-
-type TimeInterval {
-  id: ID!
-  from: String
-  to: String
-  recurringSlot: RecurringSlot
-}
-
-input TimeIntervalWhereUniqueInput {
-  id: ID
-}
-
-input TimeIntervalWhereInput {
-  AND: [TimeIntervalWhereInput!]
-  OR: [TimeIntervalWhereInput!]
-  NOT: [TimeIntervalWhereInput!]
-  id: IDFilter
-  from: StringFilter
-  to: StringFilter
-  recurringSlot: RecurringSlotWhereInput
-}
-
-input TimeIntervalOrderByInput {
-  id: OrderDirection
-  from: OrderDirection
-  to: OrderDirection
-}
-
-input TimeIntervalUpdateInput {
-  from: String
-  to: String
-  recurringSlot: RecurringSlotRelateToOneForUpdateInput
-}
-
-input RecurringSlotRelateToOneForUpdateInput {
-  create: RecurringSlotCreateInput
-  connect: RecurringSlotWhereUniqueInput
-  disconnect: Boolean
-}
-
-input TimeIntervalUpdateArgs {
-  where: TimeIntervalWhereUniqueInput!
-  data: TimeIntervalUpdateInput!
-}
-
-input TimeIntervalCreateInput {
-  from: String
-  to: String
-  recurringSlot: RecurringSlotRelateToOneForCreateInput
-}
-
-input RecurringSlotRelateToOneForCreateInput {
-  create: RecurringSlotCreateInput
-  connect: RecurringSlotWhereUniqueInput
-}
-
 type Company {
   id: ID!
   name: String
@@ -2321,6 +2152,79 @@ input ContractCreateInput {
 input UserRelateToManyForCreateInput {
   create: [UserCreateInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+type Country {
+  id: ID!
+  administrativeAreas(
+    where: AdministrativeAreaWhereInput! = {}
+    orderBy: [AdministrativeAreaOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AdministrativeArea!]
+  administrativeAreasCount(where: AdministrativeAreaWhereInput! = {}): Int
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input CountryWhereUniqueInput {
+  id: ID
+}
+
+input CountryWhereInput {
+  AND: [CountryWhereInput!]
+  OR: [CountryWhereInput!]
+  NOT: [CountryWhereInput!]
+  id: IDFilter
+  administrativeAreas: AdministrativeAreaManyRelationFilter
+  isActive: BooleanFilter
+  label: StringFilter
+  value: StringFilter
+}
+
+input AdministrativeAreaManyRelationFilter {
+  every: AdministrativeAreaWhereInput
+  some: AdministrativeAreaWhereInput
+  none: AdministrativeAreaWhereInput
+}
+
+input CountryOrderByInput {
+  id: OrderDirection
+  isActive: OrderDirection
+  label: OrderDirection
+  value: OrderDirection
+}
+
+input CountryUpdateInput {
+  administrativeAreas: AdministrativeAreaRelateToManyForUpdateInput
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input AdministrativeAreaRelateToManyForUpdateInput {
+  disconnect: [AdministrativeAreaWhereUniqueInput!]
+  set: [AdministrativeAreaWhereUniqueInput!]
+  create: [AdministrativeAreaCreateInput!]
+  connect: [AdministrativeAreaWhereUniqueInput!]
+}
+
+input CountryUpdateArgs {
+  where: CountryWhereUniqueInput!
+  data: CountryUpdateInput!
+}
+
+input CountryCreateInput {
+  administrativeAreas: AdministrativeAreaRelateToManyForCreateInput
+  isActive: Boolean
+  label: String
+  value: String
+}
+
+input AdministrativeAreaRelateToManyForCreateInput {
+  create: [AdministrativeAreaCreateInput!]
+  connect: [AdministrativeAreaWhereUniqueInput!]
 }
 
 type Doctor {
@@ -2734,75 +2638,6 @@ input ProofOfLicenseRelateToOneForCreateInput {
   connect: ProofOfLicenseWhereUniqueInput
 }
 
-type Language {
-  id: ID!
-  label: String
-  value: String
-  doctors(
-    where: DoctorWhereInput! = {}
-    orderBy: [DoctorOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Doctor!]
-  doctorsCount(where: DoctorWhereInput! = {}): Int
-}
-
-input LanguageWhereUniqueInput {
-  id: ID
-  value: String
-}
-
-input LanguageWhereInput {
-  AND: [LanguageWhereInput!]
-  OR: [LanguageWhereInput!]
-  NOT: [LanguageWhereInput!]
-  id: IDFilter
-  label: StringFilter
-  value: StringFilter
-  doctors: DoctorManyRelationFilter
-}
-
-input DoctorManyRelationFilter {
-  every: DoctorWhereInput
-  some: DoctorWhereInput
-  none: DoctorWhereInput
-}
-
-input LanguageOrderByInput {
-  id: OrderDirection
-  label: OrderDirection
-  value: OrderDirection
-}
-
-input LanguageUpdateInput {
-  label: String
-  value: String
-  doctors: DoctorRelateToManyForUpdateInput
-}
-
-input DoctorRelateToManyForUpdateInput {
-  disconnect: [DoctorWhereUniqueInput!]
-  set: [DoctorWhereUniqueInput!]
-  create: [DoctorCreateInput!]
-  connect: [DoctorWhereUniqueInput!]
-}
-
-input LanguageUpdateArgs {
-  where: LanguageWhereUniqueInput!
-  data: LanguageUpdateInput!
-}
-
-input LanguageCreateInput {
-  label: String
-  value: String
-  doctors: DoctorRelateToManyForCreateInput
-}
-
-input DoctorRelateToManyForCreateInput {
-  create: [DoctorCreateInput!]
-  connect: [DoctorWhereUniqueInput!]
-}
-
 type DoctorSpecialty {
   id: ID!
   label: String
@@ -2831,6 +2666,12 @@ input DoctorSpecialtyWhereInput {
   doctors: DoctorManyRelationFilter
 }
 
+input DoctorManyRelationFilter {
+  every: DoctorWhereInput
+  some: DoctorWhereInput
+  none: DoctorWhereInput
+}
+
 input DoctorSpecialtyOrderByInput {
   id: OrderDirection
   label: OrderDirection
@@ -2843,6 +2684,13 @@ input DoctorSpecialtyUpdateInput {
   doctors: DoctorRelateToManyForUpdateInput
 }
 
+input DoctorRelateToManyForUpdateInput {
+  disconnect: [DoctorWhereUniqueInput!]
+  set: [DoctorWhereUniqueInput!]
+  create: [DoctorCreateInput!]
+  connect: [DoctorWhereUniqueInput!]
+}
+
 input DoctorSpecialtyUpdateArgs {
   where: DoctorSpecialtyWhereUniqueInput!
   data: DoctorSpecialtyUpdateInput!
@@ -2852,6 +2700,11 @@ input DoctorSpecialtyCreateInput {
   label: String
   value: String
   doctors: DoctorRelateToManyForCreateInput
+}
+
+input DoctorRelateToManyForCreateInput {
+  create: [DoctorCreateInput!]
+  connect: [DoctorWhereUniqueInput!]
 }
 
 type DoctorSubSpecialty {
@@ -2903,6 +2756,187 @@ input DoctorSubSpecialtyCreateInput {
   label: String
   value: String
   doctors: DoctorRelateToManyForCreateInput
+}
+
+type EmergencyContact {
+  id: ID!
+  email: String
+  relation: String
+  firstName: String
+  lastName: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  patient: Patient
+}
+
+input EmergencyContactWhereUniqueInput {
+  id: ID
+}
+
+input EmergencyContactWhereInput {
+  AND: [EmergencyContactWhereInput!]
+  OR: [EmergencyContactWhereInput!]
+  NOT: [EmergencyContactWhereInput!]
+  id: IDFilter
+  email: StringFilter
+  relation: StringFilter
+  firstName: StringFilter
+  lastName: StringFilter
+  cellPhoneNumberString: StringFilter
+  homePhoneNumberString: StringFilter
+  patient: PatientWhereInput
+}
+
+input EmergencyContactOrderByInput {
+  id: OrderDirection
+  email: OrderDirection
+  relation: OrderDirection
+  firstName: OrderDirection
+  lastName: OrderDirection
+  cellPhoneNumberString: OrderDirection
+  homePhoneNumberString: OrderDirection
+}
+
+input EmergencyContactUpdateInput {
+  email: String
+  relation: String
+  firstName: String
+  lastName: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  patient: PatientRelateToOneForUpdateInput
+}
+
+input EmergencyContactUpdateArgs {
+  where: EmergencyContactWhereUniqueInput!
+  data: EmergencyContactUpdateInput!
+}
+
+input EmergencyContactCreateInput {
+  email: String
+  relation: String
+  firstName: String
+  lastName: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  patient: PatientRelateToOneForCreateInput
+}
+
+type Form {
+  id: ID!
+  appointment: Appointment
+  formType: FormType
+  name: String
+  doctor: Doctor
+  patient: Patient
+  slug: String
+}
+
+input FormWhereUniqueInput {
+  id: ID
+}
+
+input FormWhereInput {
+  AND: [FormWhereInput!]
+  OR: [FormWhereInput!]
+  NOT: [FormWhereInput!]
+  id: IDFilter
+  appointment: AppointmentWhereInput
+  formType: FormTypeWhereInput
+  name: StringFilter
+  doctor: DoctorWhereInput
+  patient: PatientWhereInput
+  slug: StringFilter
+}
+
+input FormOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+}
+
+input FormUpdateInput {
+  appointment: AppointmentRelateToOneForUpdateInput
+  formType: FormTypeRelateToOneForUpdateInput
+  name: String
+  doctor: DoctorRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
+  slug: String
+}
+
+input FormTypeRelateToOneForUpdateInput {
+  create: FormTypeCreateInput
+  connect: FormTypeWhereUniqueInput
+  disconnect: Boolean
+}
+
+input FormUpdateArgs {
+  where: FormWhereUniqueInput!
+  data: FormUpdateInput!
+}
+
+input FormCreateInput {
+  appointment: AppointmentRelateToOneForCreateInput
+  formType: FormTypeRelateToOneForCreateInput
+  name: String
+  doctor: DoctorRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
+  slug: String
+}
+
+input FormTypeRelateToOneForCreateInput {
+  create: FormTypeCreateInput
+  connect: FormTypeWhereUniqueInput
+}
+
+type FormType {
+  id: ID!
+  name: String
+  forms(
+    where: FormWhereInput! = {}
+    orderBy: [FormOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Form!]
+  formsCount(where: FormWhereInput! = {}): Int
+  slug: String
+}
+
+input FormTypeWhereUniqueInput {
+  id: ID
+}
+
+input FormTypeWhereInput {
+  AND: [FormTypeWhereInput!]
+  OR: [FormTypeWhereInput!]
+  NOT: [FormTypeWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  forms: FormManyRelationFilter
+  slug: StringFilter
+}
+
+input FormTypeOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+}
+
+input FormTypeUpdateInput {
+  name: String
+  forms: FormRelateToManyForUpdateInput
+  slug: String
+}
+
+input FormTypeUpdateArgs {
+  where: FormTypeWhereUniqueInput!
+  data: FormTypeUpdateInput!
+}
+
+input FormTypeCreateInput {
+  name: String
+  forms: FormRelateToManyForCreateInput
+  slug: String
 }
 
 type HealthCard {
@@ -2995,569 +3029,151 @@ input UserInviteRelateToOneForCreateInput {
   connect: UserInviteWhereUniqueInput
 }
 
-type Country {
+type Language {
   id: ID!
-  administrativeAreas(
-    where: AdministrativeAreaWhereInput! = {}
-    orderBy: [AdministrativeAreaOrderByInput!]! = []
+  label: String
+  value: String
+  doctors(
+    where: DoctorWhereInput! = {}
+    orderBy: [DoctorOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [AdministrativeArea!]
-  administrativeAreasCount(where: AdministrativeAreaWhereInput! = {}): Int
-  isActive: Boolean
-  label: String
+  ): [Doctor!]
+  doctorsCount(where: DoctorWhereInput! = {}): Int
+}
+
+input LanguageWhereUniqueInput {
+  id: ID
   value: String
 }
 
-input CountryWhereUniqueInput {
-  id: ID
-}
-
-input CountryWhereInput {
-  AND: [CountryWhereInput!]
-  OR: [CountryWhereInput!]
-  NOT: [CountryWhereInput!]
+input LanguageWhereInput {
+  AND: [LanguageWhereInput!]
+  OR: [LanguageWhereInput!]
+  NOT: [LanguageWhereInput!]
   id: IDFilter
-  administrativeAreas: AdministrativeAreaManyRelationFilter
-  isActive: BooleanFilter
   label: StringFilter
   value: StringFilter
+  doctors: DoctorManyRelationFilter
 }
 
-input AdministrativeAreaManyRelationFilter {
-  every: AdministrativeAreaWhereInput
-  some: AdministrativeAreaWhereInput
-  none: AdministrativeAreaWhereInput
-}
-
-input CountryOrderByInput {
+input LanguageOrderByInput {
   id: OrderDirection
-  isActive: OrderDirection
   label: OrderDirection
   value: OrderDirection
 }
 
-input CountryUpdateInput {
-  administrativeAreas: AdministrativeAreaRelateToManyForUpdateInput
-  isActive: Boolean
+input LanguageUpdateInput {
   label: String
   value: String
+  doctors: DoctorRelateToManyForUpdateInput
 }
 
-input AdministrativeAreaRelateToManyForUpdateInput {
-  disconnect: [AdministrativeAreaWhereUniqueInput!]
-  set: [AdministrativeAreaWhereUniqueInput!]
-  create: [AdministrativeAreaCreateInput!]
-  connect: [AdministrativeAreaWhereUniqueInput!]
+input LanguageUpdateArgs {
+  where: LanguageWhereUniqueInput!
+  data: LanguageUpdateInput!
 }
 
-input CountryUpdateArgs {
-  where: CountryWhereUniqueInput!
-  data: CountryUpdateInput!
-}
-
-input CountryCreateInput {
-  administrativeAreas: AdministrativeAreaRelateToManyForCreateInput
-  isActive: Boolean
+input LanguageCreateInput {
   label: String
   value: String
+  doctors: DoctorRelateToManyForCreateInput
 }
 
-input AdministrativeAreaRelateToManyForCreateInput {
-  create: [AdministrativeAreaCreateInput!]
-  connect: [AdministrativeAreaWhereUniqueInput!]
-}
-
-type AdministrativeArea {
+type Medication {
   id: ID!
-  country: Country
-  isActive: Boolean
-  label: String
-  value: String
-}
-
-input AdministrativeAreaWhereUniqueInput {
-  id: ID
-}
-
-input AdministrativeAreaWhereInput {
-  AND: [AdministrativeAreaWhereInput!]
-  OR: [AdministrativeAreaWhereInput!]
-  NOT: [AdministrativeAreaWhereInput!]
-  id: IDFilter
-  country: CountryWhereInput
-  isActive: BooleanFilter
-  label: StringFilter
-  value: StringFilter
-}
-
-input AdministrativeAreaOrderByInput {
-  id: OrderDirection
-  isActive: OrderDirection
-  label: OrderDirection
-  value: OrderDirection
-}
-
-input AdministrativeAreaUpdateInput {
-  country: CountryRelateToOneForUpdateInput
-  isActive: Boolean
-  label: String
-  value: String
-}
-
-input CountryRelateToOneForUpdateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
-  disconnect: Boolean
-}
-
-input AdministrativeAreaUpdateArgs {
-  where: AdministrativeAreaWhereUniqueInput!
-  data: AdministrativeAreaUpdateInput!
-}
-
-input AdministrativeAreaCreateInput {
-  country: CountryRelateToOneForCreateInput
-  isActive: Boolean
-  label: String
-  value: String
-}
-
-input CountryRelateToOneForCreateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
-}
-
-type EmergencyContact {
-  id: ID!
-  email: String
-  relation: String
-  firstName: String
-  lastName: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
+  brandName: String
+  companyName: String
+  drugCode: Int
+  activeIngredients(
+    where: ActiveIngredientWhereInput! = {}
+    orderBy: [ActiveIngredientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ActiveIngredient!]
+  activeIngredientsCount(where: ActiveIngredientWhereInput! = {}): Int
   patient: Patient
+  prescription: Prescription
+  prescriptionItem: PrescriptionItem
 }
 
-input EmergencyContactWhereUniqueInput {
+input MedicationWhereUniqueInput {
   id: ID
 }
 
-input EmergencyContactWhereInput {
-  AND: [EmergencyContactWhereInput!]
-  OR: [EmergencyContactWhereInput!]
-  NOT: [EmergencyContactWhereInput!]
+input MedicationWhereInput {
+  AND: [MedicationWhereInput!]
+  OR: [MedicationWhereInput!]
+  NOT: [MedicationWhereInput!]
   id: IDFilter
-  email: StringFilter
-  relation: StringFilter
-  firstName: StringFilter
-  lastName: StringFilter
-  cellPhoneNumberString: StringFilter
-  homePhoneNumberString: StringFilter
+  brandName: StringFilter
+  companyName: StringFilter
+  drugCode: IntNullableFilter
+  activeIngredients: ActiveIngredientManyRelationFilter
   patient: PatientWhereInput
+  prescription: PrescriptionWhereInput
+  prescriptionItem: PrescriptionItemWhereInput
 }
 
-input EmergencyContactOrderByInput {
+input ActiveIngredientManyRelationFilter {
+  every: ActiveIngredientWhereInput
+  some: ActiveIngredientWhereInput
+  none: ActiveIngredientWhereInput
+}
+
+input MedicationOrderByInput {
   id: OrderDirection
-  email: OrderDirection
-  relation: OrderDirection
-  firstName: OrderDirection
-  lastName: OrderDirection
-  cellPhoneNumberString: OrderDirection
-  homePhoneNumberString: OrderDirection
+  brandName: OrderDirection
+  companyName: OrderDirection
+  drugCode: OrderDirection
 }
 
-input EmergencyContactUpdateInput {
-  email: String
-  relation: String
-  firstName: String
-  lastName: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
+input MedicationUpdateInput {
+  brandName: String
+  companyName: String
+  drugCode: Int
+  activeIngredients: ActiveIngredientRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
+  prescription: PrescriptionRelateToOneForUpdateInput
+  prescriptionItem: PrescriptionItemRelateToOneForUpdateInput
 }
 
-input EmergencyContactUpdateArgs {
-  where: EmergencyContactWhereUniqueInput!
-  data: EmergencyContactUpdateInput!
+input ActiveIngredientRelateToManyForUpdateInput {
+  disconnect: [ActiveIngredientWhereUniqueInput!]
+  set: [ActiveIngredientWhereUniqueInput!]
+  create: [ActiveIngredientCreateInput!]
+  connect: [ActiveIngredientWhereUniqueInput!]
 }
 
-input EmergencyContactCreateInput {
-  email: String
-  relation: String
-  firstName: String
-  lastName: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
-  patient: PatientRelateToOneForCreateInput
-}
-
-type User {
-  id: ID!
-  subjectId: String
-  contracts(
-    where: ContractWhereInput! = {}
-    orderBy: [ContractOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Contract!]
-  contractsCount(where: ContractWhereInput! = {}): Int
-  dateOfBirth: DateTime
-  doctor: Doctor
-  email: String
-  firstName: String
-  isAdmin: Boolean
-  isDummy: Boolean
-  isOnboarded: Boolean
-  isOnboardedDoctor: Boolean
-  lastName: String
-  middleName: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
-  photoSrc: String
-  sex: String
-  username: String
-  address: Address
-  patient: Patient
-  prompts(
-    where: PromptWhereInput! = {}
-    orderBy: [PromptOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Prompt!]
-  promptsCount(where: PromptWhereInput! = {}): Int
-  profilePhoto: ProfilePhoto
-  signUpInvite: UserInvite
-  stepperProgs(
-    where: StepperProgWhereInput! = {}
-    orderBy: [StepperProgOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [StepperProg!]
-  stepperProgsCount(where: StepperProgWhereInput! = {}): Int
-  stepperStepProgs(
-    where: StepperStepProgWhereInput! = {}
-    orderBy: [StepperStepProgOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [StepperStepProg!]
-  stepperStepProgsCount(where: StepperStepProgWhereInput! = {}): Int
-  userInvites(
-    where: UserInviteWhereInput! = {}
-    orderBy: [UserInviteOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [UserInvite!]
-  userInvitesCount(where: UserInviteWhereInput! = {}): Int
-}
-
-input UserWhereUniqueInput {
-  id: ID
-  subjectId: String
-  email: String
-  username: String
-}
-
-input UserWhereInput {
-  AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
-  id: IDFilter
-  subjectId: StringFilter
-  contracts: ContractManyRelationFilter
-  dateOfBirth: DateTimeNullableFilter
-  doctor: DoctorWhereInput
-  email: StringFilter
-  firstName: StringFilter
-  isAdmin: BooleanFilter
-  isDummy: BooleanFilter
-  isOnboarded: BooleanFilter
-  isOnboardedDoctor: BooleanFilter
-  lastName: StringFilter
-  middleName: StringFilter
-  cellPhoneNumberString: StringFilter
-  homePhoneNumberString: StringFilter
-  photoSrc: StringFilter
-  sex: StringFilter
-  username: StringFilter
-  address: AddressWhereInput
-  patient: PatientWhereInput
-  prompts: PromptManyRelationFilter
-  profilePhoto: ProfilePhotoWhereInput
-  signUpInvite: UserInviteWhereInput
-  stepperProgs: StepperProgManyRelationFilter
-  stepperStepProgs: StepperStepProgManyRelationFilter
-  userInvites: UserInviteManyRelationFilter
-}
-
-input ContractManyRelationFilter {
-  every: ContractWhereInput
-  some: ContractWhereInput
-  none: ContractWhereInput
-}
-
-input PromptManyRelationFilter {
-  every: PromptWhereInput
-  some: PromptWhereInput
-  none: PromptWhereInput
-}
-
-input StepperProgManyRelationFilter {
-  every: StepperProgWhereInput
-  some: StepperProgWhereInput
-  none: StepperProgWhereInput
-}
-
-input StepperStepProgManyRelationFilter {
-  every: StepperStepProgWhereInput
-  some: StepperStepProgWhereInput
-  none: StepperStepProgWhereInput
-}
-
-input UserInviteManyRelationFilter {
-  every: UserInviteWhereInput
-  some: UserInviteWhereInput
-  none: UserInviteWhereInput
-}
-
-input UserOrderByInput {
-  id: OrderDirection
-  subjectId: OrderDirection
-  dateOfBirth: OrderDirection
-  email: OrderDirection
-  firstName: OrderDirection
-  isAdmin: OrderDirection
-  isDummy: OrderDirection
-  isOnboarded: OrderDirection
-  isOnboardedDoctor: OrderDirection
-  lastName: OrderDirection
-  middleName: OrderDirection
-  cellPhoneNumberString: OrderDirection
-  homePhoneNumberString: OrderDirection
-  photoSrc: OrderDirection
-  sex: OrderDirection
-  username: OrderDirection
-}
-
-input UserUpdateInput {
-  subjectId: String
-  contracts: ContractRelateToManyForUpdateInput
-  dateOfBirth: DateTime
-  doctor: DoctorRelateToOneForUpdateInput
-  email: String
-  firstName: String
-  isAdmin: Boolean
-  isDummy: Boolean
-  isOnboarded: Boolean
-  isOnboardedDoctor: Boolean
-  lastName: String
-  middleName: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
-  photoSrc: String
-  sex: String
-  username: String
-  address: AddressRelateToOneForUpdateInput
-  patient: PatientRelateToOneForUpdateInput
-  prompts: PromptRelateToManyForUpdateInput
-  profilePhoto: ProfilePhotoRelateToOneForUpdateInput
-  signUpInvite: UserInviteRelateToOneForUpdateInput
-  stepperProgs: StepperProgRelateToManyForUpdateInput
-  stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
-  userInvites: UserInviteRelateToManyForUpdateInput
-}
-
-input ContractRelateToManyForUpdateInput {
-  disconnect: [ContractWhereUniqueInput!]
-  set: [ContractWhereUniqueInput!]
-  create: [ContractCreateInput!]
-  connect: [ContractWhereUniqueInput!]
-}
-
-input PromptRelateToManyForUpdateInput {
-  disconnect: [PromptWhereUniqueInput!]
-  set: [PromptWhereUniqueInput!]
-  create: [PromptCreateInput!]
-  connect: [PromptWhereUniqueInput!]
-}
-
-input ProfilePhotoRelateToOneForUpdateInput {
-  create: ProfilePhotoCreateInput
-  connect: ProfilePhotoWhereUniqueInput
+input PrescriptionItemRelateToOneForUpdateInput {
+  create: PrescriptionItemCreateInput
+  connect: PrescriptionItemWhereUniqueInput
   disconnect: Boolean
 }
 
-input StepperProgRelateToManyForUpdateInput {
-  disconnect: [StepperProgWhereUniqueInput!]
-  set: [StepperProgWhereUniqueInput!]
-  create: [StepperProgCreateInput!]
-  connect: [StepperProgWhereUniqueInput!]
+input MedicationUpdateArgs {
+  where: MedicationWhereUniqueInput!
+  data: MedicationUpdateInput!
 }
 
-input StepperStepProgRelateToManyForUpdateInput {
-  disconnect: [StepperStepProgWhereUniqueInput!]
-  set: [StepperStepProgWhereUniqueInput!]
-  create: [StepperStepProgCreateInput!]
-  connect: [StepperStepProgWhereUniqueInput!]
-}
-
-input UserInviteRelateToManyForUpdateInput {
-  disconnect: [UserInviteWhereUniqueInput!]
-  set: [UserInviteWhereUniqueInput!]
-  create: [UserInviteCreateInput!]
-  connect: [UserInviteWhereUniqueInput!]
-}
-
-input UserUpdateArgs {
-  where: UserWhereUniqueInput!
-  data: UserUpdateInput!
-}
-
-input UserCreateInput {
-  subjectId: String
-  contracts: ContractRelateToManyForCreateInput
-  dateOfBirth: DateTime
-  doctor: DoctorRelateToOneForCreateInput
-  email: String
-  firstName: String
-  isAdmin: Boolean
-  isDummy: Boolean
-  isOnboarded: Boolean
-  isOnboardedDoctor: Boolean
-  lastName: String
-  middleName: String
-  cellPhoneNumberString: String
-  homePhoneNumberString: String
-  photoSrc: String
-  sex: String
-  username: String
-  address: AddressRelateToOneForCreateInput
+input MedicationCreateInput {
+  brandName: String
+  companyName: String
+  drugCode: Int
+  activeIngredients: ActiveIngredientRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
-  prompts: PromptRelateToManyForCreateInput
-  profilePhoto: ProfilePhotoRelateToOneForCreateInput
-  signUpInvite: UserInviteRelateToOneForCreateInput
-  stepperProgs: StepperProgRelateToManyForCreateInput
-  stepperStepProgs: StepperStepProgRelateToManyForCreateInput
-  userInvites: UserInviteRelateToManyForCreateInput
+  prescription: PrescriptionRelateToOneForCreateInput
+  prescriptionItem: PrescriptionItemRelateToOneForCreateInput
 }
 
-input ContractRelateToManyForCreateInput {
-  create: [ContractCreateInput!]
-  connect: [ContractWhereUniqueInput!]
+input ActiveIngredientRelateToManyForCreateInput {
+  create: [ActiveIngredientCreateInput!]
+  connect: [ActiveIngredientWhereUniqueInput!]
 }
 
-input PromptRelateToManyForCreateInput {
-  create: [PromptCreateInput!]
-  connect: [PromptWhereUniqueInput!]
-}
-
-input ProfilePhotoRelateToOneForCreateInput {
-  create: ProfilePhotoCreateInput
-  connect: ProfilePhotoWhereUniqueInput
-}
-
-input StepperProgRelateToManyForCreateInput {
-  create: [StepperProgCreateInput!]
-  connect: [StepperProgWhereUniqueInput!]
-}
-
-input StepperStepProgRelateToManyForCreateInput {
-  create: [StepperStepProgCreateInput!]
-  connect: [StepperStepProgWhereUniqueInput!]
-}
-
-input UserInviteRelateToManyForCreateInput {
-  create: [UserInviteCreateInput!]
-  connect: [UserInviteWhereUniqueInput!]
-}
-
-type UserInvite {
-  id: ID!
-  dateOfBirth: DateTime
-  email: String
-  firstName: String
-  lastName: String
-  middleName: String
-  cellPhoneNumberString: String
-  sex: String
-  invitedByUser: User
-  signedUpUser: User
-  healthCard: HealthCard
-}
-
-input UserInviteWhereUniqueInput {
-  id: ID
-  email: String
-}
-
-input UserInviteWhereInput {
-  AND: [UserInviteWhereInput!]
-  OR: [UserInviteWhereInput!]
-  NOT: [UserInviteWhereInput!]
-  id: IDFilter
-  dateOfBirth: DateTimeNullableFilter
-  email: StringFilter
-  firstName: StringFilter
-  lastName: StringFilter
-  middleName: StringFilter
-  cellPhoneNumberString: StringFilter
-  sex: StringFilter
-  invitedByUser: UserWhereInput
-  signedUpUser: UserWhereInput
-  healthCard: HealthCardWhereInput
-}
-
-input UserInviteOrderByInput {
-  id: OrderDirection
-  dateOfBirth: OrderDirection
-  email: OrderDirection
-  firstName: OrderDirection
-  lastName: OrderDirection
-  middleName: OrderDirection
-  cellPhoneNumberString: OrderDirection
-  sex: OrderDirection
-}
-
-input UserInviteUpdateInput {
-  dateOfBirth: DateTime
-  email: String
-  firstName: String
-  lastName: String
-  middleName: String
-  cellPhoneNumberString: String
-  sex: String
-  invitedByUser: UserRelateToOneForUpdateInput
-  signedUpUser: UserRelateToOneForUpdateInput
-  healthCard: HealthCardRelateToOneForUpdateInput
-}
-
-input HealthCardRelateToOneForUpdateInput {
-  create: HealthCardCreateInput
-  connect: HealthCardWhereUniqueInput
-  disconnect: Boolean
-}
-
-input UserInviteUpdateArgs {
-  where: UserInviteWhereUniqueInput!
-  data: UserInviteUpdateInput!
-}
-
-input UserInviteCreateInput {
-  dateOfBirth: DateTime
-  email: String
-  firstName: String
-  lastName: String
-  middleName: String
-  cellPhoneNumberString: String
-  sex: String
-  invitedByUser: UserRelateToOneForCreateInput
-  signedUpUser: UserRelateToOneForCreateInput
-  healthCard: HealthCardRelateToOneForCreateInput
-}
-
-input HealthCardRelateToOneForCreateInput {
-  create: HealthCardCreateInput
-  connect: HealthCardWhereUniqueInput
+input PrescriptionItemRelateToOneForCreateInput {
+  create: PrescriptionItemCreateInput
+  connect: PrescriptionItemWhereUniqueInput
 }
 
 type Patient {
@@ -3711,12 +3327,6 @@ input HealthCardManyRelationFilter {
   none: HealthCardWhereInput
 }
 
-input MedicationManyRelationFilter {
-  every: MedicationWhereInput
-  some: MedicationWhereInput
-  none: MedicationWhereInput
-}
-
 input PharmacyLocationManyRelationFilter {
   every: PharmacyLocationWhereInput
   some: PharmacyLocationWhereInput
@@ -3770,13 +3380,6 @@ input HealthCardRelateToManyForUpdateInput {
   connect: [HealthCardWhereUniqueInput!]
 }
 
-input MedicationRelateToManyForUpdateInput {
-  disconnect: [MedicationWhereUniqueInput!]
-  set: [MedicationWhereUniqueInput!]
-  create: [MedicationCreateInput!]
-  connect: [MedicationWhereUniqueInput!]
-}
-
 input PharmacyLocationRelateToManyForUpdateInput {
   disconnect: [PharmacyLocationWhereUniqueInput!]
   set: [PharmacyLocationWhereUniqueInput!]
@@ -3824,97 +3427,135 @@ input HealthCardRelateToManyForCreateInput {
   connect: [HealthCardWhereUniqueInput!]
 }
 
-input MedicationRelateToManyForCreateInput {
-  create: [MedicationCreateInput!]
-  connect: [MedicationWhereUniqueInput!]
-}
-
 input PharmacyLocationRelateToManyForCreateInput {
   create: [PharmacyLocationCreateInput!]
   connect: [PharmacyLocationWhereUniqueInput!]
 }
 
-type Medication {
+type Pharmacy {
   id: ID!
-  activeIngredient: String
   companyName: String
-  drugCode: Int
-  brandName: String
-  dosageCount: Int
-  dosageUnit: String
-  patient: Patient
-  prescription: Prescription
-  prescriptionItem: PrescriptionItem
+  locations(
+    where: PharmacyLocationWhereInput! = {}
+    orderBy: [PharmacyLocationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [PharmacyLocation!]
+  locationsCount(where: PharmacyLocationWhereInput! = {}): Int
 }
 
-input MedicationWhereUniqueInput {
+input PharmacyWhereUniqueInput {
   id: ID
-}
-
-input MedicationWhereInput {
-  AND: [MedicationWhereInput!]
-  OR: [MedicationWhereInput!]
-  NOT: [MedicationWhereInput!]
-  id: IDFilter
-  activeIngredient: StringFilter
-  companyName: StringFilter
-  drugCode: IntNullableFilter
-  brandName: StringFilter
-  dosageCount: IntNullableFilter
-  dosageUnit: StringFilter
-  patient: PatientWhereInput
-  prescription: PrescriptionWhereInput
-  prescriptionItem: PrescriptionItemWhereInput
-}
-
-input MedicationOrderByInput {
-  id: OrderDirection
-  activeIngredient: OrderDirection
-  companyName: OrderDirection
-  drugCode: OrderDirection
-  brandName: OrderDirection
-  dosageCount: OrderDirection
-  dosageUnit: OrderDirection
-}
-
-input MedicationUpdateInput {
-  activeIngredient: String
   companyName: String
-  drugCode: Int
-  brandName: String
-  dosageCount: Int
-  dosageUnit: String
-  patient: PatientRelateToOneForUpdateInput
-  prescription: PrescriptionRelateToOneForUpdateInput
-  prescriptionItem: PrescriptionItemRelateToOneForUpdateInput
 }
 
-input PrescriptionItemRelateToOneForUpdateInput {
-  create: PrescriptionItemCreateInput
-  connect: PrescriptionItemWhereUniqueInput
+input PharmacyWhereInput {
+  AND: [PharmacyWhereInput!]
+  OR: [PharmacyWhereInput!]
+  NOT: [PharmacyWhereInput!]
+  id: IDFilter
+  companyName: StringFilter
+  locations: PharmacyLocationManyRelationFilter
+}
+
+input PharmacyOrderByInput {
+  id: OrderDirection
+  companyName: OrderDirection
+}
+
+input PharmacyUpdateInput {
+  companyName: String
+  locations: PharmacyLocationRelateToManyForUpdateInput
+}
+
+input PharmacyUpdateArgs {
+  where: PharmacyWhereUniqueInput!
+  data: PharmacyUpdateInput!
+}
+
+input PharmacyCreateInput {
+  companyName: String
+  locations: PharmacyLocationRelateToManyForCreateInput
+}
+
+type PharmacyLocation {
+  id: ID!
+  accreditationNumber: String
+  status: String
+  phoneString: String
+  faxString: String
+  address: Address
+  pharmacy: Pharmacy
+  patients(
+    where: PatientWhereInput! = {}
+    orderBy: [PatientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Patient!]
+  patientsCount(where: PatientWhereInput! = {}): Int
+}
+
+input PharmacyLocationWhereUniqueInput {
+  id: ID
+  accreditationNumber: String
+}
+
+input PharmacyLocationWhereInput {
+  AND: [PharmacyLocationWhereInput!]
+  OR: [PharmacyLocationWhereInput!]
+  NOT: [PharmacyLocationWhereInput!]
+  id: IDFilter
+  accreditationNumber: StringFilter
+  status: StringFilter
+  phoneString: StringFilter
+  faxString: StringFilter
+  address: AddressWhereInput
+  pharmacy: PharmacyWhereInput
+  patients: PatientManyRelationFilter
+}
+
+input PharmacyLocationOrderByInput {
+  id: OrderDirection
+  accreditationNumber: OrderDirection
+  status: OrderDirection
+  phoneString: OrderDirection
+  faxString: OrderDirection
+}
+
+input PharmacyLocationUpdateInput {
+  accreditationNumber: String
+  status: String
+  phoneString: String
+  faxString: String
+  address: AddressRelateToOneForUpdateInput
+  pharmacy: PharmacyRelateToOneForUpdateInput
+  patients: PatientRelateToManyForUpdateInput
+}
+
+input PharmacyRelateToOneForUpdateInput {
+  create: PharmacyCreateInput
+  connect: PharmacyWhereUniqueInput
   disconnect: Boolean
 }
 
-input MedicationUpdateArgs {
-  where: MedicationWhereUniqueInput!
-  data: MedicationUpdateInput!
+input PharmacyLocationUpdateArgs {
+  where: PharmacyLocationWhereUniqueInput!
+  data: PharmacyLocationUpdateInput!
 }
 
-input MedicationCreateInput {
-  activeIngredient: String
-  companyName: String
-  drugCode: Int
-  brandName: String
-  dosageCount: Int
-  dosageUnit: String
-  patient: PatientRelateToOneForCreateInput
-  prescription: PrescriptionRelateToOneForCreateInput
-  prescriptionItem: PrescriptionItemRelateToOneForCreateInput
+input PharmacyLocationCreateInput {
+  accreditationNumber: String
+  status: String
+  phoneString: String
+  faxString: String
+  address: AddressRelateToOneForCreateInput
+  pharmacy: PharmacyRelateToOneForCreateInput
+  patients: PatientRelateToManyForCreateInput
 }
 
-input PrescriptionItemRelateToOneForCreateInput {
-  create: PrescriptionItemCreateInput
-  connect: PrescriptionItemWhereUniqueInput
+input PharmacyRelateToOneForCreateInput {
+  create: PharmacyCreateInput
+  connect: PharmacyWhereUniqueInput
 }
 
 type Prescription {
@@ -4061,75 +3702,6 @@ input MedicationRelateToOneForCreateInput {
   connect: MedicationWhereUniqueInput
 }
 
-type Prompt {
-  id: ID!
-  stepper: Stepper
-  user: User
-  name: String
-  promptType: String
-  promptValue: String
-  slug: String
-}
-
-input PromptWhereUniqueInput {
-  id: ID
-}
-
-input PromptWhereInput {
-  AND: [PromptWhereInput!]
-  OR: [PromptWhereInput!]
-  NOT: [PromptWhereInput!]
-  id: IDFilter
-  stepper: StepperWhereInput
-  user: UserWhereInput
-  name: StringFilter
-  promptType: StringFilter
-  promptValue: StringFilter
-  slug: StringFilter
-}
-
-input PromptOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  promptType: OrderDirection
-  promptValue: OrderDirection
-  slug: OrderDirection
-}
-
-input PromptUpdateInput {
-  stepper: StepperRelateToOneForUpdateInput
-  user: UserRelateToOneForUpdateInput
-  name: String
-  promptType: String
-  promptValue: String
-  slug: String
-}
-
-input StepperRelateToOneForUpdateInput {
-  create: StepperCreateInput
-  connect: StepperWhereUniqueInput
-  disconnect: Boolean
-}
-
-input PromptUpdateArgs {
-  where: PromptWhereUniqueInput!
-  data: PromptUpdateInput!
-}
-
-input PromptCreateInput {
-  stepper: StepperRelateToOneForCreateInput
-  user: UserRelateToOneForCreateInput
-  name: String
-  promptType: String
-  promptValue: String
-  slug: String
-}
-
-input StepperRelateToOneForCreateInput {
-  create: StepperCreateInput
-  connect: StepperWhereUniqueInput
-}
-
 type ProfilePhoto {
   id: ID!
   src: CloudinaryImage_File
@@ -4224,6 +3796,75 @@ input ProfilePhotoCreateInput {
   src: Upload
   altText: String
   user: UserRelateToOneForCreateInput
+}
+
+type Prompt {
+  id: ID!
+  stepper: Stepper
+  user: User
+  name: String
+  promptType: String
+  promptValue: String
+  slug: String
+}
+
+input PromptWhereUniqueInput {
+  id: ID
+}
+
+input PromptWhereInput {
+  AND: [PromptWhereInput!]
+  OR: [PromptWhereInput!]
+  NOT: [PromptWhereInput!]
+  id: IDFilter
+  stepper: StepperWhereInput
+  user: UserWhereInput
+  name: StringFilter
+  promptType: StringFilter
+  promptValue: StringFilter
+  slug: StringFilter
+}
+
+input PromptOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  promptType: OrderDirection
+  promptValue: OrderDirection
+  slug: OrderDirection
+}
+
+input PromptUpdateInput {
+  stepper: StepperRelateToOneForUpdateInput
+  user: UserRelateToOneForUpdateInput
+  name: String
+  promptType: String
+  promptValue: String
+  slug: String
+}
+
+input StepperRelateToOneForUpdateInput {
+  create: StepperCreateInput
+  connect: StepperWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PromptUpdateArgs {
+  where: PromptWhereUniqueInput!
+  data: PromptUpdateInput!
+}
+
+input PromptCreateInput {
+  stepper: StepperRelateToOneForCreateInput
+  user: UserRelateToOneForCreateInput
+  name: String
+  promptType: String
+  promptValue: String
+  slug: String
+}
+
+input StepperRelateToOneForCreateInput {
+  create: StepperCreateInput
+  connect: StepperWhereUniqueInput
 }
 
 type ProofOfIdentification {
@@ -4367,130 +4008,172 @@ input ProofOfLicenseCreateInput {
   isVerified: Boolean
 }
 
-type Pharmacy {
+type RecurringSlot {
   id: ID!
-  companyName: String
-  locations(
-    where: PharmacyLocationWhereInput! = {}
-    orderBy: [PharmacyLocationOrderByInput!]! = []
+  wday: String
+  isActive: Boolean
+  interval: String
+  intervalCount: Int
+  schedule: Schedule
+  timeIntervals(
+    where: TimeIntervalWhereInput! = {}
+    orderBy: [TimeIntervalOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [PharmacyLocation!]
-  locationsCount(where: PharmacyLocationWhereInput! = {}): Int
+  ): [TimeInterval!]
+  timeIntervalsCount(where: TimeIntervalWhereInput! = {}): Int
 }
 
-input PharmacyWhereUniqueInput {
+input RecurringSlotWhereUniqueInput {
   id: ID
-  companyName: String
 }
 
-input PharmacyWhereInput {
-  AND: [PharmacyWhereInput!]
-  OR: [PharmacyWhereInput!]
-  NOT: [PharmacyWhereInput!]
+input RecurringSlotWhereInput {
+  AND: [RecurringSlotWhereInput!]
+  OR: [RecurringSlotWhereInput!]
+  NOT: [RecurringSlotWhereInput!]
   id: IDFilter
-  companyName: StringFilter
-  locations: PharmacyLocationManyRelationFilter
+  wday: StringFilter
+  isActive: BooleanFilter
+  interval: StringFilter
+  intervalCount: IntNullableFilter
+  schedule: ScheduleWhereInput
+  timeIntervals: TimeIntervalManyRelationFilter
 }
 
-input PharmacyOrderByInput {
+input TimeIntervalManyRelationFilter {
+  every: TimeIntervalWhereInput
+  some: TimeIntervalWhereInput
+  none: TimeIntervalWhereInput
+}
+
+input RecurringSlotOrderByInput {
   id: OrderDirection
-  companyName: OrderDirection
+  wday: OrderDirection
+  isActive: OrderDirection
+  interval: OrderDirection
+  intervalCount: OrderDirection
 }
 
-input PharmacyUpdateInput {
-  companyName: String
-  locations: PharmacyLocationRelateToManyForUpdateInput
+input RecurringSlotUpdateInput {
+  wday: String
+  isActive: Boolean
+  interval: String
+  intervalCount: Int
+  schedule: ScheduleRelateToOneForUpdateInput
+  timeIntervals: TimeIntervalRelateToManyForUpdateInput
 }
 
-input PharmacyUpdateArgs {
-  where: PharmacyWhereUniqueInput!
-  data: PharmacyUpdateInput!
+input TimeIntervalRelateToManyForUpdateInput {
+  disconnect: [TimeIntervalWhereUniqueInput!]
+  set: [TimeIntervalWhereUniqueInput!]
+  create: [TimeIntervalCreateInput!]
+  connect: [TimeIntervalWhereUniqueInput!]
 }
 
-input PharmacyCreateInput {
-  companyName: String
-  locations: PharmacyLocationRelateToManyForCreateInput
+input RecurringSlotUpdateArgs {
+  where: RecurringSlotWhereUniqueInput!
+  data: RecurringSlotUpdateInput!
 }
 
-type PharmacyLocation {
+input RecurringSlotCreateInput {
+  wday: String
+  isActive: Boolean
+  interval: String
+  intervalCount: Int
+  schedule: ScheduleRelateToOneForCreateInput
+  timeIntervals: TimeIntervalRelateToManyForCreateInput
+}
+
+input TimeIntervalRelateToManyForCreateInput {
+  create: [TimeIntervalCreateInput!]
+  connect: [TimeIntervalWhereUniqueInput!]
+}
+
+type Schedule {
   id: ID!
-  accreditationNumber: String
-  status: String
-  phoneString: String
-  faxString: String
-  address: Address
-  pharmacy: Pharmacy
-  patients(
-    where: PatientWhereInput! = {}
-    orderBy: [PatientOrderByInput!]! = []
+  calendar: Calendar
+  description: String
+  defaultOn: Calendar
+  recurringSlots(
+    where: RecurringSlotWhereInput! = {}
+    orderBy: [RecurringSlotOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [Patient!]
-  patientsCount(where: PatientWhereInput! = {}): Int
+  ): [RecurringSlot!]
+  recurringSlotsCount(where: RecurringSlotWhereInput! = {}): Int
+  tz: String
+  slotInterval: Int
+  title: String
 }
 
-input PharmacyLocationWhereUniqueInput {
+input ScheduleWhereUniqueInput {
   id: ID
-  accreditationNumber: String
 }
 
-input PharmacyLocationWhereInput {
-  AND: [PharmacyLocationWhereInput!]
-  OR: [PharmacyLocationWhereInput!]
-  NOT: [PharmacyLocationWhereInput!]
+input ScheduleWhereInput {
+  AND: [ScheduleWhereInput!]
+  OR: [ScheduleWhereInput!]
+  NOT: [ScheduleWhereInput!]
   id: IDFilter
-  accreditationNumber: StringFilter
-  status: StringFilter
-  phoneString: StringFilter
-  faxString: StringFilter
-  address: AddressWhereInput
-  pharmacy: PharmacyWhereInput
-  patients: PatientManyRelationFilter
+  calendar: CalendarWhereInput
+  description: StringFilter
+  defaultOn: CalendarWhereInput
+  recurringSlots: RecurringSlotManyRelationFilter
+  tz: StringFilter
+  slotInterval: IntNullableFilter
+  title: StringFilter
 }
 
-input PharmacyLocationOrderByInput {
+input RecurringSlotManyRelationFilter {
+  every: RecurringSlotWhereInput
+  some: RecurringSlotWhereInput
+  none: RecurringSlotWhereInput
+}
+
+input ScheduleOrderByInput {
   id: OrderDirection
-  accreditationNumber: OrderDirection
-  status: OrderDirection
-  phoneString: OrderDirection
-  faxString: OrderDirection
+  description: OrderDirection
+  tz: OrderDirection
+  slotInterval: OrderDirection
+  title: OrderDirection
 }
 
-input PharmacyLocationUpdateInput {
-  accreditationNumber: String
-  status: String
-  phoneString: String
-  faxString: String
-  address: AddressRelateToOneForUpdateInput
-  pharmacy: PharmacyRelateToOneForUpdateInput
-  patients: PatientRelateToManyForUpdateInput
+input ScheduleUpdateInput {
+  calendar: CalendarRelateToOneForUpdateInput
+  description: String
+  defaultOn: CalendarRelateToOneForUpdateInput
+  recurringSlots: RecurringSlotRelateToManyForUpdateInput
+  tz: String
+  slotInterval: Int
+  title: String
 }
 
-input PharmacyRelateToOneForUpdateInput {
-  create: PharmacyCreateInput
-  connect: PharmacyWhereUniqueInput
-  disconnect: Boolean
+input RecurringSlotRelateToManyForUpdateInput {
+  disconnect: [RecurringSlotWhereUniqueInput!]
+  set: [RecurringSlotWhereUniqueInput!]
+  create: [RecurringSlotCreateInput!]
+  connect: [RecurringSlotWhereUniqueInput!]
 }
 
-input PharmacyLocationUpdateArgs {
-  where: PharmacyLocationWhereUniqueInput!
-  data: PharmacyLocationUpdateInput!
+input ScheduleUpdateArgs {
+  where: ScheduleWhereUniqueInput!
+  data: ScheduleUpdateInput!
 }
 
-input PharmacyLocationCreateInput {
-  accreditationNumber: String
-  status: String
-  phoneString: String
-  faxString: String
-  address: AddressRelateToOneForCreateInput
-  pharmacy: PharmacyRelateToOneForCreateInput
-  patients: PatientRelateToManyForCreateInput
+input ScheduleCreateInput {
+  calendar: CalendarRelateToOneForCreateInput
+  description: String
+  defaultOn: CalendarRelateToOneForCreateInput
+  recurringSlots: RecurringSlotRelateToManyForCreateInput
+  tz: String
+  slotInterval: Int
+  title: String
 }
 
-input PharmacyRelateToOneForCreateInput {
-  create: PharmacyCreateInput
-  connect: PharmacyWhereUniqueInput
+input RecurringSlotRelateToManyForCreateInput {
+  create: [RecurringSlotCreateInput!]
+  connect: [RecurringSlotWhereUniqueInput!]
 }
 
 type Stepper {
@@ -4553,6 +4236,18 @@ input StepperStepManyRelationFilter {
   none: StepperStepWhereInput
 }
 
+input StepperProgManyRelationFilter {
+  every: StepperProgWhereInput
+  some: StepperProgWhereInput
+  none: StepperProgWhereInput
+}
+
+input StepperStepProgManyRelationFilter {
+  every: StepperStepProgWhereInput
+  some: StepperStepProgWhereInput
+  none: StepperStepProgWhereInput
+}
+
 input StepperOrderByInput {
   id: OrderDirection
   title: OrderDirection
@@ -4589,6 +4284,20 @@ input StepperStepRelateToManyForUpdateInput {
   connect: [StepperStepWhereUniqueInput!]
 }
 
+input StepperProgRelateToManyForUpdateInput {
+  disconnect: [StepperProgWhereUniqueInput!]
+  set: [StepperProgWhereUniqueInput!]
+  create: [StepperProgCreateInput!]
+  connect: [StepperProgWhereUniqueInput!]
+}
+
+input StepperStepProgRelateToManyForUpdateInput {
+  disconnect: [StepperStepProgWhereUniqueInput!]
+  set: [StepperStepProgWhereUniqueInput!]
+  create: [StepperStepProgCreateInput!]
+  connect: [StepperStepProgWhereUniqueInput!]
+}
+
 input StepperUpdateArgs {
   where: StepperWhereUniqueInput!
   data: StepperUpdateInput!
@@ -4615,6 +4324,16 @@ input PromptRelateToOneForCreateInput {
 input StepperStepRelateToManyForCreateInput {
   create: [StepperStepCreateInput!]
   connect: [StepperStepWhereUniqueInput!]
+}
+
+input StepperProgRelateToManyForCreateInput {
+  create: [StepperProgCreateInput!]
+  connect: [StepperProgWhereUniqueInput!]
+}
+
+input StepperStepProgRelateToManyForCreateInput {
+  create: [StepperStepProgCreateInput!]
+  connect: [StepperStepProgWhereUniqueInput!]
 }
 
 type StepperProg {
@@ -4843,6 +4562,393 @@ input StepperProgRelateToOneForCreateInput {
   connect: StepperProgWhereUniqueInput
 }
 
+type TimeInterval {
+  id: ID!
+  from: String
+  to: String
+  recurringSlot: RecurringSlot
+}
+
+input TimeIntervalWhereUniqueInput {
+  id: ID
+}
+
+input TimeIntervalWhereInput {
+  AND: [TimeIntervalWhereInput!]
+  OR: [TimeIntervalWhereInput!]
+  NOT: [TimeIntervalWhereInput!]
+  id: IDFilter
+  from: StringFilter
+  to: StringFilter
+  recurringSlot: RecurringSlotWhereInput
+}
+
+input TimeIntervalOrderByInput {
+  id: OrderDirection
+  from: OrderDirection
+  to: OrderDirection
+}
+
+input TimeIntervalUpdateInput {
+  from: String
+  to: String
+  recurringSlot: RecurringSlotRelateToOneForUpdateInput
+}
+
+input RecurringSlotRelateToOneForUpdateInput {
+  create: RecurringSlotCreateInput
+  connect: RecurringSlotWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TimeIntervalUpdateArgs {
+  where: TimeIntervalWhereUniqueInput!
+  data: TimeIntervalUpdateInput!
+}
+
+input TimeIntervalCreateInput {
+  from: String
+  to: String
+  recurringSlot: RecurringSlotRelateToOneForCreateInput
+}
+
+input RecurringSlotRelateToOneForCreateInput {
+  create: RecurringSlotCreateInput
+  connect: RecurringSlotWhereUniqueInput
+}
+
+type User {
+  id: ID!
+  subjectId: String
+  contracts(
+    where: ContractWhereInput! = {}
+    orderBy: [ContractOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Contract!]
+  contractsCount(where: ContractWhereInput! = {}): Int
+  dateOfBirth: DateTime
+  doctor: Doctor
+  email: String
+  firstName: String
+  isAdmin: Boolean
+  isDummy: Boolean
+  isOnboarded: Boolean
+  isOnboardedDoctor: Boolean
+  lastName: String
+  middleName: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  photoSrc: String
+  sex: String
+  username: String
+  address: Address
+  patient: Patient
+  prompts(
+    where: PromptWhereInput! = {}
+    orderBy: [PromptOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Prompt!]
+  promptsCount(where: PromptWhereInput! = {}): Int
+  profilePhoto: ProfilePhoto
+  signUpInvite: UserInvite
+  stepperProgs(
+    where: StepperProgWhereInput! = {}
+    orderBy: [StepperProgOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [StepperProg!]
+  stepperProgsCount(where: StepperProgWhereInput! = {}): Int
+  stepperStepProgs(
+    where: StepperStepProgWhereInput! = {}
+    orderBy: [StepperStepProgOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [StepperStepProg!]
+  stepperStepProgsCount(where: StepperStepProgWhereInput! = {}): Int
+  userInvites(
+    where: UserInviteWhereInput! = {}
+    orderBy: [UserInviteOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [UserInvite!]
+  userInvitesCount(where: UserInviteWhereInput! = {}): Int
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  subjectId: String
+  email: String
+  username: String
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  id: IDFilter
+  subjectId: StringFilter
+  contracts: ContractManyRelationFilter
+  dateOfBirth: DateTimeNullableFilter
+  doctor: DoctorWhereInput
+  email: StringFilter
+  firstName: StringFilter
+  isAdmin: BooleanFilter
+  isDummy: BooleanFilter
+  isOnboarded: BooleanFilter
+  isOnboardedDoctor: BooleanFilter
+  lastName: StringFilter
+  middleName: StringFilter
+  cellPhoneNumberString: StringFilter
+  homePhoneNumberString: StringFilter
+  photoSrc: StringFilter
+  sex: StringFilter
+  username: StringFilter
+  address: AddressWhereInput
+  patient: PatientWhereInput
+  prompts: PromptManyRelationFilter
+  profilePhoto: ProfilePhotoWhereInput
+  signUpInvite: UserInviteWhereInput
+  stepperProgs: StepperProgManyRelationFilter
+  stepperStepProgs: StepperStepProgManyRelationFilter
+  userInvites: UserInviteManyRelationFilter
+}
+
+input ContractManyRelationFilter {
+  every: ContractWhereInput
+  some: ContractWhereInput
+  none: ContractWhereInput
+}
+
+input PromptManyRelationFilter {
+  every: PromptWhereInput
+  some: PromptWhereInput
+  none: PromptWhereInput
+}
+
+input UserInviteManyRelationFilter {
+  every: UserInviteWhereInput
+  some: UserInviteWhereInput
+  none: UserInviteWhereInput
+}
+
+input UserOrderByInput {
+  id: OrderDirection
+  subjectId: OrderDirection
+  dateOfBirth: OrderDirection
+  email: OrderDirection
+  firstName: OrderDirection
+  isAdmin: OrderDirection
+  isDummy: OrderDirection
+  isOnboarded: OrderDirection
+  isOnboardedDoctor: OrderDirection
+  lastName: OrderDirection
+  middleName: OrderDirection
+  cellPhoneNumberString: OrderDirection
+  homePhoneNumberString: OrderDirection
+  photoSrc: OrderDirection
+  sex: OrderDirection
+  username: OrderDirection
+}
+
+input UserUpdateInput {
+  subjectId: String
+  contracts: ContractRelateToManyForUpdateInput
+  dateOfBirth: DateTime
+  doctor: DoctorRelateToOneForUpdateInput
+  email: String
+  firstName: String
+  isAdmin: Boolean
+  isDummy: Boolean
+  isOnboarded: Boolean
+  isOnboardedDoctor: Boolean
+  lastName: String
+  middleName: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  photoSrc: String
+  sex: String
+  username: String
+  address: AddressRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
+  prompts: PromptRelateToManyForUpdateInput
+  profilePhoto: ProfilePhotoRelateToOneForUpdateInput
+  signUpInvite: UserInviteRelateToOneForUpdateInput
+  stepperProgs: StepperProgRelateToManyForUpdateInput
+  stepperStepProgs: StepperStepProgRelateToManyForUpdateInput
+  userInvites: UserInviteRelateToManyForUpdateInput
+}
+
+input ContractRelateToManyForUpdateInput {
+  disconnect: [ContractWhereUniqueInput!]
+  set: [ContractWhereUniqueInput!]
+  create: [ContractCreateInput!]
+  connect: [ContractWhereUniqueInput!]
+}
+
+input PromptRelateToManyForUpdateInput {
+  disconnect: [PromptWhereUniqueInput!]
+  set: [PromptWhereUniqueInput!]
+  create: [PromptCreateInput!]
+  connect: [PromptWhereUniqueInput!]
+}
+
+input ProfilePhotoRelateToOneForUpdateInput {
+  create: ProfilePhotoCreateInput
+  connect: ProfilePhotoWhereUniqueInput
+  disconnect: Boolean
+}
+
+input UserInviteRelateToManyForUpdateInput {
+  disconnect: [UserInviteWhereUniqueInput!]
+  set: [UserInviteWhereUniqueInput!]
+  create: [UserInviteCreateInput!]
+  connect: [UserInviteWhereUniqueInput!]
+}
+
+input UserUpdateArgs {
+  where: UserWhereUniqueInput!
+  data: UserUpdateInput!
+}
+
+input UserCreateInput {
+  subjectId: String
+  contracts: ContractRelateToManyForCreateInput
+  dateOfBirth: DateTime
+  doctor: DoctorRelateToOneForCreateInput
+  email: String
+  firstName: String
+  isAdmin: Boolean
+  isDummy: Boolean
+  isOnboarded: Boolean
+  isOnboardedDoctor: Boolean
+  lastName: String
+  middleName: String
+  cellPhoneNumberString: String
+  homePhoneNumberString: String
+  photoSrc: String
+  sex: String
+  username: String
+  address: AddressRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
+  prompts: PromptRelateToManyForCreateInput
+  profilePhoto: ProfilePhotoRelateToOneForCreateInput
+  signUpInvite: UserInviteRelateToOneForCreateInput
+  stepperProgs: StepperProgRelateToManyForCreateInput
+  stepperStepProgs: StepperStepProgRelateToManyForCreateInput
+  userInvites: UserInviteRelateToManyForCreateInput
+}
+
+input ContractRelateToManyForCreateInput {
+  create: [ContractCreateInput!]
+  connect: [ContractWhereUniqueInput!]
+}
+
+input PromptRelateToManyForCreateInput {
+  create: [PromptCreateInput!]
+  connect: [PromptWhereUniqueInput!]
+}
+
+input ProfilePhotoRelateToOneForCreateInput {
+  create: ProfilePhotoCreateInput
+  connect: ProfilePhotoWhereUniqueInput
+}
+
+input UserInviteRelateToManyForCreateInput {
+  create: [UserInviteCreateInput!]
+  connect: [UserInviteWhereUniqueInput!]
+}
+
+type UserInvite {
+  id: ID!
+  dateOfBirth: DateTime
+  email: String
+  firstName: String
+  lastName: String
+  middleName: String
+  cellPhoneNumberString: String
+  sex: String
+  invitedByUser: User
+  signedUpUser: User
+  healthCard: HealthCard
+}
+
+input UserInviteWhereUniqueInput {
+  id: ID
+  email: String
+}
+
+input UserInviteWhereInput {
+  AND: [UserInviteWhereInput!]
+  OR: [UserInviteWhereInput!]
+  NOT: [UserInviteWhereInput!]
+  id: IDFilter
+  dateOfBirth: DateTimeNullableFilter
+  email: StringFilter
+  firstName: StringFilter
+  lastName: StringFilter
+  middleName: StringFilter
+  cellPhoneNumberString: StringFilter
+  sex: StringFilter
+  invitedByUser: UserWhereInput
+  signedUpUser: UserWhereInput
+  healthCard: HealthCardWhereInput
+}
+
+input UserInviteOrderByInput {
+  id: OrderDirection
+  dateOfBirth: OrderDirection
+  email: OrderDirection
+  firstName: OrderDirection
+  lastName: OrderDirection
+  middleName: OrderDirection
+  cellPhoneNumberString: OrderDirection
+  sex: OrderDirection
+}
+
+input UserInviteUpdateInput {
+  dateOfBirth: DateTime
+  email: String
+  firstName: String
+  lastName: String
+  middleName: String
+  cellPhoneNumberString: String
+  sex: String
+  invitedByUser: UserRelateToOneForUpdateInput
+  signedUpUser: UserRelateToOneForUpdateInput
+  healthCard: HealthCardRelateToOneForUpdateInput
+}
+
+input HealthCardRelateToOneForUpdateInput {
+  create: HealthCardCreateInput
+  connect: HealthCardWhereUniqueInput
+  disconnect: Boolean
+}
+
+input UserInviteUpdateArgs {
+  where: UserInviteWhereUniqueInput!
+  data: UserInviteUpdateInput!
+}
+
+input UserInviteCreateInput {
+  dateOfBirth: DateTime
+  email: String
+  firstName: String
+  lastName: String
+  middleName: String
+  cellPhoneNumberString: String
+  sex: String
+  invitedByUser: UserRelateToOneForCreateInput
+  signedUpUser: UserRelateToOneForCreateInput
+  healthCard: HealthCardRelateToOneForCreateInput
+}
+
+input HealthCardRelateToOneForCreateInput {
+  create: HealthCardCreateInput
+  connect: HealthCardWhereUniqueInput
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -4852,6 +4958,14 @@ scalar JSON
   )
 
 type Query {
+  activeIngredients(
+    where: ActiveIngredientWhereInput! = {}
+    orderBy: [ActiveIngredientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ActiveIngredient!]
+  activeIngredient(where: ActiveIngredientWhereUniqueInput!): ActiveIngredient
+  activeIngredientsCount(where: ActiveIngredientWhereInput! = {}): Int
   addresses(
     where: AddressWhereInput! = {}
     orderBy: [AddressOrderByInput!]! = []
@@ -4860,6 +4974,16 @@ type Query {
   ): [Address!]
   address(where: AddressWhereUniqueInput!): Address
   addressesCount(where: AddressWhereInput! = {}): Int
+  administrativeAreas(
+    where: AdministrativeAreaWhereInput! = {}
+    orderBy: [AdministrativeAreaOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AdministrativeArea!]
+  administrativeArea(
+    where: AdministrativeAreaWhereUniqueInput!
+  ): AdministrativeArea
+  administrativeAreasCount(where: AdministrativeAreaWhereInput! = {}): Int
   appointments(
     where: AppointmentWhereInput! = {}
     orderBy: [AppointmentOrderByInput!]! = []
@@ -4924,22 +5048,6 @@ type Query {
   ): [Booking!]
   booking(where: BookingWhereUniqueInput!): Booking
   bookingsCount(where: BookingWhereInput! = {}): Int
-  forms(
-    where: FormWhereInput! = {}
-    orderBy: [FormOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Form!]
-  form(where: FormWhereUniqueInput!): Form
-  formsCount(where: FormWhereInput! = {}): Int
-  formTypes(
-    where: FormTypeWhereInput! = {}
-    orderBy: [FormTypeOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [FormType!]
-  formType(where: FormTypeWhereUniqueInput!): FormType
-  formTypesCount(where: FormTypeWhereInput! = {}): Int
   calendars(
     where: CalendarWhereInput! = {}
     orderBy: [CalendarOrderByInput!]! = []
@@ -4966,30 +5074,6 @@ type Query {
     where: CalendarEventTypeWhereUniqueInput!
   ): CalendarEventType
   calendarEventTypesCount(where: CalendarEventTypeWhereInput! = {}): Int
-  schedules(
-    where: ScheduleWhereInput! = {}
-    orderBy: [ScheduleOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Schedule!]
-  schedule(where: ScheduleWhereUniqueInput!): Schedule
-  schedulesCount(where: ScheduleWhereInput! = {}): Int
-  recurringSlots(
-    where: RecurringSlotWhereInput! = {}
-    orderBy: [RecurringSlotOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [RecurringSlot!]
-  recurringSlot(where: RecurringSlotWhereUniqueInput!): RecurringSlot
-  recurringSlotsCount(where: RecurringSlotWhereInput! = {}): Int
-  timeIntervals(
-    where: TimeIntervalWhereInput! = {}
-    orderBy: [TimeIntervalOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [TimeInterval!]
-  timeInterval(where: TimeIntervalWhereUniqueInput!): TimeInterval
-  timeIntervalsCount(where: TimeIntervalWhereInput! = {}): Int
   companies(
     where: CompanyWhereInput! = {}
     orderBy: [CompanyOrderByInput!]! = []
@@ -5014,6 +5098,14 @@ type Query {
   ): [Contract!]
   contract(where: ContractWhereUniqueInput!): Contract
   contractsCount(where: ContractWhereInput! = {}): Int
+  countries(
+    where: CountryWhereInput! = {}
+    orderBy: [CountryOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Country!]
+  country(where: CountryWhereUniqueInput!): Country
+  countriesCount(where: CountryWhereInput! = {}): Int
   doctors(
     where: DoctorWhereInput! = {}
     orderBy: [DoctorOrderByInput!]! = []
@@ -5022,14 +5114,6 @@ type Query {
   ): [Doctor!]
   doctor(where: DoctorWhereUniqueInput!): Doctor
   doctorsCount(where: DoctorWhereInput! = {}): Int
-  languages(
-    where: LanguageWhereInput! = {}
-    orderBy: [LanguageOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Language!]
-  language(where: LanguageWhereUniqueInput!): Language
-  languagesCount(where: LanguageWhereInput! = {}): Int
   doctorSpecialties(
     where: DoctorSpecialtyWhereInput! = {}
     orderBy: [DoctorSpecialtyOrderByInput!]! = []
@@ -5048,32 +5132,6 @@ type Query {
     where: DoctorSubSpecialtyWhereUniqueInput!
   ): DoctorSubSpecialty
   doctorSubSpecialtiesCount(where: DoctorSubSpecialtyWhereInput! = {}): Int
-  healthCards(
-    where: HealthCardWhereInput! = {}
-    orderBy: [HealthCardOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [HealthCard!]
-  healthCard(where: HealthCardWhereUniqueInput!): HealthCard
-  healthCardsCount(where: HealthCardWhereInput! = {}): Int
-  countries(
-    where: CountryWhereInput! = {}
-    orderBy: [CountryOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Country!]
-  country(where: CountryWhereUniqueInput!): Country
-  countriesCount(where: CountryWhereInput! = {}): Int
-  administrativeAreas(
-    where: AdministrativeAreaWhereInput! = {}
-    orderBy: [AdministrativeAreaOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [AdministrativeArea!]
-  administrativeArea(
-    where: AdministrativeAreaWhereUniqueInput!
-  ): AdministrativeArea
-  administrativeAreasCount(where: AdministrativeAreaWhereInput! = {}): Int
   emergencyContacts(
     where: EmergencyContactWhereInput! = {}
     orderBy: [EmergencyContactOrderByInput!]! = []
@@ -5082,30 +5140,38 @@ type Query {
   ): [EmergencyContact!]
   emergencyContact(where: EmergencyContactWhereUniqueInput!): EmergencyContact
   emergencyContactsCount(where: EmergencyContactWhereInput! = {}): Int
-  users(
-    where: UserWhereInput! = {}
-    orderBy: [UserOrderByInput!]! = []
+  forms(
+    where: FormWhereInput! = {}
+    orderBy: [FormOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [User!]
-  user(where: UserWhereUniqueInput!): User
-  usersCount(where: UserWhereInput! = {}): Int
-  userInvites(
-    where: UserInviteWhereInput! = {}
-    orderBy: [UserInviteOrderByInput!]! = []
+  ): [Form!]
+  form(where: FormWhereUniqueInput!): Form
+  formsCount(where: FormWhereInput! = {}): Int
+  formTypes(
+    where: FormTypeWhereInput! = {}
+    orderBy: [FormTypeOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [UserInvite!]
-  userInvite(where: UserInviteWhereUniqueInput!): UserInvite
-  userInvitesCount(where: UserInviteWhereInput! = {}): Int
-  patients(
-    where: PatientWhereInput! = {}
-    orderBy: [PatientOrderByInput!]! = []
+  ): [FormType!]
+  formType(where: FormTypeWhereUniqueInput!): FormType
+  formTypesCount(where: FormTypeWhereInput! = {}): Int
+  healthCards(
+    where: HealthCardWhereInput! = {}
+    orderBy: [HealthCardOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [Patient!]
-  patient(where: PatientWhereUniqueInput!): Patient
-  patientsCount(where: PatientWhereInput! = {}): Int
+  ): [HealthCard!]
+  healthCard(where: HealthCardWhereUniqueInput!): HealthCard
+  healthCardsCount(where: HealthCardWhereInput! = {}): Int
+  languages(
+    where: LanguageWhereInput! = {}
+    orderBy: [LanguageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Language!]
+  language(where: LanguageWhereUniqueInput!): Language
+  languagesCount(where: LanguageWhereInput! = {}): Int
   medications(
     where: MedicationWhereInput! = {}
     orderBy: [MedicationOrderByInput!]! = []
@@ -5114,6 +5180,30 @@ type Query {
   ): [Medication!]
   medication(where: MedicationWhereUniqueInput!): Medication
   medicationsCount(where: MedicationWhereInput! = {}): Int
+  patients(
+    where: PatientWhereInput! = {}
+    orderBy: [PatientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Patient!]
+  patient(where: PatientWhereUniqueInput!): Patient
+  patientsCount(where: PatientWhereInput! = {}): Int
+  pharmacies(
+    where: PharmacyWhereInput! = {}
+    orderBy: [PharmacyOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Pharmacy!]
+  pharmacy(where: PharmacyWhereUniqueInput!): Pharmacy
+  pharmaciesCount(where: PharmacyWhereInput! = {}): Int
+  pharmacyLocations(
+    where: PharmacyLocationWhereInput! = {}
+    orderBy: [PharmacyLocationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [PharmacyLocation!]
+  pharmacyLocation(where: PharmacyLocationWhereUniqueInput!): PharmacyLocation
+  pharmacyLocationsCount(where: PharmacyLocationWhereInput! = {}): Int
   prescriptions(
     where: PrescriptionWhereInput! = {}
     orderBy: [PrescriptionOrderByInput!]! = []
@@ -5130,14 +5220,6 @@ type Query {
   ): [PrescriptionItem!]
   prescriptionItem(where: PrescriptionItemWhereUniqueInput!): PrescriptionItem
   prescriptionItemsCount(where: PrescriptionItemWhereInput! = {}): Int
-  prompts(
-    where: PromptWhereInput! = {}
-    orderBy: [PromptOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Prompt!]
-  prompt(where: PromptWhereUniqueInput!): Prompt
-  promptsCount(where: PromptWhereInput! = {}): Int
   profilePhotos(
     where: ProfilePhotoWhereInput! = {}
     orderBy: [ProfilePhotoOrderByInput!]! = []
@@ -5146,6 +5228,14 @@ type Query {
   ): [ProfilePhoto!]
   profilePhoto(where: ProfilePhotoWhereUniqueInput!): ProfilePhoto
   profilePhotosCount(where: ProfilePhotoWhereInput! = {}): Int
+  prompts(
+    where: PromptWhereInput! = {}
+    orderBy: [PromptOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Prompt!]
+  prompt(where: PromptWhereUniqueInput!): Prompt
+  promptsCount(where: PromptWhereInput! = {}): Int
   proofOfIdentifications(
     where: ProofOfIdentificationWhereInput! = {}
     orderBy: [ProofOfIdentificationOrderByInput!]! = []
@@ -5172,22 +5262,22 @@ type Query {
   ): [ProofOfLicense!]
   proofOfLicense(where: ProofOfLicenseWhereUniqueInput!): ProofOfLicense
   proofOfLicensesCount(where: ProofOfLicenseWhereInput! = {}): Int
-  pharmacies(
-    where: PharmacyWhereInput! = {}
-    orderBy: [PharmacyOrderByInput!]! = []
+  recurringSlots(
+    where: RecurringSlotWhereInput! = {}
+    orderBy: [RecurringSlotOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [Pharmacy!]
-  pharmacy(where: PharmacyWhereUniqueInput!): Pharmacy
-  pharmaciesCount(where: PharmacyWhereInput! = {}): Int
-  pharmacyLocations(
-    where: PharmacyLocationWhereInput! = {}
-    orderBy: [PharmacyLocationOrderByInput!]! = []
+  ): [RecurringSlot!]
+  recurringSlot(where: RecurringSlotWhereUniqueInput!): RecurringSlot
+  recurringSlotsCount(where: RecurringSlotWhereInput! = {}): Int
+  schedules(
+    where: ScheduleWhereInput! = {}
+    orderBy: [ScheduleOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [PharmacyLocation!]
-  pharmacyLocation(where: PharmacyLocationWhereUniqueInput!): PharmacyLocation
-  pharmacyLocationsCount(where: PharmacyLocationWhereInput! = {}): Int
+  ): [Schedule!]
+  schedule(where: ScheduleWhereUniqueInput!): Schedule
+  schedulesCount(where: ScheduleWhereInput! = {}): Int
   steppers(
     where: StepperWhereInput! = {}
     orderBy: [StepperOrderByInput!]! = []
@@ -5220,6 +5310,30 @@ type Query {
   ): [StepperStepProg!]
   stepperStepProg(where: StepperStepProgWhereUniqueInput!): StepperStepProg
   stepperStepProgsCount(where: StepperStepProgWhereInput! = {}): Int
+  timeIntervals(
+    where: TimeIntervalWhereInput! = {}
+    orderBy: [TimeIntervalOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [TimeInterval!]
+  timeInterval(where: TimeIntervalWhereUniqueInput!): TimeInterval
+  timeIntervalsCount(where: TimeIntervalWhereInput! = {}): Int
+  users(
+    where: UserWhereInput! = {}
+    orderBy: [UserOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [User!]
+  user(where: UserWhereUniqueInput!): User
+  usersCount(where: UserWhereInput! = {}): Int
+  userInvites(
+    where: UserInviteWhereInput! = {}
+    orderBy: [UserInviteOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [UserInvite!]
+  userInvite(where: UserInviteWhereUniqueInput!): UserInvite
+  userInvitesCount(where: UserInviteWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

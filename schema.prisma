@@ -11,6 +11,18 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
+model ActiveIngredient {
+  id            String       @id @default(cuid())
+  brandName     String       @default("")
+  drugCode      Int?
+  strengthCount Float?
+  strengthUnit  String       @default("")
+  medication    Medication[] @relation("ActiveIngredient_medication")
+
+  @@index([brandName])
+  @@index([drugCode])
+}
+
 model Address {
   id                 String            @id @default(cuid())
   addressLine1       String            @default("")
@@ -27,6 +39,17 @@ model Address {
   pharmacyLocationId String?           @unique @map("pharmacyLocation")
   user               User?             @relation("Address_user", fields: [userId], references: [id])
   userId             String?           @unique @map("user")
+}
+
+model AdministrativeArea {
+  id        String   @id @default(cuid())
+  country   Country? @relation("AdministrativeArea_country", fields: [countryId], references: [id])
+  countryId String?  @map("country")
+  isActive  Boolean  @default(false)
+  label     String   @default("")
+  value     String   @default("")
+
+  @@index([countryId])
 }
 
 model Appointment {
@@ -118,6 +141,7 @@ model AppointmentVital {
   appointment      Appointment? @relation("Appointment_vitalsData")
   patient          Patient?     @relation("AppointmentVital_patient", fields: [patientId], references: [id])
   patientId        String?      @map("patient")
+  headCm           Int?
   meters           Int?
   cm               Int?
   kg               Int?
@@ -152,32 +176,6 @@ model Booking {
   @@index([doctorId])
   @@index([eventId])
   @@index([patientId])
-}
-
-model Form {
-  id            String       @id @default(cuid())
-  appointment   Appointment? @relation("Form_appointment", fields: [appointmentId], references: [id])
-  appointmentId String?      @map("appointment")
-  formType      FormType?    @relation("Form_formType", fields: [formTypeId], references: [id])
-  formTypeId    String?      @map("formType")
-  name          String       @default("")
-  doctor        Doctor?      @relation("Form_doctor", fields: [doctorId], references: [id])
-  doctorId      String?      @map("doctor")
-  patient       Patient?     @relation("Form_patient", fields: [patientId], references: [id])
-  patientId     String?      @map("patient")
-  slug          String       @default("")
-
-  @@index([appointmentId])
-  @@index([formTypeId])
-  @@index([doctorId])
-  @@index([patientId])
-}
-
-model FormType {
-  id    String @id @default(cuid())
-  name  String @default("")
-  forms Form[] @relation("Form_formType")
-  slug  String @default("")
 }
 
 model Calendar {
@@ -225,43 +223,6 @@ model CalendarEventType {
   events CalendarEvent[] @relation("CalendarEvent_eventType")
 }
 
-model Schedule {
-  id             String          @id @default(cuid())
-  calendar       Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
-  calendarId     String?         @map("calendar")
-  description    String          @default("")
-  defaultOn      Calendar?       @relation("Calendar_defaultSchedule")
-  recurringSlots RecurringSlot[] @relation("RecurringSlot_schedule")
-  tz             String          @default("")
-  slotInterval   Int?
-  title          String          @default("")
-
-  @@index([calendarId])
-}
-
-model RecurringSlot {
-  id            String         @id @default(cuid())
-  wday          String         @default("")
-  isActive      Boolean        @default(false)
-  interval      String         @default("")
-  intervalCount Int?
-  schedule      Schedule?      @relation("RecurringSlot_schedule", fields: [scheduleId], references: [id])
-  scheduleId    String?        @map("schedule")
-  timeIntervals TimeInterval[] @relation("TimeInterval_recurringSlot")
-
-  @@index([scheduleId])
-}
-
-model TimeInterval {
-  id              String         @id @default(cuid())
-  from            String         @default("")
-  to              String         @default("")
-  recurringSlot   RecurringSlot? @relation("TimeInterval_recurringSlot", fields: [recurringSlotId], references: [id])
-  recurringSlotId String?        @map("recurringSlot")
-
-  @@index([recurringSlotId])
-}
-
 model Company {
   id        String            @id @default(cuid())
   name      String            @unique @default("")
@@ -291,6 +252,14 @@ model Contract {
   slug          String    @unique @default("")
   effectiveFrom DateTime?
   lastUpdated   DateTime?
+}
+
+model Country {
+  id                  String               @id @default(cuid())
+  administrativeAreas AdministrativeArea[] @relation("AdministrativeArea_country")
+  isActive            Boolean              @default(false)
+  label               String               @default("")
+  value               String               @default("")
 }
 
 model Doctor {
@@ -339,13 +308,6 @@ model Doctor {
   @@index([doctorSpecialtyId])
 }
 
-model Language {
-  id      String   @id @default(cuid())
-  label   String   @default("")
-  value   String   @unique @default("")
-  doctors Doctor[] @relation("Doctor_languages")
-}
-
 model DoctorSpecialty {
   id      String   @id @default(cuid())
   label   String   @default("")
@@ -358,6 +320,46 @@ model DoctorSubSpecialty {
   label   String   @default("")
   value   String   @unique @default("")
   doctors Doctor[] @relation("Doctor_doctorSubSpecialties")
+}
+
+model EmergencyContact {
+  id                    String   @id @default(cuid())
+  email                 String   @default("")
+  relation              String   @default("")
+  firstName             String   @default("")
+  lastName              String   @default("")
+  cellPhoneNumberString String   @default("")
+  homePhoneNumberString String   @default("")
+  patient               Patient? @relation("EmergencyContact_patient", fields: [patientId], references: [id])
+  patientId             String?  @map("patient")
+
+  @@index([patientId])
+}
+
+model Form {
+  id            String       @id @default(cuid())
+  appointment   Appointment? @relation("Form_appointment", fields: [appointmentId], references: [id])
+  appointmentId String?      @map("appointment")
+  formType      FormType?    @relation("Form_formType", fields: [formTypeId], references: [id])
+  formTypeId    String?      @map("formType")
+  name          String       @default("")
+  doctor        Doctor?      @relation("Form_doctor", fields: [doctorId], references: [id])
+  doctorId      String?      @map("doctor")
+  patient       Patient?     @relation("Form_patient", fields: [patientId], references: [id])
+  patientId     String?      @map("patient")
+  slug          String       @default("")
+
+  @@index([appointmentId])
+  @@index([formTypeId])
+  @@index([doctorId])
+  @@index([patientId])
+}
+
+model FormType {
+  id    String @id @default(cuid())
+  name  String @default("")
+  forms Form[] @relation("Form_formType")
+  slug  String @default("")
 }
 
 model HealthCard {
@@ -376,84 +378,31 @@ model HealthCard {
   @@index([patientId])
 }
 
-model Country {
-  id                  String               @id @default(cuid())
-  administrativeAreas AdministrativeArea[] @relation("AdministrativeArea_country")
-  isActive            Boolean              @default(false)
-  label               String               @default("")
-  value               String               @default("")
+model Language {
+  id      String   @id @default(cuid())
+  label   String   @default("")
+  value   String   @unique @default("")
+  doctors Doctor[] @relation("Doctor_languages")
 }
 
-model AdministrativeArea {
-  id        String   @id @default(cuid())
-  country   Country? @relation("AdministrativeArea_country", fields: [countryId], references: [id])
-  countryId String?  @map("country")
-  isActive  Boolean  @default(false)
-  label     String   @default("")
-  value     String   @default("")
+model Medication {
+  id                 String             @id @default(cuid())
+  brandName          String             @default("")
+  companyName        String             @default("")
+  drugCode           Int?
+  activeIngredients  ActiveIngredient[] @relation("ActiveIngredient_medication")
+  patient            Patient?           @relation("Medication_patient", fields: [patientId], references: [id])
+  patientId          String?            @map("patient")
+  prescription       Prescription?      @relation("Medication_prescription", fields: [prescriptionId], references: [id])
+  prescriptionId     String?            @map("prescription")
+  prescriptionItem   PrescriptionItem?  @relation("Medication_prescriptionItem", fields: [prescriptionItemId], references: [id])
+  prescriptionItemId String?            @unique @map("prescriptionItem")
 
-  @@index([countryId])
-}
-
-model EmergencyContact {
-  id                    String   @id @default(cuid())
-  email                 String   @default("")
-  relation              String   @default("")
-  firstName             String   @default("")
-  lastName              String   @default("")
-  cellPhoneNumberString String   @default("")
-  homePhoneNumberString String   @default("")
-  patient               Patient? @relation("EmergencyContact_patient", fields: [patientId], references: [id])
-  patientId             String?  @map("patient")
-
+  @@index([brandName])
+  @@index([companyName])
+  @@index([drugCode])
   @@index([patientId])
-}
-
-model User {
-  id                    String            @id @default(cuid())
-  subjectId             String            @unique @default("")
-  contracts             Contract[]        @relation("Contract_signedBy")
-  dateOfBirth           DateTime?
-  doctor                Doctor?           @relation("Doctor_user")
-  email                 String            @unique @default("")
-  firstName             String            @default("")
-  isAdmin               Boolean           @default(false)
-  isDummy               Boolean           @default(false)
-  isOnboarded           Boolean           @default(false)
-  isOnboardedDoctor     Boolean           @default(false)
-  lastName              String            @default("")
-  middleName            String            @default("")
-  cellPhoneNumberString String            @default("")
-  homePhoneNumberString String            @default("")
-  photoSrc              String            @default("")
-  sex                   String            @default("")
-  username              String            @unique @default("")
-  address               Address?          @relation("Address_user")
-  patient               Patient?          @relation("Patient_user")
-  prompts               Prompt[]          @relation("Prompt_user")
-  profilePhoto          ProfilePhoto?     @relation("ProfilePhoto_user")
-  signUpInvite          UserInvite?       @relation("User_signUpInvite", fields: [signUpInviteId], references: [id])
-  signUpInviteId        String?           @unique @map("signUpInvite")
-  stepperProgs          StepperProg[]     @relation("StepperProg_user")
-  stepperStepProgs      StepperStepProg[] @relation("StepperStepProg_user")
-  userInvites           UserInvite[]      @relation("UserInvite_invitedByUser")
-}
-
-model UserInvite {
-  id                    String      @id @default(cuid())
-  dateOfBirth           DateTime?
-  email                 String      @unique @default("")
-  firstName             String      @default("")
-  lastName              String      @default("")
-  middleName            String      @default("")
-  cellPhoneNumberString String      @default("")
-  sex                   String      @default("")
-  invitedByUser         User?       @relation("UserInvite_invitedByUser", fields: [invitedByUserId], references: [id])
-  invitedByUserId       String?     @map("invitedByUser")
-  signedUpUser          User?       @relation("User_signUpInvite")
-  healthCard            HealthCard? @relation("HealthCard_userInvite")
-
-  @@index([invitedByUserId])
+  @@index([prescriptionId])
 }
 
 model Patient {
@@ -478,26 +427,24 @@ model Patient {
   visitedDoctors      Doctor[]             @relation("Doctor_patients")
 }
 
-model Medication {
-  id                 String            @id @default(cuid())
-  activeIngredient   String            @default("")
-  companyName        String            @default("")
-  drugCode           Int?
-  brandName          String            @default("")
-  dosageCount        Int?
-  dosageUnit         String            @default("")
-  patient            Patient?          @relation("Medication_patient", fields: [patientId], references: [id])
-  patientId          String?           @map("patient")
-  prescription       Prescription?     @relation("Medication_prescription", fields: [prescriptionId], references: [id])
-  prescriptionId     String?           @map("prescription")
-  prescriptionItem   PrescriptionItem? @relation("Medication_prescriptionItem", fields: [prescriptionItemId], references: [id])
-  prescriptionItemId String?           @unique @map("prescriptionItem")
+model Pharmacy {
+  id          String             @id @default(cuid())
+  companyName String             @unique @default("")
+  locations   PharmacyLocation[] @relation("PharmacyLocation_pharmacy")
+}
 
-  @@index([activeIngredient])
-  @@index([drugCode])
-  @@index([brandName])
-  @@index([patientId])
-  @@index([prescriptionId])
+model PharmacyLocation {
+  id                  String    @id @default(cuid())
+  accreditationNumber String    @unique @default("")
+  status              String    @default("")
+  phoneString         String    @default("")
+  faxString           String    @default("")
+  address             Address?  @relation("Address_pharmacyLocation")
+  pharmacy            Pharmacy? @relation("PharmacyLocation_pharmacy", fields: [pharmacyId], references: [id])
+  pharmacyId          String?   @map("pharmacy")
+  patients            Patient[] @relation("Patient_pharmacyLocations")
+
+  @@index([pharmacyId])
 }
 
 model Prescription {
@@ -526,6 +473,14 @@ model PrescriptionItem {
   @@index([prescriptionId])
 }
 
+model ProfilePhoto {
+  id      String  @id @default(cuid())
+  src     Json?
+  altText String  @default("")
+  user    User?   @relation("ProfilePhoto_user", fields: [userId], references: [id])
+  userId  String? @unique @map("user")
+}
+
 model Prompt {
   id          String   @id @default(cuid())
   stepper     Stepper? @relation("Prompt_stepper", fields: [stepperId], references: [id])
@@ -538,14 +493,6 @@ model Prompt {
   slug        String   @default("")
 
   @@index([userId])
-}
-
-model ProfilePhoto {
-  id      String  @id @default(cuid())
-  src     Json?
-  altText String  @default("")
-  user    User?   @relation("ProfilePhoto_user", fields: [userId], references: [id])
-  userId  String? @unique @map("user")
 }
 
 model ProofOfIdentification {
@@ -572,24 +519,31 @@ model ProofOfLicense {
   isVerified Boolean @default(false)
 }
 
-model Pharmacy {
-  id          String             @id @default(cuid())
-  companyName String             @unique @default("")
-  locations   PharmacyLocation[] @relation("PharmacyLocation_pharmacy")
+model RecurringSlot {
+  id            String         @id @default(cuid())
+  wday          String         @default("")
+  isActive      Boolean        @default(false)
+  interval      String         @default("")
+  intervalCount Int?
+  schedule      Schedule?      @relation("RecurringSlot_schedule", fields: [scheduleId], references: [id])
+  scheduleId    String?        @map("schedule")
+  timeIntervals TimeInterval[] @relation("TimeInterval_recurringSlot")
+
+  @@index([scheduleId])
 }
 
-model PharmacyLocation {
-  id                  String    @id @default(cuid())
-  accreditationNumber String    @unique @default("")
-  status              String    @default("")
-  phoneString         String    @default("")
-  faxString           String    @default("")
-  address             Address?  @relation("Address_pharmacyLocation")
-  pharmacy            Pharmacy? @relation("PharmacyLocation_pharmacy", fields: [pharmacyId], references: [id])
-  pharmacyId          String?   @map("pharmacy")
-  patients            Patient[] @relation("Patient_pharmacyLocations")
+model Schedule {
+  id             String          @id @default(cuid())
+  calendar       Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
+  calendarId     String?         @map("calendar")
+  description    String          @default("")
+  defaultOn      Calendar?       @relation("Calendar_defaultSchedule")
+  recurringSlots RecurringSlot[] @relation("RecurringSlot_schedule")
+  tz             String          @default("")
+  slotInterval   Int?
+  title          String          @default("")
 
-  @@index([pharmacyId])
+  @@index([calendarId])
 }
 
 model Stepper {
@@ -653,4 +607,61 @@ model StepperStepProg {
   @@index([stepperId])
   @@index([stepperProgId])
   @@index([userId])
+}
+
+model TimeInterval {
+  id              String         @id @default(cuid())
+  from            String         @default("")
+  to              String         @default("")
+  recurringSlot   RecurringSlot? @relation("TimeInterval_recurringSlot", fields: [recurringSlotId], references: [id])
+  recurringSlotId String?        @map("recurringSlot")
+
+  @@index([recurringSlotId])
+}
+
+model User {
+  id                    String            @id @default(cuid())
+  subjectId             String            @unique @default("")
+  contracts             Contract[]        @relation("Contract_signedBy")
+  dateOfBirth           DateTime?
+  doctor                Doctor?           @relation("Doctor_user")
+  email                 String            @unique @default("")
+  firstName             String            @default("")
+  isAdmin               Boolean           @default(false)
+  isDummy               Boolean           @default(false)
+  isOnboarded           Boolean           @default(false)
+  isOnboardedDoctor     Boolean           @default(false)
+  lastName              String            @default("")
+  middleName            String            @default("")
+  cellPhoneNumberString String            @default("")
+  homePhoneNumberString String            @default("")
+  photoSrc              String            @default("")
+  sex                   String            @default("")
+  username              String            @unique @default("")
+  address               Address?          @relation("Address_user")
+  patient               Patient?          @relation("Patient_user")
+  prompts               Prompt[]          @relation("Prompt_user")
+  profilePhoto          ProfilePhoto?     @relation("ProfilePhoto_user")
+  signUpInvite          UserInvite?       @relation("User_signUpInvite", fields: [signUpInviteId], references: [id])
+  signUpInviteId        String?           @unique @map("signUpInvite")
+  stepperProgs          StepperProg[]     @relation("StepperProg_user")
+  stepperStepProgs      StepperStepProg[] @relation("StepperStepProg_user")
+  userInvites           UserInvite[]      @relation("UserInvite_invitedByUser")
+}
+
+model UserInvite {
+  id                    String      @id @default(cuid())
+  dateOfBirth           DateTime?
+  email                 String      @unique @default("")
+  firstName             String      @default("")
+  lastName              String      @default("")
+  middleName            String      @default("")
+  cellPhoneNumberString String      @default("")
+  sex                   String      @default("")
+  invitedByUser         User?       @relation("UserInvite_invitedByUser", fields: [invitedByUserId], references: [id])
+  invitedByUserId       String?     @map("invitedByUser")
+  signedUpUser          User?       @relation("User_signUpInvite")
+  healthCard            HealthCard? @relation("HealthCard_userInvite")
+
+  @@index([invitedByUserId])
 }
