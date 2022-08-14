@@ -139,38 +139,38 @@ model AppointmentRequest {
 model AppointmentVital {
   id               String       @id @default(cuid())
   appointment      Appointment? @relation("Appointment_vitalsData")
+  bloodPressure    String       @default("")
+  cm               Int?
+  headCm           Int?
+  heartRate        Int?
+  kg               Int?
+  meters           Int?
+  oxygenSaturation Int?
+  resp             Int?
+  temperature      Int?
   patient          Patient?     @relation("AppointmentVital_patient", fields: [patientId], references: [id])
   patientId        String?      @map("patient")
-  headCm           Int?
-  meters           Int?
-  cm               Int?
-  kg               Int?
-  oxygenSaturation Int?
-  heartRate        Int?
-  temperature      Int?
-  bloodPressure    String       @default("")
-  resp             Int?
 
   @@index([patientId])
 }
 
 model Booking {
   id           String         @id @default(cuid())
+  durationMins Int
+  endsAt       DateTime?
+  isConfirmed  Boolean        @default(false)
+  name         String         @default("")
+  startsAt     DateTime?
+  tzTarget     String         @default("")
   appointment  Appointment?   @relation("Appointment_booking")
   calendar     Calendar?      @relation("Booking_calendar", fields: [calendarId], references: [id])
   calendarId   String?        @map("calendar")
   doctor       Doctor?        @relation("Booking_doctor", fields: [doctorId], references: [id])
   doctorId     String?        @map("doctor")
-  durationMins Int
   event        CalendarEvent? @relation("Booking_event", fields: [eventId], references: [id])
   eventId      String?        @map("event")
-  isConfirmed  Boolean        @default(false)
-  name         String         @default("")
   patient      Patient?       @relation("Booking_patient", fields: [patientId], references: [id])
   patientId    String?        @map("patient")
-  startsAt     DateTime?
-  tzTarget     String         @default("")
-  endsAt       DateTime?
 
   @@index([calendarId])
   @@index([doctorId])

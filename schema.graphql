@@ -1389,16 +1389,16 @@ input AppointmentRequestCreateInput {
 type AppointmentVital {
   id: ID!
   appointment: Appointment
-  patient: Patient
-  headCm: Int
-  meters: Int
-  cm: Int
-  kg: Int
-  oxygenSaturation: Int
-  heartRate: Int
-  temperature: Int
   bloodPressure: String
+  cm: Int
+  headCm: Int
+  heartRate: Int
+  kg: Int
+  meters: Int
+  oxygenSaturation: Int
   resp: Int
+  temperature: Int
+  patient: Patient
 }
 
 input AppointmentVitalWhereUniqueInput {
@@ -1411,43 +1411,43 @@ input AppointmentVitalWhereInput {
   NOT: [AppointmentVitalWhereInput!]
   id: IDFilter
   appointment: AppointmentWhereInput
-  patient: PatientWhereInput
-  headCm: IntNullableFilter
-  meters: IntNullableFilter
-  cm: IntNullableFilter
-  kg: IntNullableFilter
-  oxygenSaturation: IntNullableFilter
-  heartRate: IntNullableFilter
-  temperature: IntNullableFilter
   bloodPressure: StringFilter
+  cm: IntNullableFilter
+  headCm: IntNullableFilter
+  heartRate: IntNullableFilter
+  kg: IntNullableFilter
+  meters: IntNullableFilter
+  oxygenSaturation: IntNullableFilter
   resp: IntNullableFilter
+  temperature: IntNullableFilter
+  patient: PatientWhereInput
 }
 
 input AppointmentVitalOrderByInput {
   id: OrderDirection
-  headCm: OrderDirection
-  meters: OrderDirection
-  cm: OrderDirection
-  kg: OrderDirection
-  oxygenSaturation: OrderDirection
-  heartRate: OrderDirection
-  temperature: OrderDirection
   bloodPressure: OrderDirection
+  cm: OrderDirection
+  headCm: OrderDirection
+  heartRate: OrderDirection
+  kg: OrderDirection
+  meters: OrderDirection
+  oxygenSaturation: OrderDirection
   resp: OrderDirection
+  temperature: OrderDirection
 }
 
 input AppointmentVitalUpdateInput {
   appointment: AppointmentRelateToOneForUpdateInput
-  patient: PatientRelateToOneForUpdateInput
-  headCm: Int
-  meters: Int
-  cm: Int
-  kg: Int
-  oxygenSaturation: Int
-  heartRate: Int
-  temperature: Int
   bloodPressure: String
+  cm: Int
+  headCm: Int
+  heartRate: Int
+  kg: Int
+  meters: Int
+  oxygenSaturation: Int
   resp: Int
+  temperature: Int
+  patient: PatientRelateToOneForUpdateInput
 }
 
 input AppointmentVitalUpdateArgs {
@@ -1457,31 +1457,31 @@ input AppointmentVitalUpdateArgs {
 
 input AppointmentVitalCreateInput {
   appointment: AppointmentRelateToOneForCreateInput
-  patient: PatientRelateToOneForCreateInput
-  headCm: Int
-  meters: Int
-  cm: Int
-  kg: Int
-  oxygenSaturation: Int
-  heartRate: Int
-  temperature: Int
   bloodPressure: String
+  cm: Int
+  headCm: Int
+  heartRate: Int
+  kg: Int
+  meters: Int
+  oxygenSaturation: Int
   resp: Int
+  temperature: Int
+  patient: PatientRelateToOneForCreateInput
 }
 
 type Booking {
   id: ID!
+  durationMins: Int
+  endsAt: DateTime
+  isConfirmed: Boolean
+  name: String
+  startsAt: DateTime
+  tzTarget: String
   appointment: Appointment
   calendar: Calendar
   doctor: Doctor
-  durationMins: Int
   event: CalendarEvent
-  isConfirmed: Boolean
-  name: String
   patient: Patient
-  startsAt: DateTime
-  tzTarget: String
-  endsAt: DateTime
 }
 
 input BookingWhereUniqueInput {
@@ -1493,17 +1493,17 @@ input BookingWhereInput {
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
   id: IDFilter
+  durationMins: IntFilter
+  endsAt: DateTimeNullableFilter
+  isConfirmed: BooleanFilter
+  name: StringFilter
+  startsAt: DateTimeNullableFilter
+  tzTarget: StringFilter
   appointment: AppointmentWhereInput
   calendar: CalendarWhereInput
   doctor: DoctorWhereInput
-  durationMins: IntFilter
   event: CalendarEventWhereInput
-  isConfirmed: BooleanFilter
-  name: StringFilter
   patient: PatientWhereInput
-  startsAt: DateTimeNullableFilter
-  tzTarget: StringFilter
-  endsAt: DateTimeNullableFilter
 }
 
 input IntFilter {
@@ -1520,25 +1520,25 @@ input IntFilter {
 input BookingOrderByInput {
   id: OrderDirection
   durationMins: OrderDirection
+  endsAt: OrderDirection
   isConfirmed: OrderDirection
   name: OrderDirection
   startsAt: OrderDirection
   tzTarget: OrderDirection
-  endsAt: OrderDirection
 }
 
 input BookingUpdateInput {
+  durationMins: Int
+  endsAt: DateTime
+  isConfirmed: Boolean
+  name: String
+  startsAt: DateTime
+  tzTarget: String
   appointment: AppointmentRelateToOneForUpdateInput
   calendar: CalendarRelateToOneForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
-  durationMins: Int
   event: CalendarEventRelateToOneForUpdateInput
-  isConfirmed: Boolean
-  name: String
   patient: PatientRelateToOneForUpdateInput
-  startsAt: DateTime
-  tzTarget: String
-  endsAt: DateTime
 }
 
 input CalendarRelateToOneForUpdateInput {
@@ -1553,17 +1553,17 @@ input BookingUpdateArgs {
 }
 
 input BookingCreateInput {
+  durationMins: Int
+  endsAt: DateTime
+  isConfirmed: Boolean
+  name: String
+  startsAt: DateTime
+  tzTarget: String
   appointment: AppointmentRelateToOneForCreateInput
   calendar: CalendarRelateToOneForCreateInput
   doctor: DoctorRelateToOneForCreateInput
-  durationMins: Int
   event: CalendarEventRelateToOneForCreateInput
-  isConfirmed: Boolean
-  name: String
   patient: PatientRelateToOneForCreateInput
-  startsAt: DateTime
-  tzTarget: String
-  endsAt: DateTime
 }
 
 input CalendarRelateToOneForCreateInput {
