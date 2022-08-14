@@ -26,6 +26,11 @@
     "node": "^14.15 || ^16.13"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-alpha.7"
+    "@faker-js/faker": "^6.0.0-alpha.7",
+    "@ijsto/eslint-config": "4.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.0.0",
+    "prettier": "2.x.x"
   }
 }
