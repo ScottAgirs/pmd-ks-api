@@ -1,19 +1,26 @@
-import { checkbox, integer, relationship, text, timestamp } from "@keystone-6/core/fields";
+import {
+  checkbox,
+  integer,
+  relationship,
+  text,
+  timestamp,
+} from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const Booking = list({
-  fields: {    
+  fields: {
+    durationMins: integer({ validation: { isRequired: true } }),
+    endsAt: timestamp(),
+    isConfirmed: checkbox(),
+    name: text(),
+    startsAt: timestamp(),
+    tzTarget: text(),
+    // eslint-disable-next-line sort-keys
     appointment: relationship({ ref: 'Appointment.booking' }),
     calendar: relationship({ ref: 'Calendar.bookings' }),
     doctor: relationship({ ref: 'Doctor.bookings' }),
-    durationMins: integer({ validation: { isRequired: true } }),
     event: relationship({ ref: 'CalendarEvent.bookings' }),
-    isConfirmed: checkbox(),
-    name: text(),
     patient: relationship({ ref: 'Patient.bookings' }),
-    startsAt: timestamp(),
-    tzTarget: text(),
-    endsAt: timestamp(),
   },
-})
+});

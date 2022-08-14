@@ -1,29 +1,19 @@
-import { integer, relationship, text, timestamp } from "@keystone-6/core/fields";
+import { integer, relationship, text } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
-/**
- * Medication is ..
- */
 export const Medication = list({
   fields: {
-    activeIngredient: text({ isIndexed: true }),
-    companyName: text(),
-    drugCode: integer({ isIndexed: true }),
-    // QUESTION: [HealthCanada]: Can the brandName be not UNIQUE?
     brandName: text({ isIndexed: true }),
-    dosageCount: integer({ 
-      // validation:{
-      //   isRequired: true,
-      // }
-    }),
-    dosageUnit: text({ 
-      // validation:{
-      //   isRequired: true,
-      // }  
+    companyName: text({ isIndexed: true }),
+    drugCode: integer({ isIndexed: true }),
+    // eslint-disable-next-line sort-keys
+    activeIngredients: relationship({
+      many: true,
+      ref: 'ActiveIngredient.medication',
     }),
     patient: relationship({ ref: 'Patient.medications' }),
     prescription: relationship({ ref: 'Prescription.medications' }),
     prescriptionItem: relationship({ ref: 'PrescriptionItem.medication' }),
   },
-})
+});

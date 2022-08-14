@@ -1,21 +1,23 @@
-import { integer, relationship, text, timestamp } from "@keystone-6/core/fields";
+import { integer, relationship, text } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const AppointmentVital = list({
   fields: {
     appointment: relationship({ ref: 'Appointment.vitalsData' }),
-    // TODO: See if performance would be affected 
+    // TODO: See if performance would be affected
     // if appointmentVitals would be linked/accessible via patient.appointment.vitalsData instead,
     // that way eliminating the need to replicate explicitly the connection to Patient here.
-    patient: relationship({ ref: 'Patient.appointmentVitals' }),
-    meters: integer(),
-    cm: integer(),
-    kg: integer(),
-    oxygenSaturation: integer(),
-    heartRate: integer(),
-    temperature: integer(),
     bloodPressure: text(),
+    cm: integer(),
+    headCm: integer(),
+    heartRate: integer(),
+    kg: integer(),
+    meters: integer(),
+    oxygenSaturation: integer(),
     resp: integer(),
+    temperature: integer(),
+    // eslint-disable-next-line sort-keys
+    patient: relationship({ ref: 'Patient.appointmentVitals' }),
   },
-}) 
+});
