@@ -1,20 +1,25 @@
-import "dotenv/config";
+import 'dotenv/config';
 
-import { checkbox, relationship, text } from "@keystone-6/core/fields";
-import { cloudinaryImage } from "@keystone-6/cloudinary";
-import { cloudinary, cloudinaryConfig } from "../../../lib/cloudinary";
-import { KeystoneContext } from "@keystone-6/core/types";
+import { checkbox, relationship, text } from '@keystone-6/core/fields';
+import { cloudinaryImage } from '@keystone-6/cloudinary';
+import { KeystoneContext } from '@keystone-6/core/types';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
+import { cloudinary, cloudinaryConfig } from '../../../lib/cloudinary';
 
 export const ProofOfIdentification = list({
-  ui: {
-    // isHidden: true,
+  fields: {
+    altText: text(),
+    isVerified: checkbox(),
+    src: cloudinaryImage({
+      cloudinary: { ...cloudinaryConfig, folder: 'proof-of-identification' },
+      label: 'Source',
+    }),
+    // eslint-disable-next-line sort-keys
+    doctor: relationship({ ref: 'Doctor.proofOfIdentification' }),
   },
   hooks: {
     afterOperation: async ({
-      context,
-      item,
       operation,
       originalItem,
     }: {
@@ -23,7 +28,7 @@ export const ProofOfIdentification = list({
       operation: string;
       originalItem: any;
     }) => {
-      if (operation === "delete") {
+      if (operation === 'delete') {
         cloudinary.uploader.destroy(
           originalItem.src._meta.public_id,
           {
@@ -36,13 +41,8 @@ export const ProofOfIdentification = list({
       }
     },
   },
-  fields: {
-    src: cloudinaryImage({
-      cloudinary: { ...cloudinaryConfig, folder: "proof-of-identification" },
-      label: "Source",
-    }),
-    altText: text(),
-    doctor: relationship({ ref: "Doctor.proofOfIdentification" }),
-    isVerified: checkbox(),
+
+  ui: {
+    // isHidden: true,
   },
 });

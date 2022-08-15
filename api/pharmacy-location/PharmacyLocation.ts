@@ -1,18 +1,19 @@
-import { checkbox, relationship, text } from "@keystone-6/core/fields";
+import { relationship, text } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const PharmacyLocation = list({
   fields: {
     accreditationNumber: text({
-      isIndexed: "unique",
+      isIndexed: 'unique',
     }),
-    status: text(),
-    phoneString: text(),
     faxString: text(),
+    phoneString: text(),
+    status: text(),
     // Relationships
-    address: relationship({ ref: "Address.pharmacyLocation" }),
-    pharmacy: relationship({ ref: "Pharmacy.locations" }),
-    patients: relationship({ ref: "Patient.pharmacyLocations", many: true }),
+    // eslint-disable-next-line sort-keys
+    address: relationship({ ref: 'Address.pharmacyLocation' }),
+    patients: relationship({ many: true, ref: 'Patient.pharmacyLocations' }),
+    pharmacy: relationship({ ref: 'Pharmacy.locations' }),
   },
 });

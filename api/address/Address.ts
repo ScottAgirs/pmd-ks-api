@@ -1,6 +1,6 @@
-import { relationship, text } from "@keystone-6/core/fields";
+import { relationship, text } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const Address = list({
   fields: {
@@ -12,8 +12,9 @@ export const Address = list({
     postalCode: text(),
     premise: text(),
     thoroughfare: text(),
-    event: relationship({ ref: "CalendarEvent.address" }),
-    pharmacyLocation: relationship({ ref: "PharmacyLocation.address" }),
-    user: relationship({ ref: "User.address" }),
+    // eslint-disable-next-line sort-keys
+    event: relationship({ ref: 'CalendarEvent.address' }),
+    pharmacyLocation: relationship({ ref: 'PharmacyLocation.address' }),
+    user: relationship({ ref: 'User.address' }),
   },
 });

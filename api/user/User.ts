@@ -1,60 +1,59 @@
-import { list } from "@keystone-6/core";
+import { list } from '@keystone-6/core';
 import {
   text,
   relationship,
   timestamp,
   checkbox,
-} from "@keystone-6/core/fields";
-import { afterCreateUser } from "./afterCreateUser";
+} from '@keystone-6/core/fields';
+import { afterCreateUser } from './afterCreateUser';
 
 export const User = list({
-  hooks: {
-    afterOperation: async ({ context, item, operation }) => {
-      if (operation === "create") {
-        afterCreateUser({ context, item });
-      }
-    },
-  },
   fields: {
     subjectId: text({
-      isIndexed: "unique",
+      isIndexed: 'unique',
     }),
-    contracts: relationship({ ref: "Contract.signedBy", many: true }),
+    // eslint-disable-next-line sort-keys
+    cellPhoneNumberString: text(),
+    contracts: relationship({ many: true, ref: 'Contract.signedBy' }),
     dateOfBirth: timestamp(),
-    doctor: relationship({ ref: "Doctor.user" }),
+    doctor: relationship({ ref: 'Doctor.user' }),
     email: text({
-      validation: { isRequired: true },
-      isIndexed: "unique",
       isFilterable: true,
+      isIndexed: 'unique',
+      validation: { isRequired: true },
     }),
     firstName: text(),
+    homePhoneNumberString: text(),
     isAdmin: checkbox(),
     isDummy: checkbox(),
     isOnboarded: checkbox(),
     isOnboardedDoctor: checkbox(),
     lastName: text(),
     middleName: text(),
-    // password: password({ validation: { isRequired: true } }),
-    // Phone numbers start
-    cellPhoneNumberString: text(),
-    homePhoneNumberString: text(),
     photoSrc: text(),
     sex: text(),
-    username: text({ isIndexed: "unique", validation: { isRequired: true } }),
-    // Phone numbers end
-    address: relationship({ ref: "Address.user" }),
-    patient: relationship({ ref: "Patient.user" }),
-    prompts: relationship({ ref: "Prompt.user", many: true }),
-    profilePhoto: relationship({ ref: "ProfilePhoto.user" }),
-    signUpInvite: relationship({ ref: "UserInvite.signedUpUser" }),
-    stepperProgs: relationship({ ref: "StepperProg.user", many: true }),
-    stepperStepProgs: relationship({ ref: "StepperStepProg.user", many: true }),
-    userInvites: relationship({ ref: "UserInvite.invitedByUser", many: true }),
+    username: text({ isIndexed: 'unique', validation: { isRequired: true } }),
+    // eslint-disable-next-line sort-keys
+    address: relationship({ ref: 'Address.user' }),
+    patient: relationship({ ref: 'Patient.user' }),
+    profilePhoto: relationship({ ref: 'ProfilePhoto.user' }),
+    prompts: relationship({ many: true, ref: 'Prompt.user' }),
+    signUpInvite: relationship({ ref: 'UserInvite.signedUpUser' }),
+    stepperProgs: relationship({ many: true, ref: 'StepperProg.user' }),
+    stepperStepProgs: relationship({ many: true, ref: 'StepperStepProg.user' }),
+    userInvites: relationship({ many: true, ref: 'UserInvite.invitedByUser' }),
+  },
+  hooks: {
+    afterOperation: async ({ context, item, operation }) => {
+      if (operation === 'create') {
+        afterCreateUser({ context, item });
+      }
+    },
   },
   ui: {
-    labelField: "email",
+    labelField: 'email',
     listView: {
-      initialColumns: ["firstName", "lastName", "email", "id"],
+      initialColumns: ['firstName', 'lastName', 'email', 'id'],
     },
   },
 });

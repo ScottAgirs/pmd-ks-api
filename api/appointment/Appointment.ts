@@ -1,31 +1,28 @@
-import { checkbox, relationship, text, timestamp } from "@keystone-6/core/fields";
-import { document } from "@keystone-6/fields-document";
+import {
+  checkbox,
+  relationship,
+  text,
+  timestamp,
+} from '@keystone-6/core/fields';
+import { document } from '@keystone-6/fields-document';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const Appointment = list({
   fields: {
-    billing: relationship({ ref: 'AppointmentBilling.appointment' }),
-    booking: relationship({ ref: 'Booking.appointment' }),
-    doctor: relationship({ ref: 'Doctor.appointments' }),
+    endedAt: timestamp(),
     isSigned: checkbox(),
     isSignedOn: timestamp({
       defaultValue: {
-        kind: "now",
-      }
+        kind: 'now',
+      },
     }),
-    event: relationship({ ref: 'CalendarEvent.appointments' }),
-    forms: relationship({ ref: 'Form.appointment', many: true }),
-    notes: relationship({ ref: 'AppointmentNote.appointment', many: true }),
-    patient: relationship({ ref: 'Patient.appointments' }),
-    prescription: relationship({ ref: 'Prescription.appointment' }),
     reason: text(),
-    vitalsData: relationship({ ref: 'AppointmentVital.appointment' }),
-    scheduledStartsAt: timestamp(),
     scheduledEndsAt: timestamp(),
+    scheduledStartsAt: timestamp(),
     startedAt: timestamp(),
-    summaryString: text(),
     summary: document({
+      dividers: true,
       formatting: true,
       layouts: [
         [1, 1],
@@ -35,8 +32,17 @@ export const Appointment = list({
         [1, 2, 1],
       ],
       links: true,
-      dividers: true,
     }),
-    endedAt: timestamp(),
+    summaryString: text(),
+    // eslint-disable-next-line sort-keys
+    billing: relationship({ ref: 'AppointmentBilling.appointment' }),
+    booking: relationship({ ref: 'Booking.appointment' }),
+    doctor: relationship({ ref: 'Doctor.appointments' }),
+    event: relationship({ ref: 'CalendarEvent.appointments' }),
+    forms: relationship({ many: true, ref: 'Form.appointment' }),
+    notes: relationship({ many: true, ref: 'AppointmentNote.appointment' }),
+    patient: relationship({ ref: 'Patient.appointments' }),
+    prescription: relationship({ ref: 'Prescription.appointment' }),
+    vitalsData: relationship({ ref: 'AppointmentVital.appointment' }),
   },
-}) 
+});

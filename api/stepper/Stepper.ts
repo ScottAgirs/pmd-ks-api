@@ -1,23 +1,24 @@
-import { relationship, text } from "@keystone-6/core/fields";
+import { relationship, text } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const Stepper = list({
   fields: {
-    title: text(),
-    name: text(),
-    slug: text({
-      isIndexed: "unique",
-    }),
     description: text(),
     eyebrow: text(),
-    prompt: relationship({ ref: "Prompt.stepper" }),
-    stepsOrderBySlugs: text(),
-    stepperSteps: relationship({ ref: "StepperStep.stepper", many: true }),
-    stepperProgs: relationship({ ref: "StepperProg.stepper", many: true }),
-    stepperStepProgs: relationship({
-      ref: "StepperStepProg.stepper",
-      many: true,
+    name: text(),
+    slug: text({
+      isIndexed: 'unique',
     }),
+    stepsOrderBySlugs: text(),
+    title: text(),
+    // eslint-disable-next-line sort-keys
+    prompt: relationship({ ref: 'Prompt.stepper' }),
+    stepperProgs: relationship({ many: true, ref: 'StepperProg.stepper' }),
+    stepperStepProgs: relationship({
+      many: true,
+      ref: 'StepperStepProg.stepper',
+    }),
+    stepperSteps: relationship({ many: true, ref: 'StepperStep.stepper' }),
   },
 });

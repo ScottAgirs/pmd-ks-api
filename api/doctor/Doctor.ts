@@ -3,11 +3,11 @@ import {
   relationship,
   text,
   timestamp,
-} from "@keystone-6/core/fields";
-import { afterCreateDoctor } from "./hooks/afterCreateDoctor";
-import { KeystoneContext } from "@keystone-6/core/types";
+} from '@keystone-6/core/fields';
+import { KeystoneContext } from '@keystone-6/core/types';
+import { list } from '@keystone-6/core';
 
-const { list } = require("@keystone-6/core");
+import { afterCreateDoctor } from './hooks/afterCreateDoctor';
 
 interface AfterCreateItemArgs {
   context: KeystoneContext;
@@ -17,14 +17,13 @@ interface AfterCreateItemArgs {
 
 export const Doctor = list({
   fields: {
-    clinicName: text(),
-    clinicPhoneNumber: text(),
-    clinicFaxNumber: text(),
     clinicFMN: text(),
-    clinicSLI: text(),
+    clinicFaxNumber: text(),
+    clinicName: text(),
     clinicOHIPBillingCode: text(),
+    clinicPhoneNumber: text(),
+    clinicSLI: text(),
     // TODO: doctorSpecializations
-    calendar: relationship({ ref: "Calendar.doctor" }),
     // TODO: contractSignedOn time must be max 1 hour in the future and min 15 mins in the past
     contractSignedOn: timestamp(),
     doctorSince: timestamp(),
@@ -33,36 +32,40 @@ export const Doctor = list({
     isVerified: checkbox(),
     licenseNumber: text(),
     licenseProvider: text(),
-    medicalLiabilityProvider: text(),
     medicalLiabilityNumber: text(),
+    medicalLiabilityProvider: text(),
     province: text(),
     summary: text(),
-    // Links
-    appointments: relationship({ ref: "Appointment.doctor", many: true }),
-    appointmentRequests: relationship({ ref: "AppointmentRequest.doctor", many: true }),
-    billings: relationship({ ref: "AppointmentBilling.doctor", many: true }),
-    bookings: relationship({ ref: "Booking.doctor", many: true }),
+    // eslint-disable-next-line sort-keys
+    appointmentRequests: relationship({
+      many: true,
+      ref: 'AppointmentRequest.doctor',
+    }),
+    appointments: relationship({ many: true, ref: 'Appointment.doctor' }),
+    billings: relationship({ many: true, ref: 'AppointmentBilling.doctor' }),
+    bookings: relationship({ many: true, ref: 'Booking.doctor' }),
+    calendar: relationship({ ref: 'Calendar.doctor' }),
+    calendarEvents: relationship({ many: true, ref: 'CalendarEvent.doctor' }),
     caringForPatients: relationship({
-      ref: "Patient.caredByDoctors",
       many: true,
+      ref: 'Patient.caredByDoctors',
     }),
-    calendarEvents: relationship({ ref: "CalendarEvent.doctor", many: true }),
-    doctorSpecialty: relationship({ ref: "DoctorSpecialty.doctors" }),
+    doctorSpecialty: relationship({ ref: 'DoctorSpecialty.doctors' }),
     doctorSubSpecialties: relationship({
-      ref: "DoctorSubSpecialty.doctors",
       many: true,
+      ref: 'DoctorSubSpecialty.doctors',
     }),
-    forms: relationship({ ref: "Form.doctor", many: true }),
-    languages: relationship({ ref: "Language.doctors", many: true }),
-    patients: relationship({ ref: "Patient.visitedDoctors", many: true }),
-    prescriptions: relationship({ ref: "Prescription.doctor", many: true }),
+    forms: relationship({ many: true, ref: 'Form.doctor' }),
+    languages: relationship({ many: true, ref: 'Language.doctors' }),
+    patients: relationship({ many: true, ref: 'Patient.visitedDoctors' }),
+    prescriptions: relationship({ many: true, ref: 'Prescription.doctor' }),
     proofOfIdentification: relationship({
-      ref: "ProofOfIdentification.doctor",
+      ref: 'ProofOfIdentification.doctor',
     }),
-    proofOfInsurance: relationship({ ref: "ProofOfInsurance.doctor" }),
-    proofOfLicense: relationship({ ref: "ProofOfLicense.doctor" }),
-    savedByPatients: relationship({ ref: "Patient.savedDoctors", many: true }),
-    user: relationship({ ref: "User.doctor" }),
+    proofOfInsurance: relationship({ ref: 'ProofOfInsurance.doctor' }),
+    proofOfLicense: relationship({ ref: 'ProofOfLicense.doctor' }),
+    savedByPatients: relationship({ many: true, ref: 'Patient.savedDoctors' }),
+    user: relationship({ ref: 'User.doctor' }),
   },
   hooks: {
     afterOperation: async ({
@@ -70,7 +73,7 @@ export const Doctor = list({
       item,
       operation,
     }: AfterCreateItemArgs) => {
-      if (operation === "create") {
+      if (operation === 'create') {
         afterCreateDoctor({ context, item });
       }
     },

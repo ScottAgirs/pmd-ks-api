@@ -1,20 +1,23 @@
-import "dotenv/config";
+import 'dotenv/config';
 
-import { relationship, text } from "@keystone-6/core/fields";
-import { cloudinaryImage } from "@keystone-6/cloudinary";
-import { cloudinary, cloudinaryConfig } from "../../../lib/cloudinary";
-import { KeystoneContext } from "@keystone-6/core/types";
+import { relationship, text } from '@keystone-6/core/fields';
+import { cloudinaryImage } from '@keystone-6/cloudinary';
+import { KeystoneContext } from '@keystone-6/core/types';
+import { list } from '@keystone-6/core';
 
-const { list } = require("@keystone-6/core");
+import { cloudinary, cloudinaryConfig } from '../../../lib/cloudinary';
 
 export const ProfilePhoto = list({
-  ui: {
-    // isHidden: true,
+  fields: {
+    altText: text(),
+    src: cloudinaryImage({
+      cloudinary: { ...cloudinaryConfig, folder: 'profile-photos' },
+      label: 'Source',
+    }),
+    user: relationship({ ref: 'User.profilePhoto' }),
   },
   hooks: {
     afterOperation: async ({
-      context,
-      item,
       operation,
       originalItem,
     }: {
@@ -23,7 +26,7 @@ export const ProfilePhoto = list({
       operation: string;
       originalItem: any;
     }) => {
-      if (operation === "delete") {
+      if (operation === 'delete') {
         cloudinary.uploader.destroy(
           originalItem.src._meta.public_id,
           {
@@ -36,12 +39,7 @@ export const ProfilePhoto = list({
       }
     },
   },
-  fields: {
-    src: cloudinaryImage({
-      cloudinary: { ...cloudinaryConfig, folder: "profile-photos" },
-      label: "Source",
-    }),
-    altText: text(),
-    user: relationship({ ref: "User.profilePhoto" }),
+  ui: {
+    // isHidden: true,
   },
 });

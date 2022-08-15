@@ -1,14 +1,15 @@
-import { checkbox, integer, relationship, text, timestamp } from "@keystone-6/core/fields";
+import { relationship, text } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const CalendarEventType = list({
   fields: {
     label: text({ validation: { isRequired: true } }),
-    value: text({ 
-      validation: { isRequired: true }, 
+    value: text({
       isIndexed: 'unique',
+      validation: { isRequired: true },
     }),
-    events: relationship({ ref: 'CalendarEvent.eventType', many: true }),
+    // eslint-disable-next-line sort-keys
+    events: relationship({ many: true, ref: 'CalendarEvent.eventType' }),
   },
-})
+});

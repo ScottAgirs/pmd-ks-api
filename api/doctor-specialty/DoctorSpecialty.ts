@@ -1,11 +1,12 @@
-import { checkbox, integer, relationship, text, timestamp } from "@keystone-6/core/fields";
+import { relationship, text } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const DoctorSpecialty = list({
   fields: {
     label: text({ validation: { isRequired: true } }),
-    value: text({ isIndexed: "unique", validation: { isRequired: true } }),
-    doctors: relationship({ ref: 'Doctor.doctorSpecialty', many: true }),
+    value: text({ isIndexed: 'unique', validation: { isRequired: true } }),
+    // eslint-disable-next-line sort-keys
+    doctors: relationship({ many: true, ref: 'Doctor.doctorSpecialty' }),
   },
-})
+});

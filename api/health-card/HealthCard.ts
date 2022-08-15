@@ -1,11 +1,6 @@
-import {
-  checkbox,
-  relationship,
-  text,
-  timestamp,
-} from "@keystone-6/core/fields";
+import { relationship, text, timestamp } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const HealthCard = list({
   fields: {
@@ -15,7 +10,8 @@ export const HealthCard = list({
     insuranceProvider: text(),
     nameOnCard: text({ validation: { isRequired: true } }),
     versionCode: text({ validation: { isRequired: true } }),
-    patient: relationship({ ref: "Patient.healthCards" }),
-    userInvite: relationship({ ref: "UserInvite.healthCard" }),
+    // eslint-disable-next-line sort-keys
+    patient: relationship({ ref: 'Patient.healthCards' }),
+    userInvite: relationship({ ref: 'UserInvite.healthCard' }),
   },
 });

@@ -1,40 +1,44 @@
-import { checkbox, relationship, text } from "@keystone-6/core/fields";
+import { checkbox, relationship, text } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const Patient = list({
   fields: {
     isCompleteProfile: checkbox(),
     name: text(),
-    appointments: relationship({ ref: "Appointment.patient", many: true }),
-    appointmentVitals: relationship({
-      ref: "AppointmentVital.patient",
-      many: true,
-    }),
+    // eslint-disable-next-line sort-keys
     appointmentNotes: relationship({
-      ref: "AppointmentNote.patient",
       many: true,
+      ref: 'AppointmentNote.patient',
     }),
-    appointmentRequests: relationship({ ref: "AppointmentRequest.patient", many: true }),
-    bookings: relationship({ ref: "Booking.patient", many: true }),
-    caredByDoctors: relationship({
-      ref: "Doctor.caringForPatients",
+    appointmentRequests: relationship({
       many: true,
+      ref: 'AppointmentRequest.patient',
+    }),
+    appointmentVitals: relationship({
+      many: true,
+      ref: 'AppointmentVital.patient',
+    }),
+    appointments: relationship({ many: true, ref: 'Appointment.patient' }),
+    bookings: relationship({ many: true, ref: 'Booking.patient' }),
+    caredByDoctors: relationship({
+      many: true,
+      ref: 'Doctor.caringForPatients',
     }),
     emergencyContacts: relationship({
-      ref: "EmergencyContact.patient",
       many: true,
+      ref: 'EmergencyContact.patient',
     }),
-    forms: relationship({ ref: "Form.patient", many: true }),
-    healthCards: relationship({ ref: "HealthCard.patient", many: true }),
-    medications: relationship({ ref: "Medication.patient", many: true }),
+    forms: relationship({ many: true, ref: 'Form.patient' }),
+    healthCards: relationship({ many: true, ref: 'HealthCard.patient' }),
+    medications: relationship({ many: true, ref: 'Medication.patient' }),
     pharmacyLocations: relationship({
-      ref: "PharmacyLocation.patients",
       many: true,
+      ref: 'PharmacyLocation.patients',
     }),
-    prescriptions: relationship({ ref: "Prescription.patient", many: true }),
-    savedDoctors: relationship({ ref: "Doctor.savedByPatients", many: true }),
-    user: relationship({ ref: "User.patient" }),
-    visitedDoctors: relationship({ ref: "Doctor.patients", many: true }),
+    prescriptions: relationship({ many: true, ref: 'Prescription.patient' }),
+    savedDoctors: relationship({ many: true, ref: 'Doctor.savedByPatients' }),
+    user: relationship({ ref: 'User.patient' }),
+    visitedDoctors: relationship({ many: true, ref: 'Doctor.patients' }),
   },
 });

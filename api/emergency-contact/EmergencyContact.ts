@@ -1,16 +1,17 @@
-import { relationship, text, timestamp } from "@keystone-6/core/fields";
+import { relationship, text, timestamp } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const EmergencyContact = list({
   fields: {
     // Maybe add a relationship to the patient?
-    email: text({ validation: { isRequired: false } }),
-    relation: text(),
-    firstName: text({ validation: { isRequired: true } }),
-    lastName: text({ validation: { isRequired: true } }),
     cellPhoneNumberString: text({ validation: { isRequired: true } }),
+    email: text({ validation: { isRequired: false } }),
+    firstName: text({ validation: { isRequired: true } }),
     homePhoneNumberString: text(),
-    patient: relationship({ ref: "Patient.emergencyContacts" }),
+    lastName: text({ validation: { isRequired: true } }),
+    relation: text(),
+    // eslint-disable-next-line sort-keys
+    patient: relationship({ ref: 'Patient.emergencyContacts' }),
   },
 });

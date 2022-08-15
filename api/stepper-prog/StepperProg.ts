@@ -1,13 +1,16 @@
-import { checkbox, integer, relationship, text, timestamp } from "@keystone-6/core/fields";
+import { checkbox, relationship, text } from '@keystone-6/core/fields';
 
-const { list } = require("@keystone-6/core");
+import { list } from '@keystone-6/core';
 
 export const StepperProg = list({
   fields: {
-    name: text(),
     isCompleted: checkbox(),
+    name: text(),
     stepper: relationship({ ref: 'Stepper.stepperProgs' }),
-    stepperStepProgs: relationship({ ref: 'StepperStepProg.stepperProg', many: true }),
+    stepperStepProgs: relationship({
+      many: true,
+      ref: 'StepperStepProg.stepperProg',
+    }),
     user: relationship({ ref: 'User.stepperProgs' }),
   },
-})
+});
