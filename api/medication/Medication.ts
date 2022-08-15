@@ -7,6 +7,7 @@ export const Medication = list({
     brandName: text({ isIndexed: true }),
     companyName: text({ isIndexed: true }),
     drugCode: integer({ isIndexed: true }),
+    drugIdentificationNumber: integer({ isIndexed: 'unique' }),
     // eslint-disable-next-line sort-keys
     activeIngredients: relationship({
       many: true,

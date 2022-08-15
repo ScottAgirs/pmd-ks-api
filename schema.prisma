@@ -12,15 +12,15 @@ generator client {
 }
 
 model ActiveIngredient {
-  id            String       @id @default(cuid())
-  brandName     String       @default("")
-  drugCode      Int?
-  strengthCount Float?
-  strengthUnit  String       @default("")
-  medication    Medication[] @relation("ActiveIngredient_medication")
+  id             String       @id @default(cuid())
+  drugCode       Int?
+  ingredientName String       @default("")
+  strengthCount  Float?
+  strengthUnit   String       @default("")
+  medication     Medication[] @relation("ActiveIngredient_medication")
 
-  @@index([brandName])
   @@index([drugCode])
+  @@index([ingredientName])
 }
 
 model Address {
@@ -43,25 +43,32 @@ model Address {
 
 model AdministrativeArea {
   id        String   @id @default(cuid())
-  country   Country? @relation("AdministrativeArea_country", fields: [countryId], references: [id])
-  countryId String?  @map("country")
   isActive  Boolean  @default(false)
   label     String   @default("")
   value     String   @default("")
+  country   Country? @relation("AdministrativeArea_country", fields: [countryId], references: [id])
+  countryId String?  @map("country")
 
   @@index([countryId])
 }
 
 model Appointment {
   id                String              @id @default(cuid())
+  endedAt           DateTime?
+  isSigned          Boolean             @default(false)
+  isSignedOn        DateTime?           @default(now())
+  reason            String              @default("")
+  scheduledEndsAt   DateTime?
+  scheduledStartsAt DateTime?
+  startedAt         DateTime?
+  summary           Json                @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  summaryString     String              @default("")
   billing           AppointmentBilling? @relation("Appointment_billing", fields: [billingId], references: [id])
   billingId         String?             @unique @map("billing")
   booking           Booking?            @relation("Appointment_booking", fields: [bookingId], references: [id])
   bookingId         String?             @unique @map("booking")
   doctor            Doctor?             @relation("Appointment_doctor", fields: [doctorId], references: [id])
   doctorId          String?             @map("doctor")
-  isSigned          Boolean             @default(false)
-  isSignedOn        DateTime?           @default(now())
   event             CalendarEvent?      @relation("Appointment_event", fields: [eventId], references: [id])
   eventId           String?             @map("event")
   forms             Form[]              @relation("Form_appointment")
@@ -70,15 +77,8 @@ model Appointment {
   patientId         String?             @map("patient")
   prescription      Prescription?       @relation("Appointment_prescription", fields: [prescriptionId], references: [id])
   prescriptionId    String?             @unique @map("prescription")
-  reason            String              @default("")
   vitalsData        AppointmentVital?   @relation("Appointment_vitalsData", fields: [vitalsDataId], references: [id])
   vitalsDataId      String?             @unique @map("vitalsData")
-  scheduledStartsAt DateTime?
-  scheduledEndsAt   DateTime?
-  startedAt         DateTime?
-  summaryString     String              @default("")
-  summary           Json                @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  endedAt           DateTime?
 
   @@index([doctorId])
   @@index([eventId])
@@ -87,31 +87,31 @@ model Appointment {
 
 model AppointmentBilling {
   id           String                   @id @default(cuid())
+  status       String                   @default("")
   appointment  Appointment?             @relation("Appointment_billing")
+  billingItems AppointmentBillingItem[] @relation("AppointmentBillingItem_billing")
   doctor       Doctor?                  @relation("AppointmentBilling_doctor", fields: [doctorId], references: [id])
   doctorId     String?                  @map("doctor")
-  billingItems AppointmentBillingItem[] @relation("AppointmentBillingItem_billing")
-  status       String                   @default("")
 
   @@index([doctorId])
 }
 
 model AppointmentBillingItem {
   id            String              @id @default(cuid())
+  diagnosisCode String              @default("")
+  feeCode       String              @default("")
+  units         String              @default("")
   billing       AppointmentBilling? @relation("AppointmentBillingItem_billing", fields: [billingId], references: [id])
   billingId     String?             @map("billing")
-  feeCode       String              @default("")
-  diagnosisCode String              @default("")
-  units         String              @default("")
 
   @@index([billingId])
 }
 
 model AppointmentNote {
   id            String       @id @default(cuid())
+  createdAt     DateTime?    @default(now())
   appointment   Appointment? @relation("AppointmentNote_appointment", fields: [appointmentId], references: [id])
   appointmentId String?      @map("appointment")
-  createdAt     DateTime?    @default(now())
   patient       Patient?     @relation("AppointmentNote_patient", fields: [patientId], references: [id])
   patientId     String?      @map("patient")
   summary       String       @default("")
@@ -181,24 +181,24 @@ model Booking {
 model Calendar {
   id                String          @id @default(cuid())
   name              String          @default("")
-  events            CalendarEvent[] @relation("CalendarEvent_calendar")
   bookings          Booking[]       @relation("Booking_calendar")
-  doctor            Doctor?         @relation("Calendar_doctor", fields: [doctorId], references: [id])
-  doctorId          String?         @unique @map("doctor")
-  schedules         Schedule[]      @relation("Schedule_calendar")
   defaultSchedule   Schedule?       @relation("Calendar_defaultSchedule", fields: [defaultScheduleId], references: [id])
   defaultScheduleId String?         @unique @map("defaultSchedule")
+  doctor            Doctor?         @relation("Calendar_doctor", fields: [doctorId], references: [id])
+  doctorId          String?         @unique @map("doctor")
+  events            CalendarEvent[] @relation("CalendarEvent_calendar")
+  schedules         Schedule[]      @relation("Schedule_calendar")
 }
 
 model CalendarEvent {
   id                       String              @id @default(cuid())
+  companyName              String              @default("")
   description              String              @default("")
   durationMins             Int
-  companyName              String              @default("")
   facilityMasterNumber     String              @default("")
-  serviceLocationIndicator String              @default("")
   isActive                 Boolean             @default(false)
   isConfirmationRequired   Boolean             @default(false)
+  serviceLocationIndicator String              @default("")
   title                    String              @default("")
   address                  Address?            @relation("Address_event")
   appointmentRequests      AppointmentRequest? @relation("AppointmentRequest_event")
@@ -206,14 +206,14 @@ model CalendarEvent {
   bookings                 Booking[]           @relation("Booking_event")
   calendar                 Calendar?           @relation("CalendarEvent_calendar", fields: [calendarId], references: [id])
   calendarId               String?             @map("calendar")
-  eventType                CalendarEventType?  @relation("CalendarEvent_eventType", fields: [eventTypeId], references: [id])
-  eventTypeId              String?             @map("eventType")
   doctor                   Doctor?             @relation("CalendarEvent_doctor", fields: [doctorId], references: [id])
   doctorId                 String?             @map("doctor")
+  eventType                CalendarEventType?  @relation("CalendarEvent_eventType", fields: [eventTypeId], references: [id])
+  eventTypeId              String?             @map("eventType")
 
   @@index([calendarId])
-  @@index([eventTypeId])
   @@index([doctorId])
+  @@index([eventTypeId])
 }
 
 model CalendarEventType {
@@ -232,11 +232,11 @@ model Company {
 
 model CompanyLocation {
   id                       String   @id @default(cuid())
-  name                     String   @default("")
-  slug                     String   @default("")
   facilityMasterNumber     String   @unique @default("")
   locationType             String   @default("")
+  name                     String   @default("")
   serviceLocationIndicator String   @unique @default("")
+  slug                     String   @default("")
   company                  Company? @relation("CompanyLocation_company", fields: [companyId], references: [id])
   companyId                String?  @map("company")
 
@@ -245,13 +245,13 @@ model CompanyLocation {
 
 model Contract {
   id            String    @id @default(cuid())
-  signedBy      User[]    @relation("Contract_signedBy")
-  isActive      Boolean   @default(false)
   body          Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  effectiveFrom DateTime?
+  isActive      Boolean   @default(false)
+  lastUpdated   DateTime?
   name          String    @default("")
   slug          String    @unique @default("")
-  effectiveFrom DateTime?
-  lastUpdated   DateTime?
+  signedBy      User[]    @relation("Contract_signedBy")
 }
 
 model Country {
@@ -264,13 +264,12 @@ model Country {
 
 model Doctor {
   id                       String                 @id @default(cuid())
-  clinicName               String                 @default("")
-  clinicPhoneNumber        String                 @default("")
-  clinicFaxNumber          String                 @default("")
   clinicFMN                String                 @default("")
-  clinicSLI                String                 @default("")
+  clinicFaxNumber          String                 @default("")
+  clinicName               String                 @default("")
   clinicOHIPBillingCode    String                 @default("")
-  calendar                 Calendar?              @relation("Calendar_doctor")
+  clinicPhoneNumber        String                 @default("")
+  clinicSLI                String                 @default("")
   contractSignedOn         DateTime?
   doctorSince              DateTime?
   email                    String                 @default("")
@@ -278,16 +277,17 @@ model Doctor {
   isVerified               Boolean                @default(false)
   licenseNumber            String                 @default("")
   licenseProvider          String                 @default("")
-  medicalLiabilityProvider String                 @default("")
   medicalLiabilityNumber   String                 @default("")
+  medicalLiabilityProvider String                 @default("")
   province                 String                 @default("")
   summary                  String                 @default("")
-  appointments             Appointment[]          @relation("Appointment_doctor")
   appointmentRequests      AppointmentRequest[]   @relation("AppointmentRequest_doctor")
+  appointments             Appointment[]          @relation("Appointment_doctor")
   billings                 AppointmentBilling[]   @relation("AppointmentBilling_doctor")
   bookings                 Booking[]              @relation("Booking_doctor")
-  caringForPatients        Patient[]              @relation("Doctor_caringForPatients")
+  calendar                 Calendar?              @relation("Calendar_doctor")
   calendarEvents           CalendarEvent[]        @relation("CalendarEvent_doctor")
+  caringForPatients        Patient[]              @relation("Doctor_caringForPatients")
   doctorSpecialty          DoctorSpecialty?       @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])
   doctorSpecialtyId        String?                @map("doctorSpecialty")
   doctorSubSpecialties     DoctorSubSpecialty[]   @relation("Doctor_doctorSubSpecialties")
@@ -324,12 +324,12 @@ model DoctorSubSpecialty {
 
 model EmergencyContact {
   id                    String   @id @default(cuid())
-  email                 String   @default("")
-  relation              String   @default("")
-  firstName             String   @default("")
-  lastName              String   @default("")
   cellPhoneNumberString String   @default("")
+  email                 String   @default("")
+  firstName             String   @default("")
   homePhoneNumberString String   @default("")
+  lastName              String   @default("")
+  relation              String   @default("")
   patient               Patient? @relation("EmergencyContact_patient", fields: [patientId], references: [id])
   patientId             String?  @map("patient")
 
@@ -338,28 +338,28 @@ model EmergencyContact {
 
 model Form {
   id            String       @id @default(cuid())
+  name          String       @default("")
+  slug          String       @default("")
   appointment   Appointment? @relation("Form_appointment", fields: [appointmentId], references: [id])
   appointmentId String?      @map("appointment")
-  formType      FormType?    @relation("Form_formType", fields: [formTypeId], references: [id])
-  formTypeId    String?      @map("formType")
-  name          String       @default("")
   doctor        Doctor?      @relation("Form_doctor", fields: [doctorId], references: [id])
   doctorId      String?      @map("doctor")
+  formType      FormType?    @relation("Form_formType", fields: [formTypeId], references: [id])
+  formTypeId    String?      @map("formType")
   patient       Patient?     @relation("Form_patient", fields: [patientId], references: [id])
   patientId     String?      @map("patient")
-  slug          String       @default("")
 
   @@index([appointmentId])
-  @@index([formTypeId])
   @@index([doctorId])
+  @@index([formTypeId])
   @@index([patientId])
 }
 
 model FormType {
   id    String @id @default(cuid())
   name  String @default("")
-  forms Form[] @relation("Form_formType")
   slug  String @default("")
+  forms Form[] @relation("Form_formType")
 }
 
 model HealthCard {
@@ -386,17 +386,18 @@ model Language {
 }
 
 model Medication {
-  id                 String             @id @default(cuid())
-  brandName          String             @default("")
-  companyName        String             @default("")
-  drugCode           Int?
-  activeIngredients  ActiveIngredient[] @relation("ActiveIngredient_medication")
-  patient            Patient?           @relation("Medication_patient", fields: [patientId], references: [id])
-  patientId          String?            @map("patient")
-  prescription       Prescription?      @relation("Medication_prescription", fields: [prescriptionId], references: [id])
-  prescriptionId     String?            @map("prescription")
-  prescriptionItem   PrescriptionItem?  @relation("Medication_prescriptionItem", fields: [prescriptionItemId], references: [id])
-  prescriptionItemId String?            @unique @map("prescriptionItem")
+  id                       String             @id @default(cuid())
+  brandName                String             @default("")
+  companyName              String             @default("")
+  drugCode                 Int?
+  drugIdentificationNumber Int?               @unique
+  activeIngredients        ActiveIngredient[] @relation("ActiveIngredient_medication")
+  patient                  Patient?           @relation("Medication_patient", fields: [patientId], references: [id])
+  patientId                String?            @map("patient")
+  prescription             Prescription?      @relation("Medication_prescription", fields: [prescriptionId], references: [id])
+  prescriptionId           String?            @map("prescription")
+  prescriptionItem         PrescriptionItem?  @relation("Medication_prescriptionItem", fields: [prescriptionItemId], references: [id])
+  prescriptionItemId       String?            @unique @map("prescriptionItem")
 
   @@index([brandName])
   @@index([companyName])
@@ -409,10 +410,10 @@ model Patient {
   id                  String               @id @default(cuid())
   isCompleteProfile   Boolean              @default(false)
   name                String               @default("")
-  appointments        Appointment[]        @relation("Appointment_patient")
-  appointmentVitals   AppointmentVital[]   @relation("AppointmentVital_patient")
   appointmentNotes    AppointmentNote[]    @relation("AppointmentNote_patient")
   appointmentRequests AppointmentRequest[] @relation("AppointmentRequest_patient")
+  appointmentVitals   AppointmentVital[]   @relation("AppointmentVital_patient")
+  appointments        Appointment[]        @relation("Appointment_patient")
   bookings            Booking[]            @relation("Booking_patient")
   caredByDoctors      Doctor[]             @relation("Doctor_caringForPatients")
   emergencyContacts   EmergencyContact[]   @relation("EmergencyContact_patient")
@@ -436,13 +437,13 @@ model Pharmacy {
 model PharmacyLocation {
   id                  String    @id @default(cuid())
   accreditationNumber String    @unique @default("")
-  status              String    @default("")
-  phoneString         String    @default("")
   faxString           String    @default("")
+  phoneString         String    @default("")
+  status              String    @default("")
   address             Address?  @relation("Address_pharmacyLocation")
+  patients            Patient[] @relation("Patient_pharmacyLocations")
   pharmacy            Pharmacy? @relation("PharmacyLocation_pharmacy", fields: [pharmacyId], references: [id])
   pharmacyId          String?   @map("pharmacy")
-  patients            Patient[] @relation("Patient_pharmacyLocations")
 
   @@index([pharmacyId])
 }
@@ -463,68 +464,68 @@ model Prescription {
 
 model PrescriptionItem {
   id             String        @id @default(cuid())
-  medication     Medication?   @relation("Medication_prescriptionItem")
-  prescription   Prescription? @relation("PrescriptionItem_prescription", fields: [prescriptionId], references: [id])
-  prescriptionId String?       @map("prescription")
   instructions   String        @default("")
   luCode         String        @default("")
   refills        String        @default("")
+  medication     Medication?   @relation("Medication_prescriptionItem")
+  prescription   Prescription? @relation("PrescriptionItem_prescription", fields: [prescriptionId], references: [id])
+  prescriptionId String?       @map("prescription")
 
   @@index([prescriptionId])
 }
 
 model ProfilePhoto {
   id      String  @id @default(cuid())
-  src     Json?
   altText String  @default("")
+  src     Json?
   user    User?   @relation("ProfilePhoto_user", fields: [userId], references: [id])
   userId  String? @unique @map("user")
 }
 
 model Prompt {
   id          String   @id @default(cuid())
-  stepper     Stepper? @relation("Prompt_stepper", fields: [stepperId], references: [id])
-  stepperId   String?  @unique @map("stepper")
-  user        User?    @relation("Prompt_user", fields: [userId], references: [id])
-  userId      String?  @map("user")
   name        String   @default("")
   promptType  String   @default("")
   promptValue String   @default("")
   slug        String   @default("")
+  stepper     Stepper? @relation("Prompt_stepper", fields: [stepperId], references: [id])
+  stepperId   String?  @unique @map("stepper")
+  user        User?    @relation("Prompt_user", fields: [userId], references: [id])
+  userId      String?  @map("user")
 
   @@index([userId])
 }
 
 model ProofOfIdentification {
   id         String  @id @default(cuid())
-  src        Json?
   altText    String  @default("")
-  doctor     Doctor? @relation("Doctor_proofOfIdentification")
   isVerified Boolean @default(false)
+  src        Json?
+  doctor     Doctor? @relation("Doctor_proofOfIdentification")
 }
 
 model ProofOfInsurance {
   id         String  @id @default(cuid())
-  src        Json?
   altText    String  @default("")
-  doctor     Doctor? @relation("Doctor_proofOfInsurance")
   isVerified Boolean @default(false)
+  src        Json?
+  doctor     Doctor? @relation("Doctor_proofOfInsurance")
 }
 
 model ProofOfLicense {
   id         String  @id @default(cuid())
-  src        Json?
   altText    String  @default("")
-  doctor     Doctor? @relation("Doctor_proofOfLicense")
   isVerified Boolean @default(false)
+  src        Json?
+  doctor     Doctor? @relation("Doctor_proofOfLicense")
 }
 
 model RecurringSlot {
   id            String         @id @default(cuid())
-  wday          String         @default("")
-  isActive      Boolean        @default(false)
   interval      String         @default("")
   intervalCount Int?
+  isActive      Boolean        @default(false)
+  wday          String         @default("")
   schedule      Schedule?      @relation("RecurringSlot_schedule", fields: [scheduleId], references: [id])
   scheduleId    String?        @map("schedule")
   timeIntervals TimeInterval[] @relation("TimeInterval_recurringSlot")
@@ -534,36 +535,36 @@ model RecurringSlot {
 
 model Schedule {
   id             String          @id @default(cuid())
-  calendar       Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
-  calendarId     String?         @map("calendar")
   description    String          @default("")
-  defaultOn      Calendar?       @relation("Calendar_defaultSchedule")
-  recurringSlots RecurringSlot[] @relation("RecurringSlot_schedule")
-  tz             String          @default("")
   slotInterval   Int?
   title          String          @default("")
+  tz             String          @default("")
+  calendar       Calendar?       @relation("Schedule_calendar", fields: [calendarId], references: [id])
+  calendarId     String?         @map("calendar")
+  defaultOn      Calendar?       @relation("Calendar_defaultSchedule")
+  recurringSlots RecurringSlot[] @relation("RecurringSlot_schedule")
 
   @@index([calendarId])
 }
 
 model Stepper {
   id                String            @id @default(cuid())
-  title             String            @default("")
-  name              String            @default("")
-  slug              String            @unique @default("")
   description       String            @default("")
   eyebrow           String            @default("")
-  prompt            Prompt?           @relation("Prompt_stepper")
+  name              String            @default("")
+  slug              String            @unique @default("")
   stepsOrderBySlugs String            @default("")
-  stepperSteps      StepperStep[]     @relation("StepperStep_stepper")
+  title             String            @default("")
+  prompt            Prompt?           @relation("Prompt_stepper")
   stepperProgs      StepperProg[]     @relation("StepperProg_stepper")
   stepperStepProgs  StepperStepProg[] @relation("StepperStepProg_stepper")
+  stepperSteps      StepperStep[]     @relation("StepperStep_stepper")
 }
 
 model StepperProg {
   id               String            @id @default(cuid())
-  name             String            @default("")
   isCompleted      Boolean           @default(false)
+  name             String            @default("")
   stepper          Stepper?          @relation("StepperProg_stepper", fields: [stepperId], references: [id])
   stepperId        String?           @map("stepper")
   stepperStepProgs StepperStepProg[] @relation("StepperStepProg_stepperProg")
@@ -593,14 +594,14 @@ model StepperStep {
 
 model StepperStepProg {
   id            String       @id @default(cuid())
+  isCompleted   Boolean      @default(false)
   name          String       @default("")
   percentDone   Int?
-  isCompleted   Boolean      @default(false)
   stepper       Stepper?     @relation("StepperStepProg_stepper", fields: [stepperId], references: [id])
   stepperId     String?      @map("stepper")
-  stepperStep   StepperStep? @relation("StepperStep_stepperStepProg")
   stepperProg   StepperProg? @relation("StepperStepProg_stepperProg", fields: [stepperProgId], references: [id])
   stepperProgId String?      @map("stepperProg")
+  stepperStep   StepperStep? @relation("StepperStep_stepperStepProg")
   user          User?        @relation("StepperStepProg_user", fields: [userId], references: [id])
   userId        String?      @map("user")
 
@@ -622,26 +623,26 @@ model TimeInterval {
 model User {
   id                    String            @id @default(cuid())
   subjectId             String            @unique @default("")
+  cellPhoneNumberString String            @default("")
   contracts             Contract[]        @relation("Contract_signedBy")
   dateOfBirth           DateTime?
   doctor                Doctor?           @relation("Doctor_user")
   email                 String            @unique @default("")
   firstName             String            @default("")
+  homePhoneNumberString String            @default("")
   isAdmin               Boolean           @default(false)
   isDummy               Boolean           @default(false)
   isOnboarded           Boolean           @default(false)
   isOnboardedDoctor     Boolean           @default(false)
   lastName              String            @default("")
   middleName            String            @default("")
-  cellPhoneNumberString String            @default("")
-  homePhoneNumberString String            @default("")
   photoSrc              String            @default("")
   sex                   String            @default("")
   username              String            @unique @default("")
   address               Address?          @relation("Address_user")
   patient               Patient?          @relation("Patient_user")
-  prompts               Prompt[]          @relation("Prompt_user")
   profilePhoto          ProfilePhoto?     @relation("ProfilePhoto_user")
+  prompts               Prompt[]          @relation("Prompt_user")
   signUpInvite          UserInvite?       @relation("User_signUpInvite", fields: [signUpInviteId], references: [id])
   signUpInviteId        String?           @unique @map("signUpInvite")
   stepperProgs          StepperProg[]     @relation("StepperProg_user")
@@ -651,17 +652,17 @@ model User {
 
 model UserInvite {
   id                    String      @id @default(cuid())
+  cellPhoneNumberString String      @default("")
   dateOfBirth           DateTime?
   email                 String      @unique @default("")
   firstName             String      @default("")
   lastName              String      @default("")
   middleName            String      @default("")
-  cellPhoneNumberString String      @default("")
   sex                   String      @default("")
+  healthCard            HealthCard? @relation("HealthCard_userInvite")
   invitedByUser         User?       @relation("UserInvite_invitedByUser", fields: [invitedByUserId], references: [id])
   invitedByUserId       String?     @map("invitedByUser")
   signedUpUser          User?       @relation("User_signUpInvite")
-  healthCard            HealthCard? @relation("HealthCard_userInvite")
 
   @@index([invitedByUserId])
 }
