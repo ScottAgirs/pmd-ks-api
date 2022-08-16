@@ -12,15 +12,17 @@ generator client {
 }
 
 model ActiveIngredient {
-  id             String       @id @default(cuid())
-  drugCode       Int?
-  ingredientName String       @default("")
-  strengthCount  Float?
-  strengthUnit   String       @default("")
-  medication     Medication[] @relation("ActiveIngredient_medication")
+  id             String      @id @default(cuid())
+  drugCode       String      @default("")
+  ingredientName String      @default("")
+  strengthUnit   String      @default("")
+  strengthValue  String      @default("")
+  medication     Medication? @relation("ActiveIngredient_medication", fields: [medicationId], references: [id])
+  medicationId   String?     @map("medication")
 
   @@index([drugCode])
   @@index([ingredientName])
+  @@index([medicationId])
 }
 
 model Address {
@@ -388,9 +390,8 @@ model Language {
 model Medication {
   id                       String             @id @default(cuid())
   brandName                String             @default("")
-  companyName              String             @default("")
-  drugCode                 Int?
-  drugIdentificationNumber Int?               @unique
+  drugCode                 String             @unique @default("")
+  drugIdentificationNumber String             @unique @default("")
   activeIngredients        ActiveIngredient[] @relation("ActiveIngredient_medication")
   patient                  Patient?           @relation("Medication_patient", fields: [patientId], references: [id])
   patientId                String?            @map("patient")
@@ -400,8 +401,6 @@ model Medication {
   prescriptionItemId       String?            @unique @map("prescriptionItem")
 
   @@index([brandName])
-  @@index([companyName])
-  @@index([drugCode])
   @@index([patientId])
   @@index([prescriptionId])
 }

@@ -581,17 +581,11 @@ type Mutation {
 
 type ActiveIngredient {
   id: ID!
-  drugCode: Int
+  drugCode: String
   ingredientName: String
-  strengthCount: Float
   strengthUnit: String
-  medication(
-    where: MedicationWhereInput! = {}
-    orderBy: [MedicationOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Medication!]
-  medicationCount(where: MedicationWhereInput! = {}): Int
+  strengthValue: String
+  medication: Medication
 }
 
 input ActiveIngredientWhereUniqueInput {
@@ -603,11 +597,11 @@ input ActiveIngredientWhereInput {
   OR: [ActiveIngredientWhereInput!]
   NOT: [ActiveIngredientWhereInput!]
   id: IDFilter
-  drugCode: IntNullableFilter
+  drugCode: StringFilter
   ingredientName: StringFilter
-  strengthCount: FloatNullableFilter
   strengthUnit: StringFilter
-  medication: MedicationManyRelationFilter
+  strengthValue: StringFilter
+  medication: MedicationWhereInput
 }
 
 input IDFilter {
@@ -619,17 +613,6 @@ input IDFilter {
   gt: ID
   gte: ID
   not: IDFilter
-}
-
-input IntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntNullableFilter
 }
 
 input StringFilter {
@@ -666,29 +649,12 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input FloatNullableFilter {
-  equals: Float
-  in: [Float!]
-  notIn: [Float!]
-  lt: Float
-  lte: Float
-  gt: Float
-  gte: Float
-  not: FloatNullableFilter
-}
-
-input MedicationManyRelationFilter {
-  every: MedicationWhereInput
-  some: MedicationWhereInput
-  none: MedicationWhereInput
-}
-
 input ActiveIngredientOrderByInput {
   id: OrderDirection
   drugCode: OrderDirection
   ingredientName: OrderDirection
-  strengthCount: OrderDirection
   strengthUnit: OrderDirection
+  strengthValue: OrderDirection
 }
 
 enum OrderDirection {
@@ -697,18 +663,17 @@ enum OrderDirection {
 }
 
 input ActiveIngredientUpdateInput {
-  drugCode: Int
+  drugCode: String
   ingredientName: String
-  strengthCount: Float
   strengthUnit: String
-  medication: MedicationRelateToManyForUpdateInput
+  strengthValue: String
+  medication: MedicationRelateToOneForUpdateInput
 }
 
-input MedicationRelateToManyForUpdateInput {
-  disconnect: [MedicationWhereUniqueInput!]
-  set: [MedicationWhereUniqueInput!]
-  create: [MedicationCreateInput!]
-  connect: [MedicationWhereUniqueInput!]
+input MedicationRelateToOneForUpdateInput {
+  create: MedicationCreateInput
+  connect: MedicationWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ActiveIngredientUpdateArgs {
@@ -717,16 +682,16 @@ input ActiveIngredientUpdateArgs {
 }
 
 input ActiveIngredientCreateInput {
-  drugCode: Int
+  drugCode: String
   ingredientName: String
-  strengthCount: Float
   strengthUnit: String
-  medication: MedicationRelateToManyForCreateInput
+  strengthValue: String
+  medication: MedicationRelateToOneForCreateInput
 }
 
-input MedicationRelateToManyForCreateInput {
-  create: [MedicationCreateInput!]
-  connect: [MedicationWhereUniqueInput!]
+input MedicationRelateToOneForCreateInput {
+  create: MedicationCreateInput
+  connect: MedicationWhereUniqueInput
 }
 
 type Address {
@@ -1421,6 +1386,17 @@ input AppointmentVitalWhereInput {
   resp: IntNullableFilter
   temperature: IntNullableFilter
   patient: PatientWhereInput
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
 }
 
 input AppointmentVitalOrderByInput {
@@ -3083,9 +3059,8 @@ input LanguageCreateInput {
 type Medication {
   id: ID!
   brandName: String
-  companyName: String
-  drugCode: Int
-  drugIdentificationNumber: Int
+  drugCode: String
+  drugIdentificationNumber: String
   activeIngredients(
     where: ActiveIngredientWhereInput! = {}
     orderBy: [ActiveIngredientOrderByInput!]! = []
@@ -3100,7 +3075,8 @@ type Medication {
 
 input MedicationWhereUniqueInput {
   id: ID
-  drugIdentificationNumber: Int
+  drugCode: String
+  drugIdentificationNumber: String
 }
 
 input MedicationWhereInput {
@@ -3109,9 +3085,8 @@ input MedicationWhereInput {
   NOT: [MedicationWhereInput!]
   id: IDFilter
   brandName: StringFilter
-  companyName: StringFilter
-  drugCode: IntNullableFilter
-  drugIdentificationNumber: IntNullableFilter
+  drugCode: StringFilter
+  drugIdentificationNumber: StringFilter
   activeIngredients: ActiveIngredientManyRelationFilter
   patient: PatientWhereInput
   prescription: PrescriptionWhereInput
@@ -3127,16 +3102,14 @@ input ActiveIngredientManyRelationFilter {
 input MedicationOrderByInput {
   id: OrderDirection
   brandName: OrderDirection
-  companyName: OrderDirection
   drugCode: OrderDirection
   drugIdentificationNumber: OrderDirection
 }
 
 input MedicationUpdateInput {
   brandName: String
-  companyName: String
-  drugCode: Int
-  drugIdentificationNumber: Int
+  drugCode: String
+  drugIdentificationNumber: String
   activeIngredients: ActiveIngredientRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
   prescription: PrescriptionRelateToOneForUpdateInput
@@ -3163,9 +3136,8 @@ input MedicationUpdateArgs {
 
 input MedicationCreateInput {
   brandName: String
-  companyName: String
-  drugCode: Int
-  drugIdentificationNumber: Int
+  drugCode: String
+  drugIdentificationNumber: String
   activeIngredients: ActiveIngredientRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
   prescription: PrescriptionRelateToOneForCreateInput
@@ -3333,6 +3305,12 @@ input HealthCardManyRelationFilter {
   none: HealthCardWhereInput
 }
 
+input MedicationManyRelationFilter {
+  every: MedicationWhereInput
+  some: MedicationWhereInput
+  none: MedicationWhereInput
+}
+
 input PharmacyLocationManyRelationFilter {
   every: PharmacyLocationWhereInput
   some: PharmacyLocationWhereInput
@@ -3386,6 +3364,13 @@ input HealthCardRelateToManyForUpdateInput {
   connect: [HealthCardWhereUniqueInput!]
 }
 
+input MedicationRelateToManyForUpdateInput {
+  disconnect: [MedicationWhereUniqueInput!]
+  set: [MedicationWhereUniqueInput!]
+  create: [MedicationCreateInput!]
+  connect: [MedicationWhereUniqueInput!]
+}
+
 input PharmacyLocationRelateToManyForUpdateInput {
   disconnect: [PharmacyLocationWhereUniqueInput!]
   set: [PharmacyLocationWhereUniqueInput!]
@@ -3431,6 +3416,11 @@ input EmergencyContactRelateToManyForCreateInput {
 input HealthCardRelateToManyForCreateInput {
   create: [HealthCardCreateInput!]
   connect: [HealthCardWhereUniqueInput!]
+}
+
+input MedicationRelateToManyForCreateInput {
+  create: [MedicationCreateInput!]
+  connect: [MedicationWhereUniqueInput!]
 }
 
 input PharmacyLocationRelateToManyForCreateInput {
@@ -3684,12 +3674,6 @@ input PrescriptionItemUpdateInput {
   prescription: PrescriptionRelateToOneForUpdateInput
 }
 
-input MedicationRelateToOneForUpdateInput {
-  create: MedicationCreateInput
-  connect: MedicationWhereUniqueInput
-  disconnect: Boolean
-}
-
 input PrescriptionItemUpdateArgs {
   where: PrescriptionItemWhereUniqueInput!
   data: PrescriptionItemUpdateInput!
@@ -3701,11 +3685,6 @@ input PrescriptionItemCreateInput {
   refills: String
   medication: MedicationRelateToOneForCreateInput
   prescription: PrescriptionRelateToOneForCreateInput
-}
-
-input MedicationRelateToOneForCreateInput {
-  create: MedicationCreateInput
-  connect: MedicationWhereUniqueInput
 }
 
 type ProfilePhoto {
