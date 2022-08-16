@@ -393,15 +393,13 @@ model Medication {
   drugCode                 String             @unique @default("")
   drugIdentificationNumber String             @unique @default("")
   activeIngredients        ActiveIngredient[] @relation("ActiveIngredient_medication")
-  patient                  Patient?           @relation("Medication_patient", fields: [patientId], references: [id])
-  patientId                String?            @map("patient")
+  patients                 Patient[]          @relation("Medication_patients")
   prescription             Prescription?      @relation("Medication_prescription", fields: [prescriptionId], references: [id])
   prescriptionId           String?            @map("prescription")
   prescriptionItem         PrescriptionItem?  @relation("Medication_prescriptionItem", fields: [prescriptionItemId], references: [id])
   prescriptionItemId       String?            @unique @map("prescriptionItem")
 
   @@index([brandName])
-  @@index([patientId])
   @@index([prescriptionId])
 }
 
@@ -418,7 +416,7 @@ model Patient {
   emergencyContacts   EmergencyContact[]   @relation("EmergencyContact_patient")
   forms               Form[]               @relation("Form_patient")
   healthCards         HealthCard[]         @relation("HealthCard_patient")
-  medications         Medication[]         @relation("Medication_patient")
+  medications         Medication[]         @relation("Medication_patients")
   pharmacyLocations   PharmacyLocation[]   @relation("Patient_pharmacyLocations")
   prescriptions       Prescription[]       @relation("Prescription_patient")
   savedDoctors        Doctor[]             @relation("Doctor_savedByPatients")

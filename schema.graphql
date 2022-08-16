@@ -3068,7 +3068,13 @@ type Medication {
     skip: Int! = 0
   ): [ActiveIngredient!]
   activeIngredientsCount(where: ActiveIngredientWhereInput! = {}): Int
-  patient: Patient
+  patients(
+    where: PatientWhereInput! = {}
+    orderBy: [PatientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Patient!]
+  patientsCount(where: PatientWhereInput! = {}): Int
   prescription: Prescription
   prescriptionItem: PrescriptionItem
 }
@@ -3088,7 +3094,7 @@ input MedicationWhereInput {
   drugCode: StringFilter
   drugIdentificationNumber: StringFilter
   activeIngredients: ActiveIngredientManyRelationFilter
-  patient: PatientWhereInput
+  patients: PatientManyRelationFilter
   prescription: PrescriptionWhereInput
   prescriptionItem: PrescriptionItemWhereInput
 }
@@ -3111,7 +3117,7 @@ input MedicationUpdateInput {
   drugCode: String
   drugIdentificationNumber: String
   activeIngredients: ActiveIngredientRelateToManyForUpdateInput
-  patient: PatientRelateToOneForUpdateInput
+  patients: PatientRelateToManyForUpdateInput
   prescription: PrescriptionRelateToOneForUpdateInput
   prescriptionItem: PrescriptionItemRelateToOneForUpdateInput
 }
@@ -3139,7 +3145,7 @@ input MedicationCreateInput {
   drugCode: String
   drugIdentificationNumber: String
   activeIngredients: ActiveIngredientRelateToManyForCreateInput
-  patient: PatientRelateToOneForCreateInput
+  patients: PatientRelateToManyForCreateInput
   prescription: PrescriptionRelateToOneForCreateInput
   prescriptionItem: PrescriptionItemRelateToOneForCreateInput
 }
