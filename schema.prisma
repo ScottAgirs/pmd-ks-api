@@ -393,14 +393,9 @@ model Medication {
   drugCode                 String             @unique @default("")
   drugIdentificationNumber String             @unique @default("")
   activeIngredients        ActiveIngredient[] @relation("ActiveIngredient_medication")
-  patients                 Patient[]          @relation("Medication_patients")
-  prescription             Prescription?      @relation("Medication_prescription", fields: [prescriptionId], references: [id])
-  prescriptionId           String?            @map("prescription")
-  prescriptionItem         PrescriptionItem?  @relation("Medication_prescriptionItem", fields: [prescriptionItemId], references: [id])
-  prescriptionItemId       String?            @unique @map("prescriptionItem")
+  prescriptionItems        PrescriptionItem[] @relation("PrescriptionItem_medication")
 
   @@index([brandName])
-  @@index([prescriptionId])
 }
 
 model Patient {
@@ -416,7 +411,6 @@ model Patient {
   emergencyContacts   EmergencyContact[]   @relation("EmergencyContact_patient")
   forms               Form[]               @relation("Form_patient")
   healthCards         HealthCard[]         @relation("HealthCard_patient")
-  medications         Medication[]         @relation("Medication_patients")
   pharmacyLocations   PharmacyLocation[]   @relation("Patient_pharmacyLocations")
   prescriptions       Prescription[]       @relation("Prescription_patient")
   savedDoctors        Doctor[]             @relation("Doctor_savedByPatients")
@@ -450,7 +444,6 @@ model Prescription {
   appointment       Appointment?       @relation("Appointment_prescription")
   doctor            Doctor?            @relation("Prescription_doctor", fields: [doctorId], references: [id])
   doctorId          String?            @map("doctor")
-  medications       Medication[]       @relation("Medication_prescription")
   patient           Patient?           @relation("Prescription_patient", fields: [patientId], references: [id])
   patientId         String?            @map("patient")
   prescriptionItems PrescriptionItem[] @relation("PrescriptionItem_prescription")
@@ -464,10 +457,12 @@ model PrescriptionItem {
   instructions   String        @default("")
   luCode         String        @default("")
   refills        String        @default("")
-  medication     Medication?   @relation("Medication_prescriptionItem")
+  medication     Medication?   @relation("PrescriptionItem_medication", fields: [medicationId], references: [id])
+  medicationId   String?       @map("medication")
   prescription   Prescription? @relation("PrescriptionItem_prescription", fields: [prescriptionId], references: [id])
   prescriptionId String?       @map("prescription")
 
+  @@index([medicationId])
   @@index([prescriptionId])
 }
 

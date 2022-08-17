@@ -3068,15 +3068,13 @@ type Medication {
     skip: Int! = 0
   ): [ActiveIngredient!]
   activeIngredientsCount(where: ActiveIngredientWhereInput! = {}): Int
-  patients(
-    where: PatientWhereInput! = {}
-    orderBy: [PatientOrderByInput!]! = []
+  prescriptionItems(
+    where: PrescriptionItemWhereInput! = {}
+    orderBy: [PrescriptionItemOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [Patient!]
-  patientsCount(where: PatientWhereInput! = {}): Int
-  prescription: Prescription
-  prescriptionItem: PrescriptionItem
+  ): [PrescriptionItem!]
+  prescriptionItemsCount(where: PrescriptionItemWhereInput! = {}): Int
 }
 
 input MedicationWhereUniqueInput {
@@ -3094,15 +3092,19 @@ input MedicationWhereInput {
   drugCode: StringFilter
   drugIdentificationNumber: StringFilter
   activeIngredients: ActiveIngredientManyRelationFilter
-  patients: PatientManyRelationFilter
-  prescription: PrescriptionWhereInput
-  prescriptionItem: PrescriptionItemWhereInput
+  prescriptionItems: PrescriptionItemManyRelationFilter
 }
 
 input ActiveIngredientManyRelationFilter {
   every: ActiveIngredientWhereInput
   some: ActiveIngredientWhereInput
   none: ActiveIngredientWhereInput
+}
+
+input PrescriptionItemManyRelationFilter {
+  every: PrescriptionItemWhereInput
+  some: PrescriptionItemWhereInput
+  none: PrescriptionItemWhereInput
 }
 
 input MedicationOrderByInput {
@@ -3117,9 +3119,7 @@ input MedicationUpdateInput {
   drugCode: String
   drugIdentificationNumber: String
   activeIngredients: ActiveIngredientRelateToManyForUpdateInput
-  patients: PatientRelateToManyForUpdateInput
-  prescription: PrescriptionRelateToOneForUpdateInput
-  prescriptionItem: PrescriptionItemRelateToOneForUpdateInput
+  prescriptionItems: PrescriptionItemRelateToManyForUpdateInput
 }
 
 input ActiveIngredientRelateToManyForUpdateInput {
@@ -3129,10 +3129,11 @@ input ActiveIngredientRelateToManyForUpdateInput {
   connect: [ActiveIngredientWhereUniqueInput!]
 }
 
-input PrescriptionItemRelateToOneForUpdateInput {
-  create: PrescriptionItemCreateInput
-  connect: PrescriptionItemWhereUniqueInput
-  disconnect: Boolean
+input PrescriptionItemRelateToManyForUpdateInput {
+  disconnect: [PrescriptionItemWhereUniqueInput!]
+  set: [PrescriptionItemWhereUniqueInput!]
+  create: [PrescriptionItemCreateInput!]
+  connect: [PrescriptionItemWhereUniqueInput!]
 }
 
 input MedicationUpdateArgs {
@@ -3145,9 +3146,7 @@ input MedicationCreateInput {
   drugCode: String
   drugIdentificationNumber: String
   activeIngredients: ActiveIngredientRelateToManyForCreateInput
-  patients: PatientRelateToManyForCreateInput
-  prescription: PrescriptionRelateToOneForCreateInput
-  prescriptionItem: PrescriptionItemRelateToOneForCreateInput
+  prescriptionItems: PrescriptionItemRelateToManyForCreateInput
 }
 
 input ActiveIngredientRelateToManyForCreateInput {
@@ -3155,9 +3154,9 @@ input ActiveIngredientRelateToManyForCreateInput {
   connect: [ActiveIngredientWhereUniqueInput!]
 }
 
-input PrescriptionItemRelateToOneForCreateInput {
-  create: PrescriptionItemCreateInput
-  connect: PrescriptionItemWhereUniqueInput
+input PrescriptionItemRelateToManyForCreateInput {
+  create: [PrescriptionItemCreateInput!]
+  connect: [PrescriptionItemWhereUniqueInput!]
 }
 
 type Patient {
@@ -3227,13 +3226,6 @@ type Patient {
     skip: Int! = 0
   ): [HealthCard!]
   healthCardsCount(where: HealthCardWhereInput! = {}): Int
-  medications(
-    where: MedicationWhereInput! = {}
-    orderBy: [MedicationOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Medication!]
-  medicationsCount(where: MedicationWhereInput! = {}): Int
   pharmacyLocations(
     where: PharmacyLocationWhereInput! = {}
     orderBy: [PharmacyLocationOrderByInput!]! = []
@@ -3285,7 +3277,6 @@ input PatientWhereInput {
   emergencyContacts: EmergencyContactManyRelationFilter
   forms: FormManyRelationFilter
   healthCards: HealthCardManyRelationFilter
-  medications: MedicationManyRelationFilter
   pharmacyLocations: PharmacyLocationManyRelationFilter
   prescriptions: PrescriptionManyRelationFilter
   savedDoctors: DoctorManyRelationFilter
@@ -3309,12 +3300,6 @@ input HealthCardManyRelationFilter {
   every: HealthCardWhereInput
   some: HealthCardWhereInput
   none: HealthCardWhereInput
-}
-
-input MedicationManyRelationFilter {
-  every: MedicationWhereInput
-  some: MedicationWhereInput
-  none: MedicationWhereInput
 }
 
 input PharmacyLocationManyRelationFilter {
@@ -3341,7 +3326,6 @@ input PatientUpdateInput {
   emergencyContacts: EmergencyContactRelateToManyForUpdateInput
   forms: FormRelateToManyForUpdateInput
   healthCards: HealthCardRelateToManyForUpdateInput
-  medications: MedicationRelateToManyForUpdateInput
   pharmacyLocations: PharmacyLocationRelateToManyForUpdateInput
   prescriptions: PrescriptionRelateToManyForUpdateInput
   savedDoctors: DoctorRelateToManyForUpdateInput
@@ -3370,13 +3354,6 @@ input HealthCardRelateToManyForUpdateInput {
   connect: [HealthCardWhereUniqueInput!]
 }
 
-input MedicationRelateToManyForUpdateInput {
-  disconnect: [MedicationWhereUniqueInput!]
-  set: [MedicationWhereUniqueInput!]
-  create: [MedicationCreateInput!]
-  connect: [MedicationWhereUniqueInput!]
-}
-
 input PharmacyLocationRelateToManyForUpdateInput {
   disconnect: [PharmacyLocationWhereUniqueInput!]
   set: [PharmacyLocationWhereUniqueInput!]
@@ -3401,7 +3378,6 @@ input PatientCreateInput {
   emergencyContacts: EmergencyContactRelateToManyForCreateInput
   forms: FormRelateToManyForCreateInput
   healthCards: HealthCardRelateToManyForCreateInput
-  medications: MedicationRelateToManyForCreateInput
   pharmacyLocations: PharmacyLocationRelateToManyForCreateInput
   prescriptions: PrescriptionRelateToManyForCreateInput
   savedDoctors: DoctorRelateToManyForCreateInput
@@ -3422,11 +3398,6 @@ input EmergencyContactRelateToManyForCreateInput {
 input HealthCardRelateToManyForCreateInput {
   create: [HealthCardCreateInput!]
   connect: [HealthCardWhereUniqueInput!]
-}
-
-input MedicationRelateToManyForCreateInput {
-  create: [MedicationCreateInput!]
-  connect: [MedicationWhereUniqueInput!]
 }
 
 input PharmacyLocationRelateToManyForCreateInput {
@@ -3564,13 +3535,6 @@ type Prescription {
   id: ID!
   appointment: Appointment
   doctor: Doctor
-  medications(
-    where: MedicationWhereInput! = {}
-    orderBy: [MedicationOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Medication!]
-  medicationsCount(where: MedicationWhereInput! = {}): Int
   patient: Patient
   prescriptionItems(
     where: PrescriptionItemWhereInput! = {}
@@ -3592,15 +3556,8 @@ input PrescriptionWhereInput {
   id: IDFilter
   appointment: AppointmentWhereInput
   doctor: DoctorWhereInput
-  medications: MedicationManyRelationFilter
   patient: PatientWhereInput
   prescriptionItems: PrescriptionItemManyRelationFilter
-}
-
-input PrescriptionItemManyRelationFilter {
-  every: PrescriptionItemWhereInput
-  some: PrescriptionItemWhereInput
-  none: PrescriptionItemWhereInput
 }
 
 input PrescriptionOrderByInput {
@@ -3610,16 +3567,8 @@ input PrescriptionOrderByInput {
 input PrescriptionUpdateInput {
   appointment: AppointmentRelateToOneForUpdateInput
   doctor: DoctorRelateToOneForUpdateInput
-  medications: MedicationRelateToManyForUpdateInput
   patient: PatientRelateToOneForUpdateInput
   prescriptionItems: PrescriptionItemRelateToManyForUpdateInput
-}
-
-input PrescriptionItemRelateToManyForUpdateInput {
-  disconnect: [PrescriptionItemWhereUniqueInput!]
-  set: [PrescriptionItemWhereUniqueInput!]
-  create: [PrescriptionItemCreateInput!]
-  connect: [PrescriptionItemWhereUniqueInput!]
 }
 
 input PrescriptionUpdateArgs {
@@ -3630,14 +3579,8 @@ input PrescriptionUpdateArgs {
 input PrescriptionCreateInput {
   appointment: AppointmentRelateToOneForCreateInput
   doctor: DoctorRelateToOneForCreateInput
-  medications: MedicationRelateToManyForCreateInput
   patient: PatientRelateToOneForCreateInput
   prescriptionItems: PrescriptionItemRelateToManyForCreateInput
-}
-
-input PrescriptionItemRelateToManyForCreateInput {
-  create: [PrescriptionItemCreateInput!]
-  connect: [PrescriptionItemWhereUniqueInput!]
 }
 
 type PrescriptionItem {
