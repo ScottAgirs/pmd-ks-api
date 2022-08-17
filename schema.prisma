@@ -101,12 +101,14 @@ model AppointmentBilling {
 model AppointmentBillingItem {
   id            String              @id @default(cuid())
   diagnosisCode String              @default("")
-  feeCode       String              @default("")
-  units         String              @default("")
+  units         Int?
   billing       AppointmentBilling? @relation("AppointmentBillingItem_billing", fields: [billingId], references: [id])
   billingId     String?             @map("billing")
+  claim         BillingClaim?       @relation("AppointmentBillingItem_claim", fields: [claimId], references: [id])
+  claimId       String?             @map("claim")
 
   @@index([billingId])
+  @@index([claimId])
 }
 
 model AppointmentNote {
@@ -154,6 +156,14 @@ model AppointmentVital {
   patientId        String?      @map("patient")
 
   @@index([patientId])
+}
+
+model BillingClaim {
+  id                      String                   @id @default(cuid())
+  amount                  Int?
+  description             String                   @default("")
+  feeCode                 String                   @default("")
+  appointmentBillingItems AppointmentBillingItem[] @relation("AppointmentBillingItem_claim")
 }
 
 model Booking {
