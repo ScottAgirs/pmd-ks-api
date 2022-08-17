@@ -12,8 +12,9 @@ export const Medication = list({
       many: true,
       ref: 'ActiveIngredient.medication',
     }),
-    patients: relationship({ many: true, ref: 'Patient.medications' }),
-    prescription: relationship({ ref: 'Prescription.medications' }),
-    prescriptionItem: relationship({ ref: 'PrescriptionItem.medication' }),
+    prescriptionItems: relationship({
+      many: true,
+      ref: 'PrescriptionItem.medication',
+    }),
   },
 });
