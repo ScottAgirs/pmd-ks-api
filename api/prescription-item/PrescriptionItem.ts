@@ -8,7 +8,7 @@ export const PrescriptionItem = list({
     luCode: text(),
     refills: text(),
     // eslint-disable-next-line sort-keys
-    medication: relationship({ ref: 'Medication.prescriptionItem' }),
+    medication: relationship({ ref: 'Medication.prescriptionItems' }),
     prescription: relationship({ ref: 'Prescription.prescriptionItems' }),
   },
 });
