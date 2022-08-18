@@ -6,6 +6,8 @@ import { AppointmentNote } from './api/appointment-note/AppointmentNote';
 import { AppointmentRequest } from './api/appointment-request/AppointmentRequest';
 import { AppointmentVital } from './api/appointment-vital/AppointmentVital';
 import { Appointment } from './api/appointment/Appointment';
+
+import { BillingClaim } from './api/billing-claim/BillingClaim';
 import { Booking } from './api/booking/Booking';
 
 import { Calendar } from './api/calendar/Calendar';
@@ -66,6 +68,7 @@ export const lists = {
   AppointmentNote,
   AppointmentRequest,
   AppointmentVital,
+  BillingClaim,
   Booking,
   Calendar,
   CalendarEvent,
