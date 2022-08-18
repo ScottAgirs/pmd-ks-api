@@ -185,6 +185,23 @@ type Mutation {
   updateBillingClaims(data: [BillingClaimUpdateArgs!]!): [BillingClaim]
   deleteBillingClaim(where: BillingClaimWhereUniqueInput!): BillingClaim
   deleteBillingClaims(where: [BillingClaimWhereUniqueInput!]!): [BillingClaim]
+  createBillingDiagnosis(data: BillingDiagnosisCreateInput!): BillingDiagnosis
+  createBillingDiagnoses(
+    data: [BillingDiagnosisCreateInput!]!
+  ): [BillingDiagnosis]
+  updateBillingDiagnosis(
+    where: BillingDiagnosisWhereUniqueInput!
+    data: BillingDiagnosisUpdateInput!
+  ): BillingDiagnosis
+  updateBillingDiagnoses(
+    data: [BillingDiagnosisUpdateArgs!]!
+  ): [BillingDiagnosis]
+  deleteBillingDiagnosis(
+    where: BillingDiagnosisWhereUniqueInput!
+  ): BillingDiagnosis
+  deleteBillingDiagnoses(
+    where: [BillingDiagnosisWhereUniqueInput!]!
+  ): [BillingDiagnosis]
   createBooking(data: BookingCreateInput!): Booking
   createBookings(data: [BookingCreateInput!]!): [Booking]
   updateBooking(
@@ -1218,6 +1235,7 @@ type AppointmentBillingItem {
   units: Int
   billing: AppointmentBilling
   claim: BillingClaim
+  diagnosis: BillingDiagnosis
 }
 
 input AppointmentBillingItemWhereUniqueInput {
@@ -1234,6 +1252,7 @@ input AppointmentBillingItemWhereInput {
   units: IntNullableFilter
   billing: AppointmentBillingWhereInput
   claim: BillingClaimWhereInput
+  diagnosis: BillingDiagnosisWhereInput
 }
 
 input IntNullableFilter {
@@ -1260,11 +1279,18 @@ input AppointmentBillingItemUpdateInput {
   units: Int
   billing: AppointmentBillingRelateToOneForUpdateInput
   claim: BillingClaimRelateToOneForUpdateInput
+  diagnosis: BillingDiagnosisRelateToOneForUpdateInput
 }
 
 input BillingClaimRelateToOneForUpdateInput {
   create: BillingClaimCreateInput
   connect: BillingClaimWhereUniqueInput
+  disconnect: Boolean
+}
+
+input BillingDiagnosisRelateToOneForUpdateInput {
+  create: BillingDiagnosisCreateInput
+  connect: BillingDiagnosisWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1279,11 +1305,17 @@ input AppointmentBillingItemCreateInput {
   units: Int
   billing: AppointmentBillingRelateToOneForCreateInput
   claim: BillingClaimRelateToOneForCreateInput
+  diagnosis: BillingDiagnosisRelateToOneForCreateInput
 }
 
 input BillingClaimRelateToOneForCreateInput {
   create: BillingClaimCreateInput
   connect: BillingClaimWhereUniqueInput
+}
+
+input BillingDiagnosisRelateToOneForCreateInput {
+  create: BillingDiagnosisCreateInput
+  connect: BillingDiagnosisWhereUniqueInput
 }
 
 type AppointmentNote {
@@ -1528,6 +1560,58 @@ input BillingClaimCreateInput {
   amount: Int
   description: String
   feeCode: String
+  appointmentBillingItems: AppointmentBillingItemRelateToManyForCreateInput
+}
+
+type BillingDiagnosis {
+  id: ID!
+  code: String
+  description: String
+  appointmentBillingItems(
+    where: AppointmentBillingItemWhereInput! = {}
+    orderBy: [AppointmentBillingItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentBillingItem!]
+  appointmentBillingItemsCount(
+    where: AppointmentBillingItemWhereInput! = {}
+  ): Int
+}
+
+input BillingDiagnosisWhereUniqueInput {
+  id: ID
+}
+
+input BillingDiagnosisWhereInput {
+  AND: [BillingDiagnosisWhereInput!]
+  OR: [BillingDiagnosisWhereInput!]
+  NOT: [BillingDiagnosisWhereInput!]
+  id: IDFilter
+  code: StringFilter
+  description: StringFilter
+  appointmentBillingItems: AppointmentBillingItemManyRelationFilter
+}
+
+input BillingDiagnosisOrderByInput {
+  id: OrderDirection
+  code: OrderDirection
+  description: OrderDirection
+}
+
+input BillingDiagnosisUpdateInput {
+  code: String
+  description: String
+  appointmentBillingItems: AppointmentBillingItemRelateToManyForUpdateInput
+}
+
+input BillingDiagnosisUpdateArgs {
+  where: BillingDiagnosisWhereUniqueInput!
+  data: BillingDiagnosisUpdateInput!
+}
+
+input BillingDiagnosisCreateInput {
+  code: String
+  description: String
   appointmentBillingItems: AppointmentBillingItemRelateToManyForCreateInput
 }
 
@@ -5068,6 +5152,14 @@ type Query {
   ): [BillingClaim!]
   billingClaim(where: BillingClaimWhereUniqueInput!): BillingClaim
   billingClaimsCount(where: BillingClaimWhereInput! = {}): Int
+  billingDiagnoses(
+    where: BillingDiagnosisWhereInput! = {}
+    orderBy: [BillingDiagnosisOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [BillingDiagnosis!]
+  billingDiagnosis(where: BillingDiagnosisWhereUniqueInput!): BillingDiagnosis
+  billingDiagnosesCount(where: BillingDiagnosisWhereInput! = {}): Int
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
