@@ -26,6 +26,9 @@ import { populateSteppers } from './seed/onboard/populate-stepper';
 import { populateAdminUsers } from './seed/user/populate-admin-users';
 import { resetList } from './utils/resetList';
 import { populatePharmacies } from './seed/common/populate-pharmacies';
+
+import { populateClaims } from './seed/billing/populate-claims';
+import { populateDiagnosis } from './seed/billing/populate-diagnosis';
 import { populateProducts } from './seed/medications/populate-products';
 import { populateIngredients } from './seed/medications/populate-ingredients';
 
@@ -97,16 +100,30 @@ export default auth.withAuth(
           resetList('Medication', keystone);
         }
         if (process.argv.includes('--reset-ingredients')) {
-          resetList('ActiveIngredients', keystone);
+          resetList('ActiveIngredient', keystone);
         }
         if (process.argv.includes('--reset-pharmas')) {
           resetList('Pharmacy', keystone);
           resetList('PharmacyLocation', keystone);
         }
+        // if (process.argv.includes('--sanitize-ingredients')) {
+        //   sanitizeIngredients(keystone);
+        // }
+        if (process.argv.includes('--seed-claims')) {
+          populateClaims(keystone);
+        }
+        if (process.argv.includes('--seed-diagnosis')) {
+          populateDiagnosis(keystone);
+        }
         if (process.argv.includes('--seed-pharmas')) {
           populatePharmacies(keystone);
         }
         if (process.argv.includes('--seed-critical')) {
+          populateProducts(keystone);
+          populateIngredients(keystone);
+          populateClaims(keystone);
+          populateDiagnosis(keystone);
+          populatePharmacies(keystone);
           populateCalendarEventTypes(keystone);
           populateContracts(keystone);
           populateLanguages(keystone);
