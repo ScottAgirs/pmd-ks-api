@@ -202,6 +202,17 @@ type Mutation {
   deleteBillingDiagnoses(
     where: [BillingDiagnosisWhereUniqueInput!]!
   ): [BillingDiagnosis]
+  createBillingPremium(data: BillingPremiumCreateInput!): BillingPremium
+  createBillingPremiums(data: [BillingPremiumCreateInput!]!): [BillingPremium]
+  updateBillingPremium(
+    where: BillingPremiumWhereUniqueInput!
+    data: BillingPremiumUpdateInput!
+  ): BillingPremium
+  updateBillingPremiums(data: [BillingPremiumUpdateArgs!]!): [BillingPremium]
+  deleteBillingPremium(where: BillingPremiumWhereUniqueInput!): BillingPremium
+  deleteBillingPremiums(
+    where: [BillingPremiumWhereUniqueInput!]!
+  ): [BillingPremium]
   createBooking(data: BookingCreateInput!): Booking
   createBookings(data: [BookingCreateInput!]!): [Booking]
   updateBooking(
@@ -1230,12 +1241,11 @@ input AppointmentBillingItemRelateToManyForCreateInput {
 
 type AppointmentBillingItem {
   id: ID!
-  diagnosisCode: String
-  premiumCode: String
   units: Int
   billing: AppointmentBilling
   claim: BillingClaim
   diagnosis: BillingDiagnosis
+  premium: BillingPremium
 }
 
 input AppointmentBillingItemWhereUniqueInput {
@@ -1247,12 +1257,11 @@ input AppointmentBillingItemWhereInput {
   OR: [AppointmentBillingItemWhereInput!]
   NOT: [AppointmentBillingItemWhereInput!]
   id: IDFilter
-  diagnosisCode: StringFilter
-  premiumCode: StringFilter
   units: IntNullableFilter
   billing: AppointmentBillingWhereInput
   claim: BillingClaimWhereInput
   diagnosis: BillingDiagnosisWhereInput
+  premium: BillingPremiumWhereInput
 }
 
 input IntNullableFilter {
@@ -1268,18 +1277,15 @@ input IntNullableFilter {
 
 input AppointmentBillingItemOrderByInput {
   id: OrderDirection
-  diagnosisCode: OrderDirection
-  premiumCode: OrderDirection
   units: OrderDirection
 }
 
 input AppointmentBillingItemUpdateInput {
-  diagnosisCode: String
-  premiumCode: String
   units: Int
   billing: AppointmentBillingRelateToOneForUpdateInput
   claim: BillingClaimRelateToOneForUpdateInput
   diagnosis: BillingDiagnosisRelateToOneForUpdateInput
+  premium: BillingPremiumRelateToOneForUpdateInput
 }
 
 input BillingClaimRelateToOneForUpdateInput {
@@ -1294,18 +1300,23 @@ input BillingDiagnosisRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input BillingPremiumRelateToOneForUpdateInput {
+  create: BillingPremiumCreateInput
+  connect: BillingPremiumWhereUniqueInput
+  disconnect: Boolean
+}
+
 input AppointmentBillingItemUpdateArgs {
   where: AppointmentBillingItemWhereUniqueInput!
   data: AppointmentBillingItemUpdateInput!
 }
 
 input AppointmentBillingItemCreateInput {
-  diagnosisCode: String
-  premiumCode: String
   units: Int
   billing: AppointmentBillingRelateToOneForCreateInput
   claim: BillingClaimRelateToOneForCreateInput
   diagnosis: BillingDiagnosisRelateToOneForCreateInput
+  premium: BillingPremiumRelateToOneForCreateInput
 }
 
 input BillingClaimRelateToOneForCreateInput {
@@ -1316,6 +1327,11 @@ input BillingClaimRelateToOneForCreateInput {
 input BillingDiagnosisRelateToOneForCreateInput {
   create: BillingDiagnosisCreateInput
   connect: BillingDiagnosisWhereUniqueInput
+}
+
+input BillingPremiumRelateToOneForCreateInput {
+  create: BillingPremiumCreateInput
+  connect: BillingPremiumWhereUniqueInput
 }
 
 type AppointmentNote {
@@ -1612,6 +1628,58 @@ input BillingDiagnosisUpdateArgs {
 input BillingDiagnosisCreateInput {
   code: String
   description: String
+  appointmentBillingItems: AppointmentBillingItemRelateToManyForCreateInput
+}
+
+type BillingPremium {
+  id: ID!
+  code: String
+  name: String
+  appointmentBillingItems(
+    where: AppointmentBillingItemWhereInput! = {}
+    orderBy: [AppointmentBillingItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AppointmentBillingItem!]
+  appointmentBillingItemsCount(
+    where: AppointmentBillingItemWhereInput! = {}
+  ): Int
+}
+
+input BillingPremiumWhereUniqueInput {
+  id: ID
+}
+
+input BillingPremiumWhereInput {
+  AND: [BillingPremiumWhereInput!]
+  OR: [BillingPremiumWhereInput!]
+  NOT: [BillingPremiumWhereInput!]
+  id: IDFilter
+  code: StringFilter
+  name: StringFilter
+  appointmentBillingItems: AppointmentBillingItemManyRelationFilter
+}
+
+input BillingPremiumOrderByInput {
+  id: OrderDirection
+  code: OrderDirection
+  name: OrderDirection
+}
+
+input BillingPremiumUpdateInput {
+  code: String
+  name: String
+  appointmentBillingItems: AppointmentBillingItemRelateToManyForUpdateInput
+}
+
+input BillingPremiumUpdateArgs {
+  where: BillingPremiumWhereUniqueInput!
+  data: BillingPremiumUpdateInput!
+}
+
+input BillingPremiumCreateInput {
+  code: String
+  name: String
   appointmentBillingItems: AppointmentBillingItemRelateToManyForCreateInput
 }
 
@@ -5160,6 +5228,14 @@ type Query {
   ): [BillingDiagnosis!]
   billingDiagnosis(where: BillingDiagnosisWhereUniqueInput!): BillingDiagnosis
   billingDiagnosesCount(where: BillingDiagnosisWhereInput! = {}): Int
+  billingPremiums(
+    where: BillingPremiumWhereInput! = {}
+    orderBy: [BillingPremiumOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [BillingPremium!]
+  billingPremium(where: BillingPremiumWhereUniqueInput!): BillingPremium
+  billingPremiumsCount(where: BillingPremiumWhereInput! = {}): Int
   bookings(
     where: BookingWhereInput! = {}
     orderBy: [BookingOrderByInput!]! = []
