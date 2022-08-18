@@ -31,6 +31,7 @@ import { populateClaims } from './seed/billing/populate-claims';
 import { populateDiagnosis } from './seed/billing/populate-diagnosis';
 import { populateProducts } from './seed/medications/populate-products';
 import { populateIngredients } from './seed/medications/populate-ingredients';
+import { populatePremiums } from './seed/billing/populate-premiums';
 
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
 
@@ -117,6 +118,9 @@ export default auth.withAuth(
         }
         if (process.argv.includes('--seed-pharmas')) {
           populatePharmacies(keystone);
+        }
+        if (process.argv.includes('--seed-premiums')) {
+          populatePremiums(keystone);
         }
         if (process.argv.includes('--seed-critical')) {
           populateProducts(keystone);
