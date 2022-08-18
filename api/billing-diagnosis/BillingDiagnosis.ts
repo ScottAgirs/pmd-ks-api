@@ -9,7 +9,7 @@ export const BillingDiagnosis = list({
     // eslint-disable-next-line sort-keys
     appointmentBillingItems: relationship({
       many: true,
-      ref: 'AppointmentBillingItem.claim',
+      ref: 'AppointmentBillingItem.diagnosis',
     }),
   },
 });
