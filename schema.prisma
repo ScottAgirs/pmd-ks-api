@@ -100,20 +100,21 @@ model AppointmentBilling {
 }
 
 model AppointmentBillingItem {
-  id            String              @id @default(cuid())
-  diagnosisCode String              @default("")
-  premiumCode   String              @default("")
-  units         Int?
-  billing       AppointmentBilling? @relation("AppointmentBillingItem_billing", fields: [billingId], references: [id])
-  billingId     String?             @map("billing")
-  claim         BillingClaim?       @relation("AppointmentBillingItem_claim", fields: [claimId], references: [id])
-  claimId       String?             @map("claim")
-  diagnosis     BillingDiagnosis?   @relation("AppointmentBillingItem_diagnosis", fields: [diagnosisId], references: [id])
-  diagnosisId   String?             @map("diagnosis")
+  id          String              @id @default(cuid())
+  units       Int?
+  billing     AppointmentBilling? @relation("AppointmentBillingItem_billing", fields: [billingId], references: [id])
+  billingId   String?             @map("billing")
+  claim       BillingClaim?       @relation("AppointmentBillingItem_claim", fields: [claimId], references: [id])
+  claimId     String?             @map("claim")
+  diagnosis   BillingDiagnosis?   @relation("AppointmentBillingItem_diagnosis", fields: [diagnosisId], references: [id])
+  diagnosisId String?             @map("diagnosis")
+  premium     BillingPremium?     @relation("AppointmentBillingItem_premium", fields: [premiumId], references: [id])
+  premiumId   String?             @map("premium")
 
   @@index([billingId])
   @@index([claimId])
   @@index([diagnosisId])
+  @@index([premiumId])
 }
 
 model AppointmentNote {
@@ -182,6 +183,16 @@ model BillingDiagnosis {
 
   @@index([code])
   @@index([description])
+}
+
+model BillingPremium {
+  id                      String                   @id @default(cuid())
+  code                    String                   @default("")
+  name                    String                   @default("")
+  appointmentBillingItems AppointmentBillingItem[] @relation("AppointmentBillingItem_premium")
+
+  @@index([code])
+  @@index([name])
 }
 
 model Booking {
