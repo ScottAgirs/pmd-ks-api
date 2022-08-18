@@ -1126,6 +1126,7 @@ input AppointmentVitalRelateToOneForCreateInput {
 
 type AppointmentBilling {
   id: ID!
+  referringDoctorNumber: String
   status: String
   appointment: Appointment
   billingItems(
@@ -1147,6 +1148,7 @@ input AppointmentBillingWhereInput {
   OR: [AppointmentBillingWhereInput!]
   NOT: [AppointmentBillingWhereInput!]
   id: IDFilter
+  referringDoctorNumber: StringFilter
   status: StringFilter
   appointment: AppointmentWhereInput
   billingItems: AppointmentBillingItemManyRelationFilter
@@ -1161,10 +1163,12 @@ input AppointmentBillingItemManyRelationFilter {
 
 input AppointmentBillingOrderByInput {
   id: OrderDirection
+  referringDoctorNumber: OrderDirection
   status: OrderDirection
 }
 
 input AppointmentBillingUpdateInput {
+  referringDoctorNumber: String
   status: String
   appointment: AppointmentRelateToOneForUpdateInput
   billingItems: AppointmentBillingItemRelateToManyForUpdateInput
@@ -1190,6 +1194,7 @@ input AppointmentBillingUpdateArgs {
 }
 
 input AppointmentBillingCreateInput {
+  referringDoctorNumber: String
   status: String
   appointment: AppointmentRelateToOneForCreateInput
   billingItems: AppointmentBillingItemRelateToManyForCreateInput
@@ -1209,6 +1214,7 @@ input AppointmentBillingItemRelateToManyForCreateInput {
 type AppointmentBillingItem {
   id: ID!
   diagnosisCode: String
+  premiumCode: String
   units: Int
   billing: AppointmentBilling
   claim: BillingClaim
@@ -1224,6 +1230,7 @@ input AppointmentBillingItemWhereInput {
   NOT: [AppointmentBillingItemWhereInput!]
   id: IDFilter
   diagnosisCode: StringFilter
+  premiumCode: StringFilter
   units: IntNullableFilter
   billing: AppointmentBillingWhereInput
   claim: BillingClaimWhereInput
@@ -1243,11 +1250,13 @@ input IntNullableFilter {
 input AppointmentBillingItemOrderByInput {
   id: OrderDirection
   diagnosisCode: OrderDirection
+  premiumCode: OrderDirection
   units: OrderDirection
 }
 
 input AppointmentBillingItemUpdateInput {
   diagnosisCode: String
+  premiumCode: String
   units: Int
   billing: AppointmentBillingRelateToOneForUpdateInput
   claim: BillingClaimRelateToOneForUpdateInput
@@ -1266,6 +1275,7 @@ input AppointmentBillingItemUpdateArgs {
 
 input AppointmentBillingItemCreateInput {
   diagnosisCode: String
+  premiumCode: String
   units: Int
   billing: AppointmentBillingRelateToOneForCreateInput
   claim: BillingClaimRelateToOneForCreateInput
