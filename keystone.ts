@@ -16,19 +16,6 @@ import { lists } from './schema';
 
 import { session } from './auth';
 
-import { populateSpecialties } from './seed/doctor/populate-specialties';
-import { populateSubSpecialties } from './seed/doctor/populate-sub-specialties';
-import { populateCalendarEventTypes } from './seed/doctor/populate-calendar-event-types';
-import { populateContracts } from './seed/contracts/populate-contracts';
-import { populateDummyUsers } from './seed/user/populate-dummy-users';
-import { populateLanguages } from './seed/common/populate-languages';
-import { populateSteppers } from './seed/onboard/populate-stepper';
-import { populateAdminUsers } from './seed/user/populate-admin-users';
-import { resetList } from './utils/resetList';
-import { populatePharmacies } from './seed/common/populate-pharmacies';
-import { populateProducts } from './seed/medications/populate-products';
-import { populateIngredients } from './seed/medications/populate-ingredients';
-
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
 
 let sessionSecret = process.env.SESSION_SECRET;
@@ -89,60 +76,6 @@ export default auth.withAuth(
       provider: 'postgresql',
       url: process.env.DATABASE_URL as string,
       // eslint-disable-next-line sort-keys
-      async onConnect(keystone) {
-        // if (process.argv.includes("--reset-steppers")) {
-        //   resetList("StepperStep", keystone);
-        // }
-        if (process.argv.includes('--reset-meds')) {
-          resetList('Medication', keystone);
-        }
-        if (process.argv.includes('--reset-ingredients')) {
-          resetList('ActiveIngredients', keystone);
-        }
-        if (process.argv.includes('--reset-pharmas')) {
-          resetList('Pharmacy', keystone);
-          resetList('PharmacyLocation', keystone);
-        }
-        if (process.argv.includes('--seed-pharmas')) {
-          populatePharmacies(keystone);
-        }
-        if (process.argv.includes('--seed-critical')) {
-          populateCalendarEventTypes(keystone);
-          populateContracts(keystone);
-          populateLanguages(keystone);
-          populateSpecialties(keystone);
-          populateSteppers(keystone);
-          populateSubSpecialties(keystone);
-        }
-
-        if (process.argv.includes('--seed-drug-products')) {
-          populateProducts(keystone);
-        }
-        if (process.argv.includes('--seed-med-ingredients')) {
-          populateIngredients(keystone);
-        }
-        if (process.argv.includes('--seed-languages')) {
-          populateLanguages(keystone);
-        }
-        if (process.argv.includes('--seed-steppers')) {
-          populateSteppers(keystone);
-        }
-        if (process.argv.includes('--seed-calendar-event-types')) {
-          populateCalendarEventTypes(keystone);
-        }
-        if (process.argv.includes('--seed-doctor-specialties')) {
-          populateSpecialties(keystone);
-        }
-        if (process.argv.includes('--seed-doctor-sub-specialties')) {
-          populateSubSpecialties(keystone);
-        }
-        if (process.argv.includes('--seed-users')) {
-          populateDummyUsers(keystone);
-        }
-        if (process.argv.includes('--seed-admins')) {
-          populateAdminUsers(keystone);
-        }
-      },
     },
     extendGraphqlSchema,
     lists,
