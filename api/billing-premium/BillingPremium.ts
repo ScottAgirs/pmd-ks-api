@@ -4,8 +4,10 @@ import { list } from '@keystone-6/core';
 
 export const BillingPremium = list({
   fields: {
+    amount: text({ isIndexed: true }),
+    feeCode: text({ isIndexed: true }),
     code: text({ isIndexed: true }),
-    name: text({ isIndexed: true }),
+    description: text({ isIndexed: true }),
     // eslint-disable-next-line sort-keys
     appointmentBillingItems: relationship({
       many: true,
