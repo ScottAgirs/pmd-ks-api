@@ -5,8 +5,8 @@ import { list } from '@keystone-6/core';
 export const BillingClaim = list({
   fields: {
     amount: integer(),
-    description: text(),
-    feeCode: text(),
+    description: text({ isIndexed: true }),
+    feeCode: text({ isIndexed: true }),
     // eslint-disable-next-line sort-keys
     appointmentBillingItems: relationship({
       many: true,
