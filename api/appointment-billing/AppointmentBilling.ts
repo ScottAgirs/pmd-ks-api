@@ -4,6 +4,7 @@ import { list } from '@keystone-6/core';
 
 export const AppointmentBilling = list({
   fields: {
+    referringDoctorNumber: text(),
     status: text(),
     // eslint-disable-next-line sort-keys
     appointment: relationship({ ref: 'Appointment.billing' }),
