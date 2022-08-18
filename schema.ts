@@ -8,6 +8,7 @@ import { AppointmentVital } from './api/appointment-vital/AppointmentVital';
 import { Appointment } from './api/appointment/Appointment';
 
 import { BillingClaim } from './api/billing-claim/BillingClaim';
+import { BillingDiagnosis } from './api/billing-diagnosis/BillingDiagnosis';
 import { Booking } from './api/booking/Booking';
 
 import { Calendar } from './api/calendar/Calendar';
@@ -69,6 +70,7 @@ export const lists = {
   AppointmentRequest,
   AppointmentVital,
   BillingClaim,
+  BillingDiagnosis,
   Booking,
   Calendar,
   CalendarEvent,

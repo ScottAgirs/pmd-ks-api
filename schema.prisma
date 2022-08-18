@@ -108,9 +108,12 @@ model AppointmentBillingItem {
   billingId     String?             @map("billing")
   claim         BillingClaim?       @relation("AppointmentBillingItem_claim", fields: [claimId], references: [id])
   claimId       String?             @map("claim")
+  diagnosis     BillingDiagnosis?   @relation("AppointmentBillingItem_diagnosis", fields: [diagnosisId], references: [id])
+  diagnosisId   String?             @map("diagnosis")
 
   @@index([billingId])
   @@index([claimId])
+  @@index([diagnosisId])
 }
 
 model AppointmentNote {
@@ -169,6 +172,16 @@ model BillingClaim {
 
   @@index([description])
   @@index([feeCode])
+}
+
+model BillingDiagnosis {
+  id                      String                   @id @default(cuid())
+  code                    String                   @default("")
+  description             String                   @default("")
+  appointmentBillingItems AppointmentBillingItem[] @relation("AppointmentBillingItem_diagnosis")
+
+  @@index([code])
+  @@index([description])
 }
 
 model Booking {
