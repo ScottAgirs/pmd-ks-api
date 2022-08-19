@@ -1,4 +1,5 @@
 import { KeystoneContext } from "@keystone-6/core/types";
+import { sendTemplatedEmail } from "../../../lib/email/sendEmail";
 
 interface CreateEventBookingInput {
   firstName?: string;
@@ -31,8 +32,8 @@ export const addPatientToDoctor = async (
     },
   });
 
-  const existingPatient =
-    userMatchedPatients.length > 0 ? userMatchedPatients[0] : null;
+  const existingPatient = userMatchedPatients.length > 0 ? userMatchedPatients[0] : null;
+  console.log("🚀 ~ file: addPatientToDoctor.ts ~ line 36 ~ existingPatient", existingPatient)
 
   if (!existingPatient) {
     // Check if user with email already exists
@@ -40,6 +41,7 @@ export const addPatientToDoctor = async (
       where: { user: { email: { equals: email } } },
     });
 
+    // Covers the case, where user with email already exists, but incorrect data was provided
     if (emailExists.length > 0) {
       throw new Error("Email already exists");
     } else {
@@ -54,11 +56,28 @@ export const addPatientToDoctor = async (
       const patientInCare = await context.db.Patient.updateOne({
         where: { id: patientId as string },
         data: {
-          caredByDoctors: {
+          caredByDoctors: { 
             connect: [{ id: currentUser.doctor.id }],
           },
         },
       });
+
+      // Send email
+      try {
+        console.log("Will try to send 💌")
+        sendTemplatedEmail({
+          to: email,
+          templateAlias: "pt-dr-added-patient",
+          templateModel: {
+            patientFirstName: firstName,
+            doctorFirstName: currentUser.firstName,
+            doctorLastName: currentUser.lastName,
+            actionUrl: `${process.env.FRONTEND_URL}/doctors?doctorId=${currentUser.doctor.id}`,
+          },
+        });
+      } catch (error) {
+        console.log("createHealthCard - error", error);
+      }
 
       return patientInCare;
     } catch (error) {

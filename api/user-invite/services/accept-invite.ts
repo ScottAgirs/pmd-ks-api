@@ -73,6 +73,17 @@ export const acceptInvite = async (
       },
     });
 
+    // sendTemplatedEmail({
+    //   to: updatedInvitedPatient.user.email,
+    //   templateAlias: "pt-dr-invited-patient",
+    //   templateModel: {
+    //     patientFirstName: updatedInvitedPatient.user.firstName,
+    //     patientLastName: updatedInvitedPatient.user.firstName,
+    //     doctorFirstName: currentUser.firstName,
+    //     actionUrl: `${process.env.FRONTEND_URL}/doctor/__PATIENT__`,
+    //   },
+    // });
+
     return updatedInvitedPatient;
   } catch (error) {
     // eslint-disable-next-line no-console
