@@ -117,6 +117,7 @@ export default auth.withAuth(
         }
         if (process.argv.includes('--reset-meds')) {
           resetList('Medication', keystone);
+          resetList('ActiveIngredient', keystone);
         }
         if (process.argv.includes('--link-ingredients')) {
           linkIngredients(keystone);
@@ -129,11 +130,11 @@ export default auth.withAuth(
           resetList('PharmacyLocation', keystone);
         }
         if (process.argv.includes('--seed-claims')) {
-          // dd --seed-claims - 
+          // dd --seed-claims -
           populateClaims(keystone);
         }
         if (process.argv.includes('--seed-diagnosis')) {
-          // dd --seed-diagnosis - 
+          // dd --seed-diagnosis -
           populateDiagnosis(keystone);
         }
         if (process.argv.includes('--seed-pharmas')) {
@@ -145,7 +146,7 @@ export default auth.withAuth(
           populatePharmaciesMin(keystone);
         }
         if (process.argv.includes('--seed-premiums')) {
-          // dd --seed-premiums - 
+          // dd --seed-premiums -
           populatePremiums(keystone);
         }
         if (process.argv.includes('--seed-min')) {
@@ -172,7 +173,7 @@ export default auth.withAuth(
           // populateSteppers(keystone);
           // populateSubSpecialties(keystone);
         }
-       
+
         if (process.argv.includes('--seed-drug-products')) {
           // dd --seed-drug-products
           populateProducts(keystone);

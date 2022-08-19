@@ -1,25 +1,40 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 /* eslint-disable no-restricted-syntax */
-import { DRUG_INGREDIENTS } from './ingredients';
+import { DRUG_INGREDIENTS_REDUCED } from './ingredients-reduced';
 
 export async function populateIngredients(keystone: any) {
+  const medicationDB = keystone.db.Medication;
+  const activeIngredientDB = keystone.db.ActiveIngredient;
+
   try {
     console.log(`----------------------------------------`);
-    console.log(`🌱 Seeding [${DRUG_INGREDIENTS.length}] DRUG_INGREDIENTS`);
+    console.log(
+      `🌱 Seeding [${DRUG_INGREDIENTS_REDUCED.length}] DRUG_INGREDIENTS_REDUCED`
+    );
     console.log(`----------------------------------------`);
 
-    for (const drugIng of DRUG_INGREDIENTS) {
-      console.log(` 💉 Adding [${drugIng.drugCode}] drugIng`);
+    for (const drugIng of DRUG_INGREDIENTS_REDUCED) {
+      console.log(`⚪ Adding ${drugIng.drugCode}`);
+
+      const hasMedicationToDrugCode = await medicationDB.findOne({
+        where: {
+          drugCode: drugIng.drugCode.toString(),
+        },
+      });
+
+      // eslint-disable-next-line no-continue
+      if (!hasMedicationToDrugCode) continue;
 
       let existing;
       try {
-        // eslint-disable-next-line no-await-in-loop
-        existing = await keystone.query.ActiveIngredient.findMany({
-          query: 'id drugCode medication { id }',
+        existing = await activeIngredientDB.findMany({
+          query: 'id drugCode',
           where: {
             drugCode: { equals: drugIng.drugCode.toString() },
             ingredientName: { equals: drugIng.ingredientName },
+            medication: null,
             strengthUnit: { equals: drugIng.strengthUnit },
             strengthValue: { equals: drugIng.strengthValue },
           },
@@ -28,74 +43,26 @@ export async function populateIngredients(keystone: any) {
         console.log('❌ error find existing', error);
       }
 
-      console.log('🚀 ~ ~ existing', existing[0]);
+      const existingIngredient = existing[0];
 
-      const hasMedicationToDrugCode =
-        // eslint-disable-next-line no-await-in-loop
-        await keystone.db.Medication.findOne({
-          where: {
+      // eslint-disable-next-line no-continue
+      if (existingIngredient) continue;
+
+      try {
+        await activeIngredientDB.createOne({
+          data: {
+            ...drugIng,
             drugCode: drugIng.drugCode.toString(),
           },
         });
-
-      console.log('🚀 ~  hasMedicationToDrugCode', existing);
-      if (hasMedicationToDrugCode && existing[0]?.medication)
-        console.log('✅ Has related MED');
-
-      console.log('⚙️ CONNECTING TO MED');
-      if (
-        existing.length > 0 &&
-        hasMedicationToDrugCode &&
-        !existing[0]?.medication
-      ) {
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          await keystone.db.ActiveIngredient.updateOne({
-            where: {
-              id: existing[0].id,
-            },
-            // eslint-disable-next-line sort-keys
-            data: {
-              medication: {
-                connect: {
-                  drugCode: drugIng.drugCode.toString(),
-                  // drugCode: '98340',
-                },
-              },
-            },
-          });
-          console.log('✅ CONNECTED TO MED : ', drugIng.drugCode);
-        } catch (error: any) {
-          console.log('❌ CONNECT TO MED : error drugCode', drugIng.drugCode);
-          console.log('❌ CONNECT TO MED : error dIN', drugIng.ingredientName);
-          throw new Error(error);
-        }
-      } else {
-        console.log('⚙️ existing[0]', existing[0]);
-      }
-
-      if (existing?.length > 0) {
-        console.log(` 💀 drugIng [${drugIng.drugCode}] exists - skipping.`);
-      } else {
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          await keystone.db.ActiveIngredient.createOne({
-            data: {
-              ...drugIng,
-              drugCode: drugIng.drugCode.toString(),
-            },
-          });
-        } catch (error: any) {
-          console.log('❌ error drugCode', drugIng.drugCode);
-          console.log('❌ error dIN', drugIng.ingredientName);
-          throw new Error(error);
-        }
+      } catch (error: any) {
+        console.log('❌ error drugCode', drugIng.drugCode, error);
+        // eslint-disable-next-line no-continue
+        continue;
       }
     }
-    console.log(
-      `✅ Seeded [${DRUG_INGREDIENTS.length}] Doctor DRUG_INGREDIENTS 🌳`
-    );
+    console.log(`🎉 Seeded [${DRUG_INGREDIENTS_REDUCED.length}] 💊 🌳`);
   } catch (error) {
-    console.error('populate DRUG_INGREDIENTS :: error', error);
+    console.error('populate DRUG_INGREDIENTS_REDUCED :: error', error);
   }
 }
