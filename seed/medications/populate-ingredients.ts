@@ -59,6 +59,7 @@ export async function populateIngredients(keystone: any) {
               medication: {
                 connect: {
                   drugCode: drugIng.drugCode.toString(),
+                  // drugCode: '98340',
                 },
               },
             },
