@@ -429,6 +429,17 @@ model Language {
   doctors Doctor[] @relation("Doctor_languages")
 }
 
+model LifestyleItem {
+  id        String   @id @default(cuid())
+  activity  String   @default("")
+  frequency String   @default("")
+  item      String   @default("")
+  patient   Patient? @relation("LifestyleItem_patient", fields: [patientId], references: [id])
+  patientId String?  @map("patient")
+
+  @@index([patientId])
+}
+
 model Medication {
   id                       String             @id @default(cuid())
   brandName                String             @default("")
@@ -453,6 +464,7 @@ model Patient {
   emergencyContacts   EmergencyContact[]   @relation("EmergencyContact_patient")
   forms               Form[]               @relation("Form_patient")
   healthCards         HealthCard[]         @relation("HealthCard_patient")
+  lifestyleItems      LifestyleItem[]      @relation("LifestyleItem_patient")
   pharmacyLocations   PharmacyLocation[]   @relation("Patient_pharmacyLocations")
   prescriptions       Prescription[]       @relation("Prescription_patient")
   savedDoctors        Doctor[]             @relation("Doctor_savedByPatients")

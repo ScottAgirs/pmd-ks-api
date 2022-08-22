@@ -395,6 +395,17 @@ type Mutation {
   updateLanguages(data: [LanguageUpdateArgs!]!): [Language]
   deleteLanguage(where: LanguageWhereUniqueInput!): Language
   deleteLanguages(where: [LanguageWhereUniqueInput!]!): [Language]
+  createLifestyleItem(data: LifestyleItemCreateInput!): LifestyleItem
+  createLifestyleItems(data: [LifestyleItemCreateInput!]!): [LifestyleItem]
+  updateLifestyleItem(
+    where: LifestyleItemWhereUniqueInput!
+    data: LifestyleItemUpdateInput!
+  ): LifestyleItem
+  updateLifestyleItems(data: [LifestyleItemUpdateArgs!]!): [LifestyleItem]
+  deleteLifestyleItem(where: LifestyleItemWhereUniqueInput!): LifestyleItem
+  deleteLifestyleItems(
+    where: [LifestyleItemWhereUniqueInput!]!
+  ): [LifestyleItem]
   createMedication(data: MedicationCreateInput!): Medication
   createMedications(data: [MedicationCreateInput!]!): [Medication]
   updateMedication(
@@ -3305,6 +3316,55 @@ input LanguageCreateInput {
   doctors: DoctorRelateToManyForCreateInput
 }
 
+type LifestyleItem {
+  id: ID!
+  activity: String
+  frequency: String
+  item: String
+  patient: Patient
+}
+
+input LifestyleItemWhereUniqueInput {
+  id: ID
+}
+
+input LifestyleItemWhereInput {
+  AND: [LifestyleItemWhereInput!]
+  OR: [LifestyleItemWhereInput!]
+  NOT: [LifestyleItemWhereInput!]
+  id: IDFilter
+  activity: StringFilter
+  frequency: StringFilter
+  item: StringFilter
+  patient: PatientWhereInput
+}
+
+input LifestyleItemOrderByInput {
+  id: OrderDirection
+  activity: OrderDirection
+  frequency: OrderDirection
+  item: OrderDirection
+}
+
+input LifestyleItemUpdateInput {
+  activity: String
+  frequency: String
+  item: String
+  patient: PatientRelateToOneForUpdateInput
+}
+
+input LifestyleItemUpdateArgs {
+  where: LifestyleItemWhereUniqueInput!
+  data: LifestyleItemUpdateInput!
+}
+
+input LifestyleItemCreateInput {
+  activity: String
+  frequency: String
+  item: String
+  patient: PatientRelateToOneForCreateInput
+}
+
 type Medication {
   id: ID!
   brandName: String
@@ -3475,6 +3535,13 @@ type Patient {
     skip: Int! = 0
   ): [HealthCard!]
   healthCardsCount(where: HealthCardWhereInput! = {}): Int
+  lifestyleItems(
+    where: LifestyleItemWhereInput! = {}
+    orderBy: [LifestyleItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [LifestyleItem!]
+  lifestyleItemsCount(where: LifestyleItemWhereInput! = {}): Int
   pharmacyLocations(
     where: PharmacyLocationWhereInput! = {}
     orderBy: [PharmacyLocationOrderByInput!]! = []
@@ -3526,6 +3593,7 @@ input PatientWhereInput {
   emergencyContacts: EmergencyContactManyRelationFilter
   forms: FormManyRelationFilter
   healthCards: HealthCardManyRelationFilter
+  lifestyleItems: LifestyleItemManyRelationFilter
   pharmacyLocations: PharmacyLocationManyRelationFilter
   prescriptions: PrescriptionManyRelationFilter
   savedDoctors: DoctorManyRelationFilter
@@ -3549,6 +3617,12 @@ input HealthCardManyRelationFilter {
   every: HealthCardWhereInput
   some: HealthCardWhereInput
   none: HealthCardWhereInput
+}
+
+input LifestyleItemManyRelationFilter {
+  every: LifestyleItemWhereInput
+  some: LifestyleItemWhereInput
+  none: LifestyleItemWhereInput
 }
 
 input PharmacyLocationManyRelationFilter {
@@ -3575,6 +3649,7 @@ input PatientUpdateInput {
   emergencyContacts: EmergencyContactRelateToManyForUpdateInput
   forms: FormRelateToManyForUpdateInput
   healthCards: HealthCardRelateToManyForUpdateInput
+  lifestyleItems: LifestyleItemRelateToManyForUpdateInput
   pharmacyLocations: PharmacyLocationRelateToManyForUpdateInput
   prescriptions: PrescriptionRelateToManyForUpdateInput
   savedDoctors: DoctorRelateToManyForUpdateInput
@@ -3603,6 +3678,13 @@ input HealthCardRelateToManyForUpdateInput {
   connect: [HealthCardWhereUniqueInput!]
 }
 
+input LifestyleItemRelateToManyForUpdateInput {
+  disconnect: [LifestyleItemWhereUniqueInput!]
+  set: [LifestyleItemWhereUniqueInput!]
+  create: [LifestyleItemCreateInput!]
+  connect: [LifestyleItemWhereUniqueInput!]
+}
+
 input PharmacyLocationRelateToManyForUpdateInput {
   disconnect: [PharmacyLocationWhereUniqueInput!]
   set: [PharmacyLocationWhereUniqueInput!]
@@ -3627,6 +3709,7 @@ input PatientCreateInput {
   emergencyContacts: EmergencyContactRelateToManyForCreateInput
   forms: FormRelateToManyForCreateInput
   healthCards: HealthCardRelateToManyForCreateInput
+  lifestyleItems: LifestyleItemRelateToManyForCreateInput
   pharmacyLocations: PharmacyLocationRelateToManyForCreateInput
   prescriptions: PrescriptionRelateToManyForCreateInput
   savedDoctors: DoctorRelateToManyForCreateInput
@@ -3647,6 +3730,11 @@ input EmergencyContactRelateToManyForCreateInput {
 input HealthCardRelateToManyForCreateInput {
   create: [HealthCardCreateInput!]
   connect: [HealthCardWhereUniqueInput!]
+}
+
+input LifestyleItemRelateToManyForCreateInput {
+  create: [LifestyleItemCreateInput!]
+  connect: [LifestyleItemWhereUniqueInput!]
 }
 
 input PharmacyLocationRelateToManyForCreateInput {
@@ -5379,6 +5467,14 @@ type Query {
   ): [Language!]
   language(where: LanguageWhereUniqueInput!): Language
   languagesCount(where: LanguageWhereInput! = {}): Int
+  lifestyleItems(
+    where: LifestyleItemWhereInput! = {}
+    orderBy: [LifestyleItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [LifestyleItem!]
+  lifestyleItem(where: LifestyleItemWhereUniqueInput!): LifestyleItem
+  lifestyleItemsCount(where: LifestyleItemWhereInput! = {}): Int
   medications(
     where: MedicationWhereInput! = {}
     orderBy: [MedicationOrderByInput!]! = []
