@@ -5,7 +5,6 @@
 import { DRUG_INGREDIENTS_REDUCED } from './ingredients-reduced';
 
 export async function populateIngredients(keystone: any) {
-  const medicationDB = keystone.db.Medication;
   const activeIngredientDB = keystone.db.ActiveIngredient;
 
   try {
@@ -17,15 +16,6 @@ export async function populateIngredients(keystone: any) {
 
     for (const drugIng of DRUG_INGREDIENTS_REDUCED) {
       console.log(`⚪ Adding ${drugIng.drugCode}`);
-
-      const hasMedicationToDrugCode = await medicationDB.findOne({
-        where: {
-          drugCode: drugIng.drugCode.toString(),
-        },
-      });
-
-      // eslint-disable-next-line no-continue
-      if (!hasMedicationToDrugCode) continue;
 
       let existing;
       try {
@@ -39,8 +29,8 @@ export async function populateIngredients(keystone: any) {
             strengthValue: { equals: drugIng.strengthValue },
           },
         });
-      } catch (error) {
-        console.log('❌ error find existing', error);
+      } catch (error: any) {
+        console.log('❌ error find existing', error.message);
       }
 
       const existingIngredient = existing[0];
@@ -56,13 +46,13 @@ export async function populateIngredients(keystone: any) {
           },
         });
       } catch (error: any) {
-        console.log('❌ error drugCode', drugIng.drugCode, error);
+        console.log('❌ error drugCode', drugIng.drugCode, error.message);
         // eslint-disable-next-line no-continue
         continue;
       }
     }
     console.log(`🎉 Seeded [${DRUG_INGREDIENTS_REDUCED.length}] 💊 🌳`);
-  } catch (error) {
-    console.error('populate DRUG_INGREDIENTS_REDUCED :: error', error);
+  } catch (error: any) {
+    console.error('populate DRUG_INGREDIENTS_REDUCED :: error', error.message);
   }
 }
