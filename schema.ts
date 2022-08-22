@@ -27,6 +27,7 @@ import { TimeInterval } from './api/time-interval/TimeInterval';
 import { Doctor } from './api/doctor/Doctor';
 import { Form } from './api/form/Form';
 import { FormType } from './api/form-type/FormType';
+import { LifestyleItem } from './api/lifestyle-item/LifestyleItem';
 import { Medication } from './api/medication/Medication';
 import { DoctorSpecialty } from './api/doctor-specialty/DoctorSpecialty';
 import { DoctorSubSpecialty } from './api/doctor-sub-specialty/DoctorSubSpecialty';
@@ -89,6 +90,7 @@ export const lists = {
   FormType,
   HealthCard,
   Language,
+  LifestyleItem,
   Medication,
   Patient,
   Pharmacy,
