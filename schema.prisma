@@ -53,6 +53,17 @@ model AdministrativeArea {
   @@index([countryId])
 }
 
+model AllergyItem {
+  id        String    @id @default(cuid())
+  name      String    @default("")
+  onsetDate DateTime?
+  reaction  String    @default("")
+  patient   Patient?  @relation("AllergyItem_patient", fields: [patientId], references: [id])
+  patientId String?   @map("patient")
+
+  @@index([patientId])
+}
+
 model Appointment {
   id                String              @id @default(cuid())
   endedAt           DateTime?
@@ -455,6 +466,7 @@ model Patient {
   id                  String               @id @default(cuid())
   isCompleteProfile   Boolean              @default(false)
   name                String               @default("")
+  allergies           AllergyItem[]        @relation("AllergyItem_patient")
   appointmentNotes    AppointmentNote[]    @relation("AppointmentNote_patient")
   appointmentRequests AppointmentRequest[] @relation("AppointmentRequest_patient")
   appointmentVitals   AppointmentVital[]   @relation("AppointmentVital_patient")

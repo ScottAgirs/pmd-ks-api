@@ -78,6 +78,15 @@ type Mutation {
   deleteAdministrativeAreas(
     where: [AdministrativeAreaWhereUniqueInput!]!
   ): [AdministrativeArea]
+  createAllergyItem(data: AllergyItemCreateInput!): AllergyItem
+  createAllergyItems(data: [AllergyItemCreateInput!]!): [AllergyItem]
+  updateAllergyItem(
+    where: AllergyItemWhereUniqueInput!
+    data: AllergyItemUpdateInput!
+  ): AllergyItem
+  updateAllergyItems(data: [AllergyItemUpdateArgs!]!): [AllergyItem]
+  deleteAllergyItem(where: AllergyItemWhereUniqueInput!): AllergyItem
+  deleteAllergyItems(where: [AllergyItemWhereUniqueInput!]!): [AllergyItem]
   createAppointment(data: AppointmentCreateInput!): Appointment
   createAppointments(data: [AppointmentCreateInput!]!): [Appointment]
   updateAppointment(
@@ -923,6 +932,80 @@ input CountryRelateToOneForCreateInput {
   connect: CountryWhereUniqueInput
 }
 
+type AllergyItem {
+  id: ID!
+  name: String
+  onsetDate: DateTime
+  reaction: String
+  patient: Patient
+}
+
+scalar DateTime
+  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+
+input AllergyItemWhereUniqueInput {
+  id: ID
+}
+
+input AllergyItemWhereInput {
+  AND: [AllergyItemWhereInput!]
+  OR: [AllergyItemWhereInput!]
+  NOT: [AllergyItemWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  onsetDate: DateTimeNullableFilter
+  reaction: StringFilter
+  patient: PatientWhereInput
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
+}
+
+input AllergyItemOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  onsetDate: OrderDirection
+  reaction: OrderDirection
+}
+
+input AllergyItemUpdateInput {
+  name: String
+  onsetDate: DateTime
+  reaction: String
+  patient: PatientRelateToOneForUpdateInput
+}
+
+input PatientRelateToOneForUpdateInput {
+  create: PatientCreateInput
+  connect: PatientWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AllergyItemUpdateArgs {
+  where: AllergyItemWhereUniqueInput!
+  data: AllergyItemUpdateInput!
+}
+
+input AllergyItemCreateInput {
+  name: String
+  onsetDate: DateTime
+  reaction: String
+  patient: PatientRelateToOneForCreateInput
+}
+
+input PatientRelateToOneForCreateInput {
+  create: PatientCreateInput
+  connect: PatientWhereUniqueInput
+}
+
 type Appointment {
   id: ID!
   endedAt: DateTime
@@ -957,9 +1040,6 @@ type Appointment {
   vitalsData: AppointmentVital
 }
 
-scalar DateTime
-  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
-
 type Appointment_summary_Document {
   document(hydrateRelationships: Boolean! = false): JSON!
 }
@@ -990,17 +1070,6 @@ input AppointmentWhereInput {
   patient: PatientWhereInput
   prescription: PrescriptionWhereInput
   vitalsData: AppointmentVitalWhereInput
-}
-
-input DateTimeNullableFilter {
-  equals: DateTime
-  in: [DateTime!]
-  notIn: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  gt: DateTime
-  gte: DateTime
-  not: DateTimeNullableFilter
 }
 
 input FormManyRelationFilter {
@@ -1080,12 +1149,6 @@ input AppointmentNoteRelateToManyForUpdateInput {
   connect: [AppointmentNoteWhereUniqueInput!]
 }
 
-input PatientRelateToOneForUpdateInput {
-  create: PatientCreateInput
-  connect: PatientWhereUniqueInput
-  disconnect: Boolean
-}
-
 input PrescriptionRelateToOneForUpdateInput {
   create: PrescriptionCreateInput
   connect: PrescriptionWhereUniqueInput
@@ -1147,11 +1210,6 @@ input FormRelateToManyForCreateInput {
 input AppointmentNoteRelateToManyForCreateInput {
   create: [AppointmentNoteCreateInput!]
   connect: [AppointmentNoteWhereUniqueInput!]
-}
-
-input PatientRelateToOneForCreateInput {
-  create: PatientCreateInput
-  connect: PatientWhereUniqueInput
 }
 
 input PrescriptionRelateToOneForCreateInput {
@@ -3472,6 +3530,13 @@ type Patient {
   id: ID!
   isCompleteProfile: Boolean
   name: String
+  allergies(
+    where: AllergyItemWhereInput! = {}
+    orderBy: [AllergyItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AllergyItem!]
+  allergiesCount(where: AllergyItemWhereInput! = {}): Int
   appointmentNotes(
     where: AppointmentNoteWhereInput! = {}
     orderBy: [AppointmentNoteOrderByInput!]! = []
@@ -3584,6 +3649,7 @@ input PatientWhereInput {
   id: IDFilter
   isCompleteProfile: BooleanFilter
   name: StringFilter
+  allergies: AllergyItemManyRelationFilter
   appointmentNotes: AppointmentNoteManyRelationFilter
   appointmentRequests: AppointmentRequestManyRelationFilter
   appointmentVitals: AppointmentVitalManyRelationFilter
@@ -3599,6 +3665,12 @@ input PatientWhereInput {
   savedDoctors: DoctorManyRelationFilter
   user: UserWhereInput
   visitedDoctors: DoctorManyRelationFilter
+}
+
+input AllergyItemManyRelationFilter {
+  every: AllergyItemWhereInput
+  some: AllergyItemWhereInput
+  none: AllergyItemWhereInput
 }
 
 input AppointmentVitalManyRelationFilter {
@@ -3640,6 +3712,7 @@ input PatientOrderByInput {
 input PatientUpdateInput {
   isCompleteProfile: Boolean
   name: String
+  allergies: AllergyItemRelateToManyForUpdateInput
   appointmentNotes: AppointmentNoteRelateToManyForUpdateInput
   appointmentRequests: AppointmentRequestRelateToManyForUpdateInput
   appointmentVitals: AppointmentVitalRelateToManyForUpdateInput
@@ -3655,6 +3728,13 @@ input PatientUpdateInput {
   savedDoctors: DoctorRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
   visitedDoctors: DoctorRelateToManyForUpdateInput
+}
+
+input AllergyItemRelateToManyForUpdateInput {
+  disconnect: [AllergyItemWhereUniqueInput!]
+  set: [AllergyItemWhereUniqueInput!]
+  create: [AllergyItemCreateInput!]
+  connect: [AllergyItemWhereUniqueInput!]
 }
 
 input AppointmentVitalRelateToManyForUpdateInput {
@@ -3700,6 +3780,7 @@ input PatientUpdateArgs {
 input PatientCreateInput {
   isCompleteProfile: Boolean
   name: String
+  allergies: AllergyItemRelateToManyForCreateInput
   appointmentNotes: AppointmentNoteRelateToManyForCreateInput
   appointmentRequests: AppointmentRequestRelateToManyForCreateInput
   appointmentVitals: AppointmentVitalRelateToManyForCreateInput
@@ -3715,6 +3796,11 @@ input PatientCreateInput {
   savedDoctors: DoctorRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
   visitedDoctors: DoctorRelateToManyForCreateInput
+}
+
+input AllergyItemRelateToManyForCreateInput {
+  create: [AllergyItemCreateInput!]
+  connect: [AllergyItemWhereUniqueInput!]
 }
 
 input AppointmentVitalRelateToManyForCreateInput {
@@ -5255,6 +5341,14 @@ type Query {
     where: AdministrativeAreaWhereUniqueInput!
   ): AdministrativeArea
   administrativeAreasCount(where: AdministrativeAreaWhereInput! = {}): Int
+  allergyItems(
+    where: AllergyItemWhereInput! = {}
+    orderBy: [AllergyItemOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AllergyItem!]
+  allergyItem(where: AllergyItemWhereUniqueInput!): AllergyItem
+  allergyItemsCount(where: AllergyItemWhereInput! = {}): Int
   appointments(
     where: AppointmentWhereInput! = {}
     orderBy: [AppointmentOrderByInput!]! = []

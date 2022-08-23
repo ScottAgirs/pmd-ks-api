@@ -7,6 +7,7 @@ export const Patient = list({
     isCompleteProfile: checkbox(),
     name: text(),
     // eslint-disable-next-line sort-keys
+    allergies: relationship({ many: true, ref: 'AllergyItem.patient' }),
     appointmentNotes: relationship({
       many: true,
       ref: 'AppointmentNote.patient',

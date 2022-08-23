@@ -1,5 +1,6 @@
 import { Address } from './api/address/Address';
 import { ActiveIngredient } from './api/active-ingredient/ActiveIngredient';
+import { AllergyItem } from './api/allergy-item/AllergyItem';
 import { AppointmentBilling } from './api/appointment-billing/AppointmentBilling';
 import { AppointmentBillingItem } from './api/appointment-billing-item/AppointmentBillingItem';
 import { AppointmentNote } from './api/appointment-note/AppointmentNote';
@@ -65,6 +66,7 @@ export const lists = {
   ActiveIngredient,
   Address,
   AdministrativeArea,
+  AllergyItem,
   Appointment,
   AppointmentBilling,
   AppointmentBillingItem,
