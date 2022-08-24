@@ -26,12 +26,20 @@ export const Patient = list({
       many: true,
       ref: 'Doctor.caringForPatients',
     }),
+    documents: relationship({
+      many: true,
+      ref: 'Document.patient',
+    }),
     emergencyContacts: relationship({
       many: true,
       ref: 'EmergencyContact.patient',
     }),
     forms: relationship({ many: true, ref: 'Form.patient' }),
     healthCards: relationship({ many: true, ref: 'HealthCard.patient' }),
+    healthConditions: relationship({
+      many: true,
+      ref: 'HealthCondition.patient',
+    }),
     lifestyleItems: relationship({ many: true, ref: 'LifestyleItem.patient' }),
     pharmacyLocations: relationship({
       many: true,
@@ -39,7 +47,9 @@ export const Patient = list({
     }),
     prescriptions: relationship({ many: true, ref: 'Prescription.patient' }),
     savedDoctors: relationship({ many: true, ref: 'Doctor.savedByPatients' }),
+    screeningTests: relationship({ many: true, ref: 'ScreeningTest.patient' }),
     user: relationship({ ref: 'User.patient' }),
+    vaccinations: relationship({ many: true, ref: 'Vaccination.patient' }),
     visitedDoctors: relationship({ many: true, ref: 'Doctor.patients' }),
   },
 });
