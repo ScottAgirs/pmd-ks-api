@@ -20,6 +20,7 @@ import { CalendarEventType } from './api/calendar-event-type/CalendarEventType';
 import { Company } from './api/company/Company';
 import { CompanyLocation } from './api/company-location/CompanyLocation';
 
+import { Document } from './api/document/Document';
 import { Contract } from './api/contract/Contract';
 import { RecurringSlot } from './api/recurring-slot/RecurringSlot';
 import { Schedule } from './api/schedule/Schedule';
@@ -34,6 +35,7 @@ import { DoctorSpecialty } from './api/doctor-specialty/DoctorSpecialty';
 import { DoctorSubSpecialty } from './api/doctor-sub-specialty/DoctorSubSpecialty';
 import { Language } from './api/language/Language';
 import { HealthCard } from './api/health-card/HealthCard';
+import { HealthCondition } from './api/health-condition/HealthCondition';
 
 import { EmergencyContact } from './api/emergency-contact/EmergencyContact';
 
@@ -50,6 +52,8 @@ import { ProofOfLicense } from './api/proof-of-license/model/ProofOfLicense';
 
 import { Prompt } from './api/prompt/Prompt';
 
+import { ScreeningTest } from './api/screening-test/ScreeningTest';
+
 import { Stepper } from './api/stepper/Stepper';
 import { StepperProg } from './api/stepper-prog/StepperProg';
 import { StepperStep } from './api/stepper-step/StepperStep';
@@ -58,6 +62,7 @@ import { StepperStepProg } from './api/stepper-step-prog/StepperStepProg';
 import { User } from './api/user/User';
 import { UserInvite } from './api/user-invite/UserInvite';
 
+import { Vaccination } from './api/vaccination/Vaccination';
 // Location
 import { AdministrativeArea } from './api/administrative-area/AdministrativeArea';
 import { Country } from './api/country/Country';
@@ -87,10 +92,12 @@ export const lists = {
   Doctor,
   DoctorSpecialty,
   DoctorSubSpecialty,
+  Document,
   EmergencyContact,
   Form,
   FormType,
   HealthCard,
+  HealthCondition,
   Language,
   LifestyleItem,
   Medication,
@@ -106,6 +113,7 @@ export const lists = {
   ProofOfLicense,
   RecurringSlot,
   Schedule,
+  ScreeningTest,
   Stepper,
   StepperProg,
   StepperStep,
@@ -113,4 +121,5 @@ export const lists = {
   TimeInterval,
   User,
   UserInvite,
+  Vaccination,
 };
