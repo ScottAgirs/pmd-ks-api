@@ -11,6 +11,7 @@ import { afterCreateDoctor } from './hooks/afterCreateDoctor';
 
 interface AfterCreateItemArgs {
   context: KeystoneContext;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   item: any;
   operation: string;
 }
@@ -55,6 +56,7 @@ export const Doctor = list({
       many: true,
       ref: 'DoctorSubSpecialty.doctors',
     }),
+    documents: relationship({ many: true, ref: 'Document.doctor' }),
     forms: relationship({ many: true, ref: 'Form.doctor' }),
     languages: relationship({ many: true, ref: 'Language.doctors' }),
     patients: relationship({ many: true, ref: 'Patient.visitedDoctors' }),
@@ -66,6 +68,7 @@ export const Doctor = list({
     proofOfLicense: relationship({ ref: 'ProofOfLicense.doctor' }),
     savedByPatients: relationship({ many: true, ref: 'Patient.savedDoctors' }),
     user: relationship({ ref: 'User.doctor' }),
+    vaccinations: relationship({ many: true, ref: 'Vaccination.doctor' }),
   },
   hooks: {
     afterOperation: async ({
