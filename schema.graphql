@@ -354,6 +354,15 @@ type Mutation {
   deleteDoctorSubSpecialties(
     where: [DoctorSubSpecialtyWhereUniqueInput!]!
   ): [DoctorSubSpecialty]
+  createDocument(data: DocumentCreateInput!): Document
+  createDocuments(data: [DocumentCreateInput!]!): [Document]
+  updateDocument(
+    where: DocumentWhereUniqueInput!
+    data: DocumentUpdateInput!
+  ): Document
+  updateDocuments(data: [DocumentUpdateArgs!]!): [Document]
+  deleteDocument(where: DocumentWhereUniqueInput!): Document
+  deleteDocuments(where: [DocumentWhereUniqueInput!]!): [Document]
   createEmergencyContact(data: EmergencyContactCreateInput!): EmergencyContact
   createEmergencyContacts(
     data: [EmergencyContactCreateInput!]!
@@ -395,6 +404,21 @@ type Mutation {
   updateHealthCards(data: [HealthCardUpdateArgs!]!): [HealthCard]
   deleteHealthCard(where: HealthCardWhereUniqueInput!): HealthCard
   deleteHealthCards(where: [HealthCardWhereUniqueInput!]!): [HealthCard]
+  createHealthCondition(data: HealthConditionCreateInput!): HealthCondition
+  createHealthConditions(
+    data: [HealthConditionCreateInput!]!
+  ): [HealthCondition]
+  updateHealthCondition(
+    where: HealthConditionWhereUniqueInput!
+    data: HealthConditionUpdateInput!
+  ): HealthCondition
+  updateHealthConditions(data: [HealthConditionUpdateArgs!]!): [HealthCondition]
+  deleteHealthCondition(
+    where: HealthConditionWhereUniqueInput!
+  ): HealthCondition
+  deleteHealthConditions(
+    where: [HealthConditionWhereUniqueInput!]!
+  ): [HealthCondition]
   createLanguage(data: LanguageCreateInput!): Language
   createLanguages(data: [LanguageCreateInput!]!): [Language]
   updateLanguage(
@@ -567,6 +591,17 @@ type Mutation {
   updateSchedules(data: [ScheduleUpdateArgs!]!): [Schedule]
   deleteSchedule(where: ScheduleWhereUniqueInput!): Schedule
   deleteSchedules(where: [ScheduleWhereUniqueInput!]!): [Schedule]
+  createScreeningTest(data: ScreeningTestCreateInput!): ScreeningTest
+  createScreeningTests(data: [ScreeningTestCreateInput!]!): [ScreeningTest]
+  updateScreeningTest(
+    where: ScreeningTestWhereUniqueInput!
+    data: ScreeningTestUpdateInput!
+  ): ScreeningTest
+  updateScreeningTests(data: [ScreeningTestUpdateArgs!]!): [ScreeningTest]
+  deleteScreeningTest(where: ScreeningTestWhereUniqueInput!): ScreeningTest
+  deleteScreeningTests(
+    where: [ScreeningTestWhereUniqueInput!]!
+  ): [ScreeningTest]
   createStepper(data: StepperCreateInput!): Stepper
   createSteppers(data: [StepperCreateInput!]!): [Stepper]
   updateStepper(
@@ -633,6 +668,15 @@ type Mutation {
   updateUserInvites(data: [UserInviteUpdateArgs!]!): [UserInvite]
   deleteUserInvite(where: UserInviteWhereUniqueInput!): UserInvite
   deleteUserInvites(where: [UserInviteWhereUniqueInput!]!): [UserInvite]
+  createVaccination(data: VaccinationCreateInput!): Vaccination
+  createVaccinations(data: [VaccinationCreateInput!]!): [Vaccination]
+  updateVaccination(
+    where: VaccinationWhereUniqueInput!
+    data: VaccinationUpdateInput!
+  ): Vaccination
+  updateVaccinations(data: [VaccinationUpdateArgs!]!): [Vaccination]
+  deleteVaccination(where: VaccinationWhereUniqueInput!): Vaccination
+  deleteVaccinations(where: [VaccinationWhereUniqueInput!]!): [Vaccination]
   endSession: Boolean!
 }
 
@@ -2591,6 +2635,13 @@ type Doctor {
     skip: Int! = 0
   ): [DoctorSubSpecialty!]
   doctorSubSpecialtiesCount(where: DoctorSubSpecialtyWhereInput! = {}): Int
+  documents(
+    where: DocumentWhereInput! = {}
+    orderBy: [DocumentOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
   forms(
     where: FormWhereInput! = {}
     orderBy: [FormOrderByInput!]! = []
@@ -2630,6 +2681,13 @@ type Doctor {
   ): [Patient!]
   savedByPatientsCount(where: PatientWhereInput! = {}): Int
   user: User
+  vaccinations(
+    where: VaccinationWhereInput! = {}
+    orderBy: [VaccinationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Vaccination!]
+  vaccinationsCount(where: VaccinationWhereInput! = {}): Int
 }
 
 input DoctorWhereUniqueInput {
@@ -2667,6 +2725,7 @@ input DoctorWhereInput {
   caringForPatients: PatientManyRelationFilter
   doctorSpecialty: DoctorSpecialtyWhereInput
   doctorSubSpecialties: DoctorSubSpecialtyManyRelationFilter
+  documents: DocumentManyRelationFilter
   forms: FormManyRelationFilter
   languages: LanguageManyRelationFilter
   patients: PatientManyRelationFilter
@@ -2676,6 +2735,7 @@ input DoctorWhereInput {
   proofOfLicense: ProofOfLicenseWhereInput
   savedByPatients: PatientManyRelationFilter
   user: UserWhereInput
+  vaccinations: VaccinationManyRelationFilter
 }
 
 input AppointmentRequestManyRelationFilter {
@@ -2702,6 +2762,12 @@ input DoctorSubSpecialtyManyRelationFilter {
   none: DoctorSubSpecialtyWhereInput
 }
 
+input DocumentManyRelationFilter {
+  every: DocumentWhereInput
+  some: DocumentWhereInput
+  none: DocumentWhereInput
+}
+
 input LanguageManyRelationFilter {
   every: LanguageWhereInput
   some: LanguageWhereInput
@@ -2712,6 +2778,12 @@ input PrescriptionManyRelationFilter {
   every: PrescriptionWhereInput
   some: PrescriptionWhereInput
   none: PrescriptionWhereInput
+}
+
+input VaccinationManyRelationFilter {
+  every: VaccinationWhereInput
+  some: VaccinationWhereInput
+  none: VaccinationWhereInput
 }
 
 input DoctorOrderByInput {
@@ -2762,6 +2834,7 @@ input DoctorUpdateInput {
   caringForPatients: PatientRelateToManyForUpdateInput
   doctorSpecialty: DoctorSpecialtyRelateToOneForUpdateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
   forms: FormRelateToManyForUpdateInput
   languages: LanguageRelateToManyForUpdateInput
   patients: PatientRelateToManyForUpdateInput
@@ -2771,6 +2844,7 @@ input DoctorUpdateInput {
   proofOfLicense: ProofOfLicenseRelateToOneForUpdateInput
   savedByPatients: PatientRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
+  vaccinations: VaccinationRelateToManyForUpdateInput
 }
 
 input AppointmentRequestRelateToManyForUpdateInput {
@@ -2807,6 +2881,13 @@ input DoctorSubSpecialtyRelateToManyForUpdateInput {
   connect: [DoctorSubSpecialtyWhereUniqueInput!]
 }
 
+input DocumentRelateToManyForUpdateInput {
+  disconnect: [DocumentWhereUniqueInput!]
+  set: [DocumentWhereUniqueInput!]
+  create: [DocumentCreateInput!]
+  connect: [DocumentWhereUniqueInput!]
+}
+
 input LanguageRelateToManyForUpdateInput {
   disconnect: [LanguageWhereUniqueInput!]
   set: [LanguageWhereUniqueInput!]
@@ -2837,6 +2918,13 @@ input ProofOfLicenseRelateToOneForUpdateInput {
   create: ProofOfLicenseCreateInput
   connect: ProofOfLicenseWhereUniqueInput
   disconnect: Boolean
+}
+
+input VaccinationRelateToManyForUpdateInput {
+  disconnect: [VaccinationWhereUniqueInput!]
+  set: [VaccinationWhereUniqueInput!]
+  create: [VaccinationCreateInput!]
+  connect: [VaccinationWhereUniqueInput!]
 }
 
 input DoctorUpdateArgs {
@@ -2871,6 +2959,7 @@ input DoctorCreateInput {
   caringForPatients: PatientRelateToManyForCreateInput
   doctorSpecialty: DoctorSpecialtyRelateToOneForCreateInput
   doctorSubSpecialties: DoctorSubSpecialtyRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
   forms: FormRelateToManyForCreateInput
   languages: LanguageRelateToManyForCreateInput
   patients: PatientRelateToManyForCreateInput
@@ -2880,6 +2969,7 @@ input DoctorCreateInput {
   proofOfLicense: ProofOfLicenseRelateToOneForCreateInput
   savedByPatients: PatientRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
+  vaccinations: VaccinationRelateToManyForCreateInput
 }
 
 input AppointmentRequestRelateToManyForCreateInput {
@@ -2907,6 +2997,11 @@ input DoctorSubSpecialtyRelateToManyForCreateInput {
   connect: [DoctorSubSpecialtyWhereUniqueInput!]
 }
 
+input DocumentRelateToManyForCreateInput {
+  create: [DocumentCreateInput!]
+  connect: [DocumentWhereUniqueInput!]
+}
+
 input LanguageRelateToManyForCreateInput {
   create: [LanguageCreateInput!]
   connect: [LanguageWhereUniqueInput!]
@@ -2930,6 +3025,11 @@ input ProofOfInsuranceRelateToOneForCreateInput {
 input ProofOfLicenseRelateToOneForCreateInput {
   create: ProofOfLicenseCreateInput
   connect: ProofOfLicenseWhereUniqueInput
+}
+
+input VaccinationRelateToManyForCreateInput {
+  create: [VaccinationCreateInput!]
+  connect: [VaccinationWhereUniqueInput!]
 }
 
 type DoctorSpecialty {
@@ -3050,6 +3150,54 @@ input DoctorSubSpecialtyCreateInput {
   label: String
   value: String
   doctors: DoctorRelateToManyForCreateInput
+}
+
+type Document {
+  id: ID!
+  addedAt: DateTime
+  title: String
+  doctor: Doctor
+  patient: Patient
+}
+
+input DocumentWhereUniqueInput {
+  id: ID
+}
+
+input DocumentWhereInput {
+  AND: [DocumentWhereInput!]
+  OR: [DocumentWhereInput!]
+  NOT: [DocumentWhereInput!]
+  id: IDFilter
+  addedAt: DateTimeNullableFilter
+  title: StringFilter
+  doctor: DoctorWhereInput
+  patient: PatientWhereInput
+}
+
+input DocumentOrderByInput {
+  id: OrderDirection
+  addedAt: OrderDirection
+  title: OrderDirection
+}
+
+input DocumentUpdateInput {
+  addedAt: DateTime
+  title: String
+  doctor: DoctorRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
+}
+
+input DocumentUpdateArgs {
+  where: DocumentWhereUniqueInput!
+  data: DocumentUpdateInput!
+}
+
+input DocumentCreateInput {
+  addedAt: DateTime
+  title: String
+  doctor: DoctorRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
 }
 
 type EmergencyContact {
@@ -3323,6 +3471,55 @@ input UserInviteRelateToOneForCreateInput {
   connect: UserInviteWhereUniqueInput
 }
 
+type HealthCondition {
+  id: ID!
+  diagnosedAt: DateTime
+  name: String
+  relation: String
+  patient: Patient
+}
+
+input HealthConditionWhereUniqueInput {
+  id: ID
+}
+
+input HealthConditionWhereInput {
+  AND: [HealthConditionWhereInput!]
+  OR: [HealthConditionWhereInput!]
+  NOT: [HealthConditionWhereInput!]
+  id: IDFilter
+  diagnosedAt: DateTimeNullableFilter
+  name: StringFilter
+  relation: StringFilter
+  patient: PatientWhereInput
+}
+
+input HealthConditionOrderByInput {
+  id: OrderDirection
+  diagnosedAt: OrderDirection
+  name: OrderDirection
+  relation: OrderDirection
+}
+
+input HealthConditionUpdateInput {
+  diagnosedAt: DateTime
+  name: String
+  relation: String
+  patient: PatientRelateToOneForUpdateInput
+}
+
+input HealthConditionUpdateArgs {
+  where: HealthConditionWhereUniqueInput!
+  data: HealthConditionUpdateInput!
+}
+
+input HealthConditionCreateInput {
+  diagnosedAt: DateTime
+  name: String
+  relation: String
+  patient: PatientRelateToOneForCreateInput
+}
+
 type Language {
   id: ID!
   label: String
@@ -3442,6 +3639,13 @@ type Medication {
     skip: Int! = 0
   ): [PrescriptionItem!]
   prescriptionItemsCount(where: PrescriptionItemWhereInput! = {}): Int
+  vaccinations(
+    where: VaccinationWhereInput! = {}
+    orderBy: [VaccinationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Vaccination!]
+  vaccinationsCount(where: VaccinationWhereInput! = {}): Int
 }
 
 input MedicationWhereUniqueInput {
@@ -3460,6 +3664,7 @@ input MedicationWhereInput {
   drugIdentificationNumber: StringFilter
   activeIngredients: ActiveIngredientManyRelationFilter
   prescriptionItems: PrescriptionItemManyRelationFilter
+  vaccinations: VaccinationManyRelationFilter
 }
 
 input ActiveIngredientManyRelationFilter {
@@ -3487,6 +3692,7 @@ input MedicationUpdateInput {
   drugIdentificationNumber: String
   activeIngredients: ActiveIngredientRelateToManyForUpdateInput
   prescriptionItems: PrescriptionItemRelateToManyForUpdateInput
+  vaccinations: VaccinationRelateToManyForUpdateInput
 }
 
 input ActiveIngredientRelateToManyForUpdateInput {
@@ -3514,6 +3720,7 @@ input MedicationCreateInput {
   drugIdentificationNumber: String
   activeIngredients: ActiveIngredientRelateToManyForCreateInput
   prescriptionItems: PrescriptionItemRelateToManyForCreateInput
+  vaccinations: VaccinationRelateToManyForCreateInput
 }
 
 input ActiveIngredientRelateToManyForCreateInput {
@@ -3579,6 +3786,13 @@ type Patient {
     skip: Int! = 0
   ): [Doctor!]
   caredByDoctorsCount(where: DoctorWhereInput! = {}): Int
+  documents(
+    where: DocumentWhereInput! = {}
+    orderBy: [DocumentOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
   emergencyContacts(
     where: EmergencyContactWhereInput! = {}
     orderBy: [EmergencyContactOrderByInput!]! = []
@@ -3600,6 +3814,13 @@ type Patient {
     skip: Int! = 0
   ): [HealthCard!]
   healthCardsCount(where: HealthCardWhereInput! = {}): Int
+  healthConditions(
+    where: HealthConditionWhereInput! = {}
+    orderBy: [HealthConditionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [HealthCondition!]
+  healthConditionsCount(where: HealthConditionWhereInput! = {}): Int
   lifestyleItems(
     where: LifestyleItemWhereInput! = {}
     orderBy: [LifestyleItemOrderByInput!]! = []
@@ -3628,7 +3849,21 @@ type Patient {
     skip: Int! = 0
   ): [Doctor!]
   savedDoctorsCount(where: DoctorWhereInput! = {}): Int
+  screeningTests(
+    where: ScreeningTestWhereInput! = {}
+    orderBy: [ScreeningTestOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ScreeningTest!]
+  screeningTestsCount(where: ScreeningTestWhereInput! = {}): Int
   user: User
+  vaccinations(
+    where: VaccinationWhereInput! = {}
+    orderBy: [VaccinationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Vaccination!]
+  vaccinationsCount(where: VaccinationWhereInput! = {}): Int
   visitedDoctors(
     where: DoctorWhereInput! = {}
     orderBy: [DoctorOrderByInput!]! = []
@@ -3656,14 +3891,18 @@ input PatientWhereInput {
   appointments: AppointmentManyRelationFilter
   bookings: BookingManyRelationFilter
   caredByDoctors: DoctorManyRelationFilter
+  documents: DocumentManyRelationFilter
   emergencyContacts: EmergencyContactManyRelationFilter
   forms: FormManyRelationFilter
   healthCards: HealthCardManyRelationFilter
+  healthConditions: HealthConditionManyRelationFilter
   lifestyleItems: LifestyleItemManyRelationFilter
   pharmacyLocations: PharmacyLocationManyRelationFilter
   prescriptions: PrescriptionManyRelationFilter
   savedDoctors: DoctorManyRelationFilter
+  screeningTests: ScreeningTestManyRelationFilter
   user: UserWhereInput
+  vaccinations: VaccinationManyRelationFilter
   visitedDoctors: DoctorManyRelationFilter
 }
 
@@ -3691,6 +3930,12 @@ input HealthCardManyRelationFilter {
   none: HealthCardWhereInput
 }
 
+input HealthConditionManyRelationFilter {
+  every: HealthConditionWhereInput
+  some: HealthConditionWhereInput
+  none: HealthConditionWhereInput
+}
+
 input LifestyleItemManyRelationFilter {
   every: LifestyleItemWhereInput
   some: LifestyleItemWhereInput
@@ -3701,6 +3946,12 @@ input PharmacyLocationManyRelationFilter {
   every: PharmacyLocationWhereInput
   some: PharmacyLocationWhereInput
   none: PharmacyLocationWhereInput
+}
+
+input ScreeningTestManyRelationFilter {
+  every: ScreeningTestWhereInput
+  some: ScreeningTestWhereInput
+  none: ScreeningTestWhereInput
 }
 
 input PatientOrderByInput {
@@ -3719,14 +3970,18 @@ input PatientUpdateInput {
   appointments: AppointmentRelateToManyForUpdateInput
   bookings: BookingRelateToManyForUpdateInput
   caredByDoctors: DoctorRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
   emergencyContacts: EmergencyContactRelateToManyForUpdateInput
   forms: FormRelateToManyForUpdateInput
   healthCards: HealthCardRelateToManyForUpdateInput
+  healthConditions: HealthConditionRelateToManyForUpdateInput
   lifestyleItems: LifestyleItemRelateToManyForUpdateInput
   pharmacyLocations: PharmacyLocationRelateToManyForUpdateInput
   prescriptions: PrescriptionRelateToManyForUpdateInput
   savedDoctors: DoctorRelateToManyForUpdateInput
+  screeningTests: ScreeningTestRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
+  vaccinations: VaccinationRelateToManyForUpdateInput
   visitedDoctors: DoctorRelateToManyForUpdateInput
 }
 
@@ -3758,6 +4013,13 @@ input HealthCardRelateToManyForUpdateInput {
   connect: [HealthCardWhereUniqueInput!]
 }
 
+input HealthConditionRelateToManyForUpdateInput {
+  disconnect: [HealthConditionWhereUniqueInput!]
+  set: [HealthConditionWhereUniqueInput!]
+  create: [HealthConditionCreateInput!]
+  connect: [HealthConditionWhereUniqueInput!]
+}
+
 input LifestyleItemRelateToManyForUpdateInput {
   disconnect: [LifestyleItemWhereUniqueInput!]
   set: [LifestyleItemWhereUniqueInput!]
@@ -3770,6 +4032,13 @@ input PharmacyLocationRelateToManyForUpdateInput {
   set: [PharmacyLocationWhereUniqueInput!]
   create: [PharmacyLocationCreateInput!]
   connect: [PharmacyLocationWhereUniqueInput!]
+}
+
+input ScreeningTestRelateToManyForUpdateInput {
+  disconnect: [ScreeningTestWhereUniqueInput!]
+  set: [ScreeningTestWhereUniqueInput!]
+  create: [ScreeningTestCreateInput!]
+  connect: [ScreeningTestWhereUniqueInput!]
 }
 
 input PatientUpdateArgs {
@@ -3787,14 +4056,18 @@ input PatientCreateInput {
   appointments: AppointmentRelateToManyForCreateInput
   bookings: BookingRelateToManyForCreateInput
   caredByDoctors: DoctorRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
   emergencyContacts: EmergencyContactRelateToManyForCreateInput
   forms: FormRelateToManyForCreateInput
   healthCards: HealthCardRelateToManyForCreateInput
+  healthConditions: HealthConditionRelateToManyForCreateInput
   lifestyleItems: LifestyleItemRelateToManyForCreateInput
   pharmacyLocations: PharmacyLocationRelateToManyForCreateInput
   prescriptions: PrescriptionRelateToManyForCreateInput
   savedDoctors: DoctorRelateToManyForCreateInput
+  screeningTests: ScreeningTestRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
+  vaccinations: VaccinationRelateToManyForCreateInput
   visitedDoctors: DoctorRelateToManyForCreateInput
 }
 
@@ -3818,6 +4091,11 @@ input HealthCardRelateToManyForCreateInput {
   connect: [HealthCardWhereUniqueInput!]
 }
 
+input HealthConditionRelateToManyForCreateInput {
+  create: [HealthConditionCreateInput!]
+  connect: [HealthConditionWhereUniqueInput!]
+}
+
 input LifestyleItemRelateToManyForCreateInput {
   create: [LifestyleItemCreateInput!]
   connect: [LifestyleItemWhereUniqueInput!]
@@ -3826,6 +4104,11 @@ input LifestyleItemRelateToManyForCreateInput {
 input PharmacyLocationRelateToManyForCreateInput {
   create: [PharmacyLocationCreateInput!]
   connect: [PharmacyLocationWhereUniqueInput!]
+}
+
+input ScreeningTestRelateToManyForCreateInput {
+  create: [ScreeningTestCreateInput!]
+  connect: [ScreeningTestWhereUniqueInput!]
 }
 
 type Pharmacy {
@@ -4008,6 +4291,7 @@ input PrescriptionCreateInput {
 
 type PrescriptionItem {
   id: ID!
+  createdAt: DateTime
   instructions: String
   luCode: String
   refills: String
@@ -4024,6 +4308,7 @@ input PrescriptionItemWhereInput {
   OR: [PrescriptionItemWhereInput!]
   NOT: [PrescriptionItemWhereInput!]
   id: IDFilter
+  createdAt: DateTimeNullableFilter
   instructions: StringFilter
   luCode: StringFilter
   refills: StringFilter
@@ -4033,12 +4318,14 @@ input PrescriptionItemWhereInput {
 
 input PrescriptionItemOrderByInput {
   id: OrderDirection
+  createdAt: OrderDirection
   instructions: OrderDirection
   luCode: OrderDirection
   refills: OrderDirection
 }
 
 input PrescriptionItemUpdateInput {
+  createdAt: DateTime
   instructions: String
   luCode: String
   refills: String
@@ -4052,6 +4339,7 @@ input PrescriptionItemUpdateArgs {
 }
 
 input PrescriptionItemCreateInput {
+  createdAt: DateTime
   instructions: String
   luCode: String
   refills: String
@@ -4531,6 +4819,50 @@ input ScheduleCreateInput {
 input RecurringSlotRelateToManyForCreateInput {
   create: [RecurringSlotCreateInput!]
   connect: [RecurringSlotWhereUniqueInput!]
+}
+
+type ScreeningTest {
+  id: ID!
+  name: String
+  testedAt: DateTime
+  patient: Patient
+}
+
+input ScreeningTestWhereUniqueInput {
+  id: ID
+}
+
+input ScreeningTestWhereInput {
+  AND: [ScreeningTestWhereInput!]
+  OR: [ScreeningTestWhereInput!]
+  NOT: [ScreeningTestWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  testedAt: DateTimeNullableFilter
+  patient: PatientWhereInput
+}
+
+input ScreeningTestOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  testedAt: OrderDirection
+}
+
+input ScreeningTestUpdateInput {
+  name: String
+  testedAt: DateTime
+  patient: PatientRelateToOneForUpdateInput
+}
+
+input ScreeningTestUpdateArgs {
+  where: ScreeningTestWhereUniqueInput!
+  data: ScreeningTestUpdateInput!
+}
+
+input ScreeningTestCreateInput {
+  name: String
+  testedAt: DateTime
+  patient: PatientRelateToOneForCreateInput
 }
 
 type Stepper {
@@ -5306,6 +5638,58 @@ input HealthCardRelateToOneForCreateInput {
   connect: HealthCardWhereUniqueInput
 }
 
+type Vaccination {
+  id: ID!
+  expirationDate: DateTime
+  immunizedAt: DateTime
+  medication: Medication
+  doctor: Doctor
+  patient: Patient
+}
+
+input VaccinationWhereUniqueInput {
+  id: ID
+}
+
+input VaccinationWhereInput {
+  AND: [VaccinationWhereInput!]
+  OR: [VaccinationWhereInput!]
+  NOT: [VaccinationWhereInput!]
+  id: IDFilter
+  expirationDate: DateTimeNullableFilter
+  immunizedAt: DateTimeNullableFilter
+  medication: MedicationWhereInput
+  doctor: DoctorWhereInput
+  patient: PatientWhereInput
+}
+
+input VaccinationOrderByInput {
+  id: OrderDirection
+  expirationDate: OrderDirection
+  immunizedAt: OrderDirection
+}
+
+input VaccinationUpdateInput {
+  expirationDate: DateTime
+  immunizedAt: DateTime
+  medication: MedicationRelateToOneForUpdateInput
+  doctor: DoctorRelateToOneForUpdateInput
+  patient: PatientRelateToOneForUpdateInput
+}
+
+input VaccinationUpdateArgs {
+  where: VaccinationWhereUniqueInput!
+  data: VaccinationUpdateInput!
+}
+
+input VaccinationCreateInput {
+  expirationDate: DateTime
+  immunizedAt: DateTime
+  medication: MedicationRelateToOneForCreateInput
+  doctor: DoctorRelateToOneForCreateInput
+  patient: PatientRelateToOneForCreateInput
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -5521,6 +5905,14 @@ type Query {
     where: DoctorSubSpecialtyWhereUniqueInput!
   ): DoctorSubSpecialty
   doctorSubSpecialtiesCount(where: DoctorSubSpecialtyWhereInput! = {}): Int
+  documents(
+    where: DocumentWhereInput! = {}
+    orderBy: [DocumentOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Document!]
+  document(where: DocumentWhereUniqueInput!): Document
+  documentsCount(where: DocumentWhereInput! = {}): Int
   emergencyContacts(
     where: EmergencyContactWhereInput! = {}
     orderBy: [EmergencyContactOrderByInput!]! = []
@@ -5553,6 +5945,14 @@ type Query {
   ): [HealthCard!]
   healthCard(where: HealthCardWhereUniqueInput!): HealthCard
   healthCardsCount(where: HealthCardWhereInput! = {}): Int
+  healthConditions(
+    where: HealthConditionWhereInput! = {}
+    orderBy: [HealthConditionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [HealthCondition!]
+  healthCondition(where: HealthConditionWhereUniqueInput!): HealthCondition
+  healthConditionsCount(where: HealthConditionWhereInput! = {}): Int
   languages(
     where: LanguageWhereInput! = {}
     orderBy: [LanguageOrderByInput!]! = []
@@ -5675,6 +6075,14 @@ type Query {
   ): [Schedule!]
   schedule(where: ScheduleWhereUniqueInput!): Schedule
   schedulesCount(where: ScheduleWhereInput! = {}): Int
+  screeningTests(
+    where: ScreeningTestWhereInput! = {}
+    orderBy: [ScreeningTestOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ScreeningTest!]
+  screeningTest(where: ScreeningTestWhereUniqueInput!): ScreeningTest
+  screeningTestsCount(where: ScreeningTestWhereInput! = {}): Int
   steppers(
     where: StepperWhereInput! = {}
     orderBy: [StepperOrderByInput!]! = []
@@ -5731,6 +6139,14 @@ type Query {
   ): [UserInvite!]
   userInvite(where: UserInviteWhereUniqueInput!): UserInvite
   userInvitesCount(where: UserInviteWhereInput! = {}): Int
+  vaccinations(
+    where: VaccinationWhereInput! = {}
+    orderBy: [VaccinationOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Vaccination!]
+  vaccination(where: VaccinationWhereUniqueInput!): Vaccination
+  vaccinationsCount(where: VaccinationWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

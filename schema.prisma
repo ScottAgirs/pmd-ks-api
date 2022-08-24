@@ -346,6 +346,7 @@ model Doctor {
   doctorSpecialty          DoctorSpecialty?       @relation("Doctor_doctorSpecialty", fields: [doctorSpecialtyId], references: [id])
   doctorSpecialtyId        String?                @map("doctorSpecialty")
   doctorSubSpecialties     DoctorSubSpecialty[]   @relation("Doctor_doctorSubSpecialties")
+  documents                Document[]             @relation("Document_doctor")
   forms                    Form[]                 @relation("Form_doctor")
   languages                Language[]             @relation("Doctor_languages")
   patients                 Patient[]              @relation("Doctor_patients")
@@ -359,6 +360,7 @@ model Doctor {
   savedByPatients          Patient[]              @relation("Doctor_savedByPatients")
   user                     User?                  @relation("Doctor_user", fields: [userId], references: [id])
   userId                   String?                @unique @map("user")
+  vaccinations             Vaccination[]          @relation("Vaccination_doctor")
 
   @@index([doctorSpecialtyId])
 }
@@ -375,6 +377,19 @@ model DoctorSubSpecialty {
   label   String   @default("")
   value   String   @unique @default("")
   doctors Doctor[] @relation("Doctor_doctorSubSpecialties")
+}
+
+model Document {
+  id        String    @id @default(cuid())
+  addedAt   DateTime? @default(now())
+  title     String    @default("")
+  doctor    Doctor?   @relation("Document_doctor", fields: [doctorId], references: [id])
+  doctorId  String?   @map("doctor")
+  patient   Patient?  @relation("Document_patient", fields: [patientId], references: [id])
+  patientId String?   @map("patient")
+
+  @@index([doctorId])
+  @@index([patientId])
 }
 
 model EmergencyContact {
@@ -433,6 +448,17 @@ model HealthCard {
   @@index([patientId])
 }
 
+model HealthCondition {
+  id          String    @id @default(cuid())
+  diagnosedAt DateTime? @default(now())
+  name        String    @default("")
+  relation    String    @default("")
+  patient     Patient?  @relation("HealthCondition_patient", fields: [patientId], references: [id])
+  patientId   String?   @map("patient")
+
+  @@index([patientId])
+}
+
 model Language {
   id      String   @id @default(cuid())
   label   String   @default("")
@@ -458,6 +484,7 @@ model Medication {
   drugIdentificationNumber String             @unique @default("")
   activeIngredients        ActiveIngredient[] @relation("ActiveIngredient_medication")
   prescriptionItems        PrescriptionItem[] @relation("PrescriptionItem_medication")
+  vaccinations             Vaccination[]      @relation("Vaccination_medication")
 
   @@index([brandName])
 }
@@ -473,15 +500,19 @@ model Patient {
   appointments        Appointment[]        @relation("Appointment_patient")
   bookings            Booking[]            @relation("Booking_patient")
   caredByDoctors      Doctor[]             @relation("Doctor_caringForPatients")
+  documents           Document[]           @relation("Document_patient")
   emergencyContacts   EmergencyContact[]   @relation("EmergencyContact_patient")
   forms               Form[]               @relation("Form_patient")
   healthCards         HealthCard[]         @relation("HealthCard_patient")
+  healthConditions    HealthCondition[]    @relation("HealthCondition_patient")
   lifestyleItems      LifestyleItem[]      @relation("LifestyleItem_patient")
   pharmacyLocations   PharmacyLocation[]   @relation("Patient_pharmacyLocations")
   prescriptions       Prescription[]       @relation("Prescription_patient")
   savedDoctors        Doctor[]             @relation("Doctor_savedByPatients")
+  screeningTests      ScreeningTest[]      @relation("ScreeningTest_patient")
   user                User?                @relation("Patient_user", fields: [userId], references: [id])
   userId              String?              @unique @map("user")
+  vaccinations        Vaccination[]        @relation("Vaccination_patient")
   visitedDoctors      Doctor[]             @relation("Doctor_patients")
 }
 
@@ -520,6 +551,7 @@ model Prescription {
 
 model PrescriptionItem {
   id             String        @id @default(cuid())
+  createdAt      DateTime?     @default(now())
   instructions   String        @default("")
   luCode         String        @default("")
   refills        String        @default("")
@@ -603,6 +635,16 @@ model Schedule {
   recurringSlots RecurringSlot[] @relation("RecurringSlot_schedule")
 
   @@index([calendarId])
+}
+
+model ScreeningTest {
+  id        String    @id @default(cuid())
+  name      String    @default("")
+  testedAt  DateTime?
+  patient   Patient?  @relation("ScreeningTest_patient", fields: [patientId], references: [id])
+  patientId String?   @map("patient")
+
+  @@index([patientId])
 }
 
 model Stepper {
@@ -723,4 +765,20 @@ model UserInvite {
   signedUpUser          User?       @relation("User_signUpInvite")
 
   @@index([invitedByUserId])
+}
+
+model Vaccination {
+  id             String      @id @default(cuid())
+  expirationDate DateTime?
+  immunizedAt    DateTime?
+  medication     Medication? @relation("Vaccination_medication", fields: [medicationId], references: [id])
+  medicationId   String?     @map("medication")
+  doctor         Doctor?     @relation("Vaccination_doctor", fields: [doctorId], references: [id])
+  doctorId       String?     @map("doctor")
+  patient        Patient?    @relation("Vaccination_patient", fields: [patientId], references: [id])
+  patientId      String?     @map("patient")
+
+  @@index([medicationId])
+  @@index([doctorId])
+  @@index([patientId])
 }
