@@ -119,6 +119,9 @@ export default auth.withAuth(
           resetList('Medication', keystone);
           resetList('ActiveIngredient', keystone);
         }
+        if (process.argv.includes('--reset-diagnosis')) {
+          resetList('BillingDiagnosis', keystone);
+        }
         if (process.argv.includes('--link-ingredients')) {
           linkIngredients(keystone);
         }
