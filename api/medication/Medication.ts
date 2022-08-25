@@ -16,5 +16,9 @@ export const Medication = list({
       many: true,
       ref: 'PrescriptionItem.medication',
     }),
+    vaccinations: relationship({
+      many: true,
+      ref: 'Vaccination.medication',
+    }),
   },
 });
