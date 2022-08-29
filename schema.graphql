@@ -1748,9 +1748,9 @@ input BillingDiagnosisCreateInput {
 type BillingPremium {
   id: ID!
   amount: String
-  feeCode: String
   code: String
   description: String
+  feeCode: String
   appointmentBillingItems(
     where: AppointmentBillingItemWhereInput! = {}
     orderBy: [AppointmentBillingItemOrderByInput!]! = []
@@ -1772,25 +1772,25 @@ input BillingPremiumWhereInput {
   NOT: [BillingPremiumWhereInput!]
   id: IDFilter
   amount: StringFilter
-  feeCode: StringFilter
   code: StringFilter
   description: StringFilter
+  feeCode: StringFilter
   appointmentBillingItems: AppointmentBillingItemManyRelationFilter
 }
 
 input BillingPremiumOrderByInput {
   id: OrderDirection
   amount: OrderDirection
-  feeCode: OrderDirection
   code: OrderDirection
   description: OrderDirection
+  feeCode: OrderDirection
 }
 
 input BillingPremiumUpdateInput {
   amount: String
-  feeCode: String
   code: String
   description: String
+  feeCode: String
   appointmentBillingItems: AppointmentBillingItemRelateToManyForUpdateInput
 }
 
@@ -1801,9 +1801,9 @@ input BillingPremiumUpdateArgs {
 
 input BillingPremiumCreateInput {
   amount: String
-  feeCode: String
   code: String
   description: String
+  feeCode: String
   appointmentBillingItems: AppointmentBillingItemRelateToManyForCreateInput
 }
 
