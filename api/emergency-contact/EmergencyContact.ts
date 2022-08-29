@@ -1,4 +1,4 @@
-import { relationship, text, timestamp } from '@keystone-6/core/fields';
+import { relationship, text } from '@keystone-6/core/fields';
 
 import { list } from '@keystone-6/core';
 

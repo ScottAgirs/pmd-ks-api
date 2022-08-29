@@ -1,4 +1,4 @@
-import { emailClient } from "../../utils/postmark";
+import { emailClient } from '../../utils/postmark';
 
 interface UserForEmail {
   email: string;
@@ -32,24 +32,24 @@ export const sendTemplatedEmail = async ({
   templateModel,
 }: SendEmailWithTemplateOptions) => {
   const sendRequest = {
-    To: to,
-    From: from || "No-Reply PocketMD <no-reply@pocketmd.ca>",
+    From: from || 'No-Reply PocketMD <no-reply@pocketmd.ca>',
+    MessageStream: 'outbound',
     TemplateAlias: templateAlias,
     TemplateModel: {
       ...templateModel,
-      company_name: "PocketMD",
-      company_address: "Toronto, ON",
-      product_name: "PocketMD",
+      company_address: 'Toronto, ON',
+      company_name: 'PocketMD',
+      product_name: 'PocketMD',
       product_url: process.env.FRONTEND_URL,
       support_url: process.env.SUPPORT_URL,
     },
-    MessageStream: "outbound",
+    To: to,
   };
 
   try {
     const sentEmail = await emailClient.sendEmailWithTemplate(sendRequest);
-    console.log("sentEmail", sentEmail);
-    if (sentEmail.Message === "OK") {
+    console.log('sentEmail', sentEmail);
+    if (sentEmail.Message === 'OK') {
       console.log(`💌 Message Sent!`);
     } else {
       const errMsg = `🚨 Invite email failed to send!`;
@@ -59,7 +59,7 @@ export const sendTemplatedEmail = async ({
 
     return sentEmail;
   } catch (error: any) {
-    console.log("sendEmail.ts ~ sendEmailWithTemplate error", error);
-    return { error, message: "Failed sending email", code: error.code };
+    console.log('sendEmail.ts ~ sendEmailWithTemplate error', error);
+    return { code: error.code, error, message: 'Failed sending email' };
   }
 };

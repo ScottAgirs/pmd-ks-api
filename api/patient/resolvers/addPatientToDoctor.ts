@@ -1,5 +1,6 @@
-import { KeystoneContext } from "@keystone-6/core/types";
-import { sendTemplatedEmail } from "../../../lib/email/sendEmail";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { KeystoneContext } from '@keystone-6/core/types';
+import { sendTemplatedEmail } from '../../../lib/email/sendEmail';
 
 interface CreateEventBookingInput {
   firstName?: string;
@@ -32,8 +33,8 @@ export const addPatientToDoctor = async (
     },
   });
 
-  const existingPatient = userMatchedPatients.length > 0 ? userMatchedPatients[0] : null;
-  console.log("🚀 ~ file: addPatientToDoctor.ts ~ line 36 ~ existingPatient", existingPatient)
+  const existingPatient =
+    userMatchedPatients.length > 0 ? userMatchedPatients[0] : null;
 
   if (!existingPatient) {
     // Check if user with email already exists
@@ -43,20 +44,20 @@ export const addPatientToDoctor = async (
 
     // Covers the case, where user with email already exists, but incorrect data was provided
     if (emailExists.length > 0) {
-      throw new Error("Email already exists");
+      throw new Error('Email already exists');
     } else {
-      throw new Error("Patient does not exist"); // THIS ERROR MSG IS TIED TO CLIENT - CHANGE WITH CAUTION AND COMPARE AGAINST CLIENT
+      throw new Error('Patient does not exist'); // THIS ERROR MSG IS TIED TO CLIENT - CHANGE WITH CAUTION AND COMPARE AGAINST CLIENT
     }
   } else {
     const patientId = existingPatient.id;
-    if (!currentUser.doctor.id) throw new Error("User is not a doctor");
+    if (!currentUser.doctor.id) throw new Error('User is not a doctor');
 
     // Connect Patient to Doctor's patientsInCare
     try {
       const patientInCare = await context.db.Patient.updateOne({
         where: { id: patientId as string },
         data: {
-          caredByDoctors: { 
+          caredByDoctors: {
             connect: [{ id: currentUser.doctor.id }],
           },
         },
@@ -64,24 +65,24 @@ export const addPatientToDoctor = async (
 
       // Send email
       try {
-        console.log("Will try to send 💌")
+        console.log('Will try to send 💌');
         sendTemplatedEmail({
-          to: email,
-          templateAlias: "pt-dr-added-patient",
+          templateAlias: 'pt-dr-added-patient',
           templateModel: {
-            patientFirstName: firstName,
+            actionUrl: `${process.env.FRONTEND_URL}/doctors?doctorId=${currentUser.doctor.id}`,
             doctorFirstName: currentUser.firstName,
             doctorLastName: currentUser.lastName,
-            actionUrl: `${process.env.FRONTEND_URL}/doctors?doctorId=${currentUser.doctor.id}`,
+            patientFirstName: firstName,
           },
+          to: email,
         });
       } catch (error) {
-        console.log("createHealthCard - error", error);
+        console.log('createHealthCard - error', error);
       }
 
       return patientInCare;
     } catch (error) {
-      console.log("GOT A error", error);
+      console.log('GOT A error', error);
     }
   }
 };
