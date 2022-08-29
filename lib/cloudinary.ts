@@ -1,6 +1,6 @@
-import "dotenv/config";
+import 'dotenv/config';
 
-import cloudi from "cloudinary";
+import cloudi from 'cloudinary';
 
 interface CloudinaryConfig {
   cloudName: string;
@@ -10,16 +10,16 @@ interface CloudinaryConfig {
 }
 
 export const cloudinaryConfig = {
-  cloudName: process.env.CLOUDINARY_CLOUD_NAME,
   apiKey: process.env.CLOUDINARY_API_KEY,
   apiSecret: process.env.CLOUDINARY_API_SECRET,
+  cloudName: process.env.CLOUDINARY_CLOUD_NAME,
   // folder: "images",
 } as CloudinaryConfig;
 
 cloudi.v2.config({
-  cloud_name: cloudinaryConfig.cloudName,
   api_key: cloudinaryConfig.apiKey,
   api_secret: cloudinaryConfig.apiSecret,
+  cloud_name: cloudinaryConfig.cloudName,
 });
 
 export const cloudinary = cloudi.v2;

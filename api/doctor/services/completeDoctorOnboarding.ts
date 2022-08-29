@@ -1,4 +1,5 @@
-import { BaseItem, KeystoneContext } from "@keystone-6/core/types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { KeystoneContext } from '@keystone-6/core/types';
 
 const requiredDoctorFields = [
   // @TODO: [ONBOARDING] Add required address field
@@ -8,21 +9,21 @@ const requiredDoctorFields = [
 ];
 
 export const completeDoctorOnboarding = async (
-    context: KeystoneContext,
-    stepperStepProg: any,
-  ) => {
+  context: KeystoneContext,
+  stepperStepProg: any
+) => {
   const doctorUser = stepperStepProg.user;
 
   if (stepperStepProg?.stepper?.slug === 'doctor') {
     const userId = doctorUser.id;
 
     const doctorDB = context.db.Doctor;
-    const userMatchedDoctors = await doctorDB.findMany({ 
+    const userMatchedDoctors = await doctorDB.findMany({
       where: {
         user: {
           id: { equals: userId },
-        }
-      }
+        },
+      },
     });
 
     const doctor = userMatchedDoctors.length > 0 ? userMatchedDoctors[0] : null;
@@ -30,7 +31,7 @@ export const completeDoctorOnboarding = async (
     if (!doctor) {
       throw new Error('Doctor not found');
     }
-    
+
     const doctorId = doctor.id;
 
     let isCompleteProfile = true;
@@ -48,11 +49,11 @@ export const completeDoctorOnboarding = async (
         where: {
           id: doctorId as string,
         },
+        // eslint-disable-next-line sort-keys
         data: {
           isCompleteProfile: true,
         },
       });
-      
 
       // TODO: send email to doctor user
 
@@ -65,4 +66,4 @@ export const completeDoctorOnboarding = async (
     }
   }
   return false;
-}
+};

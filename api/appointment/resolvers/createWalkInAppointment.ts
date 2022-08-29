@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import momentTz from 'moment-timezone';
-import { KeystoneContext } from "@keystone-6/core/types";
-import { getCurrentUser } from "../../user/services/getCurrentUser";
+import { KeystoneContext } from '@keystone-6/core/types';
+import { getCurrentUser } from '../../user/services/getCurrentUser';
 
 export interface CreateWalkInAppointmentInput {
   eventId: string;
@@ -12,46 +13,45 @@ export const createWalkInAppointment = async (
   _: any,
   { eventId, patientId, reason }: CreateWalkInAppointmentInput,
   context: KeystoneContext
-  ): Promise<any> => {
-
+): Promise<any> => {
   if (!eventId) {
-    throw new Error("eventId is required");
+    throw new Error('eventId is required');
   }
 
   // Check user is logged in
   const {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    userId,
     ...currentUser
   } = await getCurrentUser(context);
 
   if (!currentUser) {
-    throw new Error("User not logged in");
+    throw new Error('User not logged in');
   }
 
   // Check event exists
-  const event = await context.db.CalendarEvent.findOne({
+  const event = (await context.db.CalendarEvent.findOne({
     where: {
       id: eventId,
     },
-  }) as any;
+  })) as any;
 
   let doctorUser;
   try {
-    const matched = await context.db.User.findMany({
+    const matched = (await context.db.User.findMany({
       where: {
-        doctor:{ id:{equals: event.doctorId}},
+        doctor: { id: { equals: event.doctorId } },
       },
-    }) as any;
+    })) as any;
 
+    // eslint-disable-next-line prefer-destructuring
     doctorUser = matched[0];
   } catch (error: any) {
-    throw new Error(error)
-    
+    throw new Error(error);
   }
 
   if (!event) {
-    throw new Error("event not found");
+    throw new Error('event not found');
   }
 
   const createdWalkInAppt = await context.db.Appointment.createOne({
@@ -63,7 +63,7 @@ export const createWalkInAppointment = async (
               id: event.doctorId,
             },
           },
-          status: "OPEN",
+          status: 'OPEN',
         },
       },
       doctor: {
@@ -78,7 +78,7 @@ export const createWalkInAppointment = async (
       },
       notes: {
         create: {
-          title: "",
+          title: '',
         },
       },
       patient: {
@@ -86,31 +86,32 @@ export const createWalkInAppointment = async (
           id: patientId,
         },
       },
-      reason,
       prescription: {
         create: {
-          patient: {
-            connect: {
-              id: patientId,
-            },
-          },
           doctor: {
             connect: {
               id: event.doctorId,
             },
           },
+          patient: {
+            connect: {
+              id: patientId,
+            },
+          },
         },
       },
+      reason,
+      startedAt: momentTz().toISOString(),
       vitalsData: {
         create: {
           resp: 0,
         },
       },
-      startedAt: momentTz().toISOString(),
     },
   });
-  
-  if (!createdWalkInAppt.id) throw new Error("Failed to create a walk-in appointment");
+
+  if (!createdWalkInAppt.id)
+    throw new Error('Failed to create a walk-in appointment');
 
   return createdWalkInAppt;
 };

@@ -1,5 +1,5 @@
-import { BaseItem, KeystoneContext } from "@keystone-6/core/types";
-import { sendTemplatedEmail } from "../../lib/email/sendEmail";
+import { BaseItem, KeystoneContext } from '@keystone-6/core/types';
+import { sendTemplatedEmail } from '../../lib/email/sendEmail';
 
 // TODO: [TypeScript] Add context interface
 export const afterCreateUser = async ({
@@ -9,7 +9,7 @@ export const afterCreateUser = async ({
   context: KeystoneContext;
   item: BaseItem;
 }) => {
-  if (!createdUser) throw new Error("Failed to create User createdUser.");
+  if (!createdUser) throw new Error('Failed to create User createdUser.');
 
   if (!createdUser.isDummy) {
     await context.query.StepperProg.createOne({
@@ -35,16 +35,16 @@ export const afterCreateUser = async ({
     });
 
     sendTemplatedEmail({
-      from: "no-reply@pocketmd.ca",
-      to: createdUser.email as string,
-      templateAlias: "welcome",
+      from: 'no-reply@pocketmd.ca',
+      templateAlias: 'welcome',
       templateModel: {
+        actionUrl: `${process.env.FRONTEND_URL}`,
         firstName: createdUser.firstName,
         lastName: createdUser.lastName,
-        actionUrl: `${process.env.FRONTEND_URL}`,
         loginUrl: `${process.env.FRONTEND_URL}/login`,
         settingsUrl: `${process.env.FRONTEND_URL}/profile`,
       },
+      to: createdUser.email as string,
     });
   }
 };

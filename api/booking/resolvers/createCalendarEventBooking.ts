@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import momentTz from 'moment-timezone';
-import { KeystoneContext } from "@keystone-6/core/types";
-import { sendTemplatedEmail } from "../../../lib/email/sendEmail";
-import { getCurrentUser } from "../../user/services/getCurrentUser";
+import { KeystoneContext } from '@keystone-6/core/types';
+import { sendTemplatedEmail } from '../../../lib/email/sendEmail';
+import { getCurrentUser } from '../../user/services/getCurrentUser';
 
 export interface CreateEventBookingInput {
   eventId: string;
@@ -14,51 +15,49 @@ export const createCalendarEventBooking = async (
   _: any,
   { eventId, reason, tzTarget, startsAt }: CreateEventBookingInput,
   context: KeystoneContext
-  ): Promise<any> => {
-
+): Promise<any> => {
   if (!eventId) {
-    throw new Error("eventId is required");
+    throw new Error('eventId is required');
   }
 
   const utcStartsAt = momentTz(startsAt as string);
-  const displayApptDate = utcStartsAt.tz(tzTarget).format("MMM D, YYYY, HH:mm");
+  const displayApptDate = utcStartsAt.tz(tzTarget).format('MMM D, YYYY, HH:mm');
 
   // Check user is logged in
   const {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     patientId: currentUserPatientId,
-    // @ts-ignore
-    userId,
     ...currentUser
   } = await getCurrentUser(context);
 
   if (!currentUser) {
-    throw new Error("User not logged in");
+    throw new Error('User not logged in');
   }
 
   // Check event exists
-  const event = await context.db.CalendarEvent.findOne({
+  const event = (await context.db.CalendarEvent.findOne({
     where: {
       id: eventId,
     },
-  }) as any;
+  })) as any;
 
   let doctorUser;
   try {
-    const matched = await context.db.User.findMany({
+    const matched = (await context.db.User.findMany({
       where: {
-        doctor:{ id:{equals: event.doctorId}},
+        doctor: { id: { equals: event.doctorId } },
       },
-    }) as any;
+    })) as any;
 
+    // eslint-disable-next-line prefer-destructuring
     doctorUser = matched[0];
   } catch (error: any) {
-    throw new Error(error)
-    
+    throw new Error(error);
   }
 
   if (!event) {
-    throw new Error("event not found");
+    throw new Error('event not found');
   }
 
   const createdBooking = await context.db.Booking.createOne({
@@ -73,7 +72,7 @@ export const createCalendarEventBooking = async (
                   id: event.doctorId,
                 },
               },
-              status: "OPEN",
+              status: 'OPEN',
             },
           },
           doctor: {
@@ -88,7 +87,7 @@ export const createCalendarEventBooking = async (
           },
           notes: {
             create: {
-              title: "",
+              title: '',
             },
           },
           patient: {
@@ -96,21 +95,21 @@ export const createCalendarEventBooking = async (
               id: currentUserPatientId,
             },
           },
-          reason,
           prescription: {
             create: {
-              patient: {
-                connect: {
-                  id: currentUserPatientId,
-                },
-              },
               doctor: {
                 connect: {
                   id: event.doctorId,
                 },
               },
+              patient: {
+                connect: {
+                  id: currentUserPatientId,
+                },
+              },
             },
           },
+          reason,
           vitalsData: {
             create: {
               resp: 0,
@@ -146,42 +145,44 @@ export const createCalendarEventBooking = async (
       tzTarget,
     },
   });
-  
-  if (!createdBooking.id) throw new Error("Failed to create a booking");
 
+  if (!createdBooking.id) throw new Error('Failed to create a booking');
 
   sendTemplatedEmail({
-    from: "no-reply@pocketmd.ca",
+    from: 'no-reply@pocketmd.ca',
     to: doctorUser.email,
-    templateAlias: "dr-new-booking",
+    // eslint-disable-next-line sort-keys
+    templateAlias: 'dr-new-booking',
     templateModel: {
-      doctorFirstName: doctorUser.firstName,
-      patientFirstName: currentUser.firstName,
       displayApptDate,
       doctorApptDetailsUrl: `${process.env.FRONTEND_URL}/doctor/appointments/upcoming?bookingId=${createdBooking.id}`,
-    }
-  })
-  sendTemplatedEmail({
-    from: "no-reply@pocketmd.ca",
-    to: currentUser.email,
-    templateAlias: "pt-new-booking",
-    templateModel: {
       doctorFirstName: doctorUser.firstName,
       patientFirstName: currentUser.firstName,
+    },
+  });
+  sendTemplatedEmail({
+    from: 'no-reply@pocketmd.ca',
+    to: currentUser.email,
+    // eslint-disable-next-line sort-keys
+    templateAlias: 'pt-new-booking',
+    templateModel: {
       displayApptDate,
+      doctorFirstName: doctorUser.firstName,
       patientApptDetailsUrl: `${process.env.FRONTEND_URL}/appointments/upcoming?bookingId=${createdBooking.id}`,
-    }
-  })
+      patientFirstName: currentUser.firstName,
+    },
+  });
 
   try {
     // Check if doctor has requested this appointment
-    const matchedAppointmentRequests = await context.db.AppointmentRequest.findMany({
-      where: {
-        doctor: { id: { equals: event.doctorId } },
-        event: { id: { equals: event.id } },
-        patient: { id: { equals: currentUserPatientId } },
-      },
-    }) as any;
+    const matchedAppointmentRequests =
+      (await context.db.AppointmentRequest.findMany({
+        where: {
+          doctor: { id: { equals: event.doctorId } },
+          event: { id: { equals: event.id } },
+          patient: { id: { equals: currentUserPatientId } },
+        },
+      })) as any;
 
     if (matchedAppointmentRequests?.length > 0) {
       const appointmentRequest = matchedAppointmentRequests[0];

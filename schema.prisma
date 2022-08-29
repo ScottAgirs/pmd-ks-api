@@ -198,15 +198,15 @@ model BillingDiagnosis {
 model BillingPremium {
   id                      String                   @id @default(cuid())
   amount                  String                   @default("")
-  feeCode                 String                   @default("")
   code                    String                   @default("")
   description             String                   @default("")
+  feeCode                 String                   @default("")
   appointmentBillingItems AppointmentBillingItem[] @relation("AppointmentBillingItem_premium")
 
   @@index([amount])
-  @@index([feeCode])
   @@index([code])
   @@index([description])
+  @@index([feeCode])
 }
 
 model Booking {
