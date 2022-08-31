@@ -5,7 +5,7 @@ import { list } from '@keystone-6/core';
 export const ActiveIngredient = list({
   fields: {
     drugCode: text({ isIndexed: true }),
-    ingredientName: text({ isIndexed: 'unique' }),
+    ingredientName: text({ isIndexed: true }),
     strengthUnit: text(),
     strengthValue: text(),
     // eslint-disable-next-line sort-keys
