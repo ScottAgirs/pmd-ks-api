@@ -35,6 +35,7 @@ import { populatePremiums } from './seed/billing/populate-premiums';
 
 import { populateMeds } from './seed/medications/populate-meds';
 import { populateIngredients } from './seed/medications/populate-ingredients';
+import { populateFormTypes } from './seed/forms/populate-form-types';
 
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
 
@@ -106,7 +107,7 @@ export default auth.withAuth(
         //   populatePharmacies(keystone);
         // }
 
-        if (process.argv.includes('--seed-contracts')) {
+        if (process.argv.includes('--seed-critical')) {
           // dd --seed-critical
           populateCalendarEventTypes(keystone);
           populateContracts(keystone);
@@ -134,15 +135,15 @@ export default auth.withAuth(
 
         //
         if (process.argv.includes('--seed-claims')) {
-          // dd --seed-claims -
+          // dd --seed-claims
           populateClaims(keystone);
         }
         if (process.argv.includes('--seed-diagnosis')) {
-          // dd --seed-diagnosis -
+          // dd --seed-diagnosis
           populateDiagnosis(keystone);
         }
         if (process.argv.includes('--seed-premiums')) {
-          // dd --seed-premiums -
+          // dd --seed-premiums
           populatePremiums(keystone);
         }
 
@@ -150,6 +151,12 @@ export default auth.withAuth(
         if (process.argv.includes('--seed-pharmas')) {
           // dd --seed-pharmas
           populatePharmacies(keystone);
+        }
+
+        //
+        if (process.argv.includes('--seed-form-types')) {
+          // dd --seed-form-types
+          populateFormTypes(keystone);
         }
 
         //
@@ -162,6 +169,7 @@ export default auth.withAuth(
           populateIngredients(keystone);
         }
         if (process.argv.includes('--link-ingredients')) {
+          // dd --link-ingredients
           linkIngredients(keystone);
         }
 
