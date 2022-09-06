@@ -426,10 +426,11 @@ model Form {
 }
 
 model FormType {
-  id    String @id @default(cuid())
-  name  String @default("")
-  slug  String @default("")
-  forms Form[] @relation("Form_formType")
+  id       String  @id @default(cuid())
+  isActive Boolean @default(false)
+  name     String  @default("")
+  slug     String  @unique @default("")
+  forms    Form[]  @relation("Form_formType")
 }
 
 model HealthCard {
