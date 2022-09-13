@@ -3332,6 +3332,7 @@ input FormTypeRelateToOneForCreateInput {
 
 type FormType {
   id: ID!
+  isActive: Boolean
   name: String
   slug: String
   forms(
@@ -3345,6 +3346,7 @@ type FormType {
 
 input FormTypeWhereUniqueInput {
   id: ID
+  slug: String
 }
 
 input FormTypeWhereInput {
@@ -3352,6 +3354,7 @@ input FormTypeWhereInput {
   OR: [FormTypeWhereInput!]
   NOT: [FormTypeWhereInput!]
   id: IDFilter
+  isActive: BooleanFilter
   name: StringFilter
   slug: StringFilter
   forms: FormManyRelationFilter
@@ -3359,11 +3362,13 @@ input FormTypeWhereInput {
 
 input FormTypeOrderByInput {
   id: OrderDirection
+  isActive: OrderDirection
   name: OrderDirection
   slug: OrderDirection
 }
 
 input FormTypeUpdateInput {
+  isActive: Boolean
   name: String
   slug: String
   forms: FormRelateToManyForUpdateInput
@@ -3375,6 +3380,7 @@ input FormTypeUpdateArgs {
 }
 
 input FormTypeCreateInput {
+  isActive: Boolean
   name: String
   slug: String
   forms: FormRelateToManyForCreateInput
