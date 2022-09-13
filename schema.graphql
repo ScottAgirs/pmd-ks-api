@@ -691,7 +691,6 @@ type ActiveIngredient {
 
 input ActiveIngredientWhereUniqueInput {
   id: ID
-  ingredientName: String
 }
 
 input ActiveIngredientWhereInput {
