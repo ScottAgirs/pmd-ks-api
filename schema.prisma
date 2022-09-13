@@ -21,7 +21,6 @@ model ActiveIngredient {
   medicationId   String?     @map("medication")
 
   @@index([drugCode])
-  @@index([ingredientName])
   @@index([medicationId])
 }
 
