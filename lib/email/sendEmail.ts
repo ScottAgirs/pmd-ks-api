@@ -1,11 +1,11 @@
 import { emailClient } from '../../utils/postmark';
 
-interface UserForEmail {
-  email: string;
-  firstName: string;
-  lastName?: string;
-  id?: string;
-}
+// interface UserForEmail {
+//   email: string;
+//   firstName: string;
+//   lastName?: string;
+//   id?: string;
+// }
 
 // interface SendEmailOptions {
 //   from?: string;
@@ -19,6 +19,7 @@ interface UserForEmail {
 // }
 interface SendEmailWithTemplateOptions {
   from?: string;
+  messageStream: "outbound"
   to: string;
   templateAlias: string;
   templateModel: {};
@@ -28,12 +29,13 @@ interface SendEmailWithTemplateOptions {
 export const sendTemplatedEmail = async ({
   from,
   to,
+  messageStream = 'outbound',
   templateAlias,
   templateModel,
 }: SendEmailWithTemplateOptions) => {
   const sendRequest = {
     From: from || 'No-Reply PocketMD <no-reply@pocketmd.ca>',
-    MessageStream: 'outbound',
+    MessageStream: messageStream,
     TemplateAlias: templateAlias,
     TemplateModel: {
       ...templateModel,
