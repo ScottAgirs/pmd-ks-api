@@ -19,7 +19,7 @@ import { emailClient } from '../../utils/postmark';
 // }
 interface SendEmailWithTemplateOptions {
   from?: string;
-  messageStream: "outbound"
+  messageStream?: 'outbound' | 'broadcast';
   to: string;
   templateAlias: string;
   templateModel: {};
