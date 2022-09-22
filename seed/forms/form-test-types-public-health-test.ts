@@ -1,1 +1,0 @@
-export const FORM_TEST_TYPES_PUBLIC_HEALTH_TEST = [];
