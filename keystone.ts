@@ -36,6 +36,7 @@ import { populatePremiums } from './seed/billing/populate-premiums';
 import { populateMeds } from './seed/medications/populate-meds';
 import { populateIngredients } from './seed/medications/populate-ingredients';
 import { populateFormTypes } from './seed/forms/populate-form-types';
+import { populateFormTests } from './seed/forms/populate-form-tests';
 
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
 
@@ -157,6 +158,11 @@ export default auth.withAuth(
         if (process.argv.includes('--seed-form-types')) {
           // dd --seed-form-types
           populateFormTypes(keystone);
+        }
+        //
+        if (process.argv.includes('--seed-form-tests')) {
+          // dd --seed-form-tests
+          populateFormTests(keystone);
         }
 
         //
