@@ -425,6 +425,15 @@ model Form {
   @@index([patientId])
 }
 
+model FormTest {
+  id      String @id @default(cuid())
+  label   String @default("")
+  testFor String @default("")
+  value   String @default("")
+
+  @@index([value])
+}
+
 model FormType {
   id       String  @id @default(cuid())
   isActive Boolean @default(false)

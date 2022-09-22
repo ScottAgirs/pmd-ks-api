@@ -28,6 +28,7 @@ import { TimeInterval } from './api/time-interval/TimeInterval';
 
 import { Doctor } from './api/doctor/Doctor';
 import { Form } from './api/form/Form';
+import { FormTest } from './api/form-test/FormTest';
 import { FormType } from './api/form-type/FormType';
 import { LifestyleItem } from './api/lifestyle-item/LifestyleItem';
 import { Medication } from './api/medication/Medication';
@@ -95,6 +96,7 @@ export const lists = {
   Document,
   EmergencyContact,
   Form,
+  FormTest,
   FormType,
   HealthCard,
   HealthCondition,

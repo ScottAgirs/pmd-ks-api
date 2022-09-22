@@ -386,6 +386,15 @@ type Mutation {
   updateForms(data: [FormUpdateArgs!]!): [Form]
   deleteForm(where: FormWhereUniqueInput!): Form
   deleteForms(where: [FormWhereUniqueInput!]!): [Form]
+  createFormTest(data: FormTestCreateInput!): FormTest
+  createFormTests(data: [FormTestCreateInput!]!): [FormTest]
+  updateFormTest(
+    where: FormTestWhereUniqueInput!
+    data: FormTestUpdateInput!
+  ): FormTest
+  updateFormTests(data: [FormTestUpdateArgs!]!): [FormTest]
+  deleteFormTest(where: FormTestWhereUniqueInput!): FormTest
+  deleteFormTests(where: [FormTestWhereUniqueInput!]!): [FormTest]
   createFormType(data: FormTypeCreateInput!): FormType
   createFormTypes(data: [FormTypeCreateInput!]!): [FormType]
   updateFormType(
@@ -3330,6 +3339,51 @@ input FormTypeRelateToOneForCreateInput {
   connect: FormTypeWhereUniqueInput
 }
 
+type FormTest {
+  id: ID!
+  label: String
+  testFor: String
+  value: String
+}
+
+input FormTestWhereUniqueInput {
+  id: ID
+}
+
+input FormTestWhereInput {
+  AND: [FormTestWhereInput!]
+  OR: [FormTestWhereInput!]
+  NOT: [FormTestWhereInput!]
+  id: IDFilter
+  label: StringFilter
+  testFor: StringFilter
+  value: StringFilter
+}
+
+input FormTestOrderByInput {
+  id: OrderDirection
+  label: OrderDirection
+  testFor: OrderDirection
+  value: OrderDirection
+}
+
+input FormTestUpdateInput {
+  label: String
+  testFor: String
+  value: String
+}
+
+input FormTestUpdateArgs {
+  where: FormTestWhereUniqueInput!
+  data: FormTestUpdateInput!
+}
+
+input FormTestCreateInput {
+  label: String
+  testFor: String
+  value: String
+}
+
 type FormType {
   id: ID!
   isActive: Boolean
@@ -5934,6 +5988,14 @@ type Query {
   ): [Form!]
   form(where: FormWhereUniqueInput!): Form
   formsCount(where: FormWhereInput! = {}): Int
+  formTests(
+    where: FormTestWhereInput! = {}
+    orderBy: [FormTestOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [FormTest!]
+  formTest(where: FormTestWhereUniqueInput!): FormTest
+  formTestsCount(where: FormTestWhereInput! = {}): Int
   formTypes(
     where: FormTypeWhereInput! = {}
     orderBy: [FormTypeOrderByInput!]! = []
